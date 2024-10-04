@@ -37,6 +37,7 @@ const config = {
         "status-completed" :"#094301",
         "text-completed" :"#41C82E",
         "secondary-dark": "#262525",
+        "secondary-darker": "#201f1f",
         "primary-border": "#616161",
         "black-primary": "#020204",
         "black-secondary": "#7f8ea3",

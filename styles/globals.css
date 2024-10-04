@@ -75,7 +75,7 @@ tr td:last-child {
   }
 
   .active-order-tab {
-    @apply data-[state=active]:text-[#8BAE22];
+    @apply data-[state=active]:text-primary-green;
   }
   .transparent-btn {
     @apply border-secondary-transparent-border border px-2 rounded-xl flex gap-x-2;

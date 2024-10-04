@@ -15,6 +15,7 @@ import { GoogleSignIn } from "@/components/serviette-icons";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/shared";
 import { CircleCheckBig } from "lucide-react";
+import Container from "@/components/shared/container";
 
 const defaultValues = {
   email: "",
@@ -67,127 +68,105 @@ const SignIn: FC = () => {
       <>
         <Navbar />
         <PageAnimation>
-          <div className="authcard1">
-            <div className="authcard2">
-              <div className="authcard3">
-                <div className="authcard4">
-                  <div className="authcard5">
-                    <div className="authcard5a">
-                      {showPassword ? (
-                        <>
-                          <>
-                            <Image
-                              alt="img"
-                              src={logo}
-                              className="authimg1"
+          <Container>
+            <div className="authcard4">
+              <div className="authcard5">
+                <div className="authcard5a">
+                  {showPassword ? (
+                    <>
+                      <>
+                        <Image alt="img" src={logo} className="authimg1" />
+                        <div className="pb-8">
+                          <h1 className="text-[1.6rem] font-medium text-white pb-2">
+                            Your Password
+                          </h1>
+                          <p className="text-[#A5A5A5]">Almost there...</p>
+                        </div>
+                        <form
+                          onSubmit={handleSubmit(onSubmit)}
+                          className="w-full"
+                        >
+                          <div>
+                            <label className="text-[#F8F8F8] pb-2 text-sm">
+                              Password
+                            </label>
+                            <br />
+                            <input
+                              {...register("password")}
+                              autoComplete="new-password"
+                              type="password"
+                              placeholder="Enter a password"
+                              className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
                             />
-                            <div className="pb-8">
-                              <h1 className="text-[1.6rem] font-medium text-white pb-2">
-                                Your Password
-                              </h1>
-                              <p className="text-[#A5A5A5]">Almost there...</p>
-                            </div>
-                            <form
-                              onSubmit={handleSubmit(onSubmit)}
-                              className="w-full"
-                            >
-                              <div>
-                                <label className="text-[#F8F8F8] pb-2 text-sm">
-                                  Password
-                                </label>
-                                <br />
-                                <input
-                                  {...register("password")}
-                                  autoComplete="new-password"
-                                  type="password"
-                                  placeholder="Enter a password"
-                                  className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
-                                />
-                                <br />
-                                <p className="text-red-400 text-sm">
-                                  {errors.password?.message}
-                                </p>
-                              </div>
-
-                              <button className="authbtn">
-                                {isLoading ? "signing you in..." : "Sign in"}
-                              </button>
-                            </form>
-                          </>
-                        </>
-                      ) : (
-                        <>
-                          <Image
-                            alt="img"
-                            src={logo}
-                            className="authimg2"
-                          />
-                          <div className="pb-8">
-                            <div>
-                              <h1 className="text-[1.6rem] font-medium text-white pb-2">
-                                Sign in to Your Account
-                              </h1>
-                              <p className="text-[#A5A5A5]">
-                                Enter your email address
-                              </p>
-                            </div>
+                            <br />
+                            <p className="text-red-400 text-sm">
+                              {errors.password?.message}
+                            </p>
                           </div>
-                          <form
-                            onSubmit={handleSubmit(onSubmit)}
-                            className="w-full"
-                          >
-                            <div>
-                              <label className="text-[#F8F8F8] pb-2 text-sm">
-                                Email address
-                              </label>
-                              <br />
-                              <input
-                                {...register("email")}
-                                autoComplete="off"
-                                type="email"
-                                placeholder="Someone@example.com"
-                                className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
-                              />
-                              <br />
-                              <p className="text-red-400 text-sm">
-                                {errors.email?.message}
-                              </p>
-                            </div>
-                            <button className="authbtn">
-                              {isLoading ? "Hold on..." : "Sign in with Email"}
-                            </button>
-                          </form>
-                        </>
-                      )}
-                      <div className="flex gap-x-2 pt-3 text-[#A5A5A5] text-center text-base">
-                        Don't Have an account?
-                        <Link href="/auth/sign-up" className="link">
-                          <span className="text-[#8BAE22]">
-                            Sign up instead
-                          </span>
-                        </Link>
+
+                          <button className="authbtn">
+                            {isLoading ? "signing you in..." : "Sign in"}
+                          </button>
+                        </form>
+                      </>
+                    </>
+                  ) : (
+                    <>
+                      <Image alt="img" src={logo} className="authimg2" />
+                      <div className="pb-8">
+                        <div>
+                          <h1 className="text-[1.6rem] font-medium text-white pb-2">
+                            Sign in to Your Account
+                          </h1>
+                          <p className="text-[#A5A5A5]">
+                            Enter your email address
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="authcard6">
-                    {showPassword ? (
-                      <Image
-                        alt="img"
-                        src={authPwdImage}
-                        className="authimg3"
-                      />
-                    ) : (
-                      <Image
-                        alt="img"
-                        src={authEmImage}
-                        className="authimg3"
-                      />
-                    )}
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="w-full"
+                      >
+                        <div>
+                          <label className="text-[#F8F8F8] pb-2 text-sm">
+                            Email address
+                          </label>
+                          <br />
+                          <input
+                            {...register("email")}
+                            autoComplete="off"
+                            type="email"
+                            placeholder="Someone@example.com"
+                            className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                          />
+                          <br />
+                          <p className="text-red-400 text-sm">
+                            {errors.email?.message}
+                          </p>
+                        </div>
+                        <button className="authbtn">
+                          {isLoading ? "Hold on..." : "Sign in with Email"}
+                        </button>
+                      </form>
+                    </>
+                  )}
+                  <div className="flex gap-x-2 pt-3 text-[#A5A5A5] text-center text-base">
+                    Don't Have an account?
+                    <Link href="/auth/sign-up" className="link">
+                      <span className="text-[#8BAE22]">Sign up instead</span>
+                    </Link>
                   </div>
                 </div>
               </div>
+              <div className="authcard6">
+                {showPassword ? (
+                  <Image alt="img" src={authPwdImage} className="authimg3" />
+                ) : (
+                  <Image alt="img" src={authEmImage} className="authimg3" />
+                )}
+              </div>
             </div>
-          </div>
+          </Container>
         </PageAnimation>
       </>
     </AuthLayout>

@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 const Modal = ({ isOpen, onClose, children }: any) => {
   if (!isOpen) return null;
 
