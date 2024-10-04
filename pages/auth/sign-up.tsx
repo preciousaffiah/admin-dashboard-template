@@ -140,7 +140,7 @@ const SignUp: FC = () => {
                     </>
                   ) : (
                     <>
-                      <div className="md:m-auto m-0 max-w-[23rem]">
+                      <div className="md:m-auto m-0 w-fit px-4">
                         <Image alt="img" src={logo} className="authimg2" />
                         <div className="pb-8">
                           <div>

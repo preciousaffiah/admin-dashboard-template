@@ -82,13 +82,13 @@ tr td:last-child {
   }
 
   .authcard1 {
-    @apply min-h-[37rem] h-screen w-screen;
+    @apply min-h-[37rem] h-screen;
   }
   .authcard2 {
     @apply h-full w-full m-auto;
   }
   .authcard3 {
-    @apply bg-secondary-dark md:py-16 py-8 md:px-14 px-7 h-full w-full;
+    @apply bg-secondary-dark md:py-16 py-0 md:px-14 px-7 h-full w-full;
   }
   .authcard4 {
     @apply flex justify-center w-full h-full;
