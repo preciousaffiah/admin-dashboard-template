@@ -70,13 +70,13 @@ const SignIn: FC = () => {
         <PageAnimation>
           <Container>
             <div className="authcard4">
-              <div className="authcard5">
+              <div className="authcard5 md:pt-0 pt-14">
                 <div className="authcard5a">
                   {showPassword ? (
                     <>
                       <>
                         <Image alt="img" src={logo} className="authimg1" />
-                        <div className="pb-8">
+                        <div className="pb-10">
                           <h1 className="text-[1.6rem] font-medium text-white pb-2">
                             Your Password
                           </h1>
@@ -96,7 +96,7 @@ const SignIn: FC = () => {
                               autoComplete="new-password"
                               type="password"
                               placeholder="Enter a password"
-                              className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                              className="md:pt-0 pt-4 text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
                             />
                             <br />
                             <p className="text-red-400 text-sm">
@@ -113,7 +113,7 @@ const SignIn: FC = () => {
                   ) : (
                     <>
                       <Image alt="img" src={logo} className="authimg2" />
-                      <div className="pb-8">
+                      <div className="pb-10">
                         <div>
                           <h1 className="text-[1.6rem] font-medium text-white pb-2">
                             Sign in to Your Account
@@ -137,7 +137,7 @@ const SignIn: FC = () => {
                             autoComplete="off"
                             type="email"
                             placeholder="Someone@example.com"
-                            className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                            className="md:pt-0 pt-4 text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
                           />
                           <br />
                           <p className="text-red-400 text-sm">
