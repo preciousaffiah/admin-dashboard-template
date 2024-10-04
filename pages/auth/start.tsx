@@ -25,7 +25,7 @@ const Start: FC = () => {
       <PageAnimation>
         <div className="authcard1">
           <div className="authcard2">
-            <div className="authcard3">
+            <div className="authcard3 md:px-7 px-0">
               <div className="authcard4">
                 <div className="md:w-1/2 w-full h-full bg-primary-dark z-50 rounded-xl">
                   <div className="text-white gap-y-12 flex flex-col justify-center items-center h-full">
