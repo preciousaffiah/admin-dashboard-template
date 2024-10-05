@@ -56,11 +56,11 @@ tr td:last-child {
   }
 
   .modal-header {
-    @apply flex justify-end;
+    @apply flex justify-end px-2;
   }
 
   .close-button {
-    @apply cursor-pointer text-base font-bold;
+    @apply cursor-pointer text-5xl px-2 text-secondary-border md:absolute md:pb-0 pb-2 top-28 right-[28.5rem];
   }
 
   .orders-table-head {
@@ -117,7 +117,7 @@ tr td:last-child {
 }
 @layer base {
   :root {
-    --background: 0 0% 15%;
+    --background: 0 0% 10%;
     --foreground: 0 0% 3.9%;
 
     --secondary-border: 0 0% 64.7%;

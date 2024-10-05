@@ -87,7 +87,7 @@ const SignUp: FC = () => {
               </div>
             ) : (
               <>
-                <div className="authcard5">
+                <div className="authcard5 md:rounded-xl rounded-none">
                   {showPassword ? (
                     <>
                       <div className="authcard5a max-w-[19rem]">
@@ -114,7 +114,7 @@ const SignUp: FC = () => {
                               autoComplete="new-password"
                               type="password"
                               placeholder="Enter a password"
-                              className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                              className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                             />
                             <br />
                             <p className="text-red-400 text-sm">
@@ -140,7 +140,7 @@ const SignUp: FC = () => {
                     </>
                   ) : (
                     <>
-                      <div className="md:m-auto m-0 w-fit px-4">
+                      <div className="md:m-auto m-0 md:w-fit px-4 md:pt-0 pt-28 w-full">
                         <Image alt="img" src={logo} className="authimg2" />
                         <div className="pb-8">
                           <div>
@@ -166,7 +166,7 @@ const SignUp: FC = () => {
                               autoComplete="off"
                               type="email"
                               placeholder="Someone@example.com"
-                              className="text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                              className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                             />
                             <br />
                             <p className="text-red-400 text-sm">

@@ -52,6 +52,9 @@ const SignIn: FC = () => {
     setIsLoading(true);
     setTimeout(() => {
       console.log(getValues().password, getValues().email);
+      if(!getValues().password){
+        return errors
+      }
       if (!showPassword) {
         setIsLoading(false);
         return setShowPassword(true);
@@ -70,8 +73,8 @@ const SignIn: FC = () => {
         <PageAnimation>
           <Container>
             <div className="authcard4">
-              <div className="authcard5 md:pt-0 pt-14">
-                <div className="authcard5a">
+              <div className="authcard5 md:rounded-xl rounded-none">
+                <div className="authcard5a md:pt-0 pt-28 md:w-fit w-full">
                   {showPassword ? (
                     <>
                       <>
@@ -96,7 +99,7 @@ const SignIn: FC = () => {
                               autoComplete="new-password"
                               type="password"
                               placeholder="Enter a password"
-                              className="md:pt-0 pt-4 text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                              className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                             />
                             <br />
                             <p className="text-red-400 text-sm">
@@ -137,7 +140,7 @@ const SignIn: FC = () => {
                             autoComplete="off"
                             type="email"
                             placeholder="Someone@example.com"
-                            className="md:pt-0 pt-4 text-[0.98rem] text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                            className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                           />
                           <br />
                           <p className="text-red-400 text-sm">

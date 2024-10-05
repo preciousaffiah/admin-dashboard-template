@@ -371,7 +371,7 @@ const Orders: FC = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="my-2 flex justify-between px-2 items-center h-28 text-white">
+                  <div className="my-2 md:mb-2 md:mt-12 flex justify-between px-2 items-center h-28 text-white">
                     <div className="flex flex-col h-full justify-center gap-y-3 text-secondary-border">
                       <p className="text-sm">Customer </p>
                       <p className="text-2xl font-medium capitalize text-white">
