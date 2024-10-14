@@ -51,7 +51,7 @@ export default function AdminLayout({
         <meta property="og:site_name" content="Serviette" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:locale:alternate" content="en_US" />
-        <meta property="og:url" content="http://https://www.serviette.com/" />
+        <meta property="og:url" content="https://my-serviette.vercel.app/" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta
@@ -61,7 +61,7 @@ export default function AdminLayout({
         <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:url"
-          content="http://https://www.serviette.com/"
+          content="https://my-serviette.vercel.app/"
         />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
