@@ -563,7 +563,7 @@ const CreateMenu: FC = () => {
                                           </div>
                                           <div className="flex gap-x-5 justify-between">
                                             <p>Description</p>
-                                            <p className="w-full truncate">{menu.description} </p>
+                                            <p className="w-full truncate text-end">{menu.description} </p>
                                           </div>
                                         </div>
                                       </div>
