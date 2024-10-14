@@ -9,10 +9,12 @@ import { useEffect, useState } from "react";
 import ComboboxDemo from "../combobox";
 
 const OrderDropDown = ({
+  itemsArray,
   handleSubmit2,
   onSubmit2,
   register2,
   setValue,
+  selectValue,
   errors2,
   isFormValid,
   setSelectedTab,
@@ -105,7 +107,7 @@ const OrderDropDown = ({
           {selectedTab === "dineIn" && (
             <div className="flex items-center gap-x-3">
               <h1>Table Number</h1>
-              <ComboboxDemo setValue={setValue}/>
+              <ComboboxDemo itemsArray={itemsArray} selectValue={selectValue} setValue={setValue}/>
             </div>
           )}
         </TabsContent>

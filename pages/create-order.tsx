@@ -149,6 +149,8 @@ const CreateOrder: FC = () => {
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const itemsArray = ["A001", "A002", "A003", "A004", "A005"];
+
   const [selectedDepartments, setSelectedDepartments] = useState<{
     [department: string]: boolean;
   }>({});
@@ -293,7 +295,7 @@ const CreateOrder: FC = () => {
       ...data,
       orderItems: [...prevOrder.orderItems],
     }));
-    setDropDown1(false)
+    setDropDown1(false);
   };
 
   const onSubmit2 = (data: any) => {
@@ -336,14 +338,14 @@ const CreateOrder: FC = () => {
       orderType: selectedTab,
       orderItems: [...prevOrder.orderItems],
     }));
-    setDropDown2(false)
+    setDropDown2(false);
     setIsFormValid(true);
     console.log("hiiii", data.tableNumber);
   };
 
   const isOrderComplete = () => {
     // console.log(order);
-    
+
     return (
       order.fname !== "" &&
       order.lname !== "" &&
@@ -628,11 +630,7 @@ const CreateOrder: FC = () => {
 
                                 <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primary-green font-medium">
                                   {/* <button className="">Cancel</button> */}
-                                  <button
-                                    type="submit"
-                                  >
-                                    Save
-                                  </button>
+                                  <button type="submit">Save</button>
                                 </div>
                               </form>
                             </CollapsibleContent>
@@ -663,10 +661,12 @@ const CreateOrder: FC = () => {
                             </div>
                             <CollapsibleContent className="px-4 py-3">
                               <OrderDropDown
+                                itemsArray={itemsArray}
                                 handleSubmit2={handleSubmit2}
                                 onSubmit2={onSubmit2}
                                 register2={register2}
                                 setValue={setValue}
+                                selectValue="tableNumber"
                                 errors2={errors2}
                                 isFormValid={isFormValid}
                                 watch={watch}

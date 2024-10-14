@@ -19,9 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const frameworks = ["A001", "A002", "A003", "A004", "A005"];
-
-const ComboboxDemo = ({ setValue }: any) => {
+const ComboboxDemo = ({ setValue, selectValue, itemsArray }: any) => {
   const [open, setOpen] = React.useState(false);
   const [value, setValueLocal] = React.useState("");
 let prevValue = ""
@@ -35,7 +33,7 @@ let prevValue = ""
           className="w-[200px] justify-between  border-0"
         >
           {value
-            ? frameworks.find((framework) => framework === value)
+            ? itemsArray.find((item: string) => item === value)
             : "Select table..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -46,12 +44,12 @@ let prevValue = ""
           <CommandList>
             <CommandEmpty>No table found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {itemsArray.map((item: string) => (
                 <CommandItem
                   key={prevValue}
-                  value={framework}
+                  value={item}
                   onSelect={(currentValue: any) => {
-                    setValue("tableNumber", framework)
+                    setValue(selectValue, item)
                     setValueLocal(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
@@ -59,10 +57,10 @@ let prevValue = ""
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === framework ? "opacity-100" : "opacity-0"
+                      value === item ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {framework}
+                  {item}
                 </CommandItem>
               ))}
             </CommandGroup>
