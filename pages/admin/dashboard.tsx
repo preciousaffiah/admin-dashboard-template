@@ -245,44 +245,44 @@ const revenuesChartData = [
 const salesChartData = [
   {
     name: "Mon",
-    increment: 4000,
-    decrement: 2400,
+    inc: 4000,
+    dec: 2400,
     amt: 2400,
   },
   {
     name: "Tue",
-    increment: 3000,
-    decrement: 1398,
+    inc: 3000,
+    dec: 1398,
     amt: 2210,
   },
   {
     name: "Wed",
-    increment: 2000,
-    decrement: 9800,
+    inc: 2000,
+    dec: 9800,
     amt: 2290,
   },
   {
     name: "Thu",
-    increment: 2780,
-    decrement: 3908,
+    inc: 2780,
+    dec: 3908,
     amt: 2000,
   },
   {
     name: "Fri",
-    increment: 1890,
-    decrement: 4800,
+    inc: 1890,
+    dec: 4800,
     amt: 2181,
   },
   {
     name: "Sat",
-    increment: 2390,
-    decrement: 3800,
+    inc: 2390,
+    dec: 3800,
     amt: 2500,
   },
   {
     name: "Sun",
-    increment: 3490,
-    decrement: 4300,
+    inc: 3490,
+    dec: 4300,
     amt: 2100,
   },
 ];
@@ -601,8 +601,8 @@ const AdminDashboard: FC = () => {
                 <TabsContent value={item}>
                   <div className="w-full">
                     <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
-                      <div className="pt-4 rounded-md px-3 md:gap-y-0 gap-y-3 flex pb-4 gap-x-4 lg:flex-row flex-col">
-                        <div className="lg:w-[70%] w-full h-fit flex flex-col gap-y-4 justify-between">
+                      <div className="pt-4 rounded-md px-3 lg:gap-y-0 gap-y-10 flex pb-4 gap-x-4 lg:flex-row flex-col">
+                        <div className="lg:w-[70%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
                           <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
                             <div
                               className={`
@@ -675,6 +675,7 @@ const AdminDashboard: FC = () => {
                                             fill="url(#fillDesktop)"
                                             fillOpacity={0.2}
                                             stroke="red"
+                                            color="white"
                                             stackId="a"
                                           />
                                         </AreaChart>
@@ -845,7 +846,7 @@ const AdminDashboard: FC = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="flex  md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
+                          <div className="flex lg-pb-0 pb-4 md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
                             <div>
                               <div className="rounded-md md:w-auto w-full h-fit bg-primary-dark ">
                                 <div className="border-b border-primary-border">
@@ -879,14 +880,16 @@ const AdminDashboard: FC = () => {
                                   }}
                                 >
                                   <XAxis className="barchat" dataKey="name" />
-                                  {/* <Tooltip /> */}
+                                  {/* <Tooltip
+                                    wrapperStyle={{ transform: "none" }}
+                                  /> */}
                                   <Bar
-                                    dataKey="decrement"
+                                    dataKey="dec"
                                     stackId="a"
                                     fill="#F44E4E"
                                   />
                                   <Bar
-                                    dataKey="increment"
+                                    dataKey="inc"
                                     stackId="a"
                                     fill="#16A34A"
                                   />
@@ -927,7 +930,9 @@ const AdminDashboard: FC = () => {
                                   />
                                   <XAxis dataKey="month" />
                                   <YAxis />
-                                  <Tooltip />
+                                  {/* <Tooltip
+                                    wrapperStyle={{ transform: "none" }}
+                                  /> */}
                                   <Line
                                     dataKey="amt"
                                     stroke="#F07000"
@@ -938,7 +943,7 @@ const AdminDashboard: FC = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col md:flex-row flex-col gap-y-4">
+                        <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
                           <div
                             className={`
                                     bg-primary-dark   w-full h-fit cursor-pointer text-sm text-white rounded-md py-1`}
