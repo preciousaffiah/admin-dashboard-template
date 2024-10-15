@@ -54,6 +54,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from "recharts";
 
 import {
@@ -880,19 +881,23 @@ const AdminDashboard: FC = () => {
                                   }}
                                 >
                                   <XAxis className="barchat" dataKey="name" />
-                                  {/* <Tooltip
-                                    wrapperStyle={{ transform: "none" }}
-                                  /> */}
-                                  <Bar
-                                    dataKey="dec"
-                                    stackId="a"
-                                    fill="#F44E4E"
-                                  />
-                                  <Bar
-                                    dataKey="inc"
-                                    stackId="a"
-                                    fill="#16A34A"
-                                  />
+                                  <Bar dataKey="dec" stackId="a" fill="#F44E4E">
+                                    <LabelList
+                                      fill="#fff"
+                                      dataKey="dec"
+                                      fontSize={11}
+                                      angle={45}
+                                      position="inside"
+                                    />
+                                  </Bar>
+
+                                  <Bar dataKey="inc" stackId="a" fill="#16A34A">
+                                    <LabelList
+                                      dataKey="inc"
+                                      fontSize={11}
+                                      position="top"
+                                    />
+                                  </Bar>
                                 </BarChart>
                               </div>
                             </div>
@@ -937,7 +942,14 @@ const AdminDashboard: FC = () => {
                                     dataKey="amt"
                                     stroke="#F07000"
                                     activeDot={{ r: 8 }}
-                                  />
+                                  >
+                                    <LabelList
+                                      fill="#8c8c8c"
+                                      dataKey="amt"
+                                      fontSize={11}
+                                      position="left"
+                                    />
+                                  </Line>
                                 </LineChart>
                               </div>
                             </div>
