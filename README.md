@@ -31,7 +31,6 @@ Serviette- A Global restaurant known for serving the best meals to customers.
 
 ### Prerequisites
 
-- Node.js version: `x.x.x` or higher
 - Any globally installed packages (e.g., `yarn` or `npm`)
 
 ---
