@@ -1,12 +1,9 @@
-import { AuthLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC, useState } from "react";
-import { PageAnimation } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { MainNavbar, Modal } from "@/components/shared";
 import {
-  ArrowBigDown,
   Check,
   Circle,
   Edit3,
@@ -244,20 +241,20 @@ const AdminOrders: FC = () => {
               <ScrollArea className="px-3 w-full whitespace-nowrap">
                 <TabsList className="bg-transparent">
                   {tabs.map((item, index) => (
-                    <>
+                    <div key={index}>
                       <TabsTrigger
                         value={item}
                         className="active-main-tab text-sm px-6 capitalize"
                       >
                         {item}
                       </TabsTrigger>
-                    </>
+                    </div>
                   ))}
                 </TabsList>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
               {tabs.map((item, index) => (
-                <TabsContent value={item} className="md:px-0 px-2">
+                <TabsContent key={index} value={item} className="md:px-0 px-2">
                   <div className="w-full bg-primary-dark pt-4 rounded-md">
                     <div className="w-full h-full">
                       <div className="px-3 flex pb-4 border-b border-primary-border">
@@ -486,8 +483,11 @@ const AdminOrders: FC = () => {
                       <div className="flex justify-between">
                         <TabsContent value="items" className="w-full">
                           <div className="flex flex-col gap-y-3 px-3 pb-4">
-                            {selectedInvoice.MenuItems.map((menuItem) => (
-                              <div className="text-white items-center flex border border-primary-border px-2.5 py-2 rounded-lg">
+                            {selectedInvoice.MenuItems.map((menuItem, index) => (
+                              <div
+                                key={index}
+                                className="text-white items-center flex border border-primary-border px-2.5 py-2 rounded-lg"
+                              >
                                 <div className="w-[60%] flex gap-x-3">
                                   <div>
                                     <Image
@@ -553,7 +553,10 @@ const AdminOrders: FC = () => {
                           <div className="flex flex-col gap-y-3 px-3 pb-4">
                             {selectedInvoice.MenuItems.map(
                               (menuItem, mealIndex) => (
-                                <div className="text-white items-center border border-primary-border px-2.5 py-2 rounded-lg flex">
+                                <div
+                                  key={mealIndex}
+                                  className="text-white items-center border border-primary-border px-2.5 py-2 rounded-lg flex"
+                                >
                                   <div className="w-[60%] flex gap-x-3">
                                     <div>
                                       <Image

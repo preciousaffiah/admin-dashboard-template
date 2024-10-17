@@ -50,7 +50,6 @@ const AdminMenuTable = ({
   tableHeaders,
   className,
 }: AdminTable) => {
-
   let tabKey: any = "";
   let tabValue: any = "";
 
@@ -73,6 +72,7 @@ const AdminMenuTable = ({
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
                 <TabsTrigger
+                  key={index}
                   value={key}
                   onClick={(event) => handleTabChange(event, key, value)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
@@ -102,7 +102,7 @@ const AdminMenuTable = ({
             }  flex py-4 justify-between`}
           >
             {Object.keys(tabHeaders || {}).map((item, index) => (
-              <TabsContent value={item} className="w-full">
+              <TabsContent key={index} value={item} className="w-full">
                 {view ? (
                   <div>
                     <MenuGrid

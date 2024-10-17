@@ -1,7 +1,6 @@
-import { AuthLayout, WaiterLayout } from "@layouts";
+import { WaiterLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC, useState } from "react";
-import { PageAnimation } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { MainNavbar, Modal } from "@/components/shared";
@@ -21,7 +20,6 @@ import Image from "next/image";
 import orderImg from "public/orderimg.png";
 import { handleRowClick } from "@/utils/modal";
 import AdminOrdersTable from "@/components/shared/admin/table/orders";
-import WaiterSidebar from "@/components/shared/nav/sidebar/waiter";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 const tableHeaders = [
@@ -431,7 +429,7 @@ const WaiterOrders: FC = () => {
   let tabKey: any = "";
   let tabValue: any = "";
   let title = "Orders";
-  // TODO: 404 page
+
   return (
     <WaiterLayout subtitle="Waiter" title={title}>
       <MainNavbar title={title} />
@@ -442,20 +440,20 @@ const WaiterOrders: FC = () => {
               <ScrollArea className="px-3 w-full whitespace-nowrap">
                 <TabsList className="bg-transparent">
                   {tabs.map((item, index) => (
-                    <>
+                    <div key={index}>
                       <TabsTrigger
                         value={item}
                         className="active-main-tab text-sm px-6 capitalize"
                       >
                         {item}
                       </TabsTrigger>
-                    </>
+                    </div>
                   ))}
                 </TabsList>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
               {tabs.map((item, index) => (
-                <TabsContent value={item} className="md:px-0 px-2">
+                <TabsContent key={index} value={item} className="md:px-0 px-2">
                   <div className="w-full bg-primary-dark pt-4 rounded-md">
                     <div className="w-full h-full">
                       <div className="px-3 flex pb-4 border-b border-primary-border">
@@ -646,33 +644,38 @@ const WaiterOrders: FC = () => {
                       <div className="flex justify-between">
                         <div className="w-full">
                           <div className="flex flex-col gap-y-3 px-3 pb-4">
-                            {selectedInvoice.MenuItems.map((menuItem) => (
-                              <div className="text-white items-center flex border border-primary-border px-2.5 py-2 rounded-lg">
-                                <div className="w-[60%] flex gap-x-3">
-                                  <div>
-                                    <Image
-                                      src={orderImg}
-                                      alt="img"
-                                      className=""
-                                    />
+                            {selectedInvoice.MenuItems.map(
+                              (menuItem, index) => (
+                                <div
+                                  key={index}
+                                  className="text-white items-center flex border border-primary-border px-2.5 py-2 rounded-lg"
+                                >
+                                  <div className="w-[60%] flex gap-x-3">
+                                    <div>
+                                      <Image
+                                        src={orderImg}
+                                        alt="img"
+                                        className=""
+                                      />
+                                    </div>
+                                    <p className="m-auto">{menuItem.name}</p>
                                   </div>
-                                  <p className="m-auto">{menuItem.name}</p>
+                                  <div className="w-[40%] text-center flex">
+                                    <div className="w-[35%]">
+                                      <p className="transparent-btn justify-center">
+                                        {menuItem.quantity}
+                                      </p>
+                                    </div>
+                                    <div className="w-[35%]">
+                                      <p>${menuItem.price}</p>
+                                    </div>
+                                    <div className="w-[30%]">
+                                      <EllipsisVertical className="m-auto" />
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="w-[40%] text-center flex">
-                                  <div className="w-[35%]">
-                                    <p className="transparent-btn justify-center">
-                                      {menuItem.quantity}
-                                    </p>
-                                  </div>
-                                  <div className="w-[35%]">
-                                    <p>${menuItem.price}</p>
-                                  </div>
-                                  <div className="w-[30%]">
-                                    <EllipsisVertical className="m-auto" />
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
+                              )
+                            )}
                           </div>
 
                           <div>

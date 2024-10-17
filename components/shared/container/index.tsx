@@ -2,8 +2,6 @@ import { usePathname } from "next/navigation";
 
 const Container = ({ children, className }: any) => {
   const path = usePathname();
-  console.log(path);
-
   return (
     <div
       className={`nav-item ${

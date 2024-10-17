@@ -1,28 +1,17 @@
 import { AuthLayout } from "@layouts";
 import React, { FC, useState } from "react";
-import { PageAnimation, SearchBar } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
-import { MainNavbar, Modal } from "@/components/shared";
+import { MainNavbar } from "@/components/shared";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
-  Check,
   ChevronDown,
   ChevronUp,
   CircleCheckBig,
-  Clock,
-  Edit3,
   EllipsisVertical,
   LoaderCircle,
-  MapPin,
   Minus,
   Plus,
   Search,
-  Trash2,
   UtensilsCrossed,
   X,
 } from "lucide-react";
@@ -31,17 +20,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "@/components/shared/container";
-import { Invoice, OrderItems, OrderMenuItem } from "@/types";
+import { OrderItems, OrderMenuItem } from "@/types";
 import Image from "next/image";
 import orderImg from "public/orderimg.png";
 import orderImg2 from "public/auth-email.png";
-import Sidebar from "@/components/shared/nav/sidebar/admin";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import OrderTab from "@/components/shared/waiter/create-order-tab";
 import OrderDropDown from "@/components/shared/waiter/create-order-tab";
 
 const departments: string[] = [
@@ -53,24 +39,7 @@ const departments: string[] = [
   "counter",
   "utilities",
 ];
-const tableHeaders = [
-  "S/N",
-  "OrderID",
-  "Customer",
-  "Table No.",
-  "Menu Items",
-  "Price",
-  "Time of Order",
-  "Assigned to",
-  "Status",
-  "Actions",
-];
-const tabHeaders = {
-  all: "all",
-  dine: "dine in",
-  togo: "to go",
-  delivery: "delivery",
-};
+
 const invoiceData = [
   {
     value: "all",
@@ -134,15 +103,7 @@ const defaultOrder: OrderItems = {
   orderItems: [],
 };
 
-const defaultMeal: OrderMenuItem = {
-  MenuId: "",
-  Name: "",
-  quantity: 1,
-  Price: 0,
-};
-
 const CreateOrder: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedTab, setSelectedTab] = useState("toGo");
   const [isFormValid, setIsFormValid] = useState(true);
@@ -157,7 +118,6 @@ const CreateOrder: FC = () => {
   const [dropDown1, setDropDown1] = useState(false);
   const [dropDown2, setDropDown2] = useState(false);
   const [dropDown3, setDropDown3] = useState(false);
-  const [selectedMeal, setSelectedMeal] = useState<OrderMenuItem>(defaultMeal);
   const [order, setOrder] = useState<OrderItems>(defaultOrder);
   const [activeId, setActiveId] = useState(null);
   const {
@@ -173,51 +133,28 @@ const CreateOrder: FC = () => {
     register: register2,
     setValue,
     handleSubmit: handleSubmit2,
-    formState: { errors: errors2, isValid: isValid2 },
+    formState: { errors: errors2 },
   } = useForm();
 
   const handleDepartmentSelect = (department: string) => {
+    const isSelected = selectedDepartments[department];
+
+    setOrder((prevOrder) => {
+      const handlingDepartments = isSelected 
+        ? prevOrder.handlingDepartment.filter((d) => d !== department)
+        : [...prevOrder.handlingDepartment.filter((d, i, arr) => arr.indexOf(d) === i), department];
+  
+      return {
+        ...prevOrder,
+        handlingDepartment: handlingDepartments,
+      };
+    });
+  
     setSelectedDepartments((prevDepartments) => {
       const newDepartments = { ...prevDepartments };
       newDepartments[department] = !newDepartments[department];
-
-      // Update handlingDepartments in order
-      if (newDepartments[department]) {
-        setOrder((prevOrder) => ({
-          ...prevOrder,
-          handlingDepartment: [...prevOrder.handlingDepartment, department],
-        }));
-      } else {
-        setOrder((prevOrder) => ({
-          ...prevOrder,
-          handlingDepartment: prevOrder.handlingDepartment.filter(
-            (d) => d !== department
-          ),
-        }));
-      }
-
       return newDepartments;
     });
-  };
-
-  const saveOrderItems = (orderItems: any) => {
-    console.log(orderItems);
-
-    const items: any = {
-      fname: orderItems.fname,
-      lname: orderItems.lname,
-      phone: orderItems.phone,
-      orderType: orderItems.orderType,
-      orderTime: orderItems.orderTime,
-      estimatedDeliveryTime: orderItems.estimatedDeliveryTime,
-    };
-
-    setOrder((prevOrder) => ({
-      ...prevOrder,
-      ...items,
-    }));
-
-    console.log(order);
   };
 
   const addOrder = (selectedMeal: any) => {
@@ -292,8 +229,9 @@ const CreateOrder: FC = () => {
   const onSubmit1 = (data: any) => {
     setOrder((prevOrder) => ({
       ...prevOrder,
-      ...data,
-      orderItems: [...prevOrder.orderItems],
+      fname: data.fname,
+      lname: data.lname,
+      phone: data.phone,
     }));
     setDropDown1(false);
   };
@@ -327,8 +265,6 @@ const CreateOrder: FC = () => {
       (selectedTab === "dineIn" && !data.tableNumber) ||
       (selectedTab === "dineIn" && data.tableNumber === "")
     ) {
-      console.log("here");
-
       return setIsFormValid(false);
     }
 
@@ -336,16 +272,12 @@ const CreateOrder: FC = () => {
       ...prevOrder,
       ...data,
       orderType: selectedTab,
-      orderItems: [...prevOrder.orderItems],
     }));
     setDropDown2(false);
     setIsFormValid(true);
-    console.log("hiiii", data.tableNumber);
   };
 
   const isOrderComplete = () => {
-    // console.log(order);
-
     return (
       order.fname !== "" &&
       order.lname !== "" &&
@@ -490,11 +422,11 @@ const CreateOrder: FC = () => {
                                 </DrawerContent>
                               </Drawer>
                               {order.orderItems.map((item, index) => (
-                                <div className="flex flex-col gap-y-2">
-                                  <div
-                                    key={index}
-                                    className="bg-primary-dark cursor-pointer min-w-40 min-h-52 py-3 px-2 rounded-md items-center flex flex-col justify-center"
-                                  >
+                                <div
+                                  key={index}
+                                  className="flex flex-col gap-y-2"
+                                >
+                                  <div className="bg-primary-dark cursor-pointer min-w-40 min-h-52 py-3 px-2 rounded-md items-center flex flex-col justify-center">
                                     <div
                                       className="flex justify-end w-full"
                                       onClick={() => removeOrder(item)}
@@ -704,7 +636,7 @@ const CreateOrder: FC = () => {
                             <CollapsibleContent className="px-4 py-3">
                               <div className="w-full flex-wrap flex gap-4 pb-4">
                                 {departments.map((item, index) => (
-                                  <>
+                                  <div key={index}>
                                     {selectedDepartments[item] ? (
                                       <button
                                         key={index}
@@ -728,7 +660,7 @@ const CreateOrder: FC = () => {
                                         {item}
                                       </button>
                                     )}
-                                  </>
+                                  </div>
                                 ))}
                               </div>
                             </CollapsibleContent>

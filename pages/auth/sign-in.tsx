@@ -9,12 +9,9 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuthToken } from "@hooks";
-import { PageAnimation } from "@/components/serviette-ui";
-import { GoogleSignIn } from "@/components/serviette-icons";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/shared";
-import { CircleCheckBig, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import Container from "@/components/shared/container";
 
 const defaultValues = {
@@ -44,9 +41,6 @@ const SignIn: FC = () => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | undefined>();
 
-  // let reset = router.query.reset as string;
-
-  const { updateUser } = useAuthToken();
 
   const path = usePathname();
   // const onSubmit = () => mutation.mutate();
@@ -61,7 +55,6 @@ const SignIn: FC = () => {
     }
 
     if (showPassword && !getValues("password")) {
-      console.log(!getValues("password"));
       return setErrorMsg("Enter your password");
     }
 

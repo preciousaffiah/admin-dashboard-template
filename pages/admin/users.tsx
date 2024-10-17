@@ -1,7 +1,5 @@
-import { AuthLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC, useState } from "react";
-import { PageAnimation } from "@/components/serviette-ui";
 import { MainNavbar, Modal } from "@/components/shared";
 import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";

@@ -1,8 +1,6 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-
-import { useAuthToken } from "@hooks";
 import { PageAnimation } from "../serviette-ui";
 import AdminSidebar from "../shared/nav/sidebar/admin";
 
@@ -21,8 +19,6 @@ export default function AdminLayout({
   heading,
   description,
 }: ILayout) {
-  const router = useRouter();
-  const { token } = useAuthToken();
   title = title || "Page Title";
   subtitle = subtitle || "";
   description =

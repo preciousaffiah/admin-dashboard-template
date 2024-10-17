@@ -1,8 +1,5 @@
-import { Fragment, useEffect } from "react";
-import { useRouter } from "next/router";
+import { Fragment } from "react";
 import Head from "next/head";
-
-import { useAuthToken } from "@hooks";
 import WaiterSidebar from "../shared/nav/sidebar/waiter";
 import { PageAnimation } from "../serviette-ui";
 
@@ -21,8 +18,6 @@ export default function WaiterLayout({
   heading,
   description,
 }: ILayout) {
-  const router = useRouter();
-  const { token } = useAuthToken();
   title = title || "Page Title";
   subtitle = subtitle || "";
   description =
@@ -30,9 +25,6 @@ export default function WaiterLayout({
     "A Global restaurant known for serving the best meals to customers";
   heading = heading || title;
 
-  // useEffect(() => {
-  //   if (token) router.push("/user");
-  // }, [router, token]);
 
   return (
     <Fragment>

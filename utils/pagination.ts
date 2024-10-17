@@ -5,7 +5,6 @@ export const getPaginatedData = (
 ) => {
   const startIndex = (currentPage - 1) * items_per_page;
   const endIndex = startIndex + items_per_page;
-  console.log("hhhhhhhhhhhhhhhhhhhh",data);
   
   return data.slice(startIndex, endIndex);
 };

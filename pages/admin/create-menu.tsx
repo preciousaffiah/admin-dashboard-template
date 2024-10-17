@@ -7,24 +7,16 @@ import Sidebar from "@/components/shared/nav/sidebar/admin";
 import {
   ChevronUp,
   CircleCheckBig,
-  Clock,
-  EllipsisVertical,
   LoaderCircle,
-  Mail,
-  Phone,
   Plus,
-  Wrench,
-  X,
 } from "lucide-react";
 import Container from "@/components/shared/container";
 import { createMenu } from "@/types";
 import Image from "next/image";
-import orderImg from "public/orderimg.png";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import ComboboxDemo from "@/components/shared/waiter/combobox";
-import Link from "next/link";
 
 const defaultMenu: createMenu = {
   name: "",
@@ -63,7 +55,6 @@ const CreateMenu: FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      console.log(imageUrl);
 
       setMenu((prevOrder) => ({
         ...prevOrder,
@@ -83,8 +74,6 @@ const CreateMenu: FC = () => {
     handleSubmit: handleSubmit1,
     formState: { errors: errors1 },
     setValue,
-    setError,
-    getValues,
   } = useForm({
     defaultValues: defaultMenu,
   });
@@ -123,7 +112,6 @@ const CreateMenu: FC = () => {
       menu.price > 0
     );
   };
-  console.log(menu);
 
   const handleMenu = () => {
     setIsLoading(true);

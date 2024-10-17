@@ -49,7 +49,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import AdminOrdersTable from "@/components/shared/admin/table/orders";
-import WaiterSidebar from "@/components/shared/nav/sidebar/waiter";
+
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
   { ssr: false }
@@ -400,8 +400,7 @@ const handleTabChange: any = (event: any, key: any, value: any) => {
 };
 const WaiterDashboard: FC = () => {
   let title = "Dashboard";
-  //TODO: chart mobile view
-  //TODO:runnig activities image adjuestment
+
   return (
     <WaiterLayout subtitle="Waiter" title={title}>
       <MainNavbar title={title} />
@@ -413,14 +412,14 @@ const WaiterDashboard: FC = () => {
                 <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
                   <TabsList className="bg-transparent">
                     {tabs.map((item, index) => (
-                      <>
+                      <div key={index}>
                         <TabsTrigger
                           value={item}
                           className="active-main-tab text-sm px-6 capitalize"
                         >
                           {item}
                         </TabsTrigger>
-                      </>
+                      </div>
                     ))}
                   </TabsList>
                   <div className="flex justify-end w-full">
@@ -522,7 +521,7 @@ const WaiterDashboard: FC = () => {
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
               {tabs.map((item, index) => (
-                <TabsContent value={item}>
+                <TabsContent key={index} value={item}>
                   <div className="w-full">
                     <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
                       <div className="pt-4 rounded-md px-3 lg:gap-y-0 gap-y-3 flex pb-4 gap-x-4 lg:flex-row flex-col">
@@ -793,6 +792,7 @@ const WaiterDashboard: FC = () => {
                                           tabActivitiesHeaders || {}
                                         ).map(([key, value], index): any => (
                                           <TabsTrigger
+                                            key={index}
                                             value={key}
                                             onClick={(event) =>
                                               handleTabChange(event, key, value)
@@ -811,6 +811,7 @@ const WaiterDashboard: FC = () => {
                                       tabActivitiesHeaders || {}
                                     ).map((item, index) => (
                                       <TabsContent
+                                        key={index}
                                         value={item}
                                         className="w-full pt-3"
                                       >
@@ -818,7 +819,10 @@ const WaiterDashboard: FC = () => {
                                           {taskData
                                             .slice(0, 3)
                                             .map((item, index) => (
-                                              <div className="py-3 bg-secondary-dark rounded-md">
+                                              <div
+                                                key={index}
+                                                className="py-3 bg-secondary-dark rounded-md"
+                                              >
                                                 <div className="px-2 border-l-2 border-primary-green text-secondary-border items-center flex justify-between">
                                                   <div className="text-sm w-1/2">
                                                     <p className="capitalize truncate text-base text-white">
@@ -877,6 +881,7 @@ const WaiterDashboard: FC = () => {
                                           tabActivitiesHeaders || {}
                                         ).map(([key, value], index): any => (
                                           <TabsTrigger
+                                            key={index}
                                             value={key}
                                             onClick={(event) =>
                                               handleTabChange(event, key, value)
@@ -895,6 +900,7 @@ const WaiterDashboard: FC = () => {
                                       tabActivitiesHeaders || {}
                                     ).map((item, index) => (
                                       <TabsContent
+                                        key={index}
                                         value={item}
                                         className="w-full pt-3"
                                       >
@@ -902,7 +908,10 @@ const WaiterDashboard: FC = () => {
                                           {activityData
                                             .slice(0, 3)
                                             .map((item, index) => (
-                                              <div className="py-3 bg-secondary-dark rounded-md">
+                                              <div
+                                                key={index}
+                                                className="py-3 bg-secondary-dark rounded-md"
+                                              >
                                                 <div className="px-2 border-l-2 border-primary-green text-secondary-border items-center flex justify-between">
                                                   <div className="w-[15%]">
                                                     <div className="w-fit bg-primary-dark border-[5px] border-[#403e3e] rounded-full">
@@ -929,6 +938,7 @@ const WaiterDashboard: FC = () => {
                                                         .slice(0, 3)
                                                         .map((item, index) => (
                                                           <Image
+                                                            key={index}
                                                             alt="img"
                                                             src={orderImg}
                                                             className={`rounded-full border-2 border-secondary-dark w-7 relative right-${

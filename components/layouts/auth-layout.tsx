@@ -1,8 +1,6 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-
-import { useAuthToken } from "@hooks";
 import { PageAnimation } from "../serviette-ui";
 
 interface ILayout {
@@ -19,19 +17,13 @@ export default function AuthLayout({
   subtitle,
   heading,
   description,
-}: ILayout) {
-  const router = useRouter();
-  const { token } = useAuthToken();
+}: ILayout) {;
   title = title || "Page Title";
   subtitle = subtitle || "";
   description =
     description ||
     "A Global restaurant known for serving the best meals to customers";
   heading = heading || title;
-
-  // useEffect(() => {
-  //   if (token) router.push("/user");
-  // }, [router, token]);
 
   return (
     <Fragment>

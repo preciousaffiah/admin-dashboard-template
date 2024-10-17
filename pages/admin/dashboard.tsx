@@ -1,47 +1,31 @@
 "use client";
-import { AuthLayout, WaiterLayout } from "@layouts";
 import Link from "next/link";
-import React, { FC, useState } from "react";
-import { PageAnimation } from "@/components/serviette-ui";
+import React, { FC } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { MainNavbar, Modal } from "@/components/shared";
+import { MainNavbar } from "@/components/shared";
 import {
-  ArrowBigDown,
+  TrendingUp,
   BookCheck,
   CalendarFold,
-  Check,
-  ChevronDown,
   ChevronRight,
   Circle,
   ClipboardPlus,
   Clock,
-  EclipseIcon,
-  Edit3,
   EllipsisVertical,
   Mail,
   MessageCircleQuestion,
-  Minus,
   NotepadText,
   Plus,
   ScrollText,
-  Settings,
   ShoppingCart,
-  Trash2,
   TrendingDown,
-  User,
-  UtensilsCrossed,
-  X,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Invoice } from "@/types";
 import Image from "next/image";
 import orderImg from "public/orderimg.png";
-import { handleRowClick } from "@/utils/modal";
-
-import { TrendingUp } from "lucide-react";
 import {
   Area,
   AreaChart,
@@ -51,20 +35,10 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
   LabelList,
 } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -78,17 +52,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Sidebar from "@/components/shared/nav/sidebar/admin";
 import AdminOrdersTable from "@/components/shared/admin/table/orders";
 import AdminLayout from "@/components/layouts/admin-layout";
+
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
   { ssr: false }
@@ -490,14 +460,14 @@ const AdminDashboard: FC = () => {
                 <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
                   <TabsList className="bg-transparent">
                     {tabs.map((item, index) => (
-                      <>
+                      <div key={index}>
                         <TabsTrigger
                           value={item}
                           className="active-main-tab text-sm px-6 capitalize"
                         >
                           {item}
                         </TabsTrigger>
-                      </>
+                      </div>
                     ))}
                   </TabsList>
                   <div className="flex justify-end w-full">
@@ -599,7 +569,7 @@ const AdminDashboard: FC = () => {
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
               {tabs.map((item, index) => (
-                <TabsContent value={item}>
+                <TabsContent value={item} key={index}>
                   <div className="w-full">
                     <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
                       <div className="pt-4 rounded-md px-3 lg:gap-y-0 gap-y-10 flex pb-4 gap-x-4 lg:flex-row flex-col">
