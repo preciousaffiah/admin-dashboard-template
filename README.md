@@ -86,7 +86,7 @@ Serviette- A Global restaurant known for serving the best meals to customers.
 
 | Page/Route            | URL                        | Description                                                             |
 |-----------------------|----------------------------|-------------------------------------------------------------------------|
-| **Home**              | `/home`                    | The home page for all users, by default is the sign-in page.            |
+| **Home**              | `/`                        | The home page for all users, by default is the sign-in page.            |
 | **Create Order**      | `/create-order`            | Page for both admin and waiter to create order.                         |
 | **SignIn**            | `/auth/sign-in`            | The sign-in page for all users.                                         |
 | **SignUn**            | `/auth/sign-up`            | The sign-up page for all users.                                         |
