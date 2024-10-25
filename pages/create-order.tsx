@@ -29,6 +29,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import OrderDropDown from "@/components/shared/waiter/create-order-tab";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const departments: string[] = [
   "kitchen",
@@ -103,12 +105,41 @@ const defaultOrder: OrderItems = {
   orderItems: [],
 };
 
+const validationSchema1 = yup.object().shape({
+  fname: yup
+    .string()
+    .required("Enter first name")
+    .test(
+      "no-whitespace",
+      "Cannot contain whitespace",
+      (value) => !value || value.trim() !== ""
+    ),
+  lname: yup
+    .string()
+    .required("Enter last name")
+    .test(
+      "no-whitespace",
+      "Cannot contain whitespace",
+      (value) => !value || value.trim() !== ""
+    ),
+  phone: yup
+    .string()
+    .required("Enter phone number")
+    .required()
+    .test(
+      "no-whitespace",
+      "Cannot contain whitespace",
+      (value) => !value || value.trim() !== ""
+    ),
+});
+
 const CreateOrder: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedTab, setSelectedTab] = useState("toGo");
   const [isFormValid, setIsFormValid] = useState(true);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const itemsArray = ["A001", "A002", "A003", "A004", "A005"];
 
@@ -124,8 +155,11 @@ const CreateOrder: FC = () => {
     register: register1,
     handleSubmit: handleSubmit1,
     formState: { errors: errors1 },
+    reset,
+    clearErrors,
     watch,
   } = useForm({
+    resolver: yupResolver(validationSchema1),
     defaultValues: defaultOrder,
   });
 
@@ -140,16 +174,21 @@ const CreateOrder: FC = () => {
     const isSelected = selectedDepartments[department];
 
     setOrder((prevOrder) => {
-      const handlingDepartments = isSelected 
+      const handlingDepartments = isSelected
         ? prevOrder.handlingDepartment.filter((d) => d !== department)
-        : [...prevOrder.handlingDepartment.filter((d, i, arr) => arr.indexOf(d) === i), department];
-  
+        : [
+            ...prevOrder.handlingDepartment.filter(
+              (d, i, arr) => arr.indexOf(d) === i
+            ),
+            department,
+          ];
+
       return {
         ...prevOrder,
         handlingDepartment: handlingDepartments,
       };
     });
-  
+
     setSelectedDepartments((prevDepartments) => {
       const newDepartments = { ...prevDepartments };
       newDepartments[department] = !newDepartments[department];
@@ -242,6 +281,7 @@ const CreateOrder: FC = () => {
       order.tableNumber = "";
       setValue("tableNumber", "");
     }
+
     if (selectedTab === "dineIn") {
       data.location = "";
       data.orderTime = "";
@@ -275,6 +315,7 @@ const CreateOrder: FC = () => {
     }));
     setDropDown2(false);
     setIsFormValid(true);
+    setIsSaved(true);
   };
 
   const isOrderComplete = () => {
@@ -487,7 +528,9 @@ const CreateOrder: FC = () => {
                                 </Button>
                               </CollapsibleTrigger>
                             </div>
-                            <CollapsibleContent className="px-4 py-3">
+                            <CollapsibleContent
+                              className="px-4 py-3"
+                            >
                               <form
                                 onSubmit={handleSubmit1(onSubmit1)}
                                 className="w-full"
@@ -509,11 +552,9 @@ const CreateOrder: FC = () => {
                                     })}
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
-                                  {errors1.fname && (
-                                    <p className="text-text-cancelled text-sm">
-                                      First name is required
-                                    </p>
-                                  )}
+                                  <p className="text-text-cancelled text-sm">
+                                    {errors1.fname?.message}
+                                  </p>
                                 </div>
                                 <div className="pb-4">
                                   <Label
@@ -531,12 +572,10 @@ const CreateOrder: FC = () => {
                                     })}
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
-                                </div>
-                                {errors1.lname && (
                                   <p className="text-text-cancelled text-sm">
-                                    Last name is required
+                                    {errors1.lname?.message}
                                   </p>
-                                )}
+                                </div>
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="phone"
@@ -553,15 +592,11 @@ const CreateOrder: FC = () => {
                                     })}
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
-                                </div>
-                                {errors1.phone && (
                                   <p className="text-text-cancelled text-sm">
-                                    Phone number is required
+                                    {errors1.phone?.message}
                                   </p>
-                                )}
-
+                                </div>
                                 <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primary-green font-medium">
-                                  {/* <button className="">Cancel</button> */}
                                   <button type="submit">Save</button>
                                 </div>
                               </form>
@@ -595,6 +630,7 @@ const CreateOrder: FC = () => {
                               <OrderDropDown
                                 itemsArray={itemsArray}
                                 handleSubmit2={handleSubmit2}
+                                isSaved={isSaved}
                                 onSubmit2={onSubmit2}
                                 register2={register2}
                                 setValue={setValue}
@@ -733,17 +769,14 @@ const CreateOrder: FC = () => {
                                       <div className="flex justify-between">
                                         <p>Sub-total</p>
                                         $600
-                                        {/* <p>${order.Price} </p> */}
                                       </div>
                                       <div className="flex justify-between">
                                         <p>Discount</p>
                                         No discount
-                                        {/* <p>${order.Discount} </p> */}
                                       </div>
                                       <div className="flex justify-between text-base font-medium ">
                                         <p>Total amount to be paid</p>
                                         $900
-                                        {/* <p>${order.amountPaid} </p> */}
                                       </div>
                                     </div>
                                   </div>

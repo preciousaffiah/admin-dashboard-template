@@ -30,6 +30,7 @@ const SignIn: FC = () => {
     handleSubmit,
     formState: { errors },
     getValues,
+    setError,
     reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
@@ -41,17 +42,24 @@ const SignIn: FC = () => {
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState<string | undefined>();
 
-
   const path = usePathname();
-  // const onSubmit = () => mutation.mutate();
-  const onSubmit = () => {
+
+  const emailCheck = () => {
     if (!showPassword) {
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
         console.log("...where email check aapi comes in");
+        // return false;
         return setShowPassword(true);
       }, 3000);
+    }
+    return false;
+  };
+
+  const formCheck = () => {
+    if (!showPassword && !emailCheck()) {
+      return false;
     }
 
     if (showPassword && !getValues("password")) {
@@ -59,12 +67,21 @@ const SignIn: FC = () => {
     }
 
     if (showPassword && getValues("password")) {
-      setIsLoading(true);
-      setTimeout(() => {
-        console.log("...where password check aapi comes in");
-        return router.push("/auth/start");
-      }, 2000);
+      return true;
     }
+    return false;
+  };
+
+  const onSubmit = () => {
+    if (!formCheck()) {
+      return false;
+    }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      console.log("...where password check aapi comes in");
+      return router.push("/auth/start");
+    }, 2000);
   };
 
   return (

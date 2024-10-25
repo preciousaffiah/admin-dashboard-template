@@ -58,12 +58,12 @@ const Sidebar = ({ navItems }: any) => {
             </div>
             <div
               className={`nav-item ${
-                path === "/admin/menu"
+                path === "/admin/menus"
                   ? "text-white border-primary-green border-b-2"
                   : "text-secondary-border"
               }`}
             >
-              <Link href="/admin/menu">
+              <Link href="/admin/menus">
                 <UtensilsCrossed className="m-auto w-6" />
                 <h1>Menu</h1>
               </Link>
