@@ -31,6 +31,7 @@ import { useForm } from "react-hook-form";
 import OrderDropDown from "@/components/shared/waiter/create-order-tab";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useToast } from "@/hooks/use-toast";
 
 const departments: string[] = [
   "kitchen",
@@ -134,12 +135,12 @@ const validationSchema1 = yup.object().shape({
 });
 
 const CreateOrder: FC = () => {
+  const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedTab, setSelectedTab] = useState("toGo");
   const [isFormValid, setIsFormValid] = useState(true);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
 
   const itemsArray = ["A001", "A002", "A003", "A004", "A005"];
 
@@ -273,6 +274,9 @@ const CreateOrder: FC = () => {
       phone: data.phone,
     }));
     setDropDown1(false);
+    toast({
+      description: "Details Saved.",
+    });
   };
 
   const onSubmit2 = (data: any) => {
@@ -295,8 +299,11 @@ const CreateOrder: FC = () => {
     }
 
     if (
-      (selectedTab === "delivery" && !data.location && !data.orderTime) ||
+      (selectedTab === "delivery" &&
+        !data.location &&
+        !data.orderTime) ||
       (selectedTab === "delivery" && data.location === "") ||
+      (selectedTab === "delivery" && data.location === " ") ||
       (selectedTab === "delivery" && data.orderTime === "")
     ) {
       return setIsFormValid(false);
@@ -315,7 +322,9 @@ const CreateOrder: FC = () => {
     }));
     setDropDown2(false);
     setIsFormValid(true);
-    setIsSaved(true);
+    toast({
+      description: "Details Saved.",
+    });
   };
 
   const isOrderComplete = () => {
@@ -528,9 +537,7 @@ const CreateOrder: FC = () => {
                                 </Button>
                               </CollapsibleTrigger>
                             </div>
-                            <CollapsibleContent
-                              className="px-4 py-3"
-                            >
+                            <CollapsibleContent className="px-4 py-3">
                               <form
                                 onSubmit={handleSubmit1(onSubmit1)}
                                 className="w-full"
@@ -630,7 +637,6 @@ const CreateOrder: FC = () => {
                               <OrderDropDown
                                 itemsArray={itemsArray}
                                 handleSubmit2={handleSubmit2}
-                                isSaved={isSaved}
                                 onSubmit2={onSubmit2}
                                 register2={register2}
                                 setValue={setValue}

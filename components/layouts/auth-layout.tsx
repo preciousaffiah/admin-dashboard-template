@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { PageAnimation } from "../serviette-ui";
+import { Toaster } from "../ui/toaster";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -70,6 +71,7 @@ export default function AuthLayout({
           {/* form */}
           {children}
         </PageAnimation>
+        <Toaster />
       </div>
     </Fragment>
   );
