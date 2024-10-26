@@ -20,7 +20,7 @@ const WaiterSidebar = () => {
     },
     {
       title: "Menu",
-      link: "/",
+      link: "#",
       tag: UtensilsCrossed,
     },
     {
@@ -30,44 +30,52 @@ const WaiterSidebar = () => {
     },
     {
       title: "Messages",
-      link: "/",
+      link: "#",
       tag: Mail,
     },
     {
       title: "Analytics",
-      link: "/",
+      link: "#",
       tag: ChartSpline,
     },
     {
       title: "User Management",
-      link: "/",
+      link: "#",
       tag: Users,
     },
     {
       title: "Reviews",
-      link: "/",
+      link: "#",
       tag: MessageSquarePlus,
     },
     {
       title: "Profile",
-      link: "/",
+      link: "#",
       tag: User,
     },
     {
       title: "Account Settings",
-      link: "/",
+      link: "#",
       tag: Bolt,
     },
     {
       title: "Help Center",
-      link: "/",
+      link: "#",
       tag: ShieldQuestion,
     },
   ];
 
+  const mobileNavItems = {
+    dashboard: "/waiter/dashboard",
+    menus: "#",
+    orders: "/waiter/orders",
+    profile: "#",
+    message: "#",
+  };
+
   return (
     <>
-      <Sidebar navItems={navItems} />
+      <Sidebar navItems={navItems} mobileNavItems={mobileNavItems} />
     </>
   );
 };

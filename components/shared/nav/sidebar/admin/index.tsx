@@ -65,9 +65,17 @@ const AdminSidebar = () => {
     },
   ];
 
+  const mobileNavItems = {
+    dashboard: "/admin/dashboard",
+    menus: "/admin/menus",
+    orders: "/admin/orders",
+    profile: "#",
+    message: "#",
+  };
+
   return (
     <>
-      <Sidebar navItems={navItems} />
+      <Sidebar navItems={navItems} mobileNavItems={mobileNavItems} />
     </>
   );
 };
