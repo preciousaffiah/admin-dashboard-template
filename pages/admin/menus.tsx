@@ -1,6 +1,6 @@
 import { AuthLayout, WaiterLayout } from "@layouts";
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { PageAnimation } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
 import { MainNavbar, Modal } from "@/components/shared";
@@ -444,6 +444,11 @@ const Menu: FC = () => {
   const [success, setSuccess] = useState(false);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isImageLoading, setIsImageLoading] = useState(false);
+  // Ref for the hidden file input
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const items_per_page = 10;
   const total_pages = Math.ceil(data.length / items_per_page);
 
@@ -462,6 +467,27 @@ const Menu: FC = () => {
     const startIndex = (currentPage - 1) * items_per_page;
     const endIndex = startIndex + items_per_page;
     return invoiceData.slice(startIndex, endIndex);
+  };
+
+  // Handle image upload and create preview
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+
+      setIsImageLoading(true);
+      setTimeout(() => {
+        console.log("...where image upload aapi comes in");
+        setImagePreview(imageUrl);
+
+        return setIsImageLoading(false);
+      }, 3000);
+    }
+  };
+
+  // Function to trigger the file input click
+  const handleIconClick = () => {
+    fileInputRef.current?.click();
   };
 
   const formCheck = () => {
@@ -650,13 +676,43 @@ const Menu: FC = () => {
                     </div>
                     <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-white">
                       <div className="gap-y-3 flex flex-col h-full justify-center text-secondary-border">
-                        <div className="w-36 h-36 m-auto">
-                          <Image
-                            alt="img"
-                            src={orderImg2}
-                            className="w-full h-full rounded-full"
+                        <div className="flex w-full h-full justify-center items-end">
+                          <div className="w-36 h-36">
+                            {imagePreview ? (
+                              <div className="relative w-full h-full">
+                                <Image
+                                  src={imagePreview}
+                                  alt="img"
+                                  layout="fill"
+                                  objectFit="cover"
+                                  className="object-cover rounded-full"
+                                />
+                              </div>
+                            ) : (
+                              <Image
+                                alt="img"
+                                src={orderImg2}
+                                className="w-full h-full rounded-full"
+                              />
+                            )}
+                          </div>
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            ref={fileInputRef}
+                            className="hidden"
                           />
+                          {isImageLoading ? (
+                            <LoaderCircle className="text-secondary-border rotate-icon" />
+                          ) : (
+                            <Edit3
+                              onClick={handleIconClick}
+                              className="text-primary-green cursor-pointer"
+                            />
+                          )}
                         </div>
+
                         <div className="w-full flex flex-col text-center">
                           <p className="text-2xl font-medium capitalize text-white">
                             {selectedInvoice.Name}
