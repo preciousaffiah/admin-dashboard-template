@@ -1114,7 +1114,7 @@ const WaiterDashboard: FC = () => {
                             {invoiceData.slice(0, 10).map((invoice, index) => (
                               <TableRow
                                 key={index}
-                                className="bg-primary-dark truncate text-center py-2 rounded-lg"
+                                className="bg-primary-dark truncate text-center py-2 rounded-lg cursor-pointer"
                               >
                                 <TableCell className="truncate">
                                   <Circle

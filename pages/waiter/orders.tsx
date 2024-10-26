@@ -509,7 +509,7 @@ const WaiterOrders: FC = () => {
                                 selectedInvoice.OrderID === invoice.OrderID
                                   ? "border border-primary-green bg-[#1e240a]"
                                   : "bg-primary-dark"
-                              } truncate text-center py-2 rounded-lg`}
+                              } truncate text-center py-2 rounded-lg cursor-pointer`}
                               onClick={() =>
                                 handleRowClick(
                                   invoice,
