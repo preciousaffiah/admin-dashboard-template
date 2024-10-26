@@ -569,13 +569,14 @@ const Menu: FC = () => {
                               ? "border border-primary-green bg-[#1e240a]"
                               : "bg-primary-dark"
                           } truncate text-center py-2 rounded-lg cursor-pointer`}
-                          onClick={() =>
+                          onClick={() => {
                             handleRowClick(
                               invoice,
                               setIsOpen,
                               setSelectedInvoice
-                            )
-                          }
+                            );
+                            reset();
+                          }}
                         >
                           <TableCell className="truncate">
                             <Circle
