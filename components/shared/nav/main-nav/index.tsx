@@ -52,84 +52,84 @@ const MainNavbar = ({ title }: any) => {
               {title}
             </h1>
           </div>
-          <SearchBar
+          {/* <SearchBar
             placeholder="Search for menus, orders, food and more"
             className="lg:w-80 py-1"
-          />
+          /> */}
         </div>
-        <div className="md:flex hidden  w-fit h-full gap-x-4 items-center">
-          <div className=" bg-[#333232] h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
-            <Bell fill="white" className="w-[1.1rem]" />
-          </div>
-          <div className="md:w-fit h-fit bg-primary-orange flex justify-center px-3 p-1 rounded-md">
-            <p>Invite</p>
-          </div>
-          <div className="w-full flex justify-center p-1rounded-md">
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                asChild
-                className="cursor-pointer bg-[#424141d6]"
-              >
-                <div className="items-center text-xs leading-4 h-fit w-fit flex bg-[#333232] px-1 py-1 rounded-full">
-                  <div className="pr-2">
-                    <Image
-                      alt="img"
-                      src={orderImg}
-                      className="rounded-full w-10"
-                    />
-                  </div>
-
-                  <span className="max-w-32 truncate">
-                    Hello,
-                    <br />
-                    Victoria
-                  </span>
-                  <ChevronDown className="w-7 m-auto text-secondary-border" />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="border-none backdrop-blur-sm text-white bg-gray-100/30 w-56">
-                <DropdownMenuLabel className="px-1 py-0">
-                  <div className="items-center text-xs leading-4 h-fit w-full flex">
-                    <div className="pr-2 w-12">
+          <div className="md:flex hidden  w-fit h-full gap-x-4 items-center">
+            {/* <div className=" bg-[#333232] h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
+              <Bell fill="white" className="w-[1.1rem]" />
+            </div>
+            <div className="md:w-fit h-fit bg-primary-orange flex justify-center px-3 p-1 rounded-md">
+              <p>Invite</p>
+            </div> */}
+            <div className="w-full flex justify-center p-1rounded-md">
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  asChild
+                  className="cursor-pointer bg-[#424141d6]"
+                >
+                  <div className="items-center text-xs leading-4 h-fit w-fit flex bg-[#333232] px-1 py-1 rounded-full gap-x-1">
+                    <div>
                       <Image
                         alt="img"
                         src={orderImg}
                         className="rounded-full w-10"
                       />
                     </div>
-                    <div>
-                      <p className="text-sm">Victoria Okon</p>
-                      <p className="font-normal text-xs text-gray-300">
-                        Victoriaokon@email.com
-                      </p>
-                      <p className="text-text-completed">Admin</p>
-                    </div>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Mail className="mr-2 h-4 w-4" />
-                    <span>Messages</span>
-                  </DropdownMenuItem>
 
+                    <span className="max-w-32 truncate">
+                      Hello,
+                      <br />
+                      Victoria
+                    </span>
+                    <LogOut color="#c01c28" className="size-6 m-auto text-secondary-border" />
+                  </div>
+                </DropdownMenuTrigger>
+                {/* <DropdownMenuContent className="border-none backdrop-blur-sm text-white bg-gray-100/30 w-56">
+                  <DropdownMenuLabel className="px-1 py-0">
+                    <div className="items-center text-xs leading-4 h-fit w-full flex">
+                      <div className="pr-2 w-12">
+                        <Image
+                          alt="img"
+                          src={orderImg}
+                          className="rounded-full w-10"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm">Victoria Okon</p>
+                        <p className="font-normal text-xs text-gray-300">
+                          Victoriaokon@email.com
+                        </p>
+                        <p className="text-text-completed">Admin</p>
+                      </div>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Mail className="mr-2 h-4 w-4" />
+                      <span>Messages</span>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <LogOut color="#c01c28" className="mr-2 h-4 w-4" />
+                    <span>Sign out</span>
                   </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <LogOut color="#c01c28" className="mr-2 h-4 w-4" />
-                  <span>Sign out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuContent> */}
+              </DropdownMenu>
+            </div>
           </div>
-        </div>
       </>
       <>
         <div className="md:hidden flex  w-fit h-full gap-x-4 items-center">

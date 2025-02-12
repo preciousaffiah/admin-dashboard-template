@@ -14,6 +14,41 @@
     transform: rotate(360deg);
   }
 }
+.ReactFlagsSelect-module_flagsSelect__2pfa2{
+  padding-bottom: 0 !important;
+}
+.ReactFlagsSelect-module_selectBtn__19wW7{
+  padding: 0 !important;
+  border: 0 !important;
+}
+.ReactFlagsSelect-module_selectValue__152eS{
+  color: white;
+}
+
+.PhoneInputInput{
+  background-color: transparent;
+  outline: none;
+  border-color: #616161;
+}
+.PhoneInputInput:focus {
+  --tw-border-opacity: 1;
+  border-bottom-color: #f97316 /* #f97316 */;
+}
+
+.step {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.step.active {
+  background-color: #86a820;
+}
 
 .barchat {
   width: 100% !important;
@@ -119,7 +154,7 @@ tr td:last-child {
     @apply w-48 h-12 mb-12;
   }
   .authimg2 {
-    @apply lg:w-48 w-[10rem] h-12 mb-12;
+    @apply lg:w-48 w-[10rem] h-12;
   }
   .authimg3 {
     @apply h-full w-full rounded-r-xl;

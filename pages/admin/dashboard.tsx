@@ -470,7 +470,7 @@ const AdminDashboard: FC = () => {
                       </div>
                     ))}
                   </TabsList>
-                  <div className="flex justify-end w-full">
+                  {/* <div className="flex justify-end w-full">
                     <DropdownMenu>
                       <DropdownMenuTrigger
                         asChild
@@ -564,7 +564,7 @@ const AdminDashboard: FC = () => {
                         </DropdownMenuGroup>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </div>
+                  </div> */}
                 </div>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
@@ -925,7 +925,7 @@ const AdminDashboard: FC = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
+                        {/* <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
                           <div
                             className={`
                                     bg-primary-dark   w-full h-fit cursor-pointer text-sm text-white rounded-md py-1`}
@@ -997,9 +997,7 @@ const AdminDashboard: FC = () => {
                               </div>
                               <div className="w-full flex flex-col gap-y-4 p-4">
                                 <div className="lg:gap-x-2 flex w-full justify-between items-center">
-                                  {/* <div className="flex"> */}
                                   <div className="w-10">
-                                    {/* <MessageCircleQuestion className="" /> */}
                                     <Image
                                       alt="img"
                                       src={orderImg}
@@ -1015,7 +1013,6 @@ const AdminDashboard: FC = () => {
                                       ask the customer.
                                     </p>
                                   </div>
-                                  {/* </div> */}
                                   <p className="flex">
                                     <Clock className="w-[1.1rem]" />
                                     12:11pm
@@ -1023,7 +1020,6 @@ const AdminDashboard: FC = () => {
                                 </div>
                                 <div className="lg:gap-x-2 flex w-full justify-between items-center">
                                   <div className="w-10">
-                                    {/* <MessageCircleQuestion className="" /> */}
                                     <Image
                                       alt="img"
                                       src={orderImg}
@@ -1050,7 +1046,7 @@ const AdminDashboard: FC = () => {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
 
                       <div className="flex pb-4 flex-col bg-primary-dark pt-4 rounded-md">
