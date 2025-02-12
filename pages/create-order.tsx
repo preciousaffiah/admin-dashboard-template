@@ -29,8 +29,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import OrderDropDown from "@/components/shared/waiter/create-order-tab";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
 
 const departments: string[] = [
@@ -106,32 +107,21 @@ const defaultOrder: OrderItems = {
   orderItems: [],
 };
 
-const validationSchema1 = yup.object().shape({
-  fname: yup
+const validationSchema1 = z.object({
+  fname: z
     .string()
-    .required("Enter first name")
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  lname: yup
+    .min(1, "First name is required")
+    .regex(/^\S+$/, { message: "cannot contain whitespace." }),
+    
+  lname: z
     .string()
-    .required("Enter last name")
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  phone: yup
+    .min(1, "Last name is required")
+    .regex(/^\S+$/, { message: "cannot contain whitespace." }),
+    
+  phone: z
     .string()
-    .required("Enter phone number")
-    .required()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
+    .min(1, "Phone number is required")
+    .regex(/^\S+$/, { message: "cannot contain whitespace." }),  
 });
 
 const CreateOrder: FC = () => {
@@ -160,7 +150,7 @@ const CreateOrder: FC = () => {
     clearErrors,
     watch,
   } = useForm({
-    resolver: yupResolver(validationSchema1),
+    resolver: zodResolver(validationSchema1),
     defaultValues: defaultOrder,
   });
 

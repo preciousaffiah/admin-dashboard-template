@@ -14,8 +14,8 @@ import Sidebar from "@/components/shared/nav/sidebar/admin";
 import orderImg2 from "public/auth-email.png";
 import AdminMenuTable from "@/components/shared/admin/table/menu";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Check,
   Circle,
@@ -357,67 +357,54 @@ const tableHeaders = [
   "Actions",
 ];
 
-const validationSchema = yup.object().shape({
-  Department: yup
+const validationSchema = z.object({
+  Department: z
     .string()
     .nullable()
-    .notRequired()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  Name: yup
+    .optional()
+    .refine((value) => !value || value.trim() !== "", {
+      message: "Cannot contain whitespace", // Error message
+    }),
+  Name: z
     .string()
     .nullable()
-    .notRequired()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  mealImage: yup
+    .optional()
+    .refine((value) => !value || value.trim() !== "", {
+      message: "Cannot contain whitespace", // Error message
+    }),
+    
+  mealImage: z
     .string()
     .nullable()
-    .notRequired()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  Category: yup
+    .optional()
+    .refine((value) => !value || value.trim() !== "", {
+      message: "Cannot contain whitespace", // Error message
+    }),
+  Category: z
     .string()
     .nullable()
-    .notRequired()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  Discount: yup
+    .optional()
+    .refine((value) => !value || value.trim() !== "", {
+      message: "Cannot contain whitespace", // Error message
+    }),
+  Discount: z
     .string()
     .nullable()
-    .notRequired()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
-  Price: yup
-    .number()
-    .nullable()
-    .transform((value, originalValue) => (originalValue === "" ? null : value))
-    .notRequired()
-    .min(1, "Price must be at least 1"),
-  Description: yup
+    .optional()
+    .refine((value) => !value || value.trim() !== "", {
+      message: "Cannot contain whitespace", // Error message
+    }),
+  Price: z
+    .union([z.number().min(1, "Price must be at least 1"), z.null()])
+    .transform((value: any) => (value === "" ? null : value)),
+
+    Description: z
     .string()
     .nullable()
-    .notRequired()
-    .test(
-      "no-whitespace",
-      "Cannot contain whitespace",
-      (value) => !value || value.trim() !== ""
-    ),
+    .optional()
+    .refine((value) => !value || value.trim() !== "", {
+      message: "Cannot contain whitespace", // Error message
+    }),
 });
 
 const Menu: FC = () => {
@@ -431,7 +418,7 @@ const Menu: FC = () => {
     watch,
     reset,
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
     defaultValues,
   });
   const [view, setView] = useState(false);
