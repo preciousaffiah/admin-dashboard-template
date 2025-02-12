@@ -57,7 +57,9 @@ const restaurantDetailsSchema = z.object({
   address: z
     .string()
     .min(1, "Address is required")
-    .regex(/^\S+$/, { message: "cannot contain whitespace." }),
+    .regex(/^[\w\s]+$/, {
+      message: "can only contain letters, numbers, and spaces.",
+    }), //TODO: revisit to ensure no one passes only white space without any string
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
   email: z.string().email("Invalid email address"),
   type: z.enum(["fine dining", "fast food", "cafe", "bar", "other"]), //add field for other
@@ -66,7 +68,7 @@ const restaurantDetailsSchema = z.object({
     .min(1, "Country is required")
     .regex(/^\S+$/, { message: "cannot contain whitespace." }),
   cacDocument: z.string().refine((val) => val.startsWith("data:"), {
-    message: "Invalid file format",
+    message: "Invalid file format", //TODO: add max file size
   }),
   cacDocumentName: z.string().optional(),
 });
