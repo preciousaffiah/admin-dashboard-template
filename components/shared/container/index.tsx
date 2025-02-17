@@ -7,7 +7,9 @@ const Container = ({ children, className }: any) => {
       className={`nav-item ${
         path === "/auth/sign-up" ||
         path === "/auth/sign-in" ||
-        path === "/auth/start" ||
+        path === "/auth/staff/sign-in" ||
+        path === "/restaurant/sign-up" ||
+        path === "/start" ||
         path === "/create-order" ||
         path === "/"
           ? "w-full"

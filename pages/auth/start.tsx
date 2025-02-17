@@ -4,13 +4,17 @@ import React, { FC } from "react";
 import { MainNavbar } from "@/components/shared";
 import { ChevronRight } from "lucide-react";
 import Container from "@/components/shared/container";
+import { useAuthToken } from "@/hooks";
 
 const name = "Victoria";
 let title = "Start";
 
 const Start: FC = () => {
+  const { userData } = useAuthToken();
+
   return (
-    <AuthLayout title={title}>
+    // <AuthLayout title={title}>
+    <>
       <MainNavbar title={"Welcome"} />
         <Container className={"min-h-[40rem]"}>
           <div className="authcard3 md:pt-24 md:pb-16 py-0 md:px-7 px-0">
@@ -18,7 +22,7 @@ const Start: FC = () => {
               <div className="md:w-1/2 w-full h-full bg-primary-dark z-50 rounded-xl">
                 <div className="text-white gap-y-12 flex flex-col justify-center items-center h-full">
                   <div className="text-center flex flex-col gap-y-5">
-                    <h2 className="font-semibold text-2xl">Welcome, {name}!</h2>
+                    <h2 className="font-semibold text-2xl">Welcome, {userData?.fullname}!</h2>
                     <p className="">What would you like to do?</p>
                   </div>
                   <div className="flex flex-col gap-y-4">
@@ -41,8 +45,10 @@ const Start: FC = () => {
             </div>
           </div>
         </Container>
-    </AuthLayout>
+    {/* </AuthLayout> */}
+    </>
   );
+
 };
 
 export default Start;

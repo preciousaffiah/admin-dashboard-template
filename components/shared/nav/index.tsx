@@ -5,11 +5,8 @@ import { Play, SquareMenu } from "lucide-react";
 import React, { FC } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useAuthToken } from "@/hooks";
 
 const Navbar: FC = () => {
   const navItems = [
@@ -31,6 +28,7 @@ const Navbar: FC = () => {
     },
   ];
   const path = usePathname();
+  const { token } = useAuthToken();
 
   return (
     <div>
@@ -39,52 +37,87 @@ const Navbar: FC = () => {
           <Image alt="logo" src={logo} className="w-32 h-8" />
         </div>
 
-        <div className="w-[69%] flex pl-5">
+        <div className="w-[55%] flex pl-5">
           {navItems.map((item, index) => (
             <li key={index} className="list-none px-4 text-[0.98rem]">
               <Link
                 href={item.link}
-                className={`${
-                  item.link === path ? "font-bold" : ""
-                } text-base`}
+                className={`${item.link === path ? "font-bold" : ""} text-base`}
               >
                 {item.title}
               </Link>
             </li>
           ))}
         </div>
-        <div className="w-[11%] bg-primary-orange flex justify-center py-1 rounded-md px-1">
-          <Play fill="white" className="pr-2" />
+        <div className="flex justify-end w-[25%] gap-x-1">
+          {!token && (
+            <Link href="/auth/sign-in">
+              <p className="text-white px-3 py-1 bg-primary-orange rounded-md ">
+                SignIn
+              </p>
+            </Link>
+          )}
+          {path !== "/restaurant/sign-up" && token && (
+            <Link href="/restaurant/sign-up">
+              <p className="text-white px-3 py-1 bg-primary-orange rounded-md ">
+                Register business
+              </p>
+            </Link>
+          )}
 
-          <p className="md:text-base text-sm">Watch Video</p>
+          <div className=" bg-primary-orange flex justify-center py-1 rounded-md px-1">
+            <Play fill="white" className="pr-2" />
+
+            <p className="md:text-base text-sm">Watch Video</p>
+          </div>
         </div>
       </div>
-      <div className="hidden justify-between pt-4 px-4 text-white">
-        <div className="w-fit items-center bg-primary-orange flex justify-center py-1 rounded-md px-1">
-          <Play fill="white" className="pr-2" />
+      <div className="md:hidden justify-between flex pt-4 px-4 text-white">
+        <div className="flex gap-x-3 items-center">
+          {!token && (
+            <Link href="/auth/sign-in">
+              <p className="text-white p-2 bg-primary-orange rounded-md ">
+                SignIn
+              </p>
+            </Link>
+          )}
+          {path !== "/restaurant/sign-up" && token && (
+            <Link href="/restaurant/sign-up">
+              <p className="text-white p-2 bg-primary-orange rounded-md ">
+                Register business
+              </p>
+            </Link>
+          )}
 
-          <p>Watch Video</p>
+          <div className=" bg-primary-orange flex justify-center p-2 rounded-md">
+            <Play fill="white" className="pr-2" />
+
+            <p className="md:text-base text-sm">Watch Video</p>
+          </div>
         </div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" className="px-0 hover:bg-none hover:text-none">
+            <Button
+              variant="ghost"
+              className="px-0 hover:bg-none hover:text-none"
+            >
               <SquareMenu color="#A5A5A5" className="w-12 h-12" />
             </Button>
           </SheetTrigger>
           <SheetContent className="px-0 border-none">
             <div className="text-secondary-border py-8 text-end font-medium">
-            {navItems.map((item, index) => (
-            <li key={index} className="list-none px-4 text-xl">
-              <Link
-                href={item.link}
-                className={`${
-                  item.link === path ? "text-yellow-400 font-bold" : ""
-                }`}
-              >
-                {item.title}
-              </Link>
-            </li>
-          ))}
+              {navItems.map((item, index) => (
+                <li key={index} className="list-none px-4 text-xl">
+                  <Link
+                    href={item.link}
+                    className={`${
+                      item.link === path ? "text-yellow-400 font-bold" : ""
+                    }`}
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
             </div>
           </SheetContent>
         </Sheet>

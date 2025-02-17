@@ -1,7 +1,9 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Head from "next/head";
 import WaiterSidebar from "../shared/nav/sidebar/waiter";
 import { PageAnimation } from "../serviette-ui";
+import { useAuthToken } from "@/hooks";
+import { useRouter } from "next/router";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -25,6 +27,17 @@ export default function WaiterLayout({
     "A Global restaurant known for serving the best meals to customers";
   heading = heading || title;
 
+  const router = useRouter();
+
+  const { token, userData, isLoading } = useAuthToken();
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!token || !userData?.businessId) 
+    console.log(token, userData);
+    
+    // router.push("/");
+  }, [isLoading, router, token]);
 
   return (
     <Fragment>
@@ -69,7 +82,6 @@ export default function WaiterLayout({
       </Head>
 
       <div className="flex flex-col h-screen min-h-screen">
-        <WaiterSidebar />
         <PageAnimation>
           {/* nav */}
 

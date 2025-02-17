@@ -573,7 +573,7 @@ const AdminDashboard: FC = () => {
                   <div className="w-full">
                     <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
                       <div className="pt-4 rounded-md px-3 lg:gap-y-0 gap-y-10 flex pb-4 gap-x-4 lg:flex-row flex-col">
-                        <div className="lg:w-[70%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
+                        <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
                           <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
                             <div
                               className={`
@@ -817,7 +817,7 @@ const AdminDashboard: FC = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="flex lg-pb-0 pb-4 md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
+                          {/* <div className="flex lg-pb-0 pb-4 md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
                             <div>
                               <div className="rounded-md md:w-auto w-full h-fit bg-primary-dark ">
                                 <div className="border-b border-primary-border">
@@ -905,9 +905,6 @@ const AdminDashboard: FC = () => {
                                   />
                                   <XAxis dataKey="month" />
                                   <YAxis />
-                                  {/* <Tooltip
-                                    wrapperStyle={{ transform: "none" }}
-                                  /> */}
                                   <Line
                                     dataKey="amt"
                                     stroke="#F07000"
@@ -923,7 +920,7 @@ const AdminDashboard: FC = () => {
                                 </LineChart>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         {/* <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
                           <div

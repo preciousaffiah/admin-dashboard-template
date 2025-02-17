@@ -1,10 +1,9 @@
 import { Fragment, useEffect } from "react";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import WaiterSidebar from "../shared/nav/sidebar/waiter";
 import { PageAnimation } from "../serviette-ui";
-import AdminSidebar from "../shared/nav/sidebar/admin";
 import { useAuthToken } from "@/hooks";
-import { RoleEnum } from "@/types/enums";
+import { useRouter } from "next/router";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -14,7 +13,7 @@ interface ILayout {
   description?: string;
 }
 
-export default function AdminLayout({
+export default function UserLayout({
   children,
   title,
   subtitle,
@@ -30,15 +29,11 @@ export default function AdminLayout({
 
   const router = useRouter();
 
-  const { token, userData, isLoading } = useAuthToken();
+  const { token, isLoading } = useAuthToken();
 
   useEffect(() => {
     if (isLoading) return;
-    if (
-      userData?.role !== RoleEnum.MANAGER &&
-      userData?.role !== RoleEnum.OWNER
-    )
-      router.push("/");
+    if (!token) router.push("/");
   }, [isLoading, router, token]);
 
   return (
@@ -84,7 +79,6 @@ export default function AdminLayout({
       </Head>
 
       <div className="flex flex-col h-screen min-h-screen">
-        <AdminSidebar />
         <PageAnimation>
           {/* nav */}
 

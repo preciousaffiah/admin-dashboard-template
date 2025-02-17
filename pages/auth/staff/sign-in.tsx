@@ -1,11 +1,11 @@
 "use client";
 
-import { AuthLayout } from "@layouts";
+import { AuthLayout, WaiterLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../public/Logo.png";
-import authEmImage from "../../public/auth-email.png";
-import authPwdImage from "../../public/auth-pwd.png";
+import logo from "../../../public/Logo.png";
+import authEmImage from "../../../public/auth-email.png";
+import authPwdImage from "../../../public/auth-pwd.png";
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -33,11 +33,11 @@ import { ToastMessage } from "@/components/serviette-ui";
 // Define Zod schemas for each step
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  // restaurantId: z.string()
-  // .min(1, "required")
-  // .regex(/^[\w\s]+$/, {
-  //   message: "can only contain letters, numbers, and spaces.",
-  // }), //TODO: revisit to ensure no one passes only white space without any string
+  restaurantId: z.string()
+  .min(1, "required")
+  .regex(/^[\w\s]+$/, {
+    message: "can only contain letters, numbers, and spaces.",
+  }), //TODO: revisit to ensure no one passes only white space without any string
   password: z
     .string()
     .min(1, "required")
@@ -52,7 +52,7 @@ const SignIn: FC = () => {
     defaultValues: {
       email: "",
       password: "",
-      // restaurantId: "",
+      restaurantId: "",
     },
     mode: "onChange", // Ensures validation checks on each change
   });
@@ -86,25 +86,25 @@ const SignIn: FC = () => {
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
       updateUser(res.data.data);
-      router.push("/");
+      router.push("/waiter/dashboard");
     },
   });
 
   const onSubmit = () => mutation.mutate();
 
   return (
-    <AuthLayout title={"Sign-in"}>
+    <WaiterLayout title={"Staff sign-in"}>
       <Navbar />
       <Container className={"min-h-[40rem] pt-6"}>
         <div className="authcard3 md:min-h-[50rem] md:pt-16 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none">
-              <div className="md:m-auto md:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
+              <div className="md:m-auto lg:px-24 md:px-8 px-4 md:pt-0 pt-6 w-full flex flex-col">
                 <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
                   <div>
                     <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-white">
-                      Sign in to Your Account
+                      Sign in to Staff Account
                     </h1>
                     <p className="font-medium text-secondary-border">
                       Enter your details
@@ -156,6 +156,24 @@ const SignIn: FC = () => {
                                 </FormItem>
                               )}
                             />
+                            <FormField
+                              control={form.control}
+                              name="restaurantId"
+                              render={({ field }) => (
+                                <FormItem className="grid gap-2 w-full">
+                                  <FormControl>
+                                    <input
+                                      autoComplete="off"
+                                      type="text"
+                                      placeholder="Restaurant/Business Id"
+                                      {...field}
+                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
                           <FormField
                             control={form.control}
                             name="password"
@@ -179,7 +197,7 @@ const SignIn: FC = () => {
                       </div>
                     </motion.div>
 
-                    { form.formState.isValid && mutation.isPending ? (
+                    {form.formState.isValid && mutation.isPending ? (
                       <button className="authbtn flex justify-center items-center bg-[#74901f] gap-x-4">
                         <LoaderCircle className="text-gray-300 w-5 h-5 rotate-icon" />
                         Hold on...
@@ -195,8 +213,8 @@ const SignIn: FC = () => {
                 </Form>
 
                 <div className="pt-3 text-secondary-border text-center text-base">
-                  Don't have an account?&nbsp;
-                  <Link href="/auth/sign-up" className="link">
+                  Don't have a user account?&nbsp;
+                  <Link href="/waiter/dashboard" className="link">
                     <span className="text-[#8BAE22]">Sign up instead</span>
                   </Link>
                 </div>
@@ -208,7 +226,7 @@ const SignIn: FC = () => {
           </div>
         </div>
       </Container>
-    </AuthLayout>
+    </WaiterLayout>
   );
 };
 

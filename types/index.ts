@@ -1,10 +1,16 @@
 export type TAppUser = {
   id: string;
+  fullname: string;
+  email: string;
+  subscriptionPlan: string;
+  businessId: string | null;
+  role: string | null;
+  deparment: string | null;
 };
 
 export type TAppUserState = {
   token: string;
-  user: TAppUser;
+  userData: TAppUser;
 };
 
 interface MenuItem {

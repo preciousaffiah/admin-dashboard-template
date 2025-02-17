@@ -1,8 +1,9 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { PageAnimation } from "../serviette-ui";
 import { Toaster } from "../ui/toaster";
+import { useAuthToken } from "@/hooks";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -25,6 +26,14 @@ export default function AuthLayout({
     description ||
     "A Global restaurant known for serving the best meals to customers";
   heading = heading || title;
+
+  const router = useRouter();
+
+  const { token } = useAuthToken();
+
+  useEffect(() => {
+    if (token) router.push("/");
+  }, [router, token]);
 
   return (
     <Fragment>
@@ -71,7 +80,6 @@ export default function AuthLayout({
           {/* form */}
           {children}
         </PageAnimation>
-        <Toaster />
       </div>
     </Fragment>
   );
