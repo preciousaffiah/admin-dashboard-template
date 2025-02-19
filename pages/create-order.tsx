@@ -351,11 +351,11 @@ const CreateOrder: FC = () => {
         <Container>
           <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 md:px-8 px-0">
             {success ? (
-              <div className="md:w-1/2 w-full h-screen m-auto bg-primary-dark z-50 rounded-xl">
-                <div className="text-white gap-y-4 flex flex-col justify-center items-center h-full">
+              <div className="md:w-1/2 w-full h-screen m-auto bg-primaryDark z-50 rounded-xl">
+                <div className="text-txWhite gap-y-4 flex flex-col justify-center items-center h-full">
                   <CircleCheckBig
                     fill="green"
-                    className="text-white md:w-24 md:h-20 w-16 h-20"
+                    className="text-txWhite md:w-24 md:h-20 w-16 h-20"
                   />
                   <p className="font-semibold text-lg">
                     Order Created Successfully!
@@ -364,46 +364,46 @@ const CreateOrder: FC = () => {
               </div>
             ) : (
               <>
-                <div className="w-full bg-primary-dark pt-4 md:pb-0 pb-6 rounded-md">
+                <div className="w-full bg-primaryDark pt-4 md:pb-0 pb-6 rounded-md">
                   <div className="w-full h-full">
                     <div className="px-3 flex pb-4 border-b border-primary-border">
                       <div className="flex w-full items-center gap-x-8">
-                        <h1 className="capitalize font-semibold text-white text-xl">
+                        <h1 className="capitalize font-semibold text-txWhite text-xl">
                           Create Order
                         </h1>
                       </div>
                       <div></div>
                     </div>
-                    <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondary-border">
+                    <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondaryBorder">
                       <div className="md:w-[60%] w-full flex flex-col gap-y-3">
                         <h1 className="pb-4">Order Details</h1>
                         <div className="flex flex-col gap-y-4">
-                          <div className="w-full bg-secondary-dark p-3 rounded-md">
-                            <div className="flex text-white w-full pb-4 justify-between">
+                          <div className="w-full bg-secondaryDark p-3 rounded-md">
+                            <div className="flex text-txWhite w-full pb-4 justify-between">
                               <h2 className="font-medium">Add a menu</h2>
-                              <h2 className="text-primary-green">
+                              <h2 className="text-primaryGreen">
                                 Custom Order
                               </h2>
                             </div>
 
-                            <div className="text-white w-full overflow-x-scroll flex gap-x-2">
+                            <div className="text-txWhite w-full overflow-x-scroll flex gap-x-2">
                               <Drawer>
                                 <DrawerTrigger asChild>
-                                  <div className="bg-primary-dark cursor-pointer min-w-40 min-h-52 py-3 rounded-md items-center flex">
+                                  <div className="bg-primaryDark cursor-pointer min-w-40 min-h-52 py-3 rounded-md items-center flex">
                                     <Plus className="m-auto w-5" />
                                   </div>
                                 </DrawerTrigger>
-                                <DrawerContent className="h-[75%] bg-secondary-dark border-secondary-transparent-border w-full flex px-4 pb-4">
+                                <DrawerContent className="h-[75%] bg-secondaryDark border-secondary-transparent-border w-full flex px-4 pb-4">
                                   <div className="flex md:flex-row flex-col w-full justify-between md:items-center pt-6 pb-3">
-                                    <h1 className="text-white font-medium text-xl md:pb-0 pb-4">
+                                    <h1 className="text-txWhite font-medium text-xl md:pb-0 pb-4">
                                       Choose A Menu
                                     </h1>
                                     <div className="flex px-2 bg-neutral-700 items-center rounded-md">
                                       <Input
                                         placeholder="Start your search here"
-                                        className="md:w-72 w-full text-white px-0 bg-transparent border-0 focus-visible:ring-offset-0 focus-visible:ring-0"
+                                        className="md:w-72 w-full text-txWhite px-0 bg-transparent border-0 focus-visible:ring-offset-0 focus-visible:ring-0"
                                       />
-                                      <Search className="text-secondary-border" />
+                                      <Search className="text-secondaryBorder" />
                                     </div>
                                   </div>
                                   <div className="h-full w-full overflow-y-scroll py-4">
@@ -415,10 +415,10 @@ const CreateOrder: FC = () => {
                                           className={` 
                                         ${
                                           activeId === item.MenuId
-                                            ? "border border-primary-green bg-[#1e240a]"
-                                            : "bg-primary-dark"
+                                            ? "border border-primaryGreen bg-[#1e240a]"
+                                            : "bg-primaryDark"
                                         }
-                                          bg-primary-dark md:w-auto w-full h-fit cursor-pointer text-sm text-white rounded-md py-3`}
+                                          bg-primaryDark md:w-auto w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-3`}
                                         >
                                           <div className="flex w-full border-b border-primary-border pb-3 px-4">
                                             <div className="w-full flex flex-col items-center gap-x-1  justify-between">
@@ -442,7 +442,7 @@ const CreateOrder: FC = () => {
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="text-secondary-border">
+                                          <div className="text-secondaryBorder">
                                             <div className="md:gap-x-8 gap-x-4 px-4 pt-2 flex justify-between">
                                               <div className="flex gap-x-1">
                                                 <UtensilsCrossed className="w-4" />
@@ -466,7 +466,7 @@ const CreateOrder: FC = () => {
                                   key={index}
                                   className="flex flex-col gap-y-2"
                                 >
-                                  <div className="bg-primary-dark cursor-pointer min-w-40 min-h-52 py-3 px-2 rounded-md items-center flex flex-col justify-center">
+                                  <div className="bg-primaryDark cursor-pointer min-w-40 min-h-52 py-3 px-2 rounded-md items-center flex flex-col justify-center">
                                     <div
                                       className="flex justify-end w-full"
                                       onClick={() => removeOrder(item)}
@@ -482,14 +482,14 @@ const CreateOrder: FC = () => {
                                       {item.Name}
                                     </h1>
                                   </div>
-                                  <div className="flex  justify-between items-center px-3 rounded-2xl text-neutral-500 w-full h-10 bg-primary-dark">
+                                  <div className="flex  justify-between items-center px-3 rounded-2xl text-neutral-500 w-full h-10 bg-primaryDark">
                                     <Plus
                                       onClick={() =>
                                         handleQuantityChange(index, "increment")
                                       }
                                       className="cursor-pointer"
                                     />
-                                    <p className="text-white">
+                                    <p className="text-txWhite">
                                       {item.quantity}
                                     </p>
                                     <Minus
@@ -506,7 +506,7 @@ const CreateOrder: FC = () => {
                           <Collapsible
                             open={dropDown1}
                             onOpenChange={setDropDown1}
-                            className="bg-secondary-dark rounded-md"
+                            className="bg-secondaryDark rounded-md"
                           >
                             <div className="flex items-center justify-between p-4">
                               <h4 className="text-sm font-semibold">
@@ -535,7 +535,7 @@ const CreateOrder: FC = () => {
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="fname"
-                                    className="text-white font-normal"
+                                    className="text-txWhite font-normal"
                                   >
                                     First Name
                                   </Label>
@@ -556,7 +556,7 @@ const CreateOrder: FC = () => {
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="lname"
-                                    className="text-white font-normal"
+                                    className="text-txWhite font-normal"
                                   >
                                     Last Name
                                   </Label>
@@ -576,7 +576,7 @@ const CreateOrder: FC = () => {
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="phone"
-                                    className="text-white font-normal"
+                                    className="text-txWhite font-normal"
                                   >
                                     Phone Number
                                   </Label>
@@ -593,7 +593,7 @@ const CreateOrder: FC = () => {
                                     {errors1.phone?.message}
                                   </p>
                                 </div>
-                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primary-green font-medium">
+                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryGreen font-medium">
                                   <button type="submit">Save</button>
                                 </div>
                               </form>
@@ -602,7 +602,7 @@ const CreateOrder: FC = () => {
                           <Collapsible
                             open={dropDown2}
                             onOpenChange={setDropDown2}
-                            className="bg-secondary-dark rounded-md"
+                            className="bg-secondaryDark rounded-md"
                           >
                             <div className="flex items-center justify-between p-4">
                               <h4 className="text-sm font-semibold">
@@ -644,7 +644,7 @@ const CreateOrder: FC = () => {
                           <Collapsible
                             open={dropDown3}
                             onOpenChange={setDropDown3}
-                            className="bg-secondary-dark rounded-md"
+                            className="bg-secondaryDark rounded-md"
                           >
                             <div className="flex items-center justify-between p-4">
                               <h4 className="text-sm font-semibold">
@@ -686,7 +686,7 @@ const CreateOrder: FC = () => {
                                         onClick={() =>
                                           handleDepartmentSelect(item)
                                         }
-                                        className="capitalize py-1 transparent-btn rounded-lg text-secondary-border"
+                                        className="capitalize py-1 transparent-btn rounded-lg text-secondaryBorder"
                                       >
                                         <Plus className="w-5 h-5" />
                                         {item}
@@ -701,7 +701,7 @@ const CreateOrder: FC = () => {
                       </div>
                       <div className="w-[40%] md:block hidden">
                         <h1 className="pb-4">Order Summary</h1>
-                        <div className="w-full flex justify-center h-[40rem] bg-secondary-dark rounded-md">
+                        <div className="w-full flex justify-center h-[40rem] bg-secondaryDark rounded-md">
                           {order.orderItems.length < 1 ? (
                             <p className="w-full m-auto text-center px-3">
                               Your order summar will show here.
@@ -729,7 +729,7 @@ const CreateOrder: FC = () => {
                                   {order.orderItems.map((item, index) => (
                                     <div
                                       key={index}
-                                      className="text-white items-center flex gap-x-2 rounded-lg"
+                                      className="text-txWhite items-center flex gap-x-2 rounded-lg"
                                     >
                                       <div className="w-[50%] flex gap-x-1">
                                         <div className="w-[30%] h-12">
@@ -760,8 +760,8 @@ const CreateOrder: FC = () => {
                                   ))}
                                 </div>
                                 <div>
-                                  <div className="flex justify-between py-3 items-center border-t border-primary-border text-white">
-                                    <div className="text-sm w-full text-secondary-border">
+                                  <div className="flex justify-between py-3 items-center border-t border-primary-border text-txWhite">
+                                    <div className="text-sm w-full text-secondaryBorder">
                                       <div className="flex justify-between">
                                         <p>Sub-total</p>
                                         $600
@@ -784,7 +784,7 @@ const CreateOrder: FC = () => {
                                   onClick={() => handleOrder()}
                                   className={`place-order-btn ${
                                     isOrderComplete()
-                                      ? "bg-primary-green"
+                                      ? "bg-primaryGreen"
                                       : "bg-lime-700"
                                   } w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
                                 >
@@ -805,14 +805,14 @@ const CreateOrder: FC = () => {
                 </div>
                 <div className="md:hidden flex bg-black px-4 h-20 fixed bottom-0 w-full z-50">
                   <div className="text-xs flex w-full justify-between items-center">
-                    <div className="text-white font-medium w-full flex justify-between">
+                    <div className="text-txWhite font-medium w-full flex justify-between">
                       <Drawer>
                         <div className="w-full h-full flex gap-x-1">
                           <DrawerTrigger asChild>
-                            <Button className="capitalize transparent-btn bg-transparent rounded-lg text-secondary-border">
+                            <Button className="capitalize transparent-btn bg-transparent rounded-lg text-secondaryBorder">
                               <ChevronUp className="w-5 h-5" />
                               Order Summary
-                              <p className="rounded-full border-2 px-[0.3rem] flex border-primary-green">
+                              <p className="rounded-full border-2 px-[0.3rem] flex border-primaryGreen">
                                 {order.orderItems.length}
                               </p>
                             </Button>
@@ -822,7 +822,7 @@ const CreateOrder: FC = () => {
                             onClick={() => handleOrder()}
                             className={`place-order-btn ${
                               isOrderComplete()
-                                ? "bg-primary-green"
+                                ? "bg-primaryGreen"
                                 : "bg-lime-700"
                             } w-full py-2 rounded-md text-sm text-black
                              flex items-center justify-center gap-x-2
@@ -836,10 +836,10 @@ const CreateOrder: FC = () => {
                             Place Order
                           </button>
                         </div>
-                        <DrawerContent className="h-[85%]  text-secondary-border bg-secondary-dark border-secondary-transparent-border w-full flex px-4 pb-4">
+                        <DrawerContent className="h-[85%]  text-secondaryBorder bg-secondaryDark border-secondary-transparent-border w-full flex px-4 pb-4">
                           <div>
                             <h1 className="pb-4">Order Summary</h1>
-                            <div className="w-full flex justify-center h-[40rem] bg-secondary-dark rounded-md">
+                            <div className="w-full flex justify-center h-[40rem] bg-secondaryDark rounded-md">
                               <div className="w-full flex flex-col justify-between">
                                 <div className="p-3 w-full">
                                   <div className="flex justify-end pb-3">
@@ -862,7 +862,7 @@ const CreateOrder: FC = () => {
                                     {order.orderItems.map((item, index) => (
                                       <div
                                         key={index}
-                                        className="text-white items-center flex gap-x-2 rounded-lg"
+                                        className="text-txWhite items-center flex gap-x-2 rounded-lg"
                                       >
                                         <div className="w-[50%] flex gap-x-1">
                                           <div className="w-[30%] h-12">
@@ -893,7 +893,7 @@ const CreateOrder: FC = () => {
                                     ))}
                                   </div>
                                   <div>
-                                    <div className="flex justify-between py-3 items-center border-t border-primary-border text-white">
+                                    <div className="flex justify-between py-3 items-center border-t border-primary-border text-txWhite">
                                       <div className="text-sm w-full">
                                         <div className="flex justify-between">
                                           <p>Sub-total</p>

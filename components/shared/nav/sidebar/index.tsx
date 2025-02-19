@@ -14,7 +14,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
 
   return (
     <div className="h-screen">
-      <div className="md:flex hidden group transition-all duration-300 ease-in overflow-y-scroll top-16 left-0 fixed h-screen  text-secondary-border flex-col hover:w-[20%] w-14  z-50 bg-black py-3 px-4">
+      <div className="md:flex hidden group transition-all duration-300 ease-in overflow-y-scroll top-16 left-0 fixed h-screen  text-secondaryBorder flex-col hover:w-[20%] w-14  z-50 bg-black py-3 px-4">
         <div className="flex h-fit flex-col gap-y-4 ">
           <Menu className="w-7 h-7" />
 
@@ -24,14 +24,14 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
               href={item.link}
               className={`${
                 item.link === path
-                  ? "group/tag hover:bg-primary-green hover:text-black"
+                  ? "group/tag hover:bg-primaryGreen hover:text-black"
                   : " hover:bg-gray-300/30"
               } cursor-pointer transition hover:backdrop-blur-sm rounded-md duration-300 flex items-center w-40`}
             >
               <item.tag
                 className={`${
                   item.link === path
-                    ? "text-primary-green group-hover/tag:text-black"
+                    ? "text-primaryGreen group-hover/tag:text-black"
                     : ""
                 } pl-1 pr-4 w-10 h-8`}
               />
@@ -45,8 +45,8 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           <div
             className={`nav-item ${
               path === mobileNavItems.dashboard
-                ? "text-white border-primary-green border-b-2"
-                : "text-secondary-border"
+                ? "text-txWhite border-primaryGreen border-b-2"
+                : "text-secondaryBorder"
             }`}
           >
             <Link href={mobileNavItems.dashboard}>
@@ -57,8 +57,8 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           <div
             className={`nav-item ${
               path === mobileNavItems.menus
-                ? "text-white border-primary-green border-b-2"
-                : "text-secondary-border"
+                ? "text-txWhite border-primaryGreen border-b-2"
+                : "text-secondaryBorder"
             }`}
           >
             <Link href={mobileNavItems.menus}>
@@ -69,8 +69,8 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           <div
             className={`nav-item ${
               path === mobileNavItems.orders
-                ? "text-white border-primary-green border-b-2"
-                : "text-secondary-border"
+                ? "text-txWhite border-primaryGreen border-b-2"
+                : "text-secondaryBorder"
             }`}
           >
             <Link href={mobileNavItems.orders}>
@@ -81,8 +81,8 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           <div
             className={`nav-item ${
               path === "#"
-                ? "text-white border-primary-green border-b-2"
-                : "text-secondary-border"
+                ? "text-txWhite border-primaryGreen border-b-2"
+                : "text-secondaryBorder"
             }`}
           >
             <Link href={mobileNavItems.profile}>
@@ -93,8 +93,8 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           <div
             className={`nav-item ${
               path === mobileNavItems.profile
-                ? "text-white border-primary-green border-b-2"
-                : "text-secondary-border"
+                ? "text-txWhite border-primaryGreen border-b-2"
+                : "text-secondaryBorder"
             }`}
           >
             <Link href="#">

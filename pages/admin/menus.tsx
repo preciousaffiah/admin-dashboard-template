@@ -526,11 +526,11 @@ const Menu: FC = () => {
         <Container>
           <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
             <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
-              <div className="w-full bg-primary-dark pt-4 rounded-md">
+              <div className="w-full bg-primaryDark pt-4 rounded-md">
                 <div className="w-full h-full">
                   <div className="px-3 flex pb-4 border-b border-primary-border">
                     <div className="flex w-full items-center gap-x-8">
-                      <h1 className="md:block hidden capitalize font-semibold text-white text-xl">
+                      <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
                         Your Menu
                       </h1>
                       <Link
@@ -543,7 +543,7 @@ const Menu: FC = () => {
                     <div>
                       <Button
                         onClick={() => setView(!view)}
-                        className="transparent-btn text-secondary-border"
+                        className="transparent-btn text-secondaryBorder"
                       >
                         {view ? (
                           <>
@@ -579,8 +579,8 @@ const Menu: FC = () => {
                           key={index}
                           className={`${
                             selectedInvoice.MenuId === invoice.MenuId
-                              ? "border border-primary-green bg-[#1e240a]"
-                              : "bg-primary-dark"
+                              ? "border border-primaryGreen bg-[#1e240a]"
+                              : "bg-primaryDark"
                           } truncate text-center py-2 rounded-lg cursor-pointer`}
                           onClick={() => {
                             handleRowClick(
@@ -645,7 +645,7 @@ const Menu: FC = () => {
               <div>
                 <div className="">
                   <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-white">
+                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
                       <div className="flex flex-col h-full justify-center gap-y-3">
                         <p className="md:text-xl text-lg font-medium">
                           Meal Details
@@ -654,15 +654,15 @@ const Menu: FC = () => {
                       <div>
                         <div className="flex justify-center">
                           <p
-                            className={`capitalize text-white font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                            className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                           >
                             {selectedInvoice.Category}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-white">
-                      <div className="gap-y-3 flex flex-col h-full justify-center text-secondary-border">
+                    <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
+                      <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
                         <div className="flex w-full h-full justify-center items-end">
                           <div className="w-36 h-36">
                             {imagePreview ? (
@@ -691,17 +691,17 @@ const Menu: FC = () => {
                             className="hidden"
                           />
                           {isImageLoading ? (
-                            <LoaderCircle className="text-secondary-border rotate-icon" />
+                            <LoaderCircle className="text-secondaryBorder rotate-icon" />
                           ) : (
                             <Edit3
                               onClick={handleIconClick}
-                              className="text-primary-green cursor-pointer"
+                              className="text-primaryGreen cursor-pointer"
                             />
                           )}
                         </div>
 
                         <div className="w-full flex flex-col text-center">
-                          <p className="text-2xl font-medium capitalize text-white">
+                          <p className="text-2xl font-medium capitalize text-txWhite">
                             {selectedInvoice.Name}
                           </p>
                         </div>
@@ -745,9 +745,9 @@ const Menu: FC = () => {
                     <div>
                       <div className="flex py-2 px-4">
                         <div className="w-full">
-                          <div className="text-white justify-between w-full flex px-0 gap-x-4">
+                          <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
                             <h1 className="">Menu Summary</h1>
-                            <h1 className="text-xs font-medium text-primary-green">
+                            <h1 className="text-xs font-medium text-primaryGreen">
                               See All
                             </h1>
                           </div>
@@ -756,11 +756,11 @@ const Menu: FC = () => {
                       <div>
                         <div>
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                               <div className="flex flex-col gap-y-3 w-full">
                                 <div className="flex justify-between">
                                   <p>Department</p>
-                                  <p className="text-white">
+                                  <p className="text-txWhite">
                                     {selectedInvoice.Department}{" "}
                                   </p>
                                 </div>
@@ -785,8 +785,8 @@ const Menu: FC = () => {
                           </div>
 
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
-                              <button className="flex text-white m-auto rounded-xl bg-text-cancelled p-2 ">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                              <button className="flex text-txWhite m-auto rounded-xl bg-text-cancelled p-2 ">
                                 <X /> Remove Menu
                               </button>
                             </div>
@@ -801,7 +801,7 @@ const Menu: FC = () => {
                       <div>
                         <div>
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                               <form
                                 onSubmit={handleSubmit(onSubmit)}
                                 className="flex flex-col gap-y-3 w-full text-base"
@@ -814,7 +814,7 @@ const Menu: FC = () => {
                                       autoComplete="off"
                                       type="text"
                                       placeholder={selectedInvoice.Discount}
-                                      className="text-white bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                      className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
                                     />
                                   </div>
                                   <p className="text-red-400 text-end text-sm">
@@ -829,7 +829,7 @@ const Menu: FC = () => {
                                       autoComplete="off"
                                       type="number"
                                       placeholder={selectedInvoice.Price.toString()}
-                                      className="text-white bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                      className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
                                     />
                                   </div>
                                   <p className="text-red-400 text-end text-sm">
@@ -844,7 +844,7 @@ const Menu: FC = () => {
                                       autoComplete="off"
                                       type="text"
                                       placeholder={selectedInvoice.Description}
-                                      className="text-white bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                      className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
                                     />
                                   </div>
                                   <p className="text-red-400 text-end text-sm">
@@ -896,12 +896,12 @@ const Menu: FC = () => {
                                   </p>
                                 </div>
                                 <div>
-                                  <div className="flex justify-between p-3 items-center text-white">
+                                  <div className="flex justify-between p-3 items-center text-txWhite">
                                     <button
                                       disabled={!isButtonEnabled}
                                       className={`place-order-btn ${
                                         isButtonEnabled
-                                          ? "bg-primary-green"
+                                          ? "bg-primaryGreen"
                                           : "bg-lime-700"
                                       }
                                       flex items-center gap-x-1 text-black m-auto rounded-xl p-2`}

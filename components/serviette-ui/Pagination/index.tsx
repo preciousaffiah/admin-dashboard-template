@@ -40,7 +40,7 @@ any) => {
   };
 
   return (
-    <div className="text-white pt-3 font-medium flex flex-col justify-center items-center w-full gap-y-2 ">
+    <div className="text-txWhite pt-3 font-medium flex flex-col justify-center items-center w-full gap-y-2 ">
       <p className="flex items-center gap-3">
         <button className="transparent-btn rounded-md py-1">
           showing {items_per_page}

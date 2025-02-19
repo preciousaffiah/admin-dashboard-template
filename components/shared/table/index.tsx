@@ -3,9 +3,9 @@ import { Circle } from "lucide-react";
 // TODO: add pagination to tables and grids
 const DefaultTable = ({ children, tableHeaders, paginationIndex }: any) => {
   return (
-    <Table className="table-auto border-separate border-spacing-0 text-white">
+    <Table className="table-auto border-separate border-spacing-0 text-txWhite">
       <TableHeader>
-        <TableRow className="px-3 bg-primary-dark">
+        <TableRow className="px-3 bg-primaryDark">
           <TableHead className="orders-table-head">
             <Circle />
           </TableHead>

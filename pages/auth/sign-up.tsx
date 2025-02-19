@@ -147,7 +147,7 @@ const SignUp: FC = () => {
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none">
               {/* <div className="py-2 px-8 w-full">
-                <div className="flex items-center border-dashed border-2 border-l-0 border-r-0 border-primary-green h-1 w-full justify-between relative bottom-4">
+                <div className="flex items-center border-dashed border-2 border-l-0 border-r-0 border-primaryGreen h-1 w-full justify-between relative bottom-4">
                   <div className={`step ${step >= 1 ? "active" : ""}`}>1</div>
                   <div className={`step ${step >= 2 ? "active" : ""}`}>2</div>
                   <div className={`step ${step >= 3 ? "active" : ""}`}>3</div>
@@ -157,10 +157,10 @@ const SignUp: FC = () => {
                 <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
                   <div>
-                    <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-white">
+                    <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-txWhite">
                       Create Your Account
                     </h1>
-                    <p className="font-medium text-secondary-border">
+                    <p className="font-medium text-secondaryBorder">
                       Enter your details to get started
                     </p>
                   </div>
@@ -193,7 +193,7 @@ const SignUp: FC = () => {
                         exit={{ y: -20, opacity: 0.2 }}
                       >
                         <div className="step-content">
-                          <h1 className="text-white pb-5 font-medium text-xl">
+                          <h1 className="text-txWhite pb-5 font-medium text-xl">
                             Personal Details
                           </h1>
 
@@ -210,7 +210,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="Fullname"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -228,7 +228,7 @@ const SignUp: FC = () => {
                                         type="email"
                                         placeholder="Email"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -245,7 +245,7 @@ const SignUp: FC = () => {
                                   <FormItem className="grid gap-2 md:w-1/2 w-full">
                                     <FormControl>
                                       <PhoneInput
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 border-b-[1px] border-primary-border focus:border-b-orange-500 transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 border-b-[1px] border-primary-border focus:border-b-orange-500 transition-colors duration-500"
                                         placeholder="Mobile Number"
                                         {...field}
                                       />
@@ -265,7 +265,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="Password"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -287,7 +287,7 @@ const SignUp: FC = () => {
                         exit={{ y: -20, opacity: 0.2 }}
                       >
                         <div className="step-content">
-                          <h1 className="text-white pb-8 font-medium text-xl">
+                          <h1 className="text-txWhite pb-8 font-medium text-xl">
                             Payment Details
                           </h1>
 
@@ -304,7 +304,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="Card name"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -322,7 +322,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="Card number"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -343,7 +343,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="MM/YY"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -361,7 +361,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="CVV"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -381,7 +381,7 @@ const SignUp: FC = () => {
                                         type="text"
                                         placeholder="Billing address"
                                         {...field}
-                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                        className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -421,7 +421,7 @@ const SignUp: FC = () => {
                   </form>
                 </Form>
 
-                <div className="pt-3 text-secondary-border text-center text-base">
+                <div className="pt-3 text-secondaryBorder text-center text-base">
                   Have an account?&nbsp;
                   <Link href="/auth/sign-in" className="link">
                     <span className="text-[#8BAE22]">Sign in instead</span>

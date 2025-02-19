@@ -32,7 +32,7 @@ const Navbar: FC = () => {
 
   return (
     <div>
-      <div className="md:flex hidden w-full bg-black py-3 text-[#FEFEFE] items-center px-4">
+      <div className="md:flex hidden w-full  py-4 text-txWhite items-center px-4">
         <div className="w-[20%]">
           <Image alt="logo" src={logo} className="w-32 h-8" />
         </div>
@@ -42,30 +42,30 @@ const Navbar: FC = () => {
             <li key={index} className="list-none px-4 text-[0.98rem]">
               <Link
                 href={item.link}
-                className={`${item.link === path ? "font-bold" : ""} text-base`}
+                className={`${item.link === path ? "font-bold" : ""} text-base auth-subheader`}
               >
                 {item.title}
               </Link>
             </li>
           ))}
         </div>
-        <div className="flex justify-end w-[25%] gap-x-1">
+        <div className="flex justify-end w-[25%] gap-x-1 text-white">
           {!token && (
             <Link href="/auth/sign-in">
-              <p className="text-white px-3 py-1 bg-primary-orange rounded-md ">
+              <p className="px-3 py-1 bg-primary-orange rounded-md ">
                 SignIn
               </p>
             </Link>
           )}
           {path !== "/restaurant/sign-up" && token && (
             <Link href="/restaurant/sign-up">
-              <p className="text-white px-3 py-1 bg-primary-orange rounded-md ">
+              <p className="px-3 py-1 bg-primary-orange rounded-md ">
                 Register business
               </p>
             </Link>
           )}
 
-          <div className=" bg-primary-orange flex justify-center py-1 rounded-md px-1">
+          <div className="bg-primary-orange flex justify-center py-1 rounded-md px-1">
             <Play fill="white" className="pr-2" />
 
             <p className="md:text-base text-sm">Watch Video</p>
@@ -76,14 +76,14 @@ const Navbar: FC = () => {
         <div className="flex gap-x-3 items-center">
           {!token && (
             <Link href="/auth/sign-in">
-              <p className="text-white p-2 bg-primary-orange rounded-md ">
+              <p className="p-2 bg-primary-orange rounded-md ">
                 SignIn
               </p>
             </Link>
           )}
           {path !== "/restaurant/sign-up" && token && (
             <Link href="/restaurant/sign-up">
-              <p className="text-white p-2 bg-primary-orange rounded-md ">
+              <p className="p-2 bg-primary-orange rounded-md ">
                 Register business
               </p>
             </Link>
@@ -105,7 +105,7 @@ const Navbar: FC = () => {
             </Button>
           </SheetTrigger>
           <SheetContent className="px-0 border-none">
-            <div className="text-secondary-border py-8 text-end font-medium">
+            <div className="text-secondaryBorder py-8 text-end font-medium">
               {navItems.map((item, index) => (
                 <li key={index} className="list-none px-4 text-xl">
                   <Link

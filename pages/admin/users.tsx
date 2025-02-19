@@ -151,11 +151,11 @@ const Users: FC = () => {
         <Container>
           <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
             <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
-              <div className="w-full bg-primary-dark pt-4 rounded-md">
+              <div className="w-full bg-primaryDark pt-4 rounded-md">
                 <div className="w-full h-full">
                   <div className="px-3 flex md:justify-between justify-start pb-4 border-b border-primary-border">
                     <div className="flex items-center">
-                      <h1 className="md:block hidden capitalize font-semibold text-white text-xl">
+                      <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
                         All Users
                       </h1>
                     </div>
@@ -189,8 +189,8 @@ const Users: FC = () => {
                           key={index}
                           className={`${
                             selectedInvoice.UserId === invoice.UserId
-                              ? "border border-primary-green bg-[#1e240a]"
-                              : "bg-primary-dark"
+                              ? "border border-primaryGreen bg-[#1e240a]"
+                              : "bg-primaryDark"
                           } truncate text-center py-2 rounded-lg cursor-pointer`}
                           onClick={() =>
                             handleRowClick(
@@ -255,7 +255,7 @@ const Users: FC = () => {
               <div>
                 <div className="border-b-[0.3px] border-b-primary-border -border">
                   <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-white">
+                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
                       <div className="flex flex-col h-full justify-center gap-y-3">
                         <p className="md:text-xl text-lg font-medium">
                           User Details
@@ -264,15 +264,15 @@ const Users: FC = () => {
                       <div>
                         <div className="flex justify-center">
                           <p
-                            className={`capitalize text-white font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                            className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                           >
                             {selectedInvoice.Type}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-white">
-                      <div className="gap-y-3 flex flex-col h-full justify-center text-secondary-border">
+                    <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
+                      <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
                         <div className="w-36 h-36 m-auto">
                           <Image
                             alt="img"
@@ -281,7 +281,7 @@ const Users: FC = () => {
                           />
                         </div>
                         <div className="w-full flex flex-col text-center">
-                          <p className="text-2xl font-medium capitalize text-white">
+                          <p className="text-2xl font-medium capitalize text-txWhite">
                             {selectedInvoice.Name}
                           </p>
                           <p className="text-sm">{selectedInvoice.Email}</p>
@@ -306,9 +306,9 @@ const Users: FC = () => {
                 <div>
                   <div className="flex py-2 px-4">
                     <div className="w-full">
-                      <div className="text-white justify-between w-full flex px-0 gap-x-4">
+                      <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
                         <h1 className="">User Summary</h1>
-                        <h1 className="text-xs font-medium text-primary-green">
+                        <h1 className="text-xs font-medium text-primaryGreen">
                           See All
                         </h1>
                       </div>
@@ -317,11 +317,11 @@ const Users: FC = () => {
                   <div>
                     <div>
                       <div>
-                        <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
+                        <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                           <div className="flex flex-col gap-y-3 w-full">
                             <div className="flex justify-between">
                               <p>Department</p>
-                              <p className="text-white">
+                              <p className="text-txWhite">
                                 {selectedInvoice.Department}{" "}
                               </p>
                             </div>
@@ -351,22 +351,22 @@ const Users: FC = () => {
                       <div>
                         <div className="border-t border-primary-border flex flex-col py-4 px-4">
                           <div className="w-full">
-                            <div className="text-white justify-between items-center w-full flex px-0 pb-4 gap-x-4">
+                            <div className="text-txWhite justify-between items-center w-full flex px-0 pb-4 gap-x-4">
                               <h1 className="flex gap-x-2">
                                 Open Tasks{" "}
                                 <span className="font-semibold border border-primary-orange py-[0.1rem] px-1 text-sm rounded-md text-primary-orange">
                                   10
                                 </span>
                               </h1>
-                              <h1 className="text-xs font-medium text-primary-green">
+                              <h1 className="text-xs font-medium text-primaryGreen">
                                 See All
                               </h1>
                             </div>
                           </div>
-                          <div className="border-l-4 px-1 border-primary-green text-secondary-border items-end flex justify-between">
+                          <div className="border-l-4 px-1 border-primaryGreen text-secondaryBorder items-end flex justify-between">
                             <div className="text-sm">
                               <p> Upcoming</p>
-                              <p className="text-base font-medium text-white">
+                              <p className="text-base font-medium text-txWhite">
                                 {" "}
                                 Review with manager
                               </p>
@@ -375,17 +375,17 @@ const Users: FC = () => {
                                 <p> 6:30pm-8:00pm</p>
                               </div>
                             </div>
-                            <button className="text-secondary-border h-fit flex rounded-xl transparent-btn p-2 ">
+                            <button className="text-secondaryBorder h-fit flex rounded-xl transparent-btn p-2 ">
                               Send Reminder
                             </button>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
-                          <div className=" w-full text-white">
+                        <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                          <div className=" w-full text-txWhite">
                             <div className="flex justify-between">
-                              <button className="text-secondary-border flex rounded-xl transparent-btn p-2 ">
+                              <button className="text-secondaryBorder flex rounded-xl transparent-btn p-2 ">
                                 <Wrench /> Set Permissions
                               </button>
                               <button className="flex rounded-xl bg-text-cancelled p-2 ">

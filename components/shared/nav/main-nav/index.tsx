@@ -58,7 +58,7 @@ const MainNavbar = ({ title }: any) => {
         </div>
         <div className="md:flex hidden w-fit h-full justify-start items-center xl:gap-x-64 lg:gap-x-40 md:gap-x-1">
           <div>
-            <h1 className="text-xl text-secondary-border font-medium">
+            <h1 className="text-xl text-secondaryBorder font-medium">
               {title} dashbaord
             </h1>
           </div>
@@ -97,11 +97,11 @@ const MainNavbar = ({ title }: any) => {
                   <LogOut
                     onClick={logout}
                     color="#c01c28"
-                    className="size-6 m-auto text-secondary-border"
+                    className="size-6 m-auto text-secondaryBorder"
                   />
                 </div>
               </DropdownMenuTrigger>
-              {/* <DropdownMenuContent className="border-none backdrop-blur-sm text-white bg-gray-100/30 w-56">
+              {/* <DropdownMenuContent className="border-none backdrop-blur-sm text-txWhite bg-gray-100/30 w-56">
                   <DropdownMenuLabel className="px-1 py-0">
                     <div className="items-center text-xs leading-4 h-fit w-full flex">
                       <div className="pr-2 w-12">
@@ -166,10 +166,10 @@ const MainNavbar = ({ title }: any) => {
                     <br />
                     Victoria
                   </span>
-                  <ChevronDown className="w-7 m-auto text-secondary-border" />
+                  <ChevronDown className="w-7 m-auto text-secondaryBorder" />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="border-none backdrop-blur-sm text-white bg-gray-400/30 w-56">
+              <DropdownMenuContent className="border-none backdrop-blur-sm text-txWhite bg-gray-400/30 w-56">
                 <DropdownMenuLabel className="px-1 py-0">
                   <div className="items-center text-xs leading-4 h-fit w-full flex">
                     <div className="pr-2 w-12">
@@ -212,7 +212,7 @@ const MainNavbar = ({ title }: any) => {
             </DropdownMenu>
           </div>
           <div className="w-32">
-            <h1 className="w-full truncate text-xl text-secondary-border font-medium">
+            <h1 className="w-full truncate text-xl text-secondaryBorder font-medium">
               {title}
             </h1>
             <p className="text-xs">13 Ongoing Tasks</p>

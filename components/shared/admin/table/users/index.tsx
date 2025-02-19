@@ -51,12 +51,12 @@ const AdminUsersTable = ({
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
         <div className="flex m-auto justify-between py-3 md:px-3 px-0 overflow-x-scroll md:gapx-0 gap-x-2">
           <div className="md:block hidden">
-            <Button className="transparent-btn text-secondary-border border-[0.3px]">
+            <Button className="transparent-btn text-secondaryBorder border-[0.3px]">
               <p className="capitalize text-sm">bulk actions</p>
               <ChevronDown className="w-5" />
             </Button>
           </div>
-          <TabsList className="w-fit bg-secondary-dark">
+          <TabsList className="w-fit bg-secondaryDark">
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
                 <TabsTrigger
@@ -71,7 +71,7 @@ const AdminUsersTable = ({
             )}
           </TabsList>
           <div>
-            <Button className="md:rounded-xl rounded-full md:px-3 transparent-btn text-secondary-border">
+            <Button className="md:rounded-xl rounded-full md:px-3 transparent-btn text-secondaryBorder">
               <Filter className="w-5" />
               <ChevronDown className="md:block hidden w-5" />
             </Button>
@@ -86,7 +86,7 @@ const AdminUsersTable = ({
         <div>
           <div
             className={`${
-              view ? "px-4 bg-secondary-darker" : ""
+              view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
             {Object.keys(tabHeaders || {}).map((item, index) => (

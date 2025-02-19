@@ -138,11 +138,11 @@ const CreateMenu: FC = () => {
         <Container>
           <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 md:px-8 px-0">
             {success ? (
-              <div className="md:w-1/2 w-full h-screen m-auto bg-primary-dark z-50 rounded-xl">
-                <div className="text-white gap-y-4 flex flex-col justify-center items-center h-full">
+              <div className="md:w-1/2 w-full h-screen m-auto bg-primaryDark z-50 rounded-xl">
+                <div className="text-txWhite gap-y-4 flex flex-col justify-center items-center h-full">
                   <CircleCheckBig
                     fill="green"
-                    className="text-white md:w-24 md:h-20 w-16 h-20"
+                    className="text-txWhite md:w-24 md:h-20 w-16 h-20"
                   />
                   <p className="font-semibold text-lg">
                     Menu Created Successfully!
@@ -151,17 +151,17 @@ const CreateMenu: FC = () => {
               </div>
             ) : (
               <>
-                <div className="w-full bg-primary-dark pt-4 md:pb-0 pb-6 rounded-md">
+                <div className="w-full bg-primaryDark pt-4 md:pb-0 pb-6 rounded-md">
                   <div className="w-full h-full">
                     <div className="px-3 flex pb-4 border-b border-primary-border">
                       <div className="flex w-full items-center gap-x-8">
-                        <h1 className="capitalize font-semibold text-white text-xl">
+                        <h1 className="capitalize font-semibold text-txWhite text-xl">
                           Create Menu
                         </h1>
                       </div>
                       <div></div>
                     </div>
-                    <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondary-border">
+                    <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondaryBorder">
                       <div className="md:w-[60%] w-full flex flex-col gap-y-3">
                         <h1 className="pb-4">Meal Details</h1>
                         <div className="flex flex-col gap-y-4">
@@ -169,14 +169,14 @@ const CreateMenu: FC = () => {
                             onSubmit={handleSubmit1(onSubmit1)}
                             className="w-full "
                           >
-                            <div className="w-full text-white  bg-secondary-dark mb-4 p-3 rounded-md">
-                              <div className="flex text-white w-full pb-4 justify-between">
+                            <div className="w-full text-txWhite  bg-secondaryDark mb-4 p-3 rounded-md">
+                              <div className="flex text-txWhite w-full pb-4 justify-between">
                                 <h2 className="font-medium">Add meal image</h2>
                               </div>
 
                               <div
                                 onClick={handleIconClick}
-                                className="gap-x-2 bg-primary-dark cursor-pointer w-52 h-52 rounded-md items-center flex"
+                                className="gap-x-2 bg-primaryDark cursor-pointer w-52 h-52 rounded-md items-center flex"
                               >
                                 {imagePreview && (
                                   <div className="relative w-full h-full">
@@ -208,7 +208,7 @@ const CreateMenu: FC = () => {
                                 </p>
                               )}
                             </div>
-                            <div className="bg-secondary-dark rounded-md">
+                            <div className="bg-secondaryDark rounded-md">
                               <div className="flex items-center justify-between p-4">
                                 <h4 className="text-sm font-semibold">
                                   Add Meal Details
@@ -218,7 +218,7 @@ const CreateMenu: FC = () => {
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="fname"
-                                    className="text-white font-normal"
+                                    className="text-txWhite font-normal"
                                   >
                                     Name
                                   </Label>
@@ -241,7 +241,7 @@ const CreateMenu: FC = () => {
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="price"
-                                    className="text-white font-normal"
+                                    className="text-txWhite font-normal"
                                   >
                                     Price
                                   </Label>
@@ -264,7 +264,7 @@ const CreateMenu: FC = () => {
                                 <div className="pb-4">
                                   <Label
                                     htmlFor="phone"
-                                    className="text-white font-normal"
+                                    className="text-txWhite font-normal"
                                   >
                                     Description
                                   </Label>
@@ -310,7 +310,7 @@ const CreateMenu: FC = () => {
                                     Please select the required inputs
                                   </p>
                                 )}
-                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primary-green font-medium">
+                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryGreen font-medium">
                                   <button type="submit">Save</button>
                                 </div>
                               </div>
@@ -320,7 +320,7 @@ const CreateMenu: FC = () => {
                       </div>
                       <div className="w-[40%] md:block hidden">
                         <h1 className="pb-4">Menu Summary</h1>
-                        <div className={`${!menu.mealImage ? "h-[40rem]" : "h-fit"} w-full flex justify-center bg-secondary-dark rounded-md`}>
+                        <div className={`${!menu.mealImage ? "h-[40rem]" : "h-fit"} w-full flex justify-center bg-secondaryDark rounded-md`}>
                           {!menu.mealImage ? (
                             <p className="w-full m-auto text-center px-3">
                               Your menu summary will show here.
@@ -329,7 +329,7 @@ const CreateMenu: FC = () => {
                             <div className="w-full flex flex-col justify-between">
                               <div className="border-b-[0.3px] border-b-primary-border -border">
                                 <div className="px-3 pt-3">
-                                  <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-white">
+                                  <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
                                     <div className="flex flex-col h-full justify-center gap-y-3">
                                       <p className="md:text-xl text-lg font-medium">
                                         Meal Details
@@ -338,15 +338,15 @@ const CreateMenu: FC = () => {
                                     <div>
                                       <div className="flex justify-center">
                                         <p
-                                          className={`capitalize text-white font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                          className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                                         >
                                           {menu.department}
                                         </p>
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-white">
-                                    <div className="gap-y-3 flex flex-col h-full justify-center text-secondary-border">
+                                  <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
+                                    <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
                                       <div className="w-36 h-36 m-auto">
                                         {imagePreview && (
                                           <Image
@@ -359,7 +359,7 @@ const CreateMenu: FC = () => {
                                         )}
                                       </div>
                                       <div className="w-full flex flex-col text-center">
-                                        <p className="text-2xl  break-all font-medium capitalize text-white">
+                                        <p className="text-2xl  break-all font-medium capitalize text-txWhite">
                                           {menu.name}
                                         </p>
                                       </div>
@@ -371,9 +371,9 @@ const CreateMenu: FC = () => {
                               <div>
                                 <div className="flex py-2 px-4">
                                   <div className="w-full">
-                                    <div className="text-white justify-between w-full flex px-0 gap-x-4">
+                                    <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
                                       <h1 className="">Menu Summary</h1>
-                                      <h1 className="text-xs font-medium text-primary-green">
+                                      <h1 className="text-xs font-medium text-primaryGreen">
                                         See All
                                       </h1>
                                     </div>
@@ -382,11 +382,11 @@ const CreateMenu: FC = () => {
                                 <div>
                                   <div>
                                     <div>
-                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
+                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                                         <div className="flex flex-col gap-y-3 w-full">
                                           <div className="flex justify-between">
                                             <p>Department</p>
-                                            <p className="text-white">
+                                            <p className="text-txWhite">
                                               {menu.department}
                                             </p>
                                           </div>
@@ -406,14 +406,14 @@ const CreateMenu: FC = () => {
                                       </div>
                                     </div>
                                     <div>
-                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
+                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                                         <div className="p-3 w-full bg-neutral-700 rounded-b-md">
                                           <button
                                             disabled={!isOrderComplete()}
                                             onClick={() => handleMenu()}
                                             className={`place-menu-btn ${
                                               isOrderComplete()
-                                                ? "bg-primary-green"
+                                                ? "bg-primaryGreen"
                                                 : "bg-lime-700"
                                             } w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
                                           >
@@ -440,11 +440,11 @@ const CreateMenu: FC = () => {
                 </div>
                 <div className="md:hidden flex bg-black px-4 h-20 fixed bottom-0 w-full z-50">
                   <div className="text-xs flex w-full justify-between items-center">
-                    <div className="text-white font-medium w-full flex justify-between">
+                    <div className="text-txWhite font-medium w-full flex justify-between">
                       <Drawer>
                         <div className="w-full h-full flex gap-x-1">
                           <DrawerTrigger asChild>
-                            <Button className="capitalize transparent-btn bg-transparent rounded-lg text-secondary-border">
+                            <Button className="capitalize transparent-btn bg-transparent rounded-lg text-secondaryBorder">
                               <ChevronUp className="w-5 h-5" />
                               Menu Details
                             </Button>
@@ -454,7 +454,7 @@ const CreateMenu: FC = () => {
                             onClick={() => handleMenu()}
                             className={`place-menu-btn ${
                               isOrderComplete()
-                                ? "bg-primary-green"
+                                ? "bg-primaryGreen"
                                 : "bg-lime-700"
                             } w-full py-2 rounded-md text-sm text-black
                              flex items-center justify-center gap-x-2
@@ -468,10 +468,10 @@ const CreateMenu: FC = () => {
                             Create Menu
                           </button>
                         </div>
-                        <DrawerContent className="h-[85%]  text-secondary-border bg-secondary-dark border-secondary-transparent-border w-full flex px-4 pb-4">
+                        <DrawerContent className="h-[85%]  text-secondaryBorder bg-secondaryDark border-secondary-transparent-border w-full flex px-4 pb-4">
                           <div>
                           <h1 className="pb-4">Menu Summary</h1>
-                        <div className={`${!menu.mealImage ? "h-[40rem]" : "h-fit"} w-full flex justify-center bg-secondary-dark rounded-md`}>
+                        <div className={`${!menu.mealImage ? "h-[40rem]" : "h-fit"} w-full flex justify-center bg-secondaryDark rounded-md`}>
                           {!menu.mealImage ? (
                             <p className="w-full m-auto text-center px-3">
                               Your menu summary will show here.
@@ -480,7 +480,7 @@ const CreateMenu: FC = () => {
                             <div className="w-full flex flex-col justify-between">
                               <div className="border-b-[0.3px] border-b-primary-border -border">
                                 <div className="pt-3">
-                                  <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-white">
+                                  <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
                                     <div className="flex flex-col h-full justify-center gap-y-3">
                                       <p className="md:text-xl text-lg font-medium">
                                         Meal Details
@@ -489,15 +489,15 @@ const CreateMenu: FC = () => {
                                     <div>
                                       <div className="flex justify-center">
                                         <p
-                                          className={`capitalize text-white font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                          className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                                         >
                                           {menu.department}
                                         </p>
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-white">
-                                    <div className="gap-y-3 flex flex-col h-full justify-center text-secondary-border">
+                                  <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
+                                    <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
                                       <div className="w-36 h-36 m-auto">
                                         {imagePreview && (
                                           <Image
@@ -510,7 +510,7 @@ const CreateMenu: FC = () => {
                                         )}
                                       </div>
                                       <div className="w-full flex flex-col text-center">
-                                        <p className="text-2xl  break-all font-medium capitalize text-white">
+                                        <p className="text-2xl  break-all font-medium capitalize text-txWhite">
                                           {menu.name}
                                         </p>
                                       </div>
@@ -522,9 +522,9 @@ const CreateMenu: FC = () => {
                               <div>
                                 <div className="flex py-2 px-4">
                                   <div className="w-full">
-                                    <div className="text-white justify-between w-full flex px-0 gap-x-4">
+                                    <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
                                       <h1 className="">Menu Summary</h1>
-                                      <h1 className="text-xs font-medium text-primary-green">
+                                      <h1 className="text-xs font-medium text-primaryGreen">
                                         See All
                                       </h1>
                                     </div>
@@ -533,11 +533,11 @@ const CreateMenu: FC = () => {
                                 <div>
                                   <div>
                                     <div>
-                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
+                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                                         <div className="flex flex-col gap-y-3 w-full">
                                           <div className="flex justify-between">
                                             <p>Department</p>
-                                            <p className="text-white">
+                                            <p className="text-txWhite">
                                               {menu.department}
                                             </p>
                                           </div>

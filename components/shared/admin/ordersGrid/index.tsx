@@ -59,9 +59,9 @@ const OrdersGrid = ({
             }
             className={`${
               selectedInvoice.OrderID === invoice.OrderID
-                ? "border border-primary-green bg-[#1e240a]"
-                : "bg-primary-dark"
-            } md:w-auto w-full cursor-pointer text-sm text-white rounded-md py-3`}
+                ? "border border-primaryGreen bg-[#1e240a]"
+                : "bg-primaryDark"
+            } md:w-auto w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
           >
             <div className="border-b border-primary-border pb-3 px-4">
               <div className="flex justify-start text-primary-border pb-1">
@@ -91,10 +91,10 @@ const OrdersGrid = ({
                 </div>
               </div>
             </div>
-            <div className="text-secondary-border">
+            <div className="text-secondaryBorder">
               <div className="px-4 py-6">
                 <div className="pl-1 flex justify-between">
-                  <h1 className="text-primary-green font-medium">
+                  <h1 className="text-primaryGreen font-medium">
                     View Details
                   </h1>
                   <div className="flex gap-x-4">

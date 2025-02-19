@@ -96,17 +96,17 @@ const SignIn: FC = () => {
     <WaiterLayout title={"Staff sign-in"}>
       <Navbar />
       <Container className={"min-h-[40rem] pt-6"}>
-        <div className="authcard3 md:min-h-[50rem] md:pt-16 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
+        <div className="authcard3 md:min-h-[46rem] md:pt-16 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none">
               <div className="md:m-auto lg:px-24 md:px-8 px-4 md:pt-0 pt-6 w-full flex flex-col">
                 <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
                   <div>
-                    <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-white">
+                    <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-txWhite">
                       Sign in to Staff Account
                     </h1>
-                    <p className="font-medium text-secondary-border">
+                    <p className="font-medium text-secondaryBorder">
                       Enter your details
                     </p>
                   </div>
@@ -149,7 +149,7 @@ const SignIn: FC = () => {
                                       type="email"
                                       placeholder="email"
                                       {...field}
-                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                     />
                                   </FormControl>
                                   <FormMessage />
@@ -167,7 +167,7 @@ const SignIn: FC = () => {
                                       type="text"
                                       placeholder="Restaurant/Business Id"
                                       {...field}
-                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                     />
                                   </FormControl>
                                   <FormMessage />
@@ -185,7 +185,7 @@ const SignIn: FC = () => {
                                     type="text"
                                     placeholder="Password"
                                     {...field}
-                                    className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-white w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                    className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -212,7 +212,7 @@ const SignIn: FC = () => {
                   </form>
                 </Form>
 
-                <div className="pt-3 text-secondary-border text-center text-base">
+                <div className="pt-3 text-secondaryBorder text-center text-base">
                   Don't have a user account?&nbsp;
                   <Link href="/waiter/dashboard" className="link">
                     <span className="text-[#8BAE22]">Sign up instead</span>

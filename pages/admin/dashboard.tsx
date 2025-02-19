@@ -476,12 +476,12 @@ const AdminDashboard: FC = () => {
                         asChild
                         className="cursor-pointer bg-[#424141d6]"
                       >
-                        <div className="lg:text-base md:text-sm md:flex hidden transparent-btn text-secondary-border lg:p-3 p-1">
+                        <div className="lg:text-base md:text-sm md:flex hidden transparent-btn text-secondaryBorder lg:p-3 p-1">
                           <Plus />
                           <p>Customize Dashboard</p>
                         </div>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="border-none backdrop-blur-sm text-white bg-gray-300/30 w-56">
+                      <DropdownMenuContent className="border-none backdrop-blur-sm text-txWhite bg-gray-300/30 w-56">
                         <DropdownMenuLabel className="px-1 py-0">
                           <div>
                             <p className="text-sm">Customize Dashboard</p>
@@ -577,11 +577,11 @@ const AdminDashboard: FC = () => {
                           <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
                             <div
                               className={`
-                                    bg-primary-dark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                             >
-                              <div className="text-secondary-border w-full">
+                              <div className="text-secondaryBorder w-full">
                                 <div className="p-2">
-                                  <div className="text-secondary-border font-medium flex justify-between">
+                                  <div className="text-secondaryBorder font-medium flex justify-between">
                                     <h1 className="text-lg">Customers</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -658,11 +658,11 @@ const AdminDashboard: FC = () => {
                             </div>
                             <div
                               className={`
-                                    bg-primary-dark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                             >
-                              <div className="text-secondary-border w-full">
+                              <div className="text-secondaryBorder w-full">
                                 <div className="p-2">
-                                  <div className="text-secondary-border font-medium flex justify-between">
+                                  <div className="text-secondaryBorder font-medium flex justify-between">
                                     <h1 className="text-lg">Orders</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -738,11 +738,11 @@ const AdminDashboard: FC = () => {
                             </div>
                             <div
                               className={`
-                                    bg-primary-dark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                             >
-                              <div className="text-secondary-border w-full">
+                              <div className="text-secondaryBorder w-full">
                                 <div className="p-2">
-                                  <div className="text-secondary-border font-medium flex justify-between">
+                                  <div className="text-secondaryBorder font-medium flex justify-between">
                                     <h1 className="text-lg">Revenue</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -819,9 +819,9 @@ const AdminDashboard: FC = () => {
                           </div>
                           {/* <div className="flex lg-pb-0 pb-4 md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
                             <div>
-                              <div className="rounded-md md:w-auto w-full h-fit bg-primary-dark ">
+                              <div className="rounded-md md:w-auto w-full h-fit bg-primaryDark ">
                                 <div className="border-b border-primary-border">
-                                  <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                  <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                     <h1 className="text-lg">Sales</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -829,11 +829,11 @@ const AdminDashboard: FC = () => {
                                   </div>
                                 </div>
                                 <div className="flex justify-end py-2 px-6 gap-x-4">
-                                  <div className="flex text-white text-xs font-medium gap-x-1 items-center">
+                                  <div className="flex text-txWhite text-xs font-medium gap-x-1 items-center">
                                     <div className="w-3 h-3 rounded-full bg-[#F44E4E]"></div>
                                     <p>Sales drop</p>
                                   </div>
-                                  <div className="flex text-white text-xs font-medium gap-x-1 items-center">
+                                  <div className="flex text-txWhite text-xs font-medium gap-x-1 items-center">
                                     <div className="w-3 h-3 rounded-full bg-[#16A34A]"></div>
                                     <p>Sales Increment</p>
                                   </div>
@@ -872,9 +872,9 @@ const AdminDashboard: FC = () => {
                               </div>
                             </div>
                             <div>
-                              <div className="rounded-md md:w-auto w-full h-fit bg-primary-dark ">
+                              <div className="rounded-md md:w-auto w-full h-fit bg-primaryDark ">
                                 <div className="border-b border-primary-border">
-                                  <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                  <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                     <h1 className="text-lg">Profit</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -882,7 +882,7 @@ const AdminDashboard: FC = () => {
                                   </div>
                                 </div>
                                 <div className="flex justify-end py-2 px-6">
-                                  <div className="flex text-white text-xs font-medium gap-x-1 items-center">
+                                  <div className="flex text-txWhite text-xs font-medium gap-x-1 items-center">
                                     <div className="w-3 h-3 rounded-full border border-primary-orange bg-white"></div>
                                     <p>Profit Per Month</p>
                                   </div>
@@ -925,11 +925,11 @@ const AdminDashboard: FC = () => {
                         {/* <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
                           <div
                             className={`
-                                    bg-primary-dark   w-full h-fit cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark   w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-1`}
                           >
-                            <div className="text-secondary-border w-full">
+                            <div className="text-secondaryBorder w-full">
                               <div className="border-b border-primary-border">
-                                <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                   <h1 className="text-lg">Notifications</h1>
                                   <div className="flex gap-x-4">
                                     <EllipsisVertical />
@@ -942,7 +942,7 @@ const AdminDashboard: FC = () => {
                                     <MessageCircleQuestion className="" />
                                   </div>
                                   <div className="lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Review Request
                                     </h1>
                                     <p className="truncate">
@@ -960,7 +960,7 @@ const AdminDashboard: FC = () => {
                                     <NotepadText className="" />
                                   </div>
                                   <div className="lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Order Request
                                     </h1>
                                     <p className="truncate">
@@ -981,11 +981,11 @@ const AdminDashboard: FC = () => {
 
                           <div
                             className={`
-                                    bg-primary-dark   w-full h-fit cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark   w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-1`}
                           >
-                            <div className="text-secondary-border w-full">
+                            <div className="text-secondaryBorder w-full">
                               <div className="border-b border-primary-border">
-                                <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                   <h1 className="text-lg">Messages</h1>
                                   <div className="flex gap-x-4">
                                     <EllipsisVertical />
@@ -1002,7 +1002,7 @@ const AdminDashboard: FC = () => {
                                     />
                                   </div>
                                   <div className="lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Damien Black
                                     </h1>
                                     <p className="truncate">
@@ -1024,7 +1024,7 @@ const AdminDashboard: FC = () => {
                                     />
                                   </div>
                                   <div className="lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Damien Black
                                     </h1>
                                     <p className="truncate">
@@ -1046,13 +1046,13 @@ const AdminDashboard: FC = () => {
                         </div> */}
                       </div>
 
-                      <div className="flex pb-4 flex-col bg-primary-dark pt-4 rounded-md">
+                      <div className="flex pb-4 flex-col bg-primaryDark pt-4 rounded-md">
                         <div className="pt-4 rounded-t-md px-3 flex pb-4 border-b border-primary-border">
                           <div className="flex justify-between w-full">
-                            <p className="capitalize text-lg font-medium text-secondary-border">
+                            <p className="capitalize text-lg font-medium text-secondaryBorder">
                               Recent Orders
                             </p>
-                            <EllipsisVertical className="capitalize text-lg font-medium text-secondary-border" />
+                            <EllipsisVertical className="capitalize text-lg font-medium text-secondaryBorder" />
                           </div>
                         </div>
 
@@ -1068,7 +1068,7 @@ const AdminDashboard: FC = () => {
                             {invoiceData.slice(0, 10).map((invoice, index) => (
                               <TableRow
                                 key={index}
-                                className="bg-primary-dark truncate text-center py-2 rounded-lg cursor-pointer"
+                                className="bg-primaryDark truncate text-center py-2 rounded-lg cursor-pointer"
                               >
                                 <TableCell className="truncate">
                                   <Circle
@@ -1129,7 +1129,7 @@ const AdminDashboard: FC = () => {
                         </AdminOrdersTable>
                         <Link
                           href="orders"
-                          className="text-white md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
+                          className="text-txWhite md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
                         >
                           View All Orders
                           <ChevronRight color="#c0bfbc" />

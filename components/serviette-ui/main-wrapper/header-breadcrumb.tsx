@@ -14,7 +14,7 @@ export default function HeaderBreadcrumb() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink>
-            <Link href="/" className=" hover:text-white">
+            <Link href="/" className=" hover:text-txWhite">
               Home
             </Link>
           </BreadcrumbLink>

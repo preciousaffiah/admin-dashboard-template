@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        edu: ["var(--font-edu)", "serif"],
+      },
       screens: {
         'lg': '1034px',
         // => @media (min-width: 992px) { ... }
@@ -29,10 +32,11 @@ const config = {
       colors: {
         "row-hover": "#333",
         "primary-forest-green": "#212A08",
-        "primary-green": "#A7D129",
+        primaryGreen: "rgba(var(--primaryGreen))",
+        txWhite: "rgba(var(--txWhite))",
         "primary-orange": "#F07000",
-        "primary-dark": "#191919",
-        "secondary-border": "#A5A5A5",
+        primaryDark: "rgba(var(--primaryDark))",
+        secondaryBorder: "rgba(var(--secondaryBorder))",
         "secondary-transparent-border": "#616161",
         "status-cancelled": "#1F0501",
         "text-cancelled": "#EB5033",
@@ -40,8 +44,8 @@ const config = {
         "text-pending" : "#FFE525",
         "status-completed" :"#094301",
         "text-completed" :"#41C82E",
-        "secondary-dark": "#262525",
-        "secondary-darker": "#201f1f",
+        secondaryDark: "rgba(var(--secondaryDark))",
+        "secondaryDarker": "#201f1f",
         "primary-border": "#616161",
         "black-primary": "#020204",
         "black-secondary": "#7f8ea3",

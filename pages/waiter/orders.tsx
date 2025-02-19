@@ -454,11 +454,11 @@ const WaiterOrders: FC = () => {
               </ScrollArea>
               {tabs.map((item, index) => (
                 <TabsContent key={index} value={item} className="md:px-0 px-2">
-                  <div className="w-full bg-primary-dark pt-4 rounded-md">
+                  <div className="w-full bg-primaryDark pt-4 rounded-md">
                     <div className="w-full h-full">
                       <div className="px-3 flex pb-4 border-b border-primary-border">
                         <div className="flex w-full items-center gap-x-8">
-                          <h1 className="md:block hidden capitalize font-semibold text-white text-xl">
+                          <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
                             your orders {item}
                           </h1>
                           <Link
@@ -471,7 +471,7 @@ const WaiterOrders: FC = () => {
                         <div>
                           <Button
                             onClick={() => setView(!view)}
-                            className="transparent-btn text-secondary-border"
+                            className="transparent-btn text-secondaryBorder"
                           >
                             {view ? (
                               <>
@@ -507,8 +507,8 @@ const WaiterOrders: FC = () => {
                               key={index}
                               className={`${
                                 selectedInvoice.OrderID === invoice.OrderID
-                                  ? "border border-primary-green bg-[#1e240a]"
-                                  : "bg-primary-dark"
+                                  ? "border border-primaryGreen bg-[#1e240a]"
+                                  : "bg-primaryDark"
                               } truncate text-center py-2 rounded-lg cursor-pointer`}
                               onClick={() =>
                                 handleRowClick(
@@ -575,7 +575,7 @@ const WaiterOrders: FC = () => {
               <div>
                 <div className="border-b-[0.3px] border-b-primary-border -border">
                   <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-20 text-white">
+                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-20 text-txWhite">
                       <div className="flex flex-col h-full justify-center gap-y-3">
                         <p className="bg-status-completed text-text-completed rounded-lg w-fit px-2 text-sm font-medium">
                           Dine in{tabValue}{" "}
@@ -585,7 +585,7 @@ const WaiterOrders: FC = () => {
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-secondary-border">
+                        <p className="text-sm font-medium text-secondaryBorder">
                           Order ID{" "}
                         </p>
                         <p className="text-lg font-medium">
@@ -593,15 +593,15 @@ const WaiterOrders: FC = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="my-2 md:mb-2 md:mt-12 flex justify-between px-2 items-center h-28 text-white">
-                      <div className="flex flex-col h-full justify-center gap-y-3 text-secondary-border">
+                    <div className="my-2 md:mb-2 md:mt-12 flex justify-between px-2 items-center h-28 text-txWhite">
+                      <div className="flex flex-col h-full justify-center gap-y-3 text-secondaryBorder">
                         <p className="text-sm">Customer </p>
-                        <p className="text-2xl font-medium capitalize text-white">
+                        <p className="text-2xl font-medium capitalize text-txWhite">
                           {selectedInvoice.Customer}
                         </p>
                         <p className="text-sm">
                           Amount paid:{" "}
-                          <span className="font-medium text-white pl-1">
+                          <span className="font-medium text-txWhite pl-1">
                             ${selectedInvoice.Price}
                           </span>{" "}
                         </p>
@@ -648,7 +648,7 @@ const WaiterOrders: FC = () => {
                               (menuItem, index) => (
                                 <div
                                   key={index}
-                                  className="text-white items-center flex border border-primary-border px-2.5 py-2 rounded-lg"
+                                  className="text-txWhite items-center flex border border-primary-border px-2.5 py-2 rounded-lg"
                                 >
                                   <div className="w-[60%] flex gap-x-3">
                                     <div>
@@ -679,8 +679,8 @@ const WaiterOrders: FC = () => {
                           </div>
 
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
-                              <div className=" w-full text-secondary-border">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                              <div className=" w-full text-secondaryBorder">
                                 <div className="flex justify-between">
                                   <p>Sub-total</p>
                                   <p>${selectedInvoice.Price} </p>
@@ -698,8 +698,8 @@ const WaiterOrders: FC = () => {
                           </div>
 
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-white">
-                              <div className=" w-full text-white">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                              <div className=" w-full text-txWhite">
                                 <div className="flex justify-between">
                                   <button className="flex rounded-xl bg-text-cancelled p-2 ">
                                     <X /> Cancel Order

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 .rotate-icon {
   animation: spin 0.7s linear infinite;
 }
@@ -14,18 +16,18 @@
     transform: rotate(360deg);
   }
 }
-.ReactFlagsSelect-module_flagsSelect__2pfa2{
+.ReactFlagsSelect-module_flagsSelect__2pfa2 {
   padding-bottom: 0 !important;
 }
-.ReactFlagsSelect-module_selectBtn__19wW7{
+.ReactFlagsSelect-module_selectBtn__19wW7 {
   padding: 0 !important;
   border: 0 !important;
 }
-.ReactFlagsSelect-module_selectValue__152eS{
+.ReactFlagsSelect-module_selectValue__152eS {
   color: white;
 }
 
-.PhoneInputInput{
+.PhoneInputInput {
   background-color: transparent;
   outline: none;
   border-color: #616161;
@@ -93,6 +95,12 @@ tr td:last-child {
     border: none !important;
   }
 
+  .auth-header{
+    font-size: 1.6rem
+  }
+  .auth-subheader{
+    font-size: 1.2rem
+  }
   .modal-overlay {
     @apply fixed justify-end z-[100] top-0 left-0 w-full h-full flex items-center bg-black bg-opacity-30;
   }
@@ -105,11 +113,11 @@ tr td:last-child {
   }
 
   .close-button {
-    @apply cursor-pointer text-5xl px-2 text-secondary-border md:absolute md:pb-0 pb-2 top-28 right-[28.5rem];
+    @apply cursor-pointer text-5xl px-2 text-secondaryBorder md:absolute md:pb-0 pb-2 top-28 right-[28.5rem];
   }
 
   .orders-table-head {
-    @apply text-center border-b border-secondary-border;
+    @apply text-center border-b border-secondaryBorder;
   }
 
   .active-main-tab {
@@ -120,7 +128,7 @@ tr td:last-child {
   }
 
   .active-order-tab {
-    @apply data-[state=active]:text-primary-green;
+    @apply data-[state=active]:text-primaryGreen;
   }
   .transparent-btn {
     @apply border-secondary-transparent-border border px-2 rounded-xl flex gap-x-2;
@@ -133,13 +141,13 @@ tr td:last-child {
     @apply w-full m-auto;
   }
   .authcard3 {
-    @apply bg-secondary-dark py-24 md:px-14 px-7 h-full w-full;
+    @apply bg-secondaryDark py-24 md:px-14 px-7 h-full w-full;
   }
   .authcard4 {
     @apply flex justify-center w-full h-full;
   }
   .authcard5 {
-    @apply bg-primary-dark md:w-1/2 w-full md:rounded-l-xl md:rounded-none rounded-xl md:py-0 py-6 md:px-0 px-2 flex flex-col self-center m-auto h-full items-center;
+    @apply bg-primaryDark md:w-1/2 w-full md:rounded-l-xl md:rounded-none rounded-xl md:py-0 py-6 md:px-0 px-2 flex flex-col self-center m-auto h-full items-center;
   }
   .authcard5a {
     @apply md:m-auto m-0 md:max-w-[23rem] w-full md:px-0 px-5;
@@ -148,7 +156,7 @@ tr td:last-child {
     @apply md:w-1/2 w-0;
   }
   .authbtn {
-    @apply my-4 py-1 rounded-md w-full bg-primary-green hover:bg-[#86a820] text-black;
+    @apply my-4 py-1 rounded-md w-full bg-primaryGreen hover:bg-[#86a820] text-black;
   }
   .authimg1 {
     @apply w-48 h-12 mb-12;
@@ -162,10 +170,15 @@ tr td:last-child {
 }
 @layer base {
   :root {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 3.9%;
+    --primaryGreen: 167, 209, 41;
+    --secondaryDark: 227, 232, 232;
+    --primaryDark: 255, 255, 255;
+    --txWhite: 72, 72, 72;
+    --secondaryBorder: 136, 136, 136;
 
-    --secondary-border: 0 0% 64.7%;
+    --background: 0, 0%, 100%;
+    --foreground: 180, 9.8%, 90%;
+
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -196,8 +209,15 @@ tr td:last-child {
   }
 
   .dark {
+    --primaryGreen: 167, 209, 41;
+    --secondaryDark: 38, 37, 37;
+    --primaryDark: 25, 25, 25;
+    --txWhite: 255, 255, 255;
+    --secondaryBorder: 165, 165, 165;
+
+
     --background: 0 0% 15%;
-    --foreground: 0 0% 98%;
+    --foreground: 38, 37, 37;
 
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;

@@ -22,7 +22,7 @@ const OrderDropDown = ({
   return (
     <form onSubmit={handleSubmit2(onSubmit2)} className="w-full">
       <Tabs defaultValue="toGo" className="w-full">
-        <TabsList className="bg-primary-dark grid w-full grid-cols-3">
+        <TabsList className="bg-primaryDark grid w-full grid-cols-3">
           <TabsTrigger
             value="toGo"
             onClick={() => setSelectedTab("toGo")}
@@ -57,7 +57,7 @@ const OrderDropDown = ({
         </TabsContent>
         <TabsContent value="delivery" className="flex flex-col gap-y-4">
           <div>
-            <Label htmlFor="location" className="text-white font-normal">
+            <Label htmlFor="location" className="text-txWhite font-normal">
               Delivery To
             </Label>
             <div className="flex items-end">
@@ -79,7 +79,7 @@ const OrderDropDown = ({
             )}
           </div>
           <div>
-            <Label htmlFor="location" className="text-white font-normal">
+            <Label htmlFor="location" className="text-txWhite font-normal">
               Order Time
             </Label>
             <div className="flex items-end">
@@ -100,7 +100,7 @@ const OrderDropDown = ({
           </div>
           <div className="flex items-center gap-x-2">
             <Button className="transparent-btn">Estimate Delivery Time</Button>
-            <p className="font-medium text-white">10:00 AM</p>
+            <p className="font-medium text-txWhite">10:00 AM</p>
           </div>
         </TabsContent>
         <TabsContent value="dineIn">
@@ -116,7 +116,7 @@ const OrderDropDown = ({
           )}
         </TabsContent>
       </Tabs>
-      <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primary-green font-medium">
+      <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryGreen font-medium">
         <button type="submit">Save</button>
       </div>
       {!isFormValid && (

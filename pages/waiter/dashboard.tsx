@@ -428,12 +428,12 @@ const WaiterDashboard: FC = () => {
                         asChild
                         className="cursor-pointer bg-[#424141d6]"
                       >
-                        <div className="lg:text-base md:text-sm md:flex hidden transparent-btn text-secondary-border lg:p-3 p-1">
+                        <div className="lg:text-base md:text-sm md:flex hidden transparent-btn text-secondaryBorder lg:p-3 p-1">
                           <Plus />
                           <p>Customize Dashboard</p>
                         </div>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="border-none backdrop-blur-sm text-white bg-gray-300/30 w-56">
+                      <DropdownMenuContent className="border-none backdrop-blur-sm text-txWhite bg-gray-300/30 w-56">
                         <DropdownMenuLabel className="px-1 py-0">
                           <div>
                             <p className="text-sm">Customize Dashboard</p>
@@ -529,11 +529,11 @@ const WaiterDashboard: FC = () => {
                           <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
                             <div
                               className={`
-                                    bg-primary-dark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                             >
-                              <div className="text-secondary-border w-full">
+                              <div className="text-secondaryBorder w-full">
                                 <div className="p-2">
-                                  <div className="text-secondary-border font-medium flex justify-between">
+                                  <div className="text-secondaryBorder font-medium flex justify-between">
                                     <h1 className="text-lg">Customers</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -609,11 +609,11 @@ const WaiterDashboard: FC = () => {
                             </div>
                             <div
                               className={`
-                                    bg-primary-dark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                             >
-                              <div className="text-secondary-border w-full">
+                              <div className="text-secondaryBorder w-full">
                                 <div className="p-2">
-                                  <div className="text-secondary-border font-medium flex justify-between">
+                                  <div className="text-secondaryBorder font-medium flex justify-between">
                                     <h1 className="text-lg">Orders</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -689,11 +689,11 @@ const WaiterDashboard: FC = () => {
                             </div>
                             <div
                               className={`
-                                    bg-primary-dark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                             >
-                              <div className="text-secondary-border w-full">
+                              <div className="text-secondaryBorder w-full">
                                 <div className="p-2">
-                                  <div className="text-secondary-border font-medium flex justify-between">
+                                  <div className="text-secondaryBorder font-medium flex justify-between">
                                     <h1 className="text-lg">Revenue</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -770,9 +770,9 @@ const WaiterDashboard: FC = () => {
                           </div>
                           <div className="flex lg:gap-y-0 gap-y-3 gap-x-4 lg:h-[25rem] lg:flex-row flex-col">
                             <div className="lg:w-1/2">
-                              <div className="rounded-md md:w-auto w-full h-fit bg-primary-dark ">
+                              <div className="rounded-md md:w-auto w-full h-fit bg-primaryDark ">
                                 <div className="border-b border-primary-border">
-                                  <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                  <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                     <h1 className="text-lg">Your Tasks</h1>
                                     <div className="flex gap-x-4">
                                       <EllipsisVertical />
@@ -787,7 +787,7 @@ const WaiterDashboard: FC = () => {
                                     className="w-full"
                                   >
                                     <div className="flex justify-between  md:gap-x-16 gap-x-0">
-                                      <TabsList className="w-fit rounded-lg bg-secondary-dark">
+                                      <TabsList className="w-fit rounded-lg bg-secondaryDark">
                                         {Object.entries(
                                           tabActivitiesHeaders || {}
                                         ).map(([key, value], index): any => (
@@ -821,11 +821,11 @@ const WaiterDashboard: FC = () => {
                                             .map((item, index) => (
                                               <div
                                                 key={index}
-                                                className="py-3 bg-secondary-dark rounded-md"
+                                                className="py-3 bg-secondaryDark rounded-md"
                                               >
-                                                <div className="px-2 border-l-2 border-primary-green text-secondary-border items-center flex justify-between">
+                                                <div className="px-2 border-l-2 border-primaryGreen text-secondaryBorder items-center flex justify-between">
                                                   <div className="text-sm w-1/2">
-                                                    <p className="capitalize truncate text-base text-white">
+                                                    <p className="capitalize truncate text-base text-txWhite">
                                                       {item.title}
                                                     </p>
                                                     <div className="flex items-center gap-x-1">
@@ -842,7 +842,7 @@ const WaiterDashboard: FC = () => {
                                                     >
                                                       {item.priority}
                                                     </p>
-                                                    <button className="text-sm text-secondary-border h-fit flex rounded-xl transparent-btn py-2 px-3 ">
+                                                    <button className="text-sm text-secondaryBorder h-fit flex rounded-xl transparent-btn py-2 px-3 ">
                                                       View
                                                     </button>
                                                   </div>
@@ -857,9 +857,9 @@ const WaiterDashboard: FC = () => {
                               </div>
                             </div>
                             <div className="lg:w-1/2">
-                              <div className="rounded-md md:w-auto w-full h-fit bg-primary-dark ">
+                              <div className="rounded-md md:w-auto w-full h-fit bg-primaryDark ">
                                 <div className="border-b border-primary-border">
-                                  <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                  <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                     <h1 className="text-lg">
                                       Running Activities
                                     </h1>
@@ -876,7 +876,7 @@ const WaiterDashboard: FC = () => {
                                     className="w-full"
                                   >
                                     <div className="flex justify-between  md:gap-x-16 gap-x-0">
-                                      <TabsList className="w-fit rounded-lg bg-secondary-dark">
+                                      <TabsList className="w-fit rounded-lg bg-secondaryDark">
                                         {Object.entries(
                                           tabActivitiesHeaders || {}
                                         ).map(([key, value], index): any => (
@@ -910,18 +910,18 @@ const WaiterDashboard: FC = () => {
                                             .map((item, index) => (
                                               <div
                                                 key={index}
-                                                className="py-3 bg-secondary-dark rounded-md"
+                                                className="py-3 bg-secondaryDark rounded-md"
                                               >
-                                                <div className="px-2 border-l-2 border-primary-green text-secondary-border items-center flex justify-between">
+                                                <div className="px-2 border-l-2 border-primaryGreen text-secondaryBorder items-center flex justify-between">
                                                   <div className="w-[15%]">
-                                                    <div className="w-fit bg-primary-dark border-[5px] border-[#403e3e] rounded-full">
+                                                    <div className="w-fit bg-primaryDark border-[5px] border-[#403e3e] rounded-full">
                                                       <p className="p-[0.3rem]">
                                                         0%
                                                       </p>
                                                     </div>
                                                   </div>
                                                   <div className="text-sm w-[45%]">
-                                                    <p className="capitalize truncate text-base text-white">
+                                                    <p className="capitalize truncate text-base text-txWhite">
                                                       {item.title}
                                                     </p>
                                                     <div className="flex items-center gap-x-1">
@@ -941,14 +941,14 @@ const WaiterDashboard: FC = () => {
                                                             key={index}
                                                             alt="img"
                                                             src={orderImg}
-                                                            className={`rounded-full border-2 border-secondary-dark w-7 relative right-${
+                                                            className={`rounded-full border-2 border-secondaryDark w-7 relative right-${
                                                               index * 2
                                                             } `}
                                                           />
                                                         ))}
                                                       {item.assignedTo.length >
                                                       3 ? (
-                                                        <h1 className="relative right-6 text-xs w-fit h-fit py-[0.1rem] px-[0.2rem] text-white bg-secondary-dark border-2 border-text-completed border-dashed rounded-full">
+                                                        <h1 className="relative right-6 text-xs w-fit h-fit py-[0.1rem] px-[0.2rem] text-txWhite bg-secondaryDark border-2 border-text-completed border-dashed rounded-full">
                                                           +
                                                           {item.assignedTo
                                                             .length - 3}
@@ -971,11 +971,11 @@ const WaiterDashboard: FC = () => {
                         <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col md:flex-row flex-col gap-y-4">
                           <div
                             className={`
-                                    bg-primary-dark   w-full h-fit cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark   w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-1`}
                           >
-                            <div className="text-secondary-border w-full">
+                            <div className="text-secondaryBorder w-full">
                               <div className="border-b border-primary-border">
-                                <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                   <h1 className="text-lg">Notifications</h1>
                                   <div className="flex gap-x-4">
                                     <EllipsisVertical />
@@ -988,7 +988,7 @@ const WaiterDashboard: FC = () => {
                                     <MessageCircleQuestion className="w-5" />
                                   </div>
                                   <div className="lg:pl-0 pl-1 lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Review Request
                                     </h1>
                                     <p className="truncate">
@@ -1006,7 +1006,7 @@ const WaiterDashboard: FC = () => {
                                     <NotepadText className="w-5" />
                                   </div>
                                   <div className="lg:pl-0 pl-1 lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Order Request
                                     </h1>
                                     <p className="truncate">
@@ -1027,11 +1027,11 @@ const WaiterDashboard: FC = () => {
 
                           <div
                             className={`
-                                    bg-primary-dark   w-full h-fit cursor-pointer text-sm text-white rounded-md py-1`}
+                                    bg-primaryDark   w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-1`}
                           >
-                            <div className="text-secondary-border w-full">
+                            <div className="text-secondaryBorder w-full">
                               <div className="border-b border-primary-border">
-                                <div className="p-2 text-secondary-border font-medium flex justify-between pb-4">
+                                <div className="p-2 text-secondaryBorder font-medium flex justify-between pb-4">
                                   <h1 className="text-lg">Messages</h1>
                                   <div className="flex gap-x-4">
                                     <EllipsisVertical />
@@ -1048,7 +1048,7 @@ const WaiterDashboard: FC = () => {
                                     />
                                   </div>
                                   <div className="lg:pl-0 pl-1 lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Damien Black
                                     </h1>
                                     <p className="truncate">
@@ -1070,7 +1070,7 @@ const WaiterDashboard: FC = () => {
                                     />
                                   </div>
                                   <div className="lg:pl-0 pl-1 lg:w-48 w-44">
-                                    <h1 className="text-lg text-white">
+                                    <h1 className="text-lg text-txWhite">
                                       Damien Black
                                     </h1>
                                     <p className="truncate">
@@ -1092,13 +1092,13 @@ const WaiterDashboard: FC = () => {
                         </div>
                       </div>
 
-                      <div className="flex pb-4 flex-col bg-primary-dark pt-4 rounded-md">
+                      <div className="flex pb-4 flex-col bg-primaryDark pt-4 rounded-md">
                         <div className="pt-4 rounded-t-md px-3 flex pb-4 border-b border-primary-border">
                           <div className="flex justify-between w-full">
-                            <p className="capitalize text-lg font-medium text-secondary-border">
+                            <p className="capitalize text-lg font-medium text-secondaryBorder">
                               Recent Orders
                             </p>
-                            <EllipsisVertical className="capitalize text-lg font-medium text-secondary-border" />
+                            <EllipsisVertical className="capitalize text-lg font-medium text-secondaryBorder" />
                           </div>
                         </div>
 
@@ -1114,7 +1114,7 @@ const WaiterDashboard: FC = () => {
                             {invoiceData.slice(0, 10).map((invoice, index) => (
                               <TableRow
                                 key={index}
-                                className="bg-primary-dark truncate text-center py-2 rounded-lg cursor-pointer"
+                                className="bg-primaryDark truncate text-center py-2 rounded-lg cursor-pointer"
                               >
                                 <TableCell className="truncate">
                                   <Circle
@@ -1160,7 +1160,7 @@ const WaiterDashboard: FC = () => {
                         </AdminOrdersTable>
                         <Link
                           href="orders"
-                          className="text-white md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
+                          className="text-txWhite md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
                         >
                           View All Orders
                           <ChevronRight color="#c0bfbc" />
