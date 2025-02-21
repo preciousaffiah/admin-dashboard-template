@@ -14,7 +14,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
 
   return (
     <div className="h-screen">
-      <div className="md:flex hidden group transition-all duration-300 ease-in overflow-y-scroll top-16 left-0 fixed h-screen  text-secondaryBorder flex-col hover:w-[20%] w-14  z-50 bg-black py-3 px-4">
+      <div className=" bg-background md:flex hidden group transition-all duration-300 ease-in overflow-y-scroll top-16 left-0 fixed h-screen  text-secondaryBorder flex-col hover:w-[14rem] w-14  z-50 py-3 px-4">
         <div className="flex h-fit flex-col gap-y-4 ">
           <Menu className="w-7 h-7" />
 
@@ -26,14 +26,14 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
                 item.link === path
                   ? "group/tag hover:bg-primaryGreen hover:text-black"
                   : " hover:bg-gray-300/30"
-              } cursor-pointer transition hover:backdrop-blur-sm rounded-md duration-300 flex items-center w-40`}
+              } cursor-pointer transition hover:backdrop-blur-sm rounded-md duration-300 flex gap-x-4 items-center w-48`}
             >
               <item.tag
                 className={`${
                   item.link === path
-                    ? "text-primaryGreen group-hover/tag:text-black"
+                    ? "text-primary bg-primaryGreen rounded-md group-hover/tag:text-black"
                     : ""
-                } pl-1 pr-4 w-10 h-8`}
+                }  w-[1.9rem] px-1 h-8`}
               />
               <p className="text-sm">{item.title}</p>
             </Link>

@@ -59,7 +59,7 @@ const OrdersGrid = ({
             }
             className={`${
               selectedInvoice.OrderID === invoice.OrderID
-                ? "border border-primaryGreen bg-[#1e240a]"
+                ? "border border-primaryGreen bg-selectedRow"
                 : "bg-primaryDark"
             } md:w-auto w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
           >
@@ -115,7 +115,7 @@ const OrdersGrid = ({
                   </div>
                 </div>
                 <p
-                  className={`status-${invoice.Status} font-medium status-pending text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                  className={`status-${invoice.Status} font-medium statusPending text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                 >
                   {invoice.Status}
                 </p>

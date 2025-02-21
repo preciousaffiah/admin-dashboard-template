@@ -432,7 +432,6 @@ const WaiterOrders: FC = () => {
 
   return (
     <WaiterLayout subtitle="Waiter" title={title}>
-      <MainNavbar title={title} />
       <div className="flex justify-end h-screen w-full">
         <Container>
           <div className="authcard3 h-fit lg:px-6 md:px-8 px-0">
@@ -463,7 +462,7 @@ const WaiterOrders: FC = () => {
                           </h1>
                           <Link
                             href="/create-order"
-                            className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
+                            className="authbtn w-fit m-0 px-3 py-2 text-sm font-semibold"
                           >
                             Create Order
                           </Link>
@@ -507,7 +506,7 @@ const WaiterOrders: FC = () => {
                               key={index}
                               className={`${
                                 selectedInvoice.OrderID === invoice.OrderID
-                                  ? "border border-primaryGreen bg-[#1e240a]"
+                                  ? "border border-primaryGreen bg-selectedRow"
                                   : "bg-primaryDark"
                               } truncate text-center py-2 rounded-lg cursor-pointer`}
                               onClick={() =>
@@ -542,7 +541,7 @@ const WaiterOrders: FC = () => {
                                 <div className="flex items-center gap-x-1">
                                   {invoice.MenuItems[0].name}
                                   {invoice.MenuItems.length > 1 ? (
-                                    <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-text-completed border-dashed rounded-full font-medium">
+                                    <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-textCompleted border-dashed rounded-full font-medium">
                                       +{invoice.MenuItems.length - 1}
                                     </h1>
                                   ) : null}
@@ -575,9 +574,9 @@ const WaiterOrders: FC = () => {
               <div>
                 <div className="border-b-[0.3px] border-b-primary-border -border">
                   <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-20 text-txWhite">
+                    <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-20 text-txWhite">
                       <div className="flex flex-col h-full justify-center gap-y-3">
-                        <p className="bg-status-completed text-text-completed rounded-lg w-fit px-2 text-sm font-medium">
+                        <p className="bg-statusCompleted text-textCompleted rounded-lg w-fit px-2 text-sm font-medium">
                           Dine in{tabValue}{" "}
                         </p>
                         <p className="text-lg font-medium">
@@ -618,7 +617,7 @@ const WaiterOrders: FC = () => {
                 <div>
                   <Tabs
                     defaultValue="items"
-                    className="md:text-base text-sm w-full"
+                    className="md:text-base text-sm w-full text-primary"
                   >
                     <div className="flex py-2 px-6">
                       <div className="w-[60%]">
@@ -679,8 +678,8 @@ const WaiterOrders: FC = () => {
                           </div>
 
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <div className=" w-full text-secondaryBorder">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border">
+                              <div className=" w-full ">
                                 <div className="flex justify-between">
                                   <p>Sub-total</p>
                                   <p>${selectedInvoice.Price} </p>
@@ -698,13 +697,13 @@ const WaiterOrders: FC = () => {
                           </div>
 
                           <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <div className=" w-full text-txWhite">
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-text">
+                              <div className=" w-full text-white">
                                 <div className="flex justify-between">
-                                  <button className="flex rounded-xl bg-text-cancelled p-2 ">
+                                  <button className="flex rounded-xl bg-cancel p-2 ">
                                     <X /> Cancel Order
                                   </button>
-                                  <button className="flex rounded-xl bg-text-completed p-2 ">
+                                  <button className="flex rounded-xl bg-approve p-2 ">
                                     <Check /> Approve
                                   </button>
                                 </div>

@@ -40,7 +40,7 @@ const MenuGrid = ({
             }
             className={`${
               selectedInvoice.OrderID === invoice.MenuId
-                ? "border border-primaryGreen bg-[#1e240a]"
+                ? "border border-primaryGreen bg-selectedRow"
                 : "bg-primaryDark"
             } md:w-auto w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
           >
@@ -87,7 +87,7 @@ const MenuGrid = ({
                   </div>
                 </div>
                 <p
-                  className={`status-cancelled font-medium status-pending text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                  className={`status-cancelled font-medium statusPending text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                 >
                   {invoice.Department}
                 </p>

@@ -4,6 +4,7 @@ import WaiterSidebar from "../shared/nav/sidebar/waiter";
 import { PageAnimation } from "../serviette-ui";
 import { useAuthToken } from "@/hooks";
 import { useRouter } from "next/router";
+import { MainNavbar } from "../shared";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -33,9 +34,8 @@ export default function WaiterLayout({
 
   useEffect(() => {
     if (isLoading) return;
-    if (!token || !userData?.businessId) 
-    console.log(token, userData);
-    
+    if (!token || !userData?.businessId) console.log(token, userData);
+
     // router.push("/");
   }, [isLoading, router, token]);
 
@@ -82,6 +82,10 @@ export default function WaiterLayout({
       </Head>
 
       <div className="flex flex-col h-screen min-h-screen">
+        <MainNavbar title={title} />
+
+        <WaiterSidebar />
+
         <PageAnimation>
           {/* nav */}
 

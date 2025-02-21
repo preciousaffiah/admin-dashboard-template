@@ -19,7 +19,7 @@ const Start: FC = () => {
         <Container className={"min-h-[40rem]"}>
           <div className="authcard3 md:pt-24 md:pb-16 py-0 md:px-7 px-0">
             <div className="authcard4">
-              <div className="md:w-1/2 w-full h-full bg-primaryDark z-50 rounded-xl">
+              <div className="md:w-1/2 w-full h-full z-50 rounded-xl md:bg-background bg-foreground">
                 <div className="text-txWhite gap-y-12 flex flex-col justify-center items-center h-full">
                   <div className="text-center flex flex-col gap-y-5">
                     <h2 className="font-semibold text-2xl">Welcome, {userData?.fullname}!</h2>

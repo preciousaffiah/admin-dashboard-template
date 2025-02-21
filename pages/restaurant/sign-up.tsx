@@ -158,8 +158,8 @@ const ResturantSignUp: FC = () => {
   return (
     <UserLayout title={"Resturant sign-up"}>
       <Navbar />
-      <Container className={"min-h-[40rem] pt-6"}>
-        <div className="authcard3 md:min-h-[50rem] md:pt-16 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
+      <Container className={"min-h-[40rem]"}>
+        <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none">
               {success ? (
@@ -178,7 +178,7 @@ const ResturantSignUp: FC = () => {
                           will receive an email in 24 to 72 working hours
                         </p>
                         <p
-                          className="py-2 px-4 rounded-md bg-orange-500 cursor-pointer"
+                          className="py-2 px-4 rounded-md text-white bg-orange-500 cursor-pointer"
                           onClick={() => {
                             router.push("/");
                           }}

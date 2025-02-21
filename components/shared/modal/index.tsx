@@ -11,8 +11,9 @@ const Modal = ({ isOpen, onClose, children }: any) => {
           <div className="modal-header">
             <button className="close-button" onClick={onClose}>
               <ChevronRightCircle
-                fill="#373636"
-                className="md:block hidden w-8 h-8"
+                // fill="#373636"
+                strokeWidth={1}
+                className="md:block hidden w-8 h-8 fill-foreground"
               />
               <CircleX fill="#373636" className="md:hidden block w-8 h-8" />
             </button>

@@ -73,7 +73,7 @@ const OrderDropDown = ({
               <MapPin className="w-5 h-5 peer-focus:text-primary-orange" />
             </div>
             {errors2.location && (
-              <p className="text-text-cancelled text-sm">
+              <p className="text-textCancelled text-sm">
                 Location is required
               </p>
             )}
@@ -95,7 +95,7 @@ const OrderDropDown = ({
               <Clock className="w-5 h-5 peer-focus:text-primary-orange" />
             </div>
             {errors2.orderTime && (
-              <p className="text-text-cancelled text-sm">Time is required</p>
+              <p className="text-textCancelled text-sm">Time is required</p>
             )}
           </div>
           <div className="flex items-center gap-x-2">
@@ -120,7 +120,7 @@ const OrderDropDown = ({
         <button type="submit">Save</button>
       </div>
       {!isFormValid && (
-        <p className="text-text-cancelled text-sm">
+        <p className="text-textCancelled text-sm">
           Please fill in the required fields for the selected tab
         </p>
       )}

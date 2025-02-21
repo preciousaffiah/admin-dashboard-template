@@ -2,7 +2,7 @@ import { axiosWithoutToken } from "@/utils/axios";
 import { string } from "zod";
 
 class AuthenticationService {
-  login(payload: { email: string; password: string }) {
+  login(payload: { email: string; password: string; businessId?: string }) {
     return axiosWithoutToken.post("/auth/login", {
       ...payload,
     });

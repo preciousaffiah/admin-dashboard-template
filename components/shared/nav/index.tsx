@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "public/Logo.png";
-import { Play, SquareMenu } from "lucide-react";
+import { AlignRight, Play, SquareMenu } from "lucide-react";
 import React, { FC } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -31,8 +31,8 @@ const Navbar: FC = () => {
   const { token } = useAuthToken();
 
   return (
-    <div>
-      <div className="md:flex hidden w-full  py-4 text-txWhite items-center px-4">
+    <div className="bg-background">
+      <div className="md:flex hidden w-full py-4 text-txWhite items-center px-4">
         <div className="w-[20%]">
           <Image alt="logo" src={logo} className="w-32 h-8" />
         </div>
@@ -72,7 +72,7 @@ const Navbar: FC = () => {
           </div>
         </div>
       </div>
-      <div className="md:hidden justify-between flex pt-4 px-4 text-white">
+      <div className="md:hidden justify-between flex py-4 px-4 text-white">
         <div className="flex gap-x-3 items-center">
           {!token && (
             <Link href="/auth/sign-in">
@@ -89,7 +89,7 @@ const Navbar: FC = () => {
             </Link>
           )}
 
-          <div className=" bg-primary-orange flex justify-center p-2 rounded-md">
+          <div className=" bg-primary-orange flex justify-center items-center p-2 rounded-md">
             <Play fill="white" className="pr-2" />
 
             <p className="md:text-base text-sm">Watch Video</p>
@@ -101,7 +101,7 @@ const Navbar: FC = () => {
               variant="ghost"
               className="px-0 hover:bg-none hover:text-none"
             >
-              <SquareMenu color="#A5A5A5" className="w-12 h-12" />
+              <AlignRight color="#A5A5A5" className="w-12 h-12" />
             </Button>
           </SheetTrigger>
           <SheetContent className="px-0 border-none">

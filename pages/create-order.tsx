@@ -415,7 +415,7 @@ const CreateOrder: FC = () => {
                                           className={` 
                                         ${
                                           activeId === item.MenuId
-                                            ? "border border-primaryGreen bg-[#1e240a]"
+                                            ? "border border-primaryGreen bg-selectedRow"
                                             : "bg-primaryDark"
                                         }
                                           bg-primaryDark md:w-auto w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-3`}
@@ -549,7 +549,7 @@ const CreateOrder: FC = () => {
                                     })}
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
-                                  <p className="text-text-cancelled text-sm">
+                                  <p className="text-textCancelled text-sm">
                                     {errors1.fname?.message}
                                   </p>
                                 </div>
@@ -569,7 +569,7 @@ const CreateOrder: FC = () => {
                                     })}
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
-                                  <p className="text-text-cancelled text-sm">
+                                  <p className="text-textCancelled text-sm">
                                     {errors1.lname?.message}
                                   </p>
                                 </div>
@@ -589,7 +589,7 @@ const CreateOrder: FC = () => {
                                     })}
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
-                                  <p className="text-text-cancelled text-sm">
+                                  <p className="text-textCancelled text-sm">
                                     {errors1.phone?.message}
                                   </p>
                                 </div>

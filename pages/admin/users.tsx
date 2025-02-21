@@ -145,7 +145,6 @@ const Users: FC = () => {
 
   return (
     <AdminLayout title={title}>
-      <MainNavbar title={title} />
       <div className="flex justify-end h-screen w-full">
         <Sidebar />
         <Container>
@@ -189,7 +188,7 @@ const Users: FC = () => {
                           key={index}
                           className={`${
                             selectedInvoice.UserId === invoice.UserId
-                              ? "border border-primaryGreen bg-[#1e240a]"
+                              ? "border border-primaryGreen bg-selectedRow"
                               : "bg-primaryDark"
                           } truncate text-center py-2 rounded-lg cursor-pointer`}
                           onClick={() =>
@@ -255,7 +254,7 @@ const Users: FC = () => {
               <div>
                 <div className="border-b-[0.3px] border-b-primary-border -border">
                   <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
+                    <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
                       <div className="flex flex-col h-full justify-center gap-y-3">
                         <p className="md:text-xl text-lg font-medium">
                           User Details
@@ -388,7 +387,7 @@ const Users: FC = () => {
                               <button className="text-secondaryBorder flex rounded-xl transparent-btn p-2 ">
                                 <Wrench /> Set Permissions
                               </button>
-                              <button className="flex rounded-xl bg-text-cancelled p-2 ">
+                              <button className="flex rounded-xl bg-textCancelled p-2 ">
                                 <X /> Remove User
                               </button>
                             </div>

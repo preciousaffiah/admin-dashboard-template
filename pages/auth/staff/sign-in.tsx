@@ -33,7 +33,7 @@ import { ToastMessage } from "@/components/serviette-ui";
 // Define Zod schemas for each step
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  restaurantId: z.string()
+  businessId: z.string()
   .min(1, "required")
   .regex(/^[\w\s]+$/, {
     message: "can only contain letters, numbers, and spaces.",
@@ -52,7 +52,7 @@ const SignIn: FC = () => {
     defaultValues: {
       email: "",
       password: "",
-      restaurantId: "",
+      businessId: "",
     },
     mode: "onChange", // Ensures validation checks on each change
   });
@@ -86,19 +86,20 @@ const SignIn: FC = () => {
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
       updateUser(res.data.data);
+      // TODO: conditional routing for admin and staff
       router.push("/waiter/dashboard");
     },
   });
 
   const onSubmit = () => mutation.mutate();
-
+// TODO: turn the form contaier to a component
   return (
     <WaiterLayout title={"Staff sign-in"}>
       <Navbar />
-      <Container className={"min-h-[40rem] pt-6"}>
-        <div className="authcard3 md:min-h-[46rem] md:pt-16 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
+      <Container className={"min-h-[40rem]"}>
+        <div className="authcard3 md:min-h-[46rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
-            <div className="authcard5 md:rounded-xl py-8 rounded-none">
+            <div className="authcard5 md:rounded-xl py-8 rounded-none md:bg-background bg-foreground">
               <div className="md:m-auto lg:px-24 md:px-8 px-4 md:pt-0 pt-6 w-full flex flex-col">
                 <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
@@ -158,7 +159,7 @@ const SignIn: FC = () => {
                             />
                             <FormField
                               control={form.control}
-                              name="restaurantId"
+                              name="businessId"
                               render={({ field }) => (
                                 <FormItem className="grid gap-2 w-full">
                                   <FormControl>

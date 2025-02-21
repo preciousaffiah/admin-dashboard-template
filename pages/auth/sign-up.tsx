@@ -142,10 +142,10 @@ const SignUp: FC = () => {
   return (
     <AuthLayout title={"Sign-up"}>
       <Navbar />
-      <Container className={"min-h-[40rem] pt-6"}>
-        <div className="authcard3 md:min-h-[50rem] md:pt-16 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
+      <Container className={"min-h-[40rem]"}>
+        <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
-            <div className="authcard5 md:rounded-xl py-8 rounded-none">
+            <div className="authcard5 md:rounded-xl py-8 rounded-none md:bg-background bg-foreground">
               {/* <div className="py-2 px-8 w-full">
                 <div className="flex items-center border-dashed border-2 border-l-0 border-r-0 border-primaryGreen h-1 w-full justify-between relative bottom-4">
                   <div className={`step ${step >= 1 ? "active" : ""}`}>1</div>
@@ -157,7 +157,7 @@ const SignUp: FC = () => {
                 <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
                   <div>
-                    <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-txWhite">
+                    <h1 className="md:text-[1.6rem] text-[1.9rem] font-medium text-txWhite">
                       Create Your Account
                     </h1>
                     <p className="font-medium text-secondaryBorder">

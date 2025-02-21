@@ -15,12 +15,6 @@ class BusinessService {
       ...payload,
     });
   }
-
-  login(payload: { email: string; password: string; restaurantId?: string }) {
-    return axiosWithoutToken.post("/auth/login", {
-      ...payload,
-    });
-  }
 }
 
 const BusService = new BusinessService();

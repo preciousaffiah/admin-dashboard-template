@@ -520,7 +520,6 @@ const Menu: FC = () => {
 
   return (
     <AdminLayout title={title}>
-      <MainNavbar title={title} />
       <div className="flex justify-end h-screen w-full">
         <Sidebar />
         <Container>
@@ -579,7 +578,7 @@ const Menu: FC = () => {
                           key={index}
                           className={`${
                             selectedInvoice.MenuId === invoice.MenuId
-                              ? "border border-primaryGreen bg-[#1e240a]"
+                              ? "border border-primaryGreen bg-selectedRow"
                               : "bg-primaryDark"
                           } truncate text-center py-2 rounded-lg cursor-pointer`}
                           onClick={() => {
@@ -645,7 +644,7 @@ const Menu: FC = () => {
               <div>
                 <div className="">
                   <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
+                    <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
                       <div className="flex flex-col h-full justify-center gap-y-3">
                         <p className="md:text-xl text-lg font-medium">
                           Meal Details
@@ -786,7 +785,7 @@ const Menu: FC = () => {
 
                           <div>
                             <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <button className="flex text-txWhite m-auto rounded-xl bg-text-cancelled p-2 ">
+                              <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
                                 <X /> Remove Menu
                               </button>
                             </div>
@@ -899,16 +898,16 @@ const Menu: FC = () => {
                                   <div className="flex justify-between p-3 items-center text-txWhite">
                                     <button
                                       disabled={!isButtonEnabled}
-                                      className={`place-order-btn ${
+                                      className={`place-order-btn text-white font-medium ${
                                         isButtonEnabled
                                           ? "bg-primaryGreen"
                                           : "bg-lime-700"
                                       }
-                                      flex items-center gap-x-1 text-black m-auto rounded-xl p-2`}
+                                      flex items-center gap-x-1 m-auto rounded-xl p-2`}
                                     >
                                       Save
                                       {isLoading ? (
-                                        <LoaderCircle className="text-black w-5 h-5 rotate-icon" />
+                                        <LoaderCircle className="w-5 h-5 rotate-icon" />
                                       ) : (
                                         <Check />
                                       )}

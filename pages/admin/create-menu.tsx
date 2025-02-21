@@ -131,7 +131,6 @@ const CreateMenu: FC = () => {
 
   return (
     <AuthLayout title={title}>
-      <MainNavbar title={title} />
       <div className="flex justify-end h-screen w-full">
         <Sidebar />
 
@@ -203,7 +202,7 @@ const CreateMenu: FC = () => {
                                 )}
                               </div>
                               {imgError && (
-                                <p className="text-text-cancelled text-sm">
+                                <p className="text-textCancelled text-sm">
                                   meal image is required
                                 </p>
                               )}
@@ -233,7 +232,7 @@ const CreateMenu: FC = () => {
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
                                   {errors1.name && (
-                                    <p className="text-text-cancelled text-sm">
+                                    <p className="text-textCancelled text-sm">
                                       meal name is required
                                     </p>
                                   )}
@@ -256,7 +255,7 @@ const CreateMenu: FC = () => {
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
                                   {errors1.price && (
-                                    <p className="text-text-cancelled text-sm">
+                                    <p className="text-textCancelled text-sm">
                                       Invalid value
                                     </p>
                                   )}
@@ -278,7 +277,7 @@ const CreateMenu: FC = () => {
                                     className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                   />
                                   {errors1.description && (
-                                    <p className="text-text-cancelled text-sm">
+                                    <p className="text-textCancelled text-sm">
                                       description is required
                                     </p>
                                   )}
@@ -306,7 +305,7 @@ const CreateMenu: FC = () => {
                                   </div>
                                 </div>
                                 {errorMsg && (
-                                  <p className="text-text-cancelled text-sm">
+                                  <p className="text-textCancelled text-sm">
                                     Please select the required inputs
                                   </p>
                                 )}
@@ -329,7 +328,7 @@ const CreateMenu: FC = () => {
                             <div className="w-full flex flex-col justify-between">
                               <div className="border-b-[0.3px] border-b-primary-border -border">
                                 <div className="px-3 pt-3">
-                                  <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
+                                  <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
                                     <div className="flex flex-col h-full justify-center gap-y-3">
                                       <p className="md:text-xl text-lg font-medium">
                                         Meal Details
@@ -480,7 +479,7 @@ const CreateMenu: FC = () => {
                             <div className="w-full flex flex-col justify-between">
                               <div className="border-b-[0.3px] border-b-primary-border -border">
                                 <div className="pt-3">
-                                  <div className="flex justify-between rounded-xl px-2 items-center bg-primary-forest-green h-16 text-txWhite">
+                                  <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
                                     <div className="flex flex-col h-full justify-center gap-y-3">
                                       <p className="md:text-xl text-lg font-medium">
                                         Meal Details

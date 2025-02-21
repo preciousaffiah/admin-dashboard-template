@@ -49,7 +49,7 @@ const MainNavbar = ({ title }: any) => {
   };
 
   return (
-    <div className="fixed top-0 z-[100] flex w-full justify-between bg-black py-3 text-[#FEFEFE] items-center px-4">
+    <div className="fixed top-0 z-[100] flex w-full bg-background justify-between py-3 text-txWhite items-center px-4">
       <>
         <div className="md:flex hidden w-fit h-full pb-1 items-center">
           <Link href="#">
@@ -78,9 +78,9 @@ const MainNavbar = ({ title }: any) => {
             <DropdownMenu>
               <DropdownMenuTrigger
                 asChild
-                className="cursor-pointer bg-[#424141d6]"
+                className="cursor-pointer"
               >
-                <div className="items-center text-xs leading-4 h-fit w-fit flex bg-[#333232] px-1 py-1 rounded-full gap-x-1">
+                <div className="items-center text-xs leading-4 h-fit w-fit flex bg-foreground px-1 py-1 rounded-full gap-x-1">
                   <div>
                     <Image
                       alt="img"
@@ -116,7 +116,7 @@ const MainNavbar = ({ title }: any) => {
                         <p className="font-normal text-xs text-gray-300">
                           Victoriaokon@email.com
                         </p>
-                        <p className="text-text-completed">Admin</p>
+                        <p className="text-textCompleted">Admin</p>
                       </div>
                     </div>
                   </DropdownMenuLabel>
@@ -151,9 +151,9 @@ const MainNavbar = ({ title }: any) => {
             <DropdownMenu>
               <DropdownMenuTrigger
                 asChild
-                className="cursor-pointer bg-[#424141d6]"
+                className="cursor-pointer]"
               >
-                <div className="items-center text-xs leading-4 h-fit w-fit flex bg-[#333232] px-1 py-1 rounded-full">
+                <div className="items-center text-xs leading-4 h-fit w-fit flex bg-foreground  px-1 py-1 rounded-full">
                   <div className="pr-2">
                     <Image
                       alt="img"
@@ -184,7 +184,7 @@ const MainNavbar = ({ title }: any) => {
                       <p className="font-normal text-xs text-gray-300">
                         Victoriaokon@email.com
                       </p>
-                      <p className="text-text-completed">Admin</p>
+                      <p className="text-textCompleted">Admin</p>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -215,14 +215,14 @@ const MainNavbar = ({ title }: any) => {
             <h1 className="w-full truncate text-xl text-secondaryBorder font-medium">
               {title}
             </h1>
-            <p className="text-xs">13 Ongoing Tasks</p>
+            {/* <p className="text-xs">13 Ongoing Tasks</p> */}
           </div>
         </div>
         <div className="md:hidden flex w-fit h-full justify-start items-center gap-x-2">
-          <div className=" bg-[#333232] h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
+          <div className="bg-foreground h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
             <SearchIcon className="w-[1.1rem]" />
           </div>
-          <div className=" bg-[#333232] h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
+          <div className="bg-foreground h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
             <Bell fill="white" className="w-[1.1rem]" />
           </div>
         </div>
