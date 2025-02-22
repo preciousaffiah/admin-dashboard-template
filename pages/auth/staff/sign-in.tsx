@@ -90,7 +90,7 @@ const SignIn: FC = () => {
       console.log(res.data.data);
       
       // TODO: conditional routing for admin and staff
-      // router.push("/waiter/dashboard");
+      router.push("/waiter/dashboard");
     },
   });
 

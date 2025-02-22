@@ -36,7 +36,7 @@ export default function WaiterLayout({
     if (isLoading) return;
     if (!token || !userData?.businessId) console.log(token, userData);
 
-    // router.push("/");
+    router.push("/");
   }, [isLoading, router, token]);
 
   return (
