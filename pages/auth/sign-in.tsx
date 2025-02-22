@@ -29,20 +29,17 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
-
+import { EyeIcon, EyeOff } from "lucide-react";
 // Define Zod schemas for each step
-const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  // restaurantId: z.string()
-  // .min(1, "required")
-  // .regex(/^[\w\s]+$/, {
-  //   message: "can only contain letters, numbers, and spaces.",
-  // }), //TODO: revisit to ensure no one passes only white space without any string
-  password: z
-    .string()
-    .min(1, "required")
-    .regex(/^\S+$/, { message: "cannot contain whitespace." }),
-}).required()
+const formSchema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    password: z
+      .string()
+      .min(1, "required")
+      .regex(/^\S+$/, { message: "cannot contain whitespace." }),
+  })
+  .required();
 
 const SignIn: FC = () => {
   const [step, setStep] = useState(1);
@@ -52,7 +49,6 @@ const SignIn: FC = () => {
     defaultValues: {
       email: "",
       password: "",
-      // restaurantId: "",
     },
     mode: "onChange", // Ensures validation checks on each change
   });
@@ -60,11 +56,9 @@ const SignIn: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { updateUser } = useAuthToken();
 
-
   const router = useRouter();
 
   const path = usePathname();
-
 
   const registerRequest: any = async () => {
     try {
@@ -73,7 +67,7 @@ const SignIn: FC = () => {
       return response.data;
     } catch (error: any) {
       console.log(error);
-      
+
       throw new Error(
         error?.response?.data?.message ||
           error?.response?.data?.data?.message ||
@@ -112,21 +106,21 @@ const SignIn: FC = () => {
                   </div>
                 </div>
                 <AnimatePresence>
-                {mutation.isError && (
-                  <motion.div
-                    initial={{ y: -20, opacity: 0.5 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0.2 }}
-                  >
-                    <ToastMessage
-                      message={
-                        mutation?.error?.message ||
-                        "An error occured during sign up"
-                      }
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  {mutation.isError && (
+                    <motion.div
+                      initial={{ y: -20, opacity: 0.5 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0.2 }}
+                    >
+                      <ToastMessage
+                        message={
+                          mutation?.error?.message ||
+                          "An error occured during sign up"
+                        }
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -137,49 +131,70 @@ const SignIn: FC = () => {
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: -20, opacity: 0.2 }}
                     >
-                        <div className="flex flex-col gap-y-4">
-                            <FormField
-                              control={form.control}
-                              name="email"
-                              render={({ field }) => (
-                                <FormItem className="grid gap-2 w-full">
-                                  <FormControl>
-                                    <input
-                                      autoComplete="off"
-                                      type="email"
-                                      placeholder="email"
-                                      {...field}
-                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                              <FormItem className="grid gap-2 w-full">
-                                <FormControl>
+                      <div className="flex flex-col gap-y-4">
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem className="grid gap-2 w-full">
+                              <FormControl>
+                                <input
+                                  autoComplete="off"
+                                  type="email"
+                                  placeholder="email"
+                                  {...field}
+                                  className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem className="grid gap-2 w-full">
+                              <FormControl>
+                                <div className="flex">
                                   <input
                                     autoComplete="off"
-                                    type="text"
+                                    type={`${
+                                      showPassword ? "password" : "text"
+                                    }`}
                                     placeholder="Password"
                                     {...field}
                                     className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                   />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                                  <EyeOff
+                                    onClick={() => {
+                                      setShowPassword(!showPassword);
+                                    }}
+                                    className={`${
+                                      showPassword ? "hidden" : "block"
+                                    } cursor-pointer w-5 h-5 relative right-4 text-secondaryBorder`}
+                                  />
+                                  <EyeIcon
+                                    onClick={() => {
+                                      setShowPassword(!showPassword);
+                                    }}
+                                    className={`${
+                                      showPassword ? "block" : "hidden"
+                                    } cursor-pointer w-5 h-5 relative right-4 text-secondaryBorder`}
+                                  />
+                                </div>
+                              </FormControl>
 
-                          <br />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <br />
                       </div>
                     </motion.div>
 
-                    { form.formState.isValid && mutation.isPending ? (
+                    {form.formState.isValid && mutation.isPending ? (
                       <button className="authbtn flex justify-center items-center bg-[#74901f] gap-x-4">
                         <LoaderCircle className="text-gray-300 w-5 h-5 rotate-icon" />
                         Hold on...

@@ -135,7 +135,7 @@ tr td:last-child {
   }
 
   .active-order-tab {
-    @apply data-[state=active]:text-primaryGreen;
+    @apply data-[state=active]:text-primaryLime;
   }
   .transparent-btn {
     @apply border-secondary-transparent-border border px-2 rounded-xl flex gap-x-2;
@@ -145,7 +145,7 @@ tr td:last-child {
     @apply h-screen;
   }
   .authcard2 {
-    @apply w-full m-auto;
+    @apply w-full m-auto bg-foreground;
   }
   .authcard3 {
     @apply bg-secondaryDark py-24 md:px-14 px-7 h-full w-full;
@@ -178,6 +178,7 @@ tr td:last-child {
 @layer base {
   :root {
     --primaryGreen: 167, 209, 41;
+    --primaryLime: 139, 174, 34;
     --secondaryDark: 227, 232, 232;
     --primaryDark: 255, 255, 255;
     --txWhite: 72, 72, 72;
@@ -227,6 +228,7 @@ tr td:last-child {
 
   .dark {
     --primaryGreen: 167, 209, 41;
+    --primaryLime: 167, 209, 41;
     --secondaryDark: 38, 37, 37;
     --primaryDark: 25, 25, 25;
     --txWhite: 255, 255, 255;
@@ -275,6 +277,17 @@ tr td:last-child {
 @layer base {
   /* * {
     @apply border-border;
+  } */
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+
+@layer base {
+  /* * {
+    @apply border-border outline-ring/50;
   } */
   body {
     @apply bg-background text-foreground;

@@ -21,7 +21,7 @@
       &::placeholder {
         color: $text-tertiary;
       }
-      &:focus,
+      &:focus
       &:active {
         color: $text-primary;
         background-color: $background-light;

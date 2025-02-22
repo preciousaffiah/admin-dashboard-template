@@ -50,7 +50,7 @@ const OrderDropDown = ({
             <div className="flex items-center gap-x-3">
               <span className="flex gap-x-2">
                 Default Value:{" "}
-                <h1 className="font-medium text-neutral-300"> To Go</h1>
+                <h1 className="font-medium text-txWhite"> To Go</h1>
               </span>
             </div>
           )}
@@ -99,7 +99,7 @@ const OrderDropDown = ({
             )}
           </div>
           <div className="flex items-center gap-x-2">
-            <Button className="transparent-btn">Estimate Delivery Time</Button>
+            <Button className="transparent-btn text-txWhite">Estimate Delivery Time</Button>
             <p className="font-medium text-txWhite">10:00 AM</p>
           </div>
         </TabsContent>
@@ -116,7 +116,7 @@ const OrderDropDown = ({
           )}
         </TabsContent>
       </Tabs>
-      <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryGreen font-medium">
+      <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryLime font-medium">
         <button type="submit">Save</button>
       </div>
       {!isFormValid && (

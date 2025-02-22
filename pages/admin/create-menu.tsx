@@ -1,4 +1,4 @@
-import { AuthLayout } from "@layouts";
+import { AdminLayout, AuthLayout } from "@layouts";
 import React, { FC, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MainNavbar } from "@/components/shared";
@@ -130,10 +130,8 @@ const CreateMenu: FC = () => {
   const title = "Create Menu";
 
   return (
-    <AuthLayout title={title}>
+    <AdminLayout title={title}>
       <div className="flex justify-end h-screen w-full">
-        <Sidebar />
-
         <Container>
           <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 md:px-8 px-0">
             {success ? (
@@ -309,7 +307,7 @@ const CreateMenu: FC = () => {
                                     Please select the required inputs
                                   </p>
                                 )}
-                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryGreen font-medium">
+                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryLime font-medium">
                                   <button type="submit">Save</button>
                                 </div>
                               </div>
@@ -372,9 +370,6 @@ const CreateMenu: FC = () => {
                                   <div className="w-full">
                                     <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
                                       <h1 className="">Menu Summary</h1>
-                                      <h1 className="text-xs font-medium text-primaryGreen">
-                                        See All
-                                      </h1>
                                     </div>
                                   </div>
                                 </div>
@@ -399,14 +394,14 @@ const CreateMenu: FC = () => {
                                           </div>
                                           <div className="flex justify-between">
                                             <p>Description</p>
-                                            <p className="w-full truncate max-w-36">{menu.description} </p>
+                                            <p className="w-full word-breaks text-right">{menu.description} </p>
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                     <div>
                                       <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                                        <div className="p-3 w-full bg-neutral-700 rounded-b-md">
+                                        <div className="p-3 w-full bg-foreground rounded-b-md">
                                           <button
                                             disabled={!isOrderComplete()}
                                             onClick={() => handleMenu()}
@@ -437,7 +432,7 @@ const CreateMenu: FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="md:hidden flex bg-black px-4 h-20 fixed bottom-0 w-full z-50">
+                <div className="md:hidden flex bg-foreground px-4 h-20 fixed bottom-0 w-full z-50">
                   <div className="text-xs flex w-full justify-between items-center">
                     <div className="text-txWhite font-medium w-full flex justify-between">
                       <Drawer>
@@ -523,9 +518,6 @@ const CreateMenu: FC = () => {
                                   <div className="w-full">
                                     <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
                                       <h1 className="">Menu Summary</h1>
-                                      <h1 className="text-xs font-medium text-primaryGreen">
-                                        See All
-                                      </h1>
                                     </div>
                                   </div>
                                 </div>
@@ -572,7 +564,7 @@ const CreateMenu: FC = () => {
           </div>
         </Container>
       </div>
-    </AuthLayout>
+    </AdminLayout>
   );
 };
 

@@ -14,7 +14,7 @@ import * as z from "zod";
 import { GoogleSignIn } from "@/components/serviette-icons";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/shared";
-import { CircleCheckBig, LoaderCircle } from "lucide-react";
+import { CircleCheckBig, EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import Container from "@/components/shared/container";
 import {
   Form,
@@ -31,18 +31,21 @@ import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 
 // Define Zod schemas for each step
-const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  businessId: z.string()
-  .min(1, "required")
-  .regex(/^[\w\s]+$/, {
-    message: "can only contain letters, numbers, and spaces.",
-  }), //TODO: revisit to ensure no one passes only white space without any string
-  password: z
-    .string()
-    .min(1, "required")
-    .regex(/^\S+$/, { message: "cannot contain whitespace." }),
-}).required()
+const formSchema = z
+  .object({
+    email: z.string().email("invalid email address"),
+    businessId: z
+      .string()
+      .min(1, "required")
+      .regex(/^[\w\s]+$/, {
+        message: "can only contain letters, numbers, and spaces.",
+      }),
+    password: z
+      .string()
+      .min(1, "required")
+      .regex(/^\S+$/, { message: "cannot contain whitespace." }),
+  })
+  .required();
 
 const SignIn: FC = () => {
   const [step, setStep] = useState(1);
@@ -60,11 +63,9 @@ const SignIn: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { updateUser } = useAuthToken();
 
-
   const router = useRouter();
 
   const path = usePathname();
-
 
   const registerRequest: any = async () => {
     try {
@@ -73,7 +74,7 @@ const SignIn: FC = () => {
       return response.data;
     } catch (error: any) {
       console.log(error);
-      
+
       throw new Error(
         error?.response?.data?.message ||
           error?.response?.data?.data?.message ||
@@ -86,13 +87,15 @@ const SignIn: FC = () => {
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
       updateUser(res.data.data);
+      console.log(res.data.data);
+      
       // TODO: conditional routing for admin and staff
-      router.push("/waiter/dashboard");
+      // router.push("/waiter/dashboard");
     },
   });
 
   const onSubmit = () => mutation.mutate();
-// TODO: turn the form contaier to a component
+  // TODO: turn the form contaier to a component
   return (
     <WaiterLayout title={"Staff sign-in"}>
       <Navbar />
@@ -113,21 +116,21 @@ const SignIn: FC = () => {
                   </div>
                 </div>
                 <AnimatePresence>
-                {mutation.isError && (
-                  <motion.div
-                    initial={{ y: -20, opacity: 0.5 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0.2 }}
-                  >
-                    <ToastMessage
-                      message={
-                        mutation?.error?.message ||
-                        "An error occured during sign up"
-                      }
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  {mutation.isError && (
+                    <motion.div
+                      initial={{ y: -20, opacity: 0.5 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0.2 }}
+                    >
+                      <ToastMessage
+                        message={
+                          mutation?.error?.message ||
+                          "An error occured during sign up"
+                        }
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -138,63 +141,83 @@ const SignIn: FC = () => {
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: -20, opacity: 0.2 }}
                     >
-                        <div className="flex flex-col gap-y-4">
-                            <FormField
-                              control={form.control}
-                              name="email"
-                              render={({ field }) => (
-                                <FormItem className="grid gap-2 w-full">
-                                  <FormControl>
-                                    <input
-                                      autoComplete="off"
-                                      type="email"
-                                      placeholder="email"
-                                      {...field}
-                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control}
-                              name="businessId"
-                              render={({ field }) => (
-                                <FormItem className="grid gap-2 w-full">
-                                  <FormControl>
-                                    <input
-                                      autoComplete="off"
-                                      type="text"
-                                      placeholder="Restaurant/Business Id"
-                                      {...field}
-                                      className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                              <FormItem className="grid gap-2 w-full">
-                                <FormControl>
+                      <div className="flex flex-col gap-y-4">
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem className="grid gap-2 w-full">
+                              <FormControl>
+                                <input
+                                  autoComplete="off"
+                                  type="email"
+                                  placeholder="email"
+                                  {...field}
+                                  className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="businessId"
+                          render={({ field }) => (
+                            <FormItem className="grid gap-2 w-full">
+                              <FormControl>
+                                <input
+                                  autoComplete="off"
+                                  type="text"
+                                  placeholder="Restaurant/Business Id"
+                                  {...field}
+                                  className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem className="grid gap-2 w-full">
+                              <FormControl>
+                                <div className="flex">
                                   <input
                                     autoComplete="off"
-                                    type="text"
+                                    type={`${
+                                      showPassword ? "password" : "text"
+                                    }`}
                                     placeholder="Password"
                                     {...field}
                                     className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                   />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                                  <EyeOff
+                                    onClick={() => {
+                                      setShowPassword(!showPassword);
+                                    }}
+                                    className={`${
+                                      showPassword ? "hidden" : "block"
+                                    } cursor-pointer w-5 h-5 relative right-4 text-secondaryBorder`}
+                                  />
+                                  <EyeIcon
+                                    onClick={() => {
+                                      setShowPassword(!showPassword);
+                                    }}
+                                    className={`${
+                                      showPassword ? "block" : "hidden"
+                                    } cursor-pointer w-5 h-5 relative right-4 text-secondaryBorder`}
+                                  />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                          <br />
+                        <br />
                       </div>
                     </motion.div>
 

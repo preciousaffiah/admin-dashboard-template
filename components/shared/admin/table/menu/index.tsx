@@ -1,35 +1,7 @@
-import React, { FC, useState } from "react";
+import React from "react";
 import { SearchBar } from "@/components/serviette-ui";
-import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/shared";
-import {
-  Check,
-  ChevronDown,
-  Circle,
-  Clock,
-  Edit3,
-  EllipsisVertical,
-  Filter,
-  Minus,
-  Plus,
-  Trash2,
-  UtensilsCrossed,
-  X,
-} from "lucide-react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { AdminTable, Invoice, Menus } from "@/types";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
+import { AdminTable } from "@/types";
 import DefaultTable from "../../../table";
 import MenuGrid from "../../menuGrid";
 import DataPagination from "@/components/serviette-ui/Pagination";
@@ -61,13 +33,13 @@ const AdminMenuTable = ({
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
-        <div className="flex m-auto justify-between py-3 md:px-3 px-0 overflow-x-scroll md:gapx-0 gap-x-2">
-          <div className="md:block hidden">
+        <div className="flex m-auto justify-between py-3 px-3 overflow-x-scroll md:gapx-0 gap-x-2">
+          {/* <div className="md:block hidden">
             <Button className="transparent-btn text-secondaryBorder border-[0.3px]">
               <p className="capitalize text-sm">bulk actions</p>
               <ChevronDown className="w-5" />
             </Button>
-          </div>
+          </div> */}
           <TabsList className="w-fit bg-secondaryDark">
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
@@ -82,12 +54,12 @@ const AdminMenuTable = ({
               )
             )}
           </TabsList>
-          <div>
+          {/* <div>
             <Button className="md:rounded-xl rounded-full md:px-3 transparent-btn text-secondaryBorder">
               <Filter className="w-5" />
               <ChevronDown className="md:block hidden w-5" />
             </Button>
-          </div>
+          </div> */}
           <div>
             <SearchBar
               placeholder="Search for food, drinks and more"

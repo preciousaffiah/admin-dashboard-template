@@ -82,9 +82,9 @@ export default function WaiterLayout({
       </Head>
 
       <div className="flex flex-col h-screen min-h-screen">
-        <MainNavbar title={title} />
-
         <WaiterSidebar />
+
+        <MainNavbar title={title} />
 
         <PageAnimation>
           {/* nav */}

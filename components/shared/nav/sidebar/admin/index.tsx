@@ -28,41 +28,41 @@ const AdminSidebar = () => {
       link: "/admin/orders",
       tag: NotepadText,
     },
-    {
-      title: "Messages",
-      link: "/",
-      tag: Mail,
-    },
-    {
-      title: "Analytics",
-      link: "/",
-      tag: ChartSpline,
-    },
+    // {
+    //   title: "Messages",
+    //   link: "/",
+    //   tag: Mail,
+    // },
+    // {
+    //   title: "Analytics",
+    //   link: "/",
+    //   tag: ChartSpline,
+    // },
     {
       title: "User Management",
       link: "/admin/users",
       tag: Users,
     },
-    {
-      title: "Reviews",
-      link: "/",
-      tag: MessageSquarePlus,
-    },
-    {
-      title: "Profile",
-      link: "/",
-      tag: User,
-    },
-    {
-      title: "Account Settings",
-      link: "/",
-      tag: Bolt,
-    },
-    {
-      title: "Help Center",
-      link: "/",
-      tag: ShieldQuestion,
-    },
+    // {
+    //   title: "Reviews",
+    //   link: "/",
+    //   tag: MessageSquarePlus,
+    // },
+    // {
+    //   title: "Profile",
+    //   link: "/",
+    //   tag: User,
+    // },
+    // {
+    //   title: "Account Settings",
+    //   link: "/",
+    //   tag: Bolt,
+    // },
+    // {
+    //   title: "Help Center",
+    //   link: "/",
+    //   tag: ShieldQuestion,
+    // },
   ];
 
   const mobileNavItems = {

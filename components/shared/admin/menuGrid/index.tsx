@@ -49,18 +49,18 @@ const MenuGrid = ({
                   <p className="w-full text-end font-medium text-lg">${invoice.Price}</p>
 
                   <div className="flex flex-col gap-x-2 w-full">
-                    <div className="w-24 h-24 ">
+                    <div className="size-16">
                       <Image
                         alt="img"
                         src={orderImg}
                         className="w-full h-full rounded-full"
                       />
                     </div>
-                    <div className="max-w-72">
-                      <p className="text-lg font-medium text-ellipsis overflow-hidden">
+                    <div className="max-w-60">
+                      <p className="text-lg font-medium text-ellipsis break-words">
                         {invoice.Name}
                       </p>
-                      <p className="text-ellipsis overflow-hidden">
+                      <p className="text-ellipsis truncate">
                         {invoice.Description}
                       </p>
                     </div>
@@ -70,7 +70,7 @@ const MenuGrid = ({
             <div className="text-secondaryBorder">
               <div className="px-4 py-6">
                 <div className="pl-1 flex justify-between">
-                  <h1 className="text-primaryGreen font-medium">
+                  <h1 className="text-primaryLime font-medium">
                     View Details
                   </h1>
                   <div className="flex gap-x-4">

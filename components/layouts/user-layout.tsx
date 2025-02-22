@@ -31,10 +31,10 @@ export default function UserLayout({
 
   const { token, isLoading } = useAuthToken();
 
-  useEffect(() => {
-    if (isLoading) return;
-    if (!token) router.push("/");
-  }, [isLoading, router, token]);
+  // useEffect(() => {
+  //   if (isLoading) return;
+  //   if (!token) router.push("/");
+  // }, [isLoading, router, token]);
 
   return (
     <Fragment>

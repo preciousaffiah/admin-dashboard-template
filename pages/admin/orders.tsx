@@ -37,7 +37,6 @@ const tableHeaders = [
   "Time of Order",
   "Assigned to",
   "Status",
-  "Actions",
 ];
 const tabHeaders = {
   all: "all",
@@ -323,7 +322,7 @@ const AdminOrders: FC = () => {
                                   fill={`
                               ${
                                 selectedInvoice.OrderID === invoice.OrderID
-                                  ? "green"
+                                  ? "lime"
                                   : "none"
                               }
                               `}
@@ -342,7 +341,7 @@ const AdminOrders: FC = () => {
                                 <div className="flex items-center gap-x-1">
                                   {invoice.MenuItems[0].name}
                                   {invoice.MenuItems.length > 1 ? (
-                                    <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-textCompleted border-dashed rounded-full font-medium">
+                                    <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-primaryLime border-dashed rounded-full font-medium">
                                       +{invoice.MenuItems.length - 1}
                                     </h1>
                                   ) : null}
@@ -373,9 +372,6 @@ const AdminOrders: FC = () => {
                                     {invoice.Status}
                                   </p>
                                 </div>
-                              </TableCell>
-                              <TableCell className="flex justify-center">
-                                <EllipsisVertical />
                               </TableCell>
                             </TableRow>
                           ))}
@@ -608,8 +604,8 @@ const AdminOrders: FC = () => {
 
                           <div>
                             <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <div className=" w-fit m-auto text-txWhite">
-                                <button className="flex rounded-xl bg-textCompleted p-2 ">
+                              <div className=" w-fit m-auto text-primary">
+                                <button className="flex rounded-xl bg-primaryGreen p-2 ">
                                   <Check /> Save Changes
                                 </button>
                               </div>

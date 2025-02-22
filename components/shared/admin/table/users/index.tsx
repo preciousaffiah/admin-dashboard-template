@@ -49,13 +49,13 @@ const AdminUsersTable = ({
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
-        <div className="flex m-auto justify-between py-3 md:px-3 px-0 overflow-x-scroll md:gapx-0 gap-x-2">
-          <div className="md:block hidden">
+        <div className="flex m-auto justify-between py-3 px-3 overflow-x-scroll md:gapx-0 gap-x-2">
+          {/* <div className="md:block hidden">
             <Button className="transparent-btn text-secondaryBorder border-[0.3px]">
               <p className="capitalize text-sm">bulk actions</p>
               <ChevronDown className="w-5" />
             </Button>
-          </div>
+          </div> */}
           <TabsList className="w-fit bg-secondaryDark">
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
@@ -70,12 +70,12 @@ const AdminUsersTable = ({
               )
             )}
           </TabsList>
-          <div>
+          {/* <div>
             <Button className="md:rounded-xl rounded-full md:px-3 transparent-btn text-secondaryBorder">
               <Filter className="w-5" />
               <ChevronDown className="md:block hidden w-5" />
             </Button>
-          </div>
+          </div> */}
           <div>
             <SearchBar
               placeholder="Search for food, drinks and more"

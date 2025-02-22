@@ -1,5 +1,7 @@
+import { AuthLayout, WaiterLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC, useEffect, useRef, useState } from "react";
+import { PageAnimation } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
 import { MainNavbar, Modal } from "@/components/shared";
 import Container from "@/components/shared/container";
@@ -404,7 +406,7 @@ const validationSchema = z.object({
     }),
 });
 
-const Menu: FC = () => {
+const WaiterMenus: FC = () => {
   const {
     register,
     handleSubmit,
@@ -516,9 +518,8 @@ const Menu: FC = () => {
   let title = "Menu";
 
   return (
-    <AdminLayout title={title}>
+    <WaiterLayout subtitle="Waiter" title={title}>
       <div className="flex justify-end h-screen w-full">
-        <Sidebar />
         <Container>
           <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
             <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
@@ -530,7 +531,7 @@ const Menu: FC = () => {
                         Your Menu
                       </h1>
                       <Link
-                        href="/admin/create-menu"
+                        href="/waiter/create-menu"
                         className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
                       >
                         Create Menu
@@ -592,7 +593,7 @@ const Menu: FC = () => {
                               fill={`
                               ${
                                 selectedInvoice.MenuId === invoice.MenuId
-                                  ? "lime"
+                                  ? "green"
                                   : "none"
                               }
                               `}
@@ -688,7 +689,7 @@ const Menu: FC = () => {
                           ) : (
                             <Edit3
                               onClick={handleIconClick}
-                              className="text-primaryLime cursor-pointer"
+                              className="text-primaryGreen cursor-pointer"
                             />
                           )}
                         </div>
@@ -699,11 +700,12 @@ const Menu: FC = () => {
                           </p>
                         </div>
                         <div className="m-auto">
-                          <p
-                            className="flex bg-primaryGreen rounded-md items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold"
+                          <Link
+                            href="#"
+                            className="flex authbtn items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold"
                           >
                             View Full Menu
-                          </p>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -917,8 +919,8 @@ const Menu: FC = () => {
           </div>
         </Container>
       </div>
-    </AdminLayout>
+    </WaiterLayout>
   );
 };
 
-export default Menu;
+export default WaiterMenus;

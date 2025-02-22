@@ -33,20 +33,37 @@ import { useAuthToken } from "@/hooks";
 import { BusService } from "@/services";
 import { ToastMessage } from "@/components/serviette-ui";
 
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
+const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 2) / 3); // Max base64 length for 5MB
+
 // Define Zod schemas for each step
 const restaurantDetailsSchema = z.object({
   name: z
     .string()
     .min(1, "Restaurant name is required")
     .regex(/^[\w\s]+$/, {
-      message: "can only contain letters, numbers, and spaces.",
-    }), //TODO: revisit to ensure no one passes only white space without any string
+      message: "can only contain letters and numbers.",
+    })
+    .trim()
+    .regex(/[a-zA-Z0-9]/, {
+      message: "must contain at least one letter or number.",
+    })
+    .refine((value) => !/\s{2,}/.test(value), {
+      message: "contain multiple consecutive spaces.",
+    }),
   address: z
     .string()
     .min(1, "Address is required")
     .regex(/^[\w\s]+$/, {
-      message: "can only contain letters, numbers, and spaces.",
-    }), //TODO: revisit to ensure no one passes only white space without any string
+      message: "can only contain letters and numbers.",
+    })
+    .trim()
+    .regex(/[a-zA-Z0-9]/, {
+      message: "must contain at least one letter or number.",
+    })
+    .refine((value) => !/\s{2,}/.test(value), {
+      message: "contain multiple consecutive spaces.",
+    }),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
   email: z.string().email("Invalid email address"),
   type: z.enum(["fine dining", "fast food", "cafe", "bar", "other"]), //add field for other
@@ -55,7 +72,10 @@ const restaurantDetailsSchema = z.object({
     .min(1, "Country is required")
     .regex(/^\S+$/, { message: "cannot contain whitespace." }),
   cac: z.string().refine((val) => val.startsWith("data:"), {
-    message: "Invalid file format", //TODO: add max file size
+    message: "Invalid file format",
+  })
+  .refine((val) => val.length <= MAX_BASE64_LENGTH, {
+    message: "File size must be less than 3MB.",
   }),
   role: z.enum(["owner", "manager"]),
 });
@@ -103,7 +123,6 @@ const ResturantSignUp: FC = () => {
     },
     mode: "onChange", // Ensures validation checks on each change
   });
-  // TODO: add pending business message after rgistrationaa
   const [showPassword, setShowPassword] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [docName, setDocName] = useState("");

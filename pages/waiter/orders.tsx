@@ -31,7 +31,6 @@ const tableHeaders = [
   "Price",
   "Time of Order",
   "Status",
-  "Actions",
 ];
 const tabHeaders = {
   all: "all",
@@ -522,7 +521,7 @@ const WaiterOrders: FC = () => {
                                   fill={`
                               ${
                                 selectedInvoice.OrderID === invoice.OrderID
-                                  ? "green"
+                                  ? "lime"
                                   : "none"
                               }
                               `}
@@ -557,9 +556,6 @@ const WaiterOrders: FC = () => {
                                     {invoice.Status}
                                   </p>
                                 </div>
-                              </TableCell>
-                              <TableCell className="flex justify-center">
-                                <EllipsisVertical />
                               </TableCell>
                             </TableRow>
                           ))}

@@ -20,7 +20,7 @@ const WaiterSidebar = () => {
     },
     {
       title: "Menu",
-      link: "#",
+      link: "/waiter/menus",
       tag: UtensilsCrossed,
     },
     {
@@ -28,46 +28,46 @@ const WaiterSidebar = () => {
       link: "/waiter/orders",
       tag: NotepadText,
     },
-    {
-      title: "Messages",
-      link: "#",
-      tag: Mail,
-    },
-    {
-      title: "Analytics",
-      link: "#",
-      tag: ChartSpline,
-    },
-    {
-      title: "User Management",
-      link: "#",
-      tag: Users,
-    },
-    {
-      title: "Reviews",
-      link: "#",
-      tag: MessageSquarePlus,
-    },
-    {
-      title: "Profile",
-      link: "#",
-      tag: User,
-    },
-    {
-      title: "Account Settings",
-      link: "#",
-      tag: Bolt,
-    },
-    {
-      title: "Help Center",
-      link: "#",
-      tag: ShieldQuestion,
-    },
+    // {
+    //   title: "Messages",
+    //   link: "#",
+    //   tag: Mail,
+    // },
+    // {
+    //   title: "Analytics",
+    //   link: "#",
+    //   tag: ChartSpline,
+    // },
+    // {
+    //   title: "User Management",
+    //   link: "#",
+    //   tag: Users,
+    // },
+    // {
+    //   title: "Reviews",
+    //   link: "#",
+    //   tag: MessageSquarePlus,
+    // },
+    // {
+    //   title: "Profile",
+    //   link: "#",
+    //   tag: User,
+    // },
+    // {
+    //   title: "Account Settings",
+    //   link: "#",
+    //   tag: Bolt,
+    // },
+    // {
+    //   title: "Help Center",
+    //   link: "#",
+    //   tag: ShieldQuestion,
+    // },
   ];
 
   const mobileNavItems = {
     dashboard: "/waiter/dashboard",
-    menus: "#",
+    menus: "/waiter/menus",
     orders: "/waiter/orders",
     profile: "#",
     message: "#",

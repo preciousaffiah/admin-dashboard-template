@@ -1,4 +1,4 @@
-import { AuthLayout } from "@layouts";
+import { AuthLayout, WaiterLayout } from "@layouts";
 import React, { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MainNavbar } from "@/components/shared";
@@ -345,11 +345,10 @@ const CreateOrder: FC = () => {
   const title = "Create Order";
 
   return (
-    <AuthLayout title={title}>
-      <MainNavbar title={title} />
+    <WaiterLayout title={title}>
       <div className="flex justify-end h-screen w-full">
         <Container>
-          <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 md:px-8 px-0">
+          <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 px-0">
             {success ? (
               <div className="md:w-1/2 w-full h-screen m-auto bg-primaryDark z-50 rounded-xl">
                 <div className="text-txWhite gap-y-4 flex flex-col justify-center items-center h-full">
@@ -375,13 +374,13 @@ const CreateOrder: FC = () => {
                       <div></div>
                     </div>
                     <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondaryBorder">
-                      <div className="md:w-[60%] w-full flex flex-col gap-y-3">
+                      <div className="lg:w-[60%] w-full flex flex-col gap-y-3">
                         <h1 className="pb-4">Order Details</h1>
                         <div className="flex flex-col gap-y-4">
                           <div className="w-full bg-secondaryDark p-3 rounded-md">
                             <div className="flex text-txWhite w-full pb-4 justify-between">
                               <h2 className="font-medium">Add a menu</h2>
-                              <h2 className="text-primaryGreen">
+                              <h2 className="text-primaryLime">
                                 Custom Order
                               </h2>
                             </div>
@@ -398,7 +397,7 @@ const CreateOrder: FC = () => {
                                     <h1 className="text-txWhite font-medium text-xl md:pb-0 pb-4">
                                       Choose A Menu
                                     </h1>
-                                    <div className="flex px-2 bg-neutral-700 items-center rounded-md">
+                                    <div className="flex px-2 bg-primaryDark items-center rounded-md">
                                       <Input
                                         placeholder="Start your search here"
                                         className="md:w-72 w-full text-txWhite px-0 bg-transparent border-0 focus-visible:ring-offset-0 focus-visible:ring-0"
@@ -471,14 +470,14 @@ const CreateOrder: FC = () => {
                                       className="flex justify-end w-full"
                                       onClick={() => removeOrder(item)}
                                     >
-                                      <X className="w-5 h-5 bg-red-600 rounded-full" />
+                                      <X className="w-5 h-5 bg-red-600 rounded-full text-white" />
                                     </div>
                                     <Image
                                       alt="img"
                                       src={orderImg2}
                                       className="w-24 h-24 rounded-full"
                                     />
-                                    <h1 className="capitalize text-center pt-1 w-40 break-all">
+                                    <h1 className="capitalize text-center pt-1 w-40 break-words">
                                       {item.Name}
                                     </h1>
                                   </div>
@@ -593,7 +592,7 @@ const CreateOrder: FC = () => {
                                     {errors1.phone?.message}
                                   </p>
                                 </div>
-                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryGreen font-medium">
+                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryLime font-medium">
                                   <button type="submit">Save</button>
                                 </div>
                               </form>
@@ -699,7 +698,7 @@ const CreateOrder: FC = () => {
                           </Collapsible>
                         </div>
                       </div>
-                      <div className="w-[40%] md:block hidden">
+                      <div className="w-[40%] lg:block hidden">
                         <h1 className="pb-4">Order Summary</h1>
                         <div className="w-full flex justify-center h-[40rem] bg-secondaryDark rounded-md">
                           {order.orderItems.length < 1 ? (
@@ -714,10 +713,10 @@ const CreateOrder: FC = () => {
                                     <h1>Items</h1>
                                   </div>
                                   <div className="text-primary-border text-sm flex w-[50%] items-center justify-center gap-x-4">
-                                    <div className="w-[35%]">
+                                    <div className="w-[45%]">
                                       <h1>Quantity</h1>
                                     </div>
-                                    <div className="w-[35%]">
+                                    <div className="w-[25%]">
                                       <h1>Price</h1>
                                     </div>
                                     <div className="w-[30%]">
@@ -731,15 +730,15 @@ const CreateOrder: FC = () => {
                                       key={index}
                                       className="text-txWhite items-center flex gap-x-2 rounded-lg"
                                     >
-                                      <div className="w-[50%] flex gap-x-1">
-                                        <div className="w-[30%] h-12">
+                                      <div className="w-[50%] flex gap-x-1 items-center">
+                                        <div className="w-[25%] h-12">
                                           <Image
                                             src={orderImg}
                                             alt="img"
                                             className="w-full h-full"
                                           />
                                         </div>
-                                        <p className="w-[70%] m-auto truncate">
+                                        <p className="w-[75%] m-auto break-words">
                                           {item.Name}
                                         </p>
                                       </div>
@@ -778,7 +777,7 @@ const CreateOrder: FC = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="p-3 w-full bg-neutral-700 rounded-b-md">
+                              <div className="p-3 w-full bg-foreground rounded-b-md">
                                 <button
                                   disabled={!isOrderComplete()}
                                   onClick={() => handleOrder()}
@@ -803,7 +802,7 @@ const CreateOrder: FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="md:hidden flex bg-black px-4 h-20 fixed bottom-0 w-full z-50">
+                <div className="lg:hidden flex bg-foreground px-4 h-20 fixed bottom-0 w-full z-50">
                   <div className="text-xs flex w-full justify-between items-center">
                     <div className="text-txWhite font-medium w-full flex justify-between">
                       <Drawer>
@@ -847,10 +846,10 @@ const CreateOrder: FC = () => {
                                       <h1>Items</h1>
                                     </div>
                                     <div className="text-primary-border text-sm flex w-[50%] items-center justify-center gap-x-4">
-                                      <div className="w-[35%]">
+                                      <div className="w-[45%]">
                                         <h1>Quantity</h1>
                                       </div>
-                                      <div className="w-[35%]">
+                                      <div className="w-[25%]">
                                         <h1>Price</h1>
                                       </div>
                                       <div className="w-[30%]">
@@ -864,15 +863,15 @@ const CreateOrder: FC = () => {
                                         key={index}
                                         className="text-txWhite items-center flex gap-x-2 rounded-lg"
                                       >
-                                        <div className="w-[50%] flex gap-x-1">
-                                          <div className="w-[30%] h-12">
+                                        <div className="w-[50%] flex gap-x-1 items-center">
+                                          <div className="w-[25%] h-12">
                                             <Image
                                               src={orderImg}
                                               alt="img"
                                               className="w-full h-full"
                                             />
                                           </div>
-                                          <p className="w-[70%] m-auto truncate">
+                                          <p className="w-[75%] m-auto break-words">
                                             {item.Name}
                                           </p>
                                         </div>
@@ -927,7 +926,7 @@ const CreateOrder: FC = () => {
           </div>
         </Container>
       </div>
-    </AuthLayout>
+    </WaiterLayout>
   );
 };
 

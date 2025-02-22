@@ -10,7 +10,6 @@ const Container = ({ children, className }: any) => {
         path === "/auth/staff/sign-in" ||
         path === "/restaurant/sign-up" ||
         path === "/start" ||
-        path === "/create-order" ||
         path === "/"
           ? "w-full"
           : "lg:w-[95%] md:w-[93%] w-full justify-end"

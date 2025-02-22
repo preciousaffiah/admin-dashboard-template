@@ -23,6 +23,8 @@ const config = {
       },
       screens: {
         'lg': '1034px',
+        'md': '850px', // Custom value for md breakpoint
+
         // => @media (min-width: 992px) { ... }
       },
       backgroundImage: {
@@ -33,6 +35,7 @@ const config = {
         "row-hover": "#333",
         // "selectedRow": "#212A08",
         primaryGreen: "rgba(var(--primaryGreen))",
+        primaryLime: "rgba(var(--primaryLime))",
         txWhite: "rgba(var(--txWhite))",
         "primary-orange": "#F07000",
         primaryDark: "rgba(var(--primaryDark))",

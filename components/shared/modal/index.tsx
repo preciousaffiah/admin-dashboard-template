@@ -15,7 +15,11 @@ const Modal = ({ isOpen, onClose, children }: any) => {
                 strokeWidth={1}
                 className="md:block hidden w-8 h-8 fill-foreground"
               />
-              <CircleX fill="#373636" className="md:hidden block w-8 h-8" />
+              <CircleX
+                // fill="#373636"
+                strokeWidth={1}
+                className="md:hidden block w-8 h-8 fill-foreground"
+              />
             </button>
           </div>
           <div className="modal-body">{children}</div>

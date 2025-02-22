@@ -4,19 +4,9 @@ import React, { FC } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   TrendingUp,
-  BookCheck,
-  CalendarFold,
   ChevronRight,
   Circle,
-  ClipboardPlus,
-  Clock,
   EllipsisVertical,
-  Mail,
-  MessageCircleQuestion,
-  NotepadText,
-  Plus,
-  ScrollText,
-  ShoppingCart,
   TrendingDown,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -27,13 +17,6 @@ import orderImg from "public/orderimg.png";
 import {
   Area,
   AreaChart,
-  Line,
-  LineChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  LabelList,
 } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -422,7 +405,6 @@ const tableHeaders = [
   "Time of Order",
   "OrderID",
   "Status",
-  "Actions",
 ];
 const tabHeaders = {
   all: "all",
@@ -1102,9 +1084,6 @@ const Dashboard: FC = () => {
                                       {invoice.Status}
                                     </p>
                                   </div>
-                                </TableCell>
-                                <TableCell className="flex justify-center">
-                                  <EllipsisVertical />
                                 </TableCell>
                               </TableRow>
                             ))}

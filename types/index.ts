@@ -55,7 +55,6 @@ export type User = {
   Name: string;
   Email: string;
   userImage: string;
-  Type: string;
   Phone: string;
   Department: string;
   Date: string;

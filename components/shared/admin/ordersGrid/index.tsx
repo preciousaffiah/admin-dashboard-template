@@ -1,27 +1,13 @@
-import React, { FC, useState } from "react";
-import { SearchBar } from "@/components/serviette-ui";
-import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/shared";
+import React from "react";
 import {
-  Check,
-  ChevronDown,
-  Circle,
   Clock,
   Edit3,
-  EllipsisVertical,
-  Filter,
-  Minus,
-  Plus,
-  Trash2,
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AdminTable, Invoice } from "@/types";
 import Image from "next/image";
 import orderImg from "public/orderimg.png";
-import DefaultTable from "../../table";
 import { handleRowClick } from "@/utils/modal";
 
 const defaultInvoice: Invoice = {
@@ -94,7 +80,7 @@ const OrdersGrid = ({
             <div className="text-secondaryBorder">
               <div className="px-4 py-6">
                 <div className="pl-1 flex justify-between">
-                  <h1 className="text-primaryGreen font-medium">
+                  <h1 className="text-primaryLime font-medium">
                     View Details
                   </h1>
                   <div className="flex gap-x-4">
