@@ -37,7 +37,7 @@ const Navbar: FC = () => {
           <Image alt="logo" src={logo} className="w-32 h-8" />
         </div>
 
-        <div className="w-[55%] flex pl-5">
+        <div className="w-[50%] flex pl-5">
           {navItems.map((item, index) => (
             <li key={index} className="list-none px-4 text-[0.98rem]">
               <Link
@@ -49,7 +49,7 @@ const Navbar: FC = () => {
             </li>
           ))}
         </div>
-        <div className="flex justify-end w-[25%] gap-x-1 text-white">
+        <div className="flex justify-end w-[30%] gap-x-1 text-white">
           {!token && (
             <Link href="/auth/sign-in">
               <p className="px-3 py-1 bg-primary-orange rounded-md ">
@@ -57,7 +57,7 @@ const Navbar: FC = () => {
               </p>
             </Link>
           )}
-          {path !== "/restaurant/sign-up" && token && (
+          {path !== "/restaurant/sign-up" && (
             <Link href="/restaurant/sign-up">
               <p className="px-3 py-1 bg-primary-orange rounded-md ">
                 Register business
@@ -81,7 +81,7 @@ const Navbar: FC = () => {
               </p>
             </Link>
           )}
-          {path !== "/restaurant/sign-up" && token && (
+          {path !== "/restaurant/sign-up" && (
             <Link href="/restaurant/sign-up">
               <p className="p-2 bg-primary-orange rounded-md ">
                 Register business

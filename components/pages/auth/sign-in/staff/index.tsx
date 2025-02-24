@@ -1,11 +1,11 @@
 "use client";
 
-import { AuthLayout } from "@layouts";
+import { AuthLayout, UserLayout, WaiterLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../public/Logo.png";
-import authEmImage from "../../public/auth-email.png";
-import authPwdImage from "../../public/auth-pwd.png";
+import logo from "public/Logo.png";
+// import authEmImage from "../../../public/auth-email.png";
+import authPwdImage from "public/auth-pwd.png";
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import * as z from "zod";
 import { GoogleSignIn } from "@/components/serviette-icons";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/shared";
-import { CircleCheckBig, LoaderCircle } from "lucide-react";
+import { CircleCheckBig, EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import Container from "@/components/shared/container";
 import {
   Form,
@@ -29,19 +29,21 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
-import { EyeIcon, EyeOff } from "lucide-react";
+import useBusinessDetails from "@/hooks/useBusinessDetails";
+import { BDetails } from "@/types";
+
 // Define Zod schemas for each step
 const formSchema = z
   .object({
-    email: z.string().email("Invalid email address"),
-    password: z
-      .string()
-      .min(1, "required")
-      .regex(/^\S+$/, { message: "cannot contain whitespace." }),
+    email: z.string().trim().email("invalid email address"),
+    businessId: z.string().trim().min(1, "required"),
+    password: z.string().min(1, "required"),
   })
   .required();
 
-const SignIn: FC = () => {
+const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
+  const router = useRouter();
+
   const [step, setStep] = useState(1);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -49,6 +51,7 @@ const SignIn: FC = () => {
     defaultValues: {
       email: "",
       password: "",
+      businessId: "",
     },
     mode: "onChange", // Ensures validation checks on each change
   });
@@ -56,12 +59,12 @@ const SignIn: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { updateUser } = useAuthToken();
 
-  const router = useRouter();
-
   const path = usePathname();
+  form.setValue("businessId", name);
 
   const registerRequest: any = async () => {
     try {
+        
       const response = await AuthService.login(form.getValues());
 
       return response.data;
@@ -80,27 +83,33 @@ const SignIn: FC = () => {
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
       updateUser(res.data.data);
-      router.push("/");
+      console.log(res.data.data);
+
+      // TODO: conditional routing for admin and staff
+      // router.push("/waiter/dashboard");
     },
   });
 
   const onSubmit = () => mutation.mutate();
-
+  // TODO: turn the form contaier to a component
   return (
-    <AuthLayout title={"Sign-in"}>
+    <AuthLayout title={"Staff sign-in"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 md:min-h-[46rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none md:bg-background bg-foreground">
-              <div className="md:m-auto md:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
-                <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
+              <div className="md:m-auto lg:px-24 md:px-8 px-4 md:pt-0 pt-6 w-full flex flex-col">
+                {/* <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" /> */}
+                <p className="font-semibold py-7 text-secondaryBorder text-2xl uppercase">
+                  {data.name}
+                </p>
                 <div className="pb-8">
                   <div>
-                    <h1 className="md:text-[1.6rem] auth-header font-medium text-txWhite">
-                      Sign in to Your Account
+                    <h1 className="md:text-[1.6rem] font-medium text-txWhite">
+                      Sign in to Staff Account
                     </h1>
-                    <p className="font-medium auth-subheader text-secondaryBorder">
+                    <p className="font-medium text-secondaryBorder">
                       Enter your details
                     </p>
                   </div>
@@ -184,7 +193,6 @@ const SignIn: FC = () => {
                                   />
                                 </div>
                               </FormControl>
-
                               <FormMessage />
                             </FormItem>
                           )}
@@ -208,10 +216,16 @@ const SignIn: FC = () => {
                     )}
                   </form>
                 </Form>
+                {/* <div className="pt-3 text-secondaryBorder text-center text-base">
+                  <p>-Or-</p>
 
+                  <Link href="/auth/sign-in" className="link">
+                    <span className="text-[#8BAE22]">Sign in as user</span>
+                  </Link>
+                </div> */}
                 <div className="pt-3 text-secondaryBorder text-center text-base">
-                  Don't have an account?&nbsp;
-                  <Link href="/auth/sign-up" className="link">
+                  Don't have a user account?&nbsp;
+                  <Link href="/waiter/dashboard" className="link">
                     <span className="text-[#8BAE22]">Sign up instead</span>
                   </Link>
                 </div>
@@ -227,4 +241,4 @@ const SignIn: FC = () => {
   );
 };
 
-export default SignIn;
+export default StaffSignIn;

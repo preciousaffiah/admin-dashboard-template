@@ -31,9 +31,9 @@ export default function AuthLayout({
 
   const { token } = useAuthToken();
 
-  useEffect(() => {
-    if (token) router.push("/");
-  }, [router, token]);
+  // useEffect(() => {
+  //   if (token) router.push("/");
+  // }, [router, token]);
 
   return (
     <Fragment>

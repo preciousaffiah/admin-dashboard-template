@@ -175,7 +175,7 @@ const ResturantSignUp: FC = () => {
   };
 
   return (
-    <UserLayout title={"Resturant sign-up"}>
+    <AuthLayout title={"Resturant sign-up"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
@@ -497,13 +497,13 @@ const ResturantSignUp: FC = () => {
                     </form>
                   </Form>
 
-                  <div className="pt-3 text-secondaryBorder text-center text-base">
+                  {/* <div className="pt-3 text-secondaryBorder text-center text-base">
                     <Link href="/auth/staff/sign-in" className="link">
                       <span className="text-[#8BAE22]">
                         Sign in as staff instead
                       </span>
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -513,7 +513,7 @@ const ResturantSignUp: FC = () => {
           </div>
         </div>
       </Container>
-    </UserLayout>
+    </AuthLayout>
   );
 };
 

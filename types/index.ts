@@ -13,6 +13,12 @@ export type TAppUserState = {
   userData: TAppUser;
 };
 
+export type BDetails = {
+  name?: string;
+  id?: string;
+  email?: string;
+};
+
 interface MenuItem {
   mealImage: string;
   name: string;

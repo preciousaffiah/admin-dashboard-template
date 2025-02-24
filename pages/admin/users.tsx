@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { FC, useState } from "react";
-import { MainNavbar, Modal } from "@/components/shared";
+import { Modal } from "@/components/shared";
 import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { User } from "@/types";
@@ -12,41 +12,19 @@ import Sidebar from "@/components/shared/nav/sidebar/admin";
 // import gif from "../../public/svg.mp4";
 import {
   Circle,
-  Clock,
-  EllipsisVertical,
   Mail,
   Phone,
   Plus,
-  Wrench,
   X,
 } from "lucide-react";
 import { Tabs } from "@/components/ui/tabs";
 import AdminUsersTable from "@/components/shared/admin/table/users";
 import AdminLayout from "@/components/layouts/admin-layout";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useMutation } from "@tanstack/react-query";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import AddStaffModal from "@/components/shared/modal/add-staff";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 const data = [
@@ -133,20 +111,10 @@ const tableHeaders = [
   "Status",
 ];
 
-const formSchema = z
-  .object({
-    email: z.string().email("Invalid email address"),
-  })
-  .required();
+
 
 const Users: FC = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
-    mode: "onChange", // Ensures validation checks on each change
-  });
+
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [orderHeader, setOrderHeader] = useState(false);
@@ -177,11 +145,6 @@ const Users: FC = () => {
 
   const updatedInvoice = { ...selectedInvoice };
 
-  const onSubmit = (data: any) => {
-    setSuccess(true);
-    form.reset();
-    console.log("hello email world");
-  };
 
   return (
     <AdminLayout title={title}>
@@ -211,70 +174,10 @@ const Users: FC = () => {
                             Add Staff
                           </p>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px] text-black">
-                          {success ? (
-                            <div className="flex flex-col justify-center items-center">
-                              <video
-                                className="w-40 h-36"
-                                src="/svg.mp4" // Place the MP4/WebM file in "public"
-                                autoPlay
-                                muted
-                                playsInline
-                              />
-                              <p>Staff added successfully</p>
-                            </div>
-                          ) : (
-                            <>
-                              <DialogHeader>
-                                <DialogTitle>Add a staff</DialogTitle>
-                                <DialogDescription className="text-xs">
-                                  Make sure the staff has been registered on the
-                                  platform before adding them.
-                                </DialogDescription>
-                              </DialogHeader>
-                              <div className="grid gap-4">
-                                <div>
-                                  <Form {...form}>
-                                    <form
-                                      onSubmit={form.handleSubmit(onSubmit)}
-                                      className="flex flex-col gap-y-3"
-                                    >
-                                      <FormField
-                                        control={form.control}
-                                        name="email"
-                                        render={({ field }) => (
-                                          <FormItem>
-                                            <div className="flex gap-x-3 items-center">
-                                              <p>Email</p>
-                                              <FormControl>
-                                                <input
-                                                  autoComplete="off"
-                                                  type="text"
-                                                  placeholder="staff email"
-                                                  {...field}
-                                                  className="py-1.5 px-3 text-sm rounded-md w-full border-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
-                                                />
-                                              </FormControl>
-                                            </div>
-                                            <FormMessage className="pt-3 text-center " />
-                                          </FormItem>
-                                        )}
-                                      />
-                                      <DialogFooter>
-                                        <button
-                                          type="submit"
-                                          className="self-end bg-primary-orange rounded-md w-fit text-white px-3 py-1.5 text-sm font-medium"
-                                        >
-                                          Add
-                                        </button>
-                                      </DialogFooter>
-                                    </form>
-                                  </Form>
-                                </div>
-                              </div>
-                            </>
-                          )}
-                        </DialogContent>
+                        <AddStaffModal
+                          success={success}
+                          setSuccess={setSuccess}
+                        />
                       </Dialog>
                     </div>
                   </div>

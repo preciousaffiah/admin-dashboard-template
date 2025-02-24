@@ -40,13 +40,8 @@ const MainNavbar = ({ title }: any) => {
       link: "/",
     },
   ];
-  const { userData } = useAuthToken();
+  const { userData, logout } = useAuthToken();
   const router = useRouter();
-
-  const logout = () => {
-    deleteStore();
-    router.reload();
-  };
 
   return (
     <div className="fixed top-0 z-[100] flex w-full bg-background justify-between py-3 text-txWhite items-center px-4">

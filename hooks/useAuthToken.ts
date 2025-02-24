@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 import { deleteStore, loadStore, saveStore } from "@/utils/local-storage";
 import { TAppUser, TAppUserState } from "@types";
+import { usePathname } from "next/navigation";
 
 function useAuthToken() {
   const [token, setToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<TAppUser | null>(null);
   const [onlineStat, setOnlineStat] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const path = usePathname();
 
   const updateUser = (user: TAppUserState) => {
     if (user) {
@@ -21,7 +23,11 @@ function useAuthToken() {
 
   const logout = () => {
     deleteStore();
-    Router.replace("/auth/sign-in");
+    if (path === "/") {
+      Router.reload();
+    } else {
+      Router.replace("/");
+    }
   };
 
   useEffect(() => {

@@ -15,6 +15,15 @@ class BusinessService {
       ...payload,
     });
   }
+  getBusinessByNameOrIdOrEmail(name?: string, email?: string, id?: string) {
+    return axiosWithoutToken.get("/business", {
+      params: {
+        name,
+        email,
+        _id:id,
+      },
+    });
+  }
 }
 
 const BusService = new BusinessService();

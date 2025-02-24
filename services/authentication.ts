@@ -20,7 +20,6 @@ class AuthenticationService {
     phone: string;
     password: string;
   }) {
-    
     return axiosWithoutToken.post("/auth/register", {
       ...payload,
     });

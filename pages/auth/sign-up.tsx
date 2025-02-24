@@ -35,7 +35,7 @@ import { ToastMessage } from "@/components/serviette-ui";
 const personalDetailsSchema = z.object({
   fullname: z
     .string()
-    .min(1, "Full name is required")
+    .min(1, "fullname is required")
     .regex(/^[A-Za-z\s]+$/, {
       message: "can only contain letters.", //revisit
     })
@@ -46,7 +46,9 @@ const personalDetailsSchema = z.object({
     .refine((value) => !/\s{2,}/.test(value), {
       message: "contain multiple consecutive spaces.",
     }),
-  email: z.string().email("Invalid email address"),
+  email: z.string()
+  .trim()
+  .email("invalid email address"),
   phone: z.string().min(10, "must be at least 10 digits"),
   password: z
     .string()

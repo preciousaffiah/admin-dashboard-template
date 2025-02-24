@@ -33,14 +33,14 @@ export default function AdminLayout({
 
   const { token, userData, isLoading } = useAuthToken();
 
-  useEffect(() => {
-    if (isLoading) return;
-    if (
-      userData?.role !== RoleEnum.MANAGER &&
-      userData?.role !== RoleEnum.OWNER
-    )
-      router.push("/");
-  }, [isLoading, router, token]);
+  // useEffect(() => {
+  //   if (isLoading) return;
+  //   if (
+  //     userData?.role !== RoleEnum.MANAGER &&
+  //     userData?.role !== RoleEnum.OWNER
+  //   )
+  //     router.push("/");
+  // }, [isLoading, router, token]);
 
   return (
     <Fragment>

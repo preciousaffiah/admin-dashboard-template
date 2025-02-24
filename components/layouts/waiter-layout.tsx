@@ -32,12 +32,12 @@ export default function WaiterLayout({
 
   const { token, userData, isLoading } = useAuthToken();
 
-  useEffect(() => {
-    if (isLoading) return;
-    if (!token || !userData?.businessId) console.log(token, userData);
+  // useEffect(() => {
+  //   if (isLoading) return;
+  //   if (!token || !userData?.businessId) console.log(token, userData);
 
-    router.push("/");
-  }, [isLoading, router, token]);
+  //   // router.push("/");
+  // }, [isLoading, router, token]);
 
   return (
     <Fragment>
