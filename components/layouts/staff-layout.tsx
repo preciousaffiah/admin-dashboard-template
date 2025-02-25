@@ -25,7 +25,7 @@ export default function StaffLayout({
   subtitle = subtitle || "";
   description =
     description ||
-    "A Global restaurant known for serving the best meals to customers";
+    "A Global restaurant known for serving the best meals to customers"; //TODO: edit
   heading = heading || title;
 
   const router = useRouter();

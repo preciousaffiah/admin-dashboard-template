@@ -75,8 +75,8 @@ const Navbar: FC = () => {
               <p className="px-3 py-1 bg-primary-orange rounded-md ">SignIn</p>
             </Link>
           )}
-          {path !== "/restaurant/sign-up" && (
-            <Link href="/restaurant/sign-up">
+          {path !== "/business/sign-up" && (
+            <Link href="/business/sign-up">
               <p className="px-3 py-1 bg-primary-orange rounded-md ">
                 Register business
               </p>
@@ -123,8 +123,8 @@ const Navbar: FC = () => {
               <p className="p-2 bg-primary-orange rounded-md ">SignIn</p>
             </Link>
           )}
-          {path !== "/restaurant/sign-up" && (
-            <Link href="/restaurant/sign-up">
+          {path !== "/business/sign-up" && (
+            <Link href="/business/sign-up">
               <p className="p-2 bg-primary-orange rounded-md ">
                 Register business
               </p>

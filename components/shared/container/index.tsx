@@ -7,7 +7,7 @@ const Container = ({ children, className }: any) => {
     path === "/auth/sign-up" ||
     path === "/auth/sign-in" ||
     path.startsWith("/auth/sign-in") || // Dynamic route pattern
-    path === "/restaurant/sign-up" ||
+    path === "/business/sign-up" ||
     path === "/start" ||
     path === "/";
 

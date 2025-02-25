@@ -34,10 +34,10 @@ const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 2) / 3); // Max base64 length for 5MB
 
 // Define Zod schemas for each step
-const restaurantDetailsSchema = z.object({
+const businessDetailsSchema = z.object({
   name: z
     .string()
-    .min(1, "Restaurant name is required")
+    .min(1, "Business name is required")
     .regex(/^[\w\s]+$/, {
       message: "can only contain letters and numbers.",
     })
@@ -91,7 +91,7 @@ const restaurantDetailsSchema = z.object({
 
 // Combine all schemas into one
 const formSchema = z.object({
-  restaurantDetails: restaurantDetailsSchema,
+  businessDetails: businessDetailsSchema,
   // paymentDetails: paymentDetailsSchema,
 });
 
@@ -101,7 +101,7 @@ const ResturantSignUp: FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      restaurantDetails: {
+      businessDetails: {
         name: "",
         address: "",
         phone: "",
@@ -131,7 +131,7 @@ const ResturantSignUp: FC = () => {
   const registerRequest: any = async () => {
     try {
       const response = await BusService.registerBusiness(
-        form.getValues().restaurantDetails
+        form.getValues().businessDetails
       );
 
       return response.data.data;
@@ -159,7 +159,7 @@ const ResturantSignUp: FC = () => {
     let isValid = false;
 
     if (step === 1) {
-      isValid = await form.trigger("restaurantDetails");
+      isValid = await form.trigger("businessDetails");
     }
 
     if (isValid) {
@@ -252,24 +252,24 @@ const ResturantSignUp: FC = () => {
                         >
                           <div className="step-content">
                             <h1 className="text-txWhite pb-3 font-medium text-xl">
-                              Restaurant Details
+                              Business Details
                             </h1>
                             <p className="text-xs text-primary-border font-medium">
-                              *Restaurant name should match name on CAC document
+                              *Business name should match name on CAC document
                             </p>
 
                             <div>
                               <div className="flex flex-col md:flex-row gap-x-1 md:pb-3 items-baseline">
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.name"
+                                  name="businessDetails.name"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
                                         <input
                                           autoComplete="off"
                                           type="text"
-                                          placeholder="Restaurant name"
+                                          placeholder="Business name"
                                           {...field}
                                           className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                         />
@@ -281,7 +281,7 @@ const ResturantSignUp: FC = () => {
                                 />
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.email"
+                                  name="businessDetails.email"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
@@ -302,7 +302,7 @@ const ResturantSignUp: FC = () => {
                               <div className="flex flex-col md:flex-row gap-x-1 md:pb-3 items-baseline">
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.phone"
+                                  name="businessDetails.phone"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
@@ -318,7 +318,7 @@ const ResturantSignUp: FC = () => {
                                 />
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.address"
+                                  name="businessDetails.address"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
@@ -338,7 +338,7 @@ const ResturantSignUp: FC = () => {
                               <div className="flex flex-col md:flex-row gap-x-1 md:pb-3 items-baseline">
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.type"
+                                  name="businessDetails.type"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
@@ -352,7 +352,7 @@ const ResturantSignUp: FC = () => {
                                             disabled
                                             hidden
                                           >
-                                            Select restaurant type
+                                            Select business type
                                           </option>
                                           <option value="fine dining">
                                             fine dining
@@ -371,7 +371,7 @@ const ResturantSignUp: FC = () => {
                                 />
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.country"
+                                  name="businessDetails.country"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
@@ -393,7 +393,7 @@ const ResturantSignUp: FC = () => {
                               <div className="flex flex-col md:flex-row gap-x-1 items-baseline">
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.cac"
+                                  name="businessDetails.cac"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
@@ -433,7 +433,7 @@ const ResturantSignUp: FC = () => {
                                 )}
                                 <FormField
                                   control={form.control}
-                                  name="restaurantDetails.role"
+                                  name="businessDetails.role"
                                   render={({ field }) => (
                                     <FormItem className="grid gap-2 md:w-1/2 w-full">
                                       <FormControl>
