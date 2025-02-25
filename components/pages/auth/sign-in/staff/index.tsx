@@ -83,10 +83,7 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
       updateUser(res.data.data);
-      if (res.data.data.userData.department === DeptEnum.ADMIN) {
-        router.push("/admin/dashboard");
-      }
-      router.push("/waiter/dashboard");
+      router.push("/staff/dashboard");
     },
   });
 
