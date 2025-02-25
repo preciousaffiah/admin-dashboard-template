@@ -5,7 +5,7 @@ export type TAppUser = {
   subscriptionPlan: string;
   businessId: string | null;
   role: string | null;
-  deparment: string | null;
+  department: string | null;
 };
 
 export type TAppUserState = {

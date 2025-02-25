@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthLayout, UserLayout, WaiterLayout } from "@layouts";
+import { GeneralLayout, StaffLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../public/Logo.png";

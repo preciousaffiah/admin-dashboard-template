@@ -1,4 +1,4 @@
-import { AuthLayout } from "@layouts";
+import { GeneralLayout } from "@layouts";
 import SignIn from "./auth/sign-in";
 import Start from "./auth/start";
 

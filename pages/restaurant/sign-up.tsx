@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthLayout, UserLayout, WaiterLayout } from "@layouts";
+import { GeneralLayout, StaffLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
 import logo1 from "../../public/Logo.png";
@@ -175,7 +175,7 @@ const ResturantSignUp: FC = () => {
   };
 
   return (
-    <AuthLayout title={"Resturant sign-up"}>
+    <GeneralLayout title={"Resturant sign-up"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
@@ -513,7 +513,7 @@ const ResturantSignUp: FC = () => {
           </div>
         </div>
       </Container>
-    </AuthLayout>
+    </GeneralLayout>
   );
 };
 

@@ -15,17 +15,17 @@ const WaiterSidebar = () => {
   const navItems = [
     {
       title: "Dashboard",
-      link: "/waiter/dashboard",
+      link: "/staff/dashboard",
       tag: LayoutDashboard,
     },
     {
       title: "Menu",
-      link: "/waiter/menus",
+      link: "/staff/menu",
       tag: UtensilsCrossed,
     },
     {
       title: "Orders",
-      link: "/waiter/orders",
+      link: "/staff/orders",
       tag: NotepadText,
     },
     // {
@@ -66,9 +66,9 @@ const WaiterSidebar = () => {
   ];
 
   const mobileNavItems = {
-    dashboard: "/waiter/dashboard",
-    menus: "/waiter/menus",
-    orders: "/waiter/orders",
+    dashboard: "/staff/dashboard",
+    menus: "/staff/menu",
+    orders: "/staff/orders",
     profile: "#",
     message: "#",
   };

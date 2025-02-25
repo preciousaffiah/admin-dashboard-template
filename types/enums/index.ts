@@ -3,3 +3,10 @@ export enum RoleEnum {
   MANAGER = "manager",
   STAFF = "staff",
 }
+
+export enum DeptEnum {
+  ADMIN = "admin",
+  KITCHEN = "kitchen", 
+  WAITER = "waiter", 
+  BAR = "bar"
+}

@@ -15,17 +15,17 @@ const AdminSidebar = () => {
   const navItems = [
     {
       title: "Dashboard",
-      link: "/admin/dashboard",
+      link: "/staff/dashboard",
       tag: LayoutDashboard,
     },
     {
       title: "Menu",
-      link: "/admin/menus",
+      link: "/staff/menu",
       tag: UtensilsCrossed,
     },
     {
       title: "Orders",
-      link: "/admin/orders",
+      link: "/staff/orders",
       tag: NotepadText,
     },
     // {
@@ -66,9 +66,9 @@ const AdminSidebar = () => {
   ];
 
   const mobileNavItems = {
-    dashboard: "/admin/dashboard",
-    menus: "/admin/menus",
-    orders: "/admin/orders",
+    dashboard: "/staff/dashboard",
+    menus: "/staff/menu",
+    orders: "/staff/orders",
     profile: "#",
     message: "#",
   };

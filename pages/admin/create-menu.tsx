@@ -1,4 +1,4 @@
-import { AdminLayout, AuthLayout } from "@layouts";
+import { AdminLayout, GeneralLayout } from "@layouts";
 import React, { FC, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MainNavbar } from "@/components/shared";

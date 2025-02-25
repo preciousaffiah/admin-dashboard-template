@@ -4,7 +4,7 @@ import Head from "next/head";
 import { PageAnimation } from "../serviette-ui";
 import AdminSidebar from "../shared/nav/sidebar/admin";
 import { useAuthToken } from "@/hooks";
-import { RoleEnum } from "@/types/enums";
+import { DeptEnum, RoleEnum } from "@/types/enums";
 import { MainNavbar } from "../shared";
 
 interface ILayout {
@@ -33,14 +33,10 @@ export default function AdminLayout({
 
   const { token, userData, isLoading } = useAuthToken();
 
-  // useEffect(() => {
-  //   if (isLoading) return;
-  //   if (
-  //     userData?.role !== RoleEnum.MANAGER &&
-  //     userData?.role !== RoleEnum.OWNER
-  //   )
-  //     router.push("/");
-  // }, [isLoading, router, token]);
+  useEffect(() => {
+    if (isLoading) return;
+    if (userData?.department !== DeptEnum.ADMIN) router.push("/");
+  }, [isLoading, router, token]);
 
   return (
     <Fragment>
@@ -86,7 +82,7 @@ export default function AdminLayout({
 
       <div className="flex flex-col h-screen min-h-screen">
         <AdminSidebar />
-        <MainNavbar title={title} />
+        <MainNavbar title={title} subtitle={subtitle} />
 
         <PageAnimation>
           {/* nav */}

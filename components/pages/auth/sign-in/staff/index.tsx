@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthLayout, UserLayout, WaiterLayout } from "@layouts";
+import { GeneralLayout, StaffLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "public/Logo.png";
@@ -31,6 +31,7 @@ import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import useBusinessDetails from "@/hooks/useBusinessDetails";
 import { BDetails } from "@/types";
+import { DeptEnum, RoleEnum } from "@/types/enums";
 
 // Define Zod schemas for each step
 const formSchema = z
@@ -64,7 +65,6 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
 
   const registerRequest: any = async () => {
     try {
-        
       const response = await AuthService.login(form.getValues());
 
       return response.data;
@@ -83,17 +83,17 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
       updateUser(res.data.data);
-      console.log(res.data.data);
-
-      // TODO: conditional routing for admin and staff
-      // router.push("/waiter/dashboard");
+      if (res.data.data.userData.department === DeptEnum.ADMIN) {
+        router.push("/admin/dashboard");
+      }
+      router.push("/waiter/dashboard");
     },
   });
 
   const onSubmit = () => mutation.mutate();
   // TODO: turn the form contaier to a component
   return (
-    <AuthLayout title={"Staff sign-in"}>
+    <GeneralLayout title={"Staff sign-in"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 md:min-h-[46rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
@@ -237,7 +237,7 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
           </div>
         </div>
       </Container>
-    </AuthLayout>
+    </GeneralLayout>
   );
 };
 

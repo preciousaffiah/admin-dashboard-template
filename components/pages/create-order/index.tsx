@@ -1,4 +1,4 @@
-import { AuthLayout, WaiterLayout } from "@layouts";
+import { GeneralLayout, StaffLayout } from "@layouts";
 import React, { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MainNavbar } from "@/components/shared";
@@ -345,7 +345,6 @@ const CreateOrder: FC = () => {
   const title = "Create Order";
 
   return (
-    <WaiterLayout title={title}>
       <div className="flex justify-end h-screen w-full">
         <Container>
           <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 px-0">
@@ -926,7 +925,6 @@ const CreateOrder: FC = () => {
           </div>
         </Container>
       </div>
-    </WaiterLayout>
   );
 };
 

@@ -1,9 +1,10 @@
 import { Fragment, useEffect } from "react";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import WaiterSidebar from "../shared/nav/sidebar/waiter";
 import { PageAnimation } from "../serviette-ui";
-import { Toaster } from "../ui/toaster";
 import { useAuthToken } from "@/hooks";
+import { useRouter } from "next/router";
+import { MainNavbar } from "../shared";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -13,13 +14,13 @@ interface ILayout {
   description?: string;
 }
 
-export default function AuthLayout({
+export default function StaffLayout({
   children,
   title,
   subtitle,
   heading,
   description,
-}: ILayout) {;
+}: ILayout) {
   title = title || "Page Title";
   subtitle = subtitle || "";
   description =
@@ -29,11 +30,12 @@ export default function AuthLayout({
 
   const router = useRouter();
 
-  const { token } = useAuthToken();
+  const { token, userData, isLoading } = useAuthToken();
 
-  // useEffect(() => {
-  //   if (token) router.push("/");
-  // }, [router, token]);
+  useEffect(() => {
+    if (isLoading) return;
+    if (!token || !userData?.businessId) router.push("/");
+  }, [isLoading, router, token]);
 
   return (
     <Fragment>
@@ -70,10 +72,18 @@ export default function AuthLayout({
           property="twitter:image"
           content="https://res.cloudinary.com/dlq0uwrii/image/upload/v1728843002/Logo_qcsyol.png"
         />
-        <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dlq0uwrii/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1728843002/Logo_qcsyol.png" />
+        <link
+          rel="icon"
+          type="image/x-icon"
+          href="https://res.cloudinary.com/dlq0uwrii/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1728843002/Logo_qcsyol.png"
+        />
       </Head>
 
       <div className="flex flex-col h-screen min-h-screen">
+        <WaiterSidebar />
+
+        <MainNavbar title={title} subtitle={subtitle} />
+
         <PageAnimation>
           {/* nav */}
 

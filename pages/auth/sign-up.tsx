@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthLayout } from "@layouts";
+import { GeneralLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/Logo.png";
@@ -151,7 +151,7 @@ const SignUp: FC = () => {
   };
 
   return (
-    <AuthLayout title={"Sign-up"}>
+    <GeneralLayout title={"Sign-up"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
@@ -466,7 +466,7 @@ const SignUp: FC = () => {
           </div>
         </div>
       </Container>
-    </AuthLayout>
+    </GeneralLayout>
   );
 };
 

@@ -414,7 +414,6 @@ const tabHeaders = {
 };
 
 const Dashboard: FC = () => {
-  let title = "Dashboard";
 
   return (
       <div className="flex justify-end h-screen w-full">

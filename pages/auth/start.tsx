@@ -1,4 +1,4 @@
-import { AuthLayout } from "@layouts";
+import { GeneralLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC } from "react";
 import { MainNavbar } from "@/components/shared";
@@ -13,7 +13,6 @@ const Start: FC = () => {
   const { userData } = useAuthToken();
 
   return (
-    // <AuthLayout title={title}>
     <>
       <MainNavbar title={"Welcome"} />
         <Container className={"min-h-[40rem]"}>
@@ -45,7 +44,7 @@ const Start: FC = () => {
             </div>
           </div>
         </Container>
-    {/* </AuthLayout> */}
+    {/* </GeneralLayout> */}
     </>
   );
 

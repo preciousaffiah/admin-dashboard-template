@@ -1,9 +1,9 @@
 import { Fragment, useEffect } from "react";
-import Head from "next/head";
-import WaiterSidebar from "../shared/nav/sidebar/waiter";
-import { PageAnimation } from "../serviette-ui";
-import { useAuthToken } from "@/hooks";
 import { useRouter } from "next/router";
+import Head from "next/head";
+import { PageAnimation } from "../serviette-ui";
+import { Toaster } from "../ui/toaster";
+import { useAuthToken } from "@/hooks";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -13,13 +13,13 @@ interface ILayout {
   description?: string;
 }
 
-export default function UserLayout({
+export default function GeneralLayout({
   children,
   title,
   subtitle,
   heading,
   description,
-}: ILayout) {
+}: ILayout) {;
   title = title || "Page Title";
   subtitle = subtitle || "";
   description =
@@ -29,12 +29,7 @@ export default function UserLayout({
 
   const router = useRouter();
 
-  const { token, isLoading } = useAuthToken();
-
-  // useEffect(() => {
-  //   if (isLoading) return;
-  //   if (!token) router.push("/auth/sign-in");
-  // }, [isLoading, router, token]);
+  const { token } = useAuthToken();
 
   return (
     <Fragment>
@@ -71,11 +66,7 @@ export default function UserLayout({
           property="twitter:image"
           content="https://res.cloudinary.com/dlq0uwrii/image/upload/v1728843002/Logo_qcsyol.png"
         />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          href="https://res.cloudinary.com/dlq0uwrii/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1728843002/Logo_qcsyol.png"
-        />
+        <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dlq0uwrii/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1728843002/Logo_qcsyol.png" />
       </Head>
 
       <div className="flex flex-col h-screen min-h-screen">

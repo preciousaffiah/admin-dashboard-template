@@ -27,6 +27,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminLayout from "@/components/layouts/admin-layout";
 import { Input } from "@/components/ui/input";
+import { DeptEnum } from "@/types/enums";
+import { useAuthToken } from "@/hooks";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 const data = [
@@ -369,7 +371,7 @@ const validationSchema = z.object({
     .refine((value) => !value || value.trim() !== "", {
       message: "Cannot contain whitespace", // Error message
     }),
-    
+
   mealImage: z
     .string()
     .nullable()
@@ -395,7 +397,7 @@ const validationSchema = z.object({
     .union([z.number().min(1, "Price must be at least 1"), z.null()])
     .transform((value: any) => (value === "" ? null : value)),
 
-    Description: z
+  Description: z
     .string()
     .nullable()
     .optional()
@@ -418,6 +420,7 @@ const Menu: FC = () => {
     resolver: zodResolver(validationSchema),
     defaultValues,
   });
+  const { token, userData } = useAuthToken();
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
@@ -513,12 +516,9 @@ const Menu: FC = () => {
     }, 2000);
   };
 
-  let title = "Menu";
 
   return (
-    <AdminLayout title={title}>
       <div className="flex justify-end h-screen w-full">
-        <Sidebar />
         <Container>
           <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
             <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
@@ -529,12 +529,14 @@ const Menu: FC = () => {
                       <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
                         Your Menu
                       </h1>
-                      <Link
-                        href="/admin/create-menu"
-                        className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
-                      >
-                        Create Menu
-                      </Link>
+                      {userData?.department === DeptEnum.ADMIN ? (
+                        <Link
+                          href="/admin/create-menu"
+                          className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
+                        >
+                          Create Menu
+                        </Link>
+                      ) : null}
                     </div>
                     <div>
                       <Button
@@ -699,9 +701,7 @@ const Menu: FC = () => {
                           </p>
                         </div>
                         <div className="m-auto">
-                          <p
-                            className="flex bg-primaryGreen rounded-md items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold"
-                          >
+                          <p className="flex bg-primaryGreen rounded-md items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold">
                             View Full Menu
                           </p>
                         </div>
@@ -917,7 +917,6 @@ const Menu: FC = () => {
           </div>
         </Container>
       </div>
-    </AdminLayout>
   );
 };
 
