@@ -14,10 +14,7 @@ import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import orderImg from "public/orderimg.png";
-import {
-  Area,
-  AreaChart,
-} from "recharts";
+import { Area, AreaChart } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -28,6 +25,9 @@ import {
 } from "@/components/ui/chart";
 import dynamic from "next/dynamic";
 import AdminOrdersTable from "@/components/shared/admin/table/orders";
+import useBusinessDetails from "@/hooks/useBusinessDetails";
+import { useAuthToken } from "@/hooks";
+import { slugify } from "@/utils/slugify";
 
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
@@ -414,27 +414,40 @@ const tabHeaders = {
 };
 
 const Dashboard: FC = () => {
+  const { userData } = useAuthToken();
+  const { data } = useBusinessDetails({
+    id: userData?.businessId || undefined,
+  });
+
+  const url: any = slugify(data?.name || "");
 
   return (
-      <div className="flex justify-end h-screen w-full">
-        <Container>
-          <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-            <Tabs defaultValue={tabs[0]} className="w-full">
-              <ScrollArea className="px-3 w-full whitespace-nowrap">
-                <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
-                  <TabsList className="bg-transparent">
-                    {tabs.map((item, index) => (
-                      <div key={index}>
-                        <TabsTrigger
-                          value={item}
-                          className="active-main-tab text-sm px-6 capitalize"
-                        >
-                          {item}
-                        </TabsTrigger>
-                      </div>
-                    ))}
-                  </TabsList>
-                  {/* <div className="flex justify-end w-full">
+    <div className="flex justify-end h-screen w-full">
+      <Container>
+        <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
+          <Tabs defaultValue={tabs[0]} className="w-full">
+            <ScrollArea className="px-3 w-full whitespace-nowrap">
+              <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
+                <TabsList className="bg-transparent">
+                  {tabs.map((item, index) => (
+                    <div key={index}>
+                      <TabsTrigger
+                        value={item}
+                        className="active-main-tab text-sm px-6 capitalize"
+                      >
+                        {item}
+                      </TabsTrigger>
+                    </div>
+                  ))}
+                </TabsList>
+
+                <p className="text-primary text-sm md: flex w-full items-center justify-start lg:justify-end md:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
+                  Staff sign in link:
+                  <span className="font-normal pl-1 text-xs">
+                    {`${window.location.protocol}//${window.location.host}/auth/sign-in/${url}`}
+                  </span>
+                </p>
+                {/* <div className="flex justify-end w-full">
                     <DropdownMenu>
                       <DropdownMenuTrigger
                         asChild
@@ -529,259 +542,259 @@ const Dashboard: FC = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div> */}
-                </div>
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
-              {tabs.map((item, index) => (
-                <TabsContent value={item} key={index}>
-                  <div className="w-full">
-                    <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
-                      <div className="pt-4 rounded-md px-3 lg:gap-y-0 gap-y-10 flex pb-4 gap-x-4 lg:flex-row flex-col">
-                        <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
-                          <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
-                            <div
-                              className={`
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+            {tabs.map((item, index) => (
+              <TabsContent value={item} key={index}>
+                <div className="w-full">
+                  <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
+                    <div className="pt-4 rounded-md px-3 lg:gap-y-0 gap-y-10 flex pb-4 gap-x-4 lg:flex-row flex-col">
+                      <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
+                        <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
+                          <div
+                            className={`
                                     bg-primaryDark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
-                            >
-                              <div className="text-secondaryBorder w-full">
-                                <div className="p-2">
-                                  <div className="text-secondaryBorder font-medium flex justify-between">
-                                    <h1 className="text-lg">Customers</h1>
-                                    <div className="flex gap-x-4">
-                                      <EllipsisVertical />
-                                    </div>
+                          >
+                            <div className="text-secondaryBorder w-full">
+                              <div className="p-2">
+                                <div className="text-secondaryBorder font-medium flex justify-between">
+                                  <h1 className="text-lg">Customers</h1>
+                                  <div className="flex gap-x-4">
+                                    <EllipsisVertical />
                                   </div>
-                                </div>
-                                <div className="w-full flex justify-between">
-                                  <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
-                                    <CardHeader className="px-2 py-2">
-                                      <CardTitle className="flex justify-between">
-                                        <p className="font-medium">673</p>
-                                        <div className="flex w-28 items-center">
-                                          <TrendingDown className="w-8 pr-1 text-red-600" />
-
-                                          <p className="text-sm font-medium leading-4">
-                                            5% less than last month
-                                          </p>
-                                        </div>
-                                      </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="p-0 h-20">
-                                      <ChartContainer
-                                        config={chartConfig}
-                                        className="w-full h-full"
-                                      >
-                                        <AreaChart
-                                          accessibilityLayer
-                                          data={customersChartData}
-                                          margin={{
-                                            left: 12,
-                                            right: 12,
-                                          }}
-                                        >
-                                          <ChartTooltip
-                                            cursor={false}
-                                            content={<ChartTooltipContent />}
-                                          />
-                                          <defs>
-                                            <linearGradient
-                                              id="fillDesktop1"
-                                              x1="0"
-                                              y1="0"
-                                              x2="0"
-                                              y2="1"
-                                            >
-                                              <stop
-                                                offset="5%"
-                                                stopColor="red"
-                                                stopOpacity={0.8}
-                                              />
-                                              <stop
-                                                offset="95%"
-                                                stopColor="white"
-                                                stopOpacity={0.1}
-                                              />
-                                            </linearGradient>
-                                          </defs>
-                                          <Area
-                                            className="w-full"
-                                            dataKey="desktop"
-                                            type="natural"
-                                            fill="url(#fillDesktop1)"
-                                            fillOpacity={0.2}
-                                            stroke="red"
-                                            color="white"
-                                            stackId="a"
-                                          />
-                                        </AreaChart>
-                                      </ChartContainer>
-                                    </CardContent>
-                                  </Card>
                                 </div>
                               </div>
-                            </div>
-                            <div
-                              className={`
-                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
-                            >
-                              <div className="text-secondaryBorder w-full">
-                                <div className="p-2">
-                                  <div className="text-secondaryBorder font-medium flex justify-between">
-                                    <h1 className="text-lg">Orders</h1>
-                                    <div className="flex gap-x-4">
-                                      <EllipsisVertical />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="w-full flex justify-between">
-                                  <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
-                                    <CardHeader className="px-2 py-2">
-                                      <CardTitle className="flex justify-between">
-                                        <p className="font-medium">865</p>
-                                        <div className="flex w-28 items-center">
-                                          <TrendingUp className="w-8 pr-1 text-green-600" />
+                              <div className="w-full flex justify-between">
+                                <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
+                                  <CardHeader className="px-2 py-2">
+                                    <CardTitle className="flex justify-between">
+                                      <p className="font-medium">673</p>
+                                      <div className="flex w-28 items-center">
+                                        <TrendingDown className="w-8 pr-1 text-red-600" />
 
-                                          <p className="text-sm font-medium leading-4">
-                                            10% more than last month
-                                          </p>
-                                        </div>
-                                      </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="p-0 h-20">
-                                      <ChartContainer
-                                        config={chartConfig}
-                                        className="w-full h-full"
+                                        <p className="text-sm font-medium leading-4">
+                                          5% less than last month
+                                        </p>
+                                      </div>
+                                    </CardTitle>
+                                  </CardHeader>
+                                  <CardContent className="p-0 h-20">
+                                    <ChartContainer
+                                      config={chartConfig}
+                                      className="w-full h-full"
+                                    >
+                                      <AreaChart
+                                        accessibilityLayer
+                                        data={customersChartData}
+                                        margin={{
+                                          left: 12,
+                                          right: 12,
+                                        }}
                                       >
-                                        <AreaChart
-                                          accessibilityLayer
-                                          data={ordersChartData}
-                                          margin={{
-                                            left: 12,
-                                            right: 12,
-                                          }}
-                                        >
-                                          <ChartTooltip
-                                            cursor={false}
-                                            content={<ChartTooltipContent />}
-                                          />
-                                          <defs>
-                                            <linearGradient
-                                              id="fillDesktop"
-                                              x1="0"
-                                              y1="0"
-                                              x2="0"
-                                              y2="1"
-                                            >
-                                              <stop
-                                                offset="5%"
-                                                stopColor="green"
-                                                stopOpacity={0.8}
-                                              />
-                                              <stop
-                                                offset="95%"
-                                                stopColor="white"
-                                                stopOpacity={0.1}
-                                              />
-                                            </linearGradient>
-                                          </defs>
-                                          <Area
-                                            className="w-full"
-                                            dataKey="desktop"
-                                            type="natural"
-                                            fill="url(#fillDesktop)"
-                                            fillOpacity={0.2}
-                                            stroke="green"
-                                            stackId="a"
-                                          />
-                                        </AreaChart>
-                                      </ChartContainer>
-                                    </CardContent>
-                                  </Card>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              className={`
-                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
-                            >
-                              <div className="text-secondaryBorder w-full">
-                                <div className="p-2">
-                                  <div className="text-secondaryBorder font-medium flex justify-between">
-                                    <h1 className="text-lg">Revenue</h1>
-                                    <div className="flex gap-x-4">
-                                      <EllipsisVertical />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="w-full flex justify-between">
-                                  <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
-                                    <CardHeader className="px-2 py-2">
-                                      <CardTitle className="flex justify-between">
-                                        <p className="font-medium">$95000</p>
-                                        <div className="flex w-28 items-center">
-                                          <TrendingUp className="w-8 pr-1 text-green-600" />
-
-                                          <p className="text-sm font-medium leading-4">
-                                            5% more than last month
-                                          </p>
-                                        </div>
-                                      </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="p-0 h-20">
-                                      <ChartContainer
-                                        config={chartConfig}
-                                        className="w-full h-full"
-                                      >
-                                        <AreaChart
-                                          accessibilityLayer
-                                          data={revenuesChartData}
-                                          margin={{
-                                            left: 12,
-                                            right: 12,
-                                          }}
-                                        >
-                                          <ChartTooltip
-                                            cursor={false}
-                                            content={<ChartTooltipContent />}
-                                          />
-                                          <defs>
-                                            <linearGradient
-                                              id="fillDesktop"
-                                              x1="0"
-                                              y1="0"
-                                              x2="0"
-                                              y2="1"
-                                            >
-                                              <stop
-                                                offset="5%"
-                                                stopColor="white"
-                                                stopOpacity={0.8}
-                                              />
-                                              <stop
-                                                offset="95%"
-                                                stopColor="white"
-                                                stopOpacity={0.1}
-                                              />
-                                            </linearGradient>
-                                          </defs>
-                                          <Area
-                                            className="w-full"
-                                            dataKey="desktop"
-                                            type="natural"
-                                            fill="url(#fillDesktop)"
-                                            fillOpacity={0.2}
-                                            stroke="green"
-                                            stackId="a"
-                                          />
-                                        </AreaChart>
-                                      </ChartContainer>
-                                    </CardContent>
-                                  </Card>
-                                </div>
+                                        <ChartTooltip
+                                          cursor={false}
+                                          content={<ChartTooltipContent />}
+                                        />
+                                        <defs>
+                                          <linearGradient
+                                            id="fillDesktop1"
+                                            x1="0"
+                                            y1="0"
+                                            x2="0"
+                                            y2="1"
+                                          >
+                                            <stop
+                                              offset="5%"
+                                              stopColor="red"
+                                              stopOpacity={0.8}
+                                            />
+                                            <stop
+                                              offset="95%"
+                                              stopColor="white"
+                                              stopOpacity={0.1}
+                                            />
+                                          </linearGradient>
+                                        </defs>
+                                        <Area
+                                          className="w-full"
+                                          dataKey="desktop"
+                                          type="natural"
+                                          fill="url(#fillDesktop1)"
+                                          fillOpacity={0.2}
+                                          stroke="red"
+                                          color="white"
+                                          stackId="a"
+                                        />
+                                      </AreaChart>
+                                    </ChartContainer>
+                                  </CardContent>
+                                </Card>
                               </div>
                             </div>
                           </div>
-                          {/* <div className="flex lg-pb-0 pb-4 md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
+                          <div
+                            className={`
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
+                          >
+                            <div className="text-secondaryBorder w-full">
+                              <div className="p-2">
+                                <div className="text-secondaryBorder font-medium flex justify-between">
+                                  <h1 className="text-lg">Orders</h1>
+                                  <div className="flex gap-x-4">
+                                    <EllipsisVertical />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="w-full flex justify-between">
+                                <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
+                                  <CardHeader className="px-2 py-2">
+                                    <CardTitle className="flex justify-between">
+                                      <p className="font-medium">865</p>
+                                      <div className="flex w-28 items-center">
+                                        <TrendingUp className="w-8 pr-1 text-green-600" />
+
+                                        <p className="text-sm font-medium leading-4">
+                                          10% more than last month
+                                        </p>
+                                      </div>
+                                    </CardTitle>
+                                  </CardHeader>
+                                  <CardContent className="p-0 h-20">
+                                    <ChartContainer
+                                      config={chartConfig}
+                                      className="w-full h-full"
+                                    >
+                                      <AreaChart
+                                        accessibilityLayer
+                                        data={ordersChartData}
+                                        margin={{
+                                          left: 12,
+                                          right: 12,
+                                        }}
+                                      >
+                                        <ChartTooltip
+                                          cursor={false}
+                                          content={<ChartTooltipContent />}
+                                        />
+                                        <defs>
+                                          <linearGradient
+                                            id="fillDesktop"
+                                            x1="0"
+                                            y1="0"
+                                            x2="0"
+                                            y2="1"
+                                          >
+                                            <stop
+                                              offset="5%"
+                                              stopColor="green"
+                                              stopOpacity={0.8}
+                                            />
+                                            <stop
+                                              offset="95%"
+                                              stopColor="white"
+                                              stopOpacity={0.1}
+                                            />
+                                          </linearGradient>
+                                        </defs>
+                                        <Area
+                                          className="w-full"
+                                          dataKey="desktop"
+                                          type="natural"
+                                          fill="url(#fillDesktop)"
+                                          fillOpacity={0.2}
+                                          stroke="green"
+                                          stackId="a"
+                                        />
+                                      </AreaChart>
+                                    </ChartContainer>
+                                  </CardContent>
+                                </Card>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className={`
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
+                          >
+                            <div className="text-secondaryBorder w-full">
+                              <div className="p-2">
+                                <div className="text-secondaryBorder font-medium flex justify-between">
+                                  <h1 className="text-lg">Revenue</h1>
+                                  <div className="flex gap-x-4">
+                                    <EllipsisVertical />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="w-full flex justify-between">
+                                <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
+                                  <CardHeader className="px-2 py-2">
+                                    <CardTitle className="flex justify-between">
+                                      <p className="font-medium">$95000</p>
+                                      <div className="flex w-28 items-center">
+                                        <TrendingUp className="w-8 pr-1 text-green-600" />
+
+                                        <p className="text-sm font-medium leading-4">
+                                          5% more than last month
+                                        </p>
+                                      </div>
+                                    </CardTitle>
+                                  </CardHeader>
+                                  <CardContent className="p-0 h-20">
+                                    <ChartContainer
+                                      config={chartConfig}
+                                      className="w-full h-full"
+                                    >
+                                      <AreaChart
+                                        accessibilityLayer
+                                        data={revenuesChartData}
+                                        margin={{
+                                          left: 12,
+                                          right: 12,
+                                        }}
+                                      >
+                                        <ChartTooltip
+                                          cursor={false}
+                                          content={<ChartTooltipContent />}
+                                        />
+                                        <defs>
+                                          <linearGradient
+                                            id="fillDesktop"
+                                            x1="0"
+                                            y1="0"
+                                            x2="0"
+                                            y2="1"
+                                          >
+                                            <stop
+                                              offset="5%"
+                                              stopColor="white"
+                                              stopOpacity={0.8}
+                                            />
+                                            <stop
+                                              offset="95%"
+                                              stopColor="white"
+                                              stopOpacity={0.1}
+                                            />
+                                          </linearGradient>
+                                        </defs>
+                                        <Area
+                                          className="w-full"
+                                          dataKey="desktop"
+                                          type="natural"
+                                          fill="url(#fillDesktop)"
+                                          fillOpacity={0.2}
+                                          stroke="green"
+                                          stackId="a"
+                                        />
+                                      </AreaChart>
+                                    </ChartContainer>
+                                  </CardContent>
+                                </Card>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div className="flex lg-pb-0 pb-4 md:gap-y-0 gap-y-3 gap-x-4 md:h-80 md:flex-row flex-col">
                             <div>
                               <div className="rounded-md md:w-auto w-full h-fit bg-primaryDark ">
                                 <div className="border-b border-primary-border">
@@ -885,8 +898,8 @@ const Dashboard: FC = () => {
                               </div>
                             </div>
                           </div> */}
-                        </div>
-                        {/* <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
+                      </div>
+                      {/* <div className="lg:w-[30%] w-full overflow-hidden flex lg:flex-col lg:gap-x-0 gap-x-3 md:flex-row flex-col gap-y-4">
                           <div
                             className={`
                                     bg-primaryDark   w-full h-fit cursor-pointer text-sm text-txWhite rounded-md py-1`}
@@ -1008,102 +1021,102 @@ const Dashboard: FC = () => {
                             </div>
                           </div>
                         </div> */}
-                      </div>
+                    </div>
 
-                      <div className="flex pb-4 flex-col bg-primaryDark pt-4 rounded-md">
-                        <div className="pt-4 rounded-t-md px-3 flex pb-4 border-b border-primary-border">
-                          <div className="flex justify-between w-full">
-                            <p className="capitalize text-lg font-medium text-secondaryBorder">
-                              Recent Orders
-                            </p>
-                            <EllipsisVertical className="capitalize text-lg font-medium text-secondaryBorder" />
-                          </div>
+                    <div className="flex pb-4 flex-col bg-primaryDark pt-4 rounded-md">
+                      <div className="pt-4 rounded-t-md px-3 flex pb-4 border-b border-primary-border">
+                        <div className="flex justify-between w-full">
+                          <p className="capitalize text-lg font-medium text-secondaryBorder">
+                            Recent Orders
+                          </p>
+                          <EllipsisVertical className="capitalize text-lg font-medium text-secondaryBorder" />
                         </div>
-
-                        <AdminOrdersTable
-                          tableHeaders={tableHeaders}
-                          tabHeaders={tabHeaders}
-                          invoiceData={invoiceData}
-                          currentPage={1}
-                          items_per_page={4}
-                          className="h-80 overflow-scroll"
-                        >
-                          <TableBody className="h-80">
-                            {invoiceData.slice(0, 10).map((invoice, index) => (
-                              <TableRow
-                                key={index}
-                                className="bg-primaryDark truncate text-center py-2 rounded-lg cursor-pointer"
-                              >
-                                <TableCell className="truncate">
-                                  <Circle
-                                    fill="none"
-                                    className={` text-primary-border`}
-                                  />
-                                </TableCell>
-                                <TableCell className="font-medium">
-                                  {index + 1}
-                                </TableCell>
-                                <TableCell className="truncate">
-                                  #{invoice.OrderID}
-                                </TableCell>
-                                <TableCell>{invoice.Customer}</TableCell>
-                                <TableCell>{invoice.TableNo}</TableCell>
-                                <TableCell>
-                                  <div className="flex items-center gap-x-1">
-                                    {invoice.MenuItems[0].name}
-                                    {invoice.MenuItems.length > 1 ? (
-                                      <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-textCompleted border-dashed rounded-full font-medium">
-                                        +{invoice.MenuItems.length - 1}
-                                      </h1>
-                                    ) : null}
-                                  </div>
-                                </TableCell>
-                                <TableCell>${invoice.Price}</TableCell>
-                                <TableCell>{invoice.TimeofOrder}</TableCell>
-                                <TableCell>
-                                  <div className="w-fit flex items-center gap-x-1">
-                                    <div className="w-8 h-4">
-                                      <Image
-                                        alt="img"
-                                        src={orderImg}
-                                        className="w-10 h-8 rounded-full"
-                                      />
-                                    </div>
-                                    <p className="flex break-words">
-                                      {invoice.AssignedTo[0].name}
-                                    </p>
-                                  </div>
-                                </TableCell>
-
-                                <TableCell>
-                                  <div className="flex justify-center">
-                                    <p
-                                      className={`status-${invoice.Status} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                                    >
-                                      {invoice.Status}
-                                    </p>
-                                  </div>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </AdminOrdersTable>
-                        <Link
-                          href="orders"
-                          className="text-txWhite md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
-                        >
-                          View All Orders
-                          <ChevronRight color="#c0bfbc" />
-                        </Link>
                       </div>
+
+                      <AdminOrdersTable
+                        tableHeaders={tableHeaders}
+                        tabHeaders={tabHeaders}
+                        invoiceData={invoiceData}
+                        currentPage={1}
+                        items_per_page={4}
+                        className="h-80 overflow-scroll"
+                      >
+                        <TableBody className="h-80">
+                          {invoiceData.slice(0, 10).map((invoice, index) => (
+                            <TableRow
+                              key={index}
+                              className="bg-primaryDark truncate text-center py-2 rounded-lg cursor-pointer"
+                            >
+                              <TableCell className="truncate">
+                                <Circle
+                                  fill="none"
+                                  className={` text-primary-border`}
+                                />
+                              </TableCell>
+                              <TableCell className="font-medium">
+                                {index + 1}
+                              </TableCell>
+                              <TableCell className="truncate">
+                                #{invoice.OrderID}
+                              </TableCell>
+                              <TableCell>{invoice.Customer}</TableCell>
+                              <TableCell>{invoice.TableNo}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-x-1">
+                                  {invoice.MenuItems[0].name}
+                                  {invoice.MenuItems.length > 1 ? (
+                                    <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-textCompleted border-dashed rounded-full font-medium">
+                                      +{invoice.MenuItems.length - 1}
+                                    </h1>
+                                  ) : null}
+                                </div>
+                              </TableCell>
+                              <TableCell>${invoice.Price}</TableCell>
+                              <TableCell>{invoice.TimeofOrder}</TableCell>
+                              <TableCell>
+                                <div className="w-fit flex items-center gap-x-1">
+                                  <div className="w-8 h-4">
+                                    <Image
+                                      alt="img"
+                                      src={orderImg}
+                                      className="w-10 h-8 rounded-full"
+                                    />
+                                  </div>
+                                  <p className="flex break-words">
+                                    {invoice.AssignedTo[0].name}
+                                  </p>
+                                </div>
+                              </TableCell>
+
+                              <TableCell>
+                                <div className="flex justify-center">
+                                  <p
+                                    className={`status-${invoice.Status} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                  >
+                                    {invoice.Status}
+                                  </p>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </AdminOrdersTable>
+                      <Link
+                        href="orders"
+                        className="text-txWhite md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
+                      >
+                        View All Orders
+                        <ChevronRight color="#c0bfbc" />
+                      </Link>
                     </div>
                   </div>
-                </TabsContent>
-              ))}
-            </Tabs>
-          </div>
-        </Container>
-      </div>
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
+        </div>
+      </Container>
+    </div>
   );
 };
 

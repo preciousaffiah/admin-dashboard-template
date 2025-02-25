@@ -36,13 +36,6 @@ const StaffAuth: FC = () => {
   const router = useRouter();
   const slug = router.query.name as string;
 
-  function slugify(text: string): string {
-    return text
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/[^\w-]+/g, ""); // Remove non-word characters
-  }
   const decodedName = slug?.replace(/-/g, " ");
   // const decodedName = name ? decodeURIComponent(name as string) : "";
 
