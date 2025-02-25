@@ -1,26 +1,23 @@
 "use client";
 
-import { GeneralLayout, StaffLayout } from "@layouts";
+import { AuthenticatedLayout } from "@layouts";
 import Image from "next/image";
-import Link from "next/link";
 import logo1 from "../../public/Logo.png";
 import authPwdImage from "../../public/auth-pwd.png";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { GoogleSignIn, Loading } from "@/components/serviette-icons";
-import { usePathname } from "next/navigation";
+import { Loading } from "@/components/serviette-icons";
 import { Navbar } from "@/components/shared";
-import { CircleCheckBig, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import Container from "@/components/shared/container";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@radix-ui/react-dropdown-menu";
@@ -175,7 +172,7 @@ const ResturantSignUp: FC = () => {
   };
 
   return (
-    <GeneralLayout title={"Resturant sign-up"}>
+    <AuthenticatedLayout title={"Resturant sign-up"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
@@ -513,7 +510,7 @@ const ResturantSignUp: FC = () => {
           </div>
         </div>
       </Container>
-    </GeneralLayout>
+    </AuthenticatedLayout>
   );
 };
 

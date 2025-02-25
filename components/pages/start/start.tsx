@@ -1,7 +1,7 @@
 import { GeneralLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC } from "react";
-import { MainNavbar } from "@/components/shared";
+import { MainNavbar, Navbar } from "@/components/shared";
 import { ChevronRight } from "lucide-react";
 import Container from "@/components/shared/container";
 import { useAuthToken } from "@/hooks";
@@ -14,7 +14,7 @@ const Start: FC = () => {
 
   return (
     <>
-      <MainNavbar title={"Welcome"} />
+      <Navbar/>
         <Container className={"min-h-[40rem]"}>
           <div className="authcard3 md:pt-24 md:pb-16 py-0 md:px-7 px-0">
             <div className="authcard4">
