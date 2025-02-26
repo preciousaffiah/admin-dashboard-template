@@ -103,10 +103,10 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
                 </p>
                 <div className="pb-8">
                   <div>
-                    <h1 className="md:text-[1.6rem] font-medium text-txWhite">
+                    <h1 className="md:text-[1.6rem] auth-header font-medium text-txWhite">
                       Sign in to Staff Account
                     </h1>
-                    <p className="font-medium text-secondaryBorder">
+                    <p className="font-medium auth-subheader text-secondaryBorder">
                       Enter your details
                     </p>
                   </div>
@@ -222,7 +222,7 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
                 </div> */}
                 <div className="pt-3 text-secondaryBorder text-center text-base">
                   Don't have a user account?&nbsp;
-                  <Link href="/waiter/dashboard" className="link">
+                  <Link href="/auth/sign-up" className="link">
                     <span className="text-[#8BAE22]">Sign up instead</span>
                   </Link>
                 </div>

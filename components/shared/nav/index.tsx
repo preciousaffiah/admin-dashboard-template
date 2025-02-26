@@ -51,11 +51,11 @@ const Navbar: FC = () => {
   return (
     <div className="bg-background">
       <div className="md:flex hidden w-full py-4 text-txWhite items-center px-4">
-        <div className="w-[20%]">
+        <div className="w-[13%] lg:w-[17%]">
           <Image alt="logo" src={logo} className="w-32 h-8" />
         </div>
 
-        <div className="w-[50%] flex pl-5">
+        <div className="w-[47%] lg:w-[43%] flex pl-5">
           {navItems.map((item, index) => (
             <li key={index} className="list-none px-4 text-[0.98rem]">
               <Link
@@ -69,7 +69,7 @@ const Navbar: FC = () => {
             </li>
           ))}
         </div>
-        <div className="flex justify-end w-[30%] gap-x-1 text-white">
+        <div className="flex lg:text-base text-sm justify-end w-[40%] gap-x-1 text-white">
           {!token && (
             <Link href="/auth/sign-in">
               <p className="px-3 py-1 bg-primary-orange rounded-md ">SignIn</p>
@@ -83,10 +83,10 @@ const Navbar: FC = () => {
             </Link>
           )}
 
-          <div className="bg-primary-orange flex justify-center py-1 rounded-md px-1">
+          <div className="bg-primary-orange flex items-center justify-center py-1 rounded-md px-1">
             <Play fill="white" className="pr-2" />
 
-            <p className="md:text-base text-sm">Watch Video</p>
+            <p>Watch Video</p>
           </div>
         </div>
         {token && (

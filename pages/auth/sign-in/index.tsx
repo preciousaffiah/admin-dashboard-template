@@ -89,11 +89,11 @@ const SignIn: FC = () => {
     <GeneralLayout title={"Sign-in"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
-        <div className="authcard3 md:min-h-[46rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
+        <div className="authcard3 lg:min-h-[46rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none md:bg-background bg-foreground">
-              <div className="md:m-auto md:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
-                <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
+              <div className="md:m-auto lg:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
+                <Image alt="img" src={logo} className="md:block hidden authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
                   <div>
                     <h1 className="md:text-[1.6rem] auth-header font-medium text-txWhite">
