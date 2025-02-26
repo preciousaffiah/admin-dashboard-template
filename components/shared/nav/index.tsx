@@ -117,42 +117,24 @@ const Navbar: FC = () => {
         )}
       </div>
       <div className="md:hidden justify-between flex py-4 px-4 text-white">
-        <div className="flex gap-x-3 items-center">
-          {!token && (
-            <Link href="/auth/sign-in">
-              <p className="p-2 bg-primary-orange rounded-md ">SignIn</p>
-            </Link>
-          )}
-          {path !== "/business/sign-up" && (
-            <Link href="/business/sign-up">
-              <p className="p-2 bg-primary-orange rounded-md ">
-                Register business
-              </p>
-            </Link>
-          )}
+        <Image alt="logo" src={logo} className="w-36 h-9" />
 
-          <div className=" bg-primary-orange flex justify-center items-center p-2 rounded-md">
-            <Play fill="white" className="pr-2" />
-
-            <p className="md:text-base text-sm">Watch Video</p>
-          </div>
-        </div>
         <Sheet>
           <SheetTrigger asChild>
             <Button
               variant="ghost"
               className="px-0 hover:bg-none hover:text-none"
             >
-              <AlignRight color="#A5A5A5" className="w-12 h-12" />
+              <AlignRight color="#A5A5A5" className="size-12" />
             </Button>
           </SheetTrigger>
           <SheetContent
             side="left"
             className="px-0 border-none flex justify-start"
           >
-            <div className="text-secondaryBorder py-8 font-medium px-3 mt-7">
+            <div className="text-secondaryBorder flex flex-col gap-y-3 py-8 font-medium px-3 mt-7">
               {navItems.map((item: any, index) => (
-                <li key={index} className="flex py-2.5 items-center list-none">
+                <li key={index} className="flex items-center list-none">
                   <item.tag className="size-7" />
 
                   <Link
@@ -166,11 +148,31 @@ const Navbar: FC = () => {
                 </li>
               ))}
               {token && (
-                <div className="flex items-center pt-2.5">
+                <div className="flex items-center">
                   <LogOut className="size-7" />
                   <p className=" px-4 ">Logout</p>
                 </div>
               )}
+              <div className="text-white flex flex-col gap-y-3">
+                {!token && (
+                  <Link href="/auth/sign-in">
+                    <p className="p-2 bg-primary-orange rounded-md ">Sign In</p>
+                  </Link>
+                )}
+                {path !== "/business/sign-up" && (
+                  <Link href="/business/sign-up">
+                    <p className="p-2 bg-primary-orange rounded-md ">
+                      Register business
+                    </p>
+                  </Link>
+                )}
+
+                <div className="bg-primary-orange flex items-center p-2 rounded-md">
+                  <Play fill="white" className="pr-2" />
+
+                  <p className="text-base">Watch Video</p>
+                </div>
+              </div>
             </div>
           </SheetContent>
         </Sheet>
