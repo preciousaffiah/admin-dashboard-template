@@ -44,7 +44,9 @@ const StaffAuth: FC = () => {
   });
   console.log(decodedName, "error", isError, data);
 
-  if (isLoading) return;
+  if (isLoading) {
+    <p>loafingsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss....</p>
+  };
 
   // if (isError) {
   //   router.push("/");

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   TrendingUp,
@@ -421,6 +421,15 @@ const Dashboard: FC = () => {
 
   const url: any = slugify(data?.name || "");
 
+  const [domain, setDomain] = useState("");
+
+  useEffect(() => {
+    // Check if window is defined (client side)
+    if (typeof window !== "undefined") {
+      setDomain(window.location.origin);
+    }
+  }, []);
+
   return (
     <div className="flex justify-end h-screen w-full">
       <Container>
@@ -442,9 +451,9 @@ const Dashboard: FC = () => {
                 </TabsList>
 
                 <p className="text-primary text-sm md: flex w-full items-center justify-start lg:justify-end md:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
-                  Staff sign in link:
+                  Sign in link:
                   <span className="font-normal pl-1 text-xs">
-                    {`${window.location.protocol}//${window.location.host}/auth/sign-in/${url}`}
+                    {`${domain}/auth/sign-in/${url}`}
                   </span>
                 </p>
                 {/* <div className="flex justify-end w-full">

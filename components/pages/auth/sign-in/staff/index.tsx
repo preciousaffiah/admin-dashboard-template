@@ -99,7 +99,7 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
               <div className="md:m-auto lg:px-24 md:px-8 px-4 md:pt-0 pt-6 w-full flex flex-col">
                 {/* <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" /> */}
                 <p className="font-semibold py-7 text-secondaryBorder text-2xl uppercase">
-                  {data.name}
+                  {data?.name}
                 </p>
                 <div className="pb-8">
                   <div>

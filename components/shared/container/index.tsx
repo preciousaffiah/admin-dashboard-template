@@ -6,7 +6,7 @@ const Container = ({ children, className }: any) => {
   const isAuthRoute =
     path === "/auth/sign-up" ||
     path === "/auth/sign-in" ||
-    path.startsWith("/auth/sign-in") || // Dynamic route pattern
+    path?.startsWith("/auth/sign-in") || // Dynamic route pattern
     path === "/business/sign-up" ||
     path === "/start" ||
     path === "/";
