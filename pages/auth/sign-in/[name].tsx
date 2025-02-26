@@ -42,17 +42,16 @@ const StaffAuth: FC = () => {
   const { isLoading, isError, data } = useBusinessDetails({
     name: decodedName,
   });
-  console.log(decodedName, "error", isError, isLoading, data);
 
-  // if (isLoading) {
-  //   <p className="text-black">loafingsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss....</p>
-  // };
+  if (isLoading) {
+   return <p className="text-black">loadingsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss....</p>
+  };
 
-  // // if (isError) {
-  // //   router.push("/");
-  // // }
+  // if (isError) {
+  //   router.push("/");
+  // }
 
-  if (!data) {
+  if (isError) {
     return <p className="text-black">Does not exist...</p>;
   }
 
