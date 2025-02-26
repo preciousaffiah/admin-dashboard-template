@@ -28,6 +28,7 @@ import AdminOrdersTable from "@/components/shared/admin/table/orders";
 import useBusinessDetails from "@/hooks/useBusinessDetails";
 import { useAuthToken } from "@/hooks";
 import { slugify } from "@/utils/slugify";
+import Copy from "@/components/serviette-ui/copy-button";
 
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
@@ -449,12 +450,12 @@ const Dashboard: FC = () => {
                     </div>
                   ))}
                 </TabsList>
-
-                <p className="text-primary text-sm md: flex w-full items-center justify-start lg:justify-end md:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
+                <p className="text-primary md:text-sm text-xs gap-x-1 md: flex w-full items-center lg:justify-end justify-start sm:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
                   Sign in link:
-                  <span className="font-normal pl-1 text-xs">
+                  <span className="font-normal text-xs">
                     {`${domain}/auth/sign-in/${url}`}
                   </span>
+                  <Copy textToCopy={`${domain}/auth/sign-in/${url}`} />
                 </p>
                 {/* <div className="flex justify-end w-full">
                     <DropdownMenu>
