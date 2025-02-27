@@ -155,22 +155,22 @@ const SignIn: FC = () => {
                           render={({ field }) => (
                             <FormItem className="grid gap-2 w-full">
                               <FormControl>
-                                <div className="flex">
+                                <div className="flex items-center md:pt-0 pt-4">
                                   <input
                                     autoComplete="off"
                                     type={`${
-                                      showPassword ? "password" : "text"
+                                      showPassword ? "text" : "password"
                                     }`}
                                     placeholder="Password"
                                     {...field}
-                                    className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                    className="text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                   />
                                   <EyeOff
                                     onClick={() => {
                                       setShowPassword(!showPassword);
                                     }}
                                     className={`${
-                                      showPassword ? "hidden" : "block"
+                                      showPassword ? "block" : "hidden"
                                     } cursor-pointer w-5 h-5 relative right-4 text-secondaryBorder`}
                                   />
                                   <EyeIcon
@@ -178,7 +178,7 @@ const SignIn: FC = () => {
                                       setShowPassword(!showPassword);
                                     }}
                                     className={`${
-                                      showPassword ? "block" : "hidden"
+                                      showPassword ? "hidden" : "block"
                                     } cursor-pointer w-5 h-5 relative right-4 text-secondaryBorder`}
                                   />
                                 </div>
