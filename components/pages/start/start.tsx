@@ -29,15 +29,9 @@ const Start: FC = () => {
                       href="#"
                       className="font-medium rounded-[7px] justify-center items-center p-2 text-center w-full border-[0.3px] bg-primaryGreen text-black hover:bg-transparent border-primary-border hover:text-secondaryBorder flex gap-x-2 transition-colors duration-500"
                     >
-                      Setup my Organisation
+                      This is the landing Page
                     </Link>
-                    <Link
-                      href="#"
-                      className="font-medium rounded-[7px] justify-center items-center p-2 text-center w-full bg-transparent hover:bg-primaryGreen hover:text-black border-[0.3px] border-primary-border text-secondaryBorder flex gap-x-2 transition-colors duration-500"
-                    >
-                      Continue without Setup
-                      <ChevronRight />
-                    </Link>
+                   
                   </div>
                 </div>
               </div>

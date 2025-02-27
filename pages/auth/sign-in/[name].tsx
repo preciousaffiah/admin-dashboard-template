@@ -52,14 +52,18 @@ const StaffAuth: FC = () => {
   });
 
   if (isLoading) {
-   return <Loader className="rotate-icon text-txWhite m-auto flex justify-center items-center h-screen size-8" />
-  };
+    return (
+      <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+        <Loader className="rotate-icon size-8" />
+      </div>
+    );
+  }
 
   // if (isError) {
   //   router.push("/");
   // }
 
-  if (isError) {
+  if (isError || !data) {
     return (
       <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
         <FolderOpen />
@@ -68,7 +72,7 @@ const StaffAuth: FC = () => {
     );
   }
 
-  return <StaffSignIn data={data} name={decodedName}/>;
+  return <StaffSignIn data={data} name={decodedName} />;
 };
 
 export default StaffAuth;
