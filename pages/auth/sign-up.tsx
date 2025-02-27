@@ -269,7 +269,7 @@ const SignUp: FC = () => {
                                 control={form.control}
                                 name="personalDetails.password"
                                 render={({ field }) => (
-                                  <FormItem className="grid gap-2 md:w-1/2">
+                                  <FormItem className="grid gap-2 md:w-1/2 w-full">
                                     <FormControl>
                                       <div className="flex">
                                         <input
