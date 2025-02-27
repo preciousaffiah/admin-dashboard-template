@@ -14,7 +14,15 @@ import * as z from "zod";
 import { GoogleSignIn } from "@/components/serviette-icons";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/shared";
-import { CircleCheckBig, EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
+import {
+  CircleCheckBig,
+  EyeIcon,
+  EyeOff,
+  File,
+  FolderOpen,
+  Loader,
+  LoaderCircle,
+} from "lucide-react";
 import Container from "@/components/shared/container";
 import {
   Form,
@@ -44,7 +52,7 @@ const StaffAuth: FC = () => {
   });
 
   if (isLoading) {
-   return <p className="text-black">loadingsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss....</p>
+   return <Loader className="rotate-icon text-txWhite m-auto flex justify-center items-center h-screen size-8" />
   };
 
   // if (isError) {
@@ -52,7 +60,12 @@ const StaffAuth: FC = () => {
   // }
 
   if (isError) {
-    return <p className="text-black">Does not exist...</p>;
+    return (
+      <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+        <FolderOpen />
+        Ooops not found
+      </div>
+    );
   }
 
   return <StaffSignIn data={data} name={decodedName}/>;

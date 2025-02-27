@@ -20,7 +20,7 @@ export type BDetails = {
 };
 
 interface MenuItem {
-  mealImage: string;
+  itemImage: string;
   name: string;
   quantity: number;
   price: number;
@@ -50,7 +50,7 @@ export type Menus = {
   Price: number;
   Category: string;
   Description: string;
-  mealImage: string;
+  itemImage: string;
   Name: string;
   Discount: string;
   Department: string;
@@ -112,7 +112,8 @@ export type createMenu = {
   price: number;
   category: string | null;
   description: string;
-  mealImage: string;
+  image: string;
   name: string;
   department: string | null;
+  businessId: string | null;
 };

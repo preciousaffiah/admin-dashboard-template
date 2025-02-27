@@ -52,19 +52,19 @@ const data = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Chicken Burger",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Bread With Veggies",
         quantity: 5,
         price: 1105,
@@ -90,7 +90,7 @@ const data = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
@@ -115,13 +115,13 @@ const data = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Chicken Burger",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 7,
         price: 235,
@@ -146,7 +146,7 @@ const data = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
@@ -207,21 +207,21 @@ const Orders: FC = () => {
 
   const updatedInvoice = { ...selectedInvoice };
 
-  const handleQuantityChange = (mealIndex: number, type: string) => {
+  const handleQuantityChange = (itemIndex: number, type: string) => {
     if (type === "increment") {
-      updatedInvoice.MenuItems[mealIndex].quantity += 1;
+      updatedInvoice.MenuItems[itemIndex].quantity += 1;
     } else if (
       type === "decrement" &&
-      updatedInvoice.MenuItems[mealIndex].quantity > 0
+      updatedInvoice.MenuItems[itemIndex].quantity > 0
     ) {
-      updatedInvoice.MenuItems[mealIndex].quantity -= 1;
+      updatedInvoice.MenuItems[itemIndex].quantity -= 1;
     }
     setSelectedInvoice(updatedInvoice);
   };
 
-  const onDeleteItem = (mealIndex: number) => {
+  const onDeleteItem = (itemIndex: number) => {
     const updatedMenuItems = selectedInvoice.MenuItems.filter(
-      (menuItem, index) => index !== mealIndex
+      (menuItem, index) => index !== itemIndex
     );
     setSelectedInvoice({
       ...selectedInvoice,
@@ -546,9 +546,9 @@ const Orders: FC = () => {
                         <TabsContent value="edit" className="w-full">
                           <div className="flex flex-col gap-y-3 px-3 pb-4">
                             {selectedInvoice.MenuItems.map(
-                              (menuItem, mealIndex) => (
+                              (menuItem, itemIndex) => (
                                 <div
-                                  key={mealIndex}
+                                  key={itemIndex}
                                   className="text-txWhite items-center border border-primary-border px-2.5 py-2 rounded-lg flex"
                                 >
                                   <div className="w-[60%] flex gap-x-3">
@@ -566,7 +566,7 @@ const Orders: FC = () => {
                                       <p
                                         onClick={() =>
                                           handleQuantityChange(
-                                            mealIndex,
+                                            itemIndex,
                                             "increment"
                                           )
                                         }
@@ -580,7 +580,7 @@ const Orders: FC = () => {
                                       <p
                                         onClick={() =>
                                           handleQuantityChange(
-                                            mealIndex,
+                                            itemIndex,
                                             "decrement"
                                           )
                                         }
@@ -591,7 +591,7 @@ const Orders: FC = () => {
                                     </div>
                                     <div className="w-[30%]">
                                       <Trash2
-                                        onClick={() => onDeleteItem(mealIndex)}
+                                        onClick={() => onDeleteItem(itemIndex)}
                                         className="m-auto cursor-pointer text-textCancelled"
                                       />
                                     </div>

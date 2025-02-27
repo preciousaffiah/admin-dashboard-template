@@ -9,7 +9,7 @@ const defaultInvoice: Menus = {
   MenuId: 0,
   Price: 0,
   Category: "",
-  mealImage: "",
+  itemImage: "",
   Name: "",
   Description: "",
   Discount: "",

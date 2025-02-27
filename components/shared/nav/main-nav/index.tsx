@@ -20,6 +20,7 @@ import orderImg from "public/orderimg.png";
 import Link from "next/link";
 import { useAuthToken } from "@/hooks";
 import { deleteStore } from "@/utils/local-storage";
+import useBusinessDetails from "@/hooks/useBusinessDetails";
 
 const MainNavbar = ({ title, subtitle }: any) => {
   const navItems = [
@@ -41,6 +42,7 @@ const MainNavbar = ({ title, subtitle }: any) => {
     },
   ];
   const { userData, logout } = useAuthToken();
+  const { data } = useBusinessDetails({ id: userData?.businessId || "" });
   const router = useRouter();
 
   return (
@@ -48,7 +50,11 @@ const MainNavbar = ({ title, subtitle }: any) => {
       <>
         <div className="flex w-fit h-full pb-1 items-center">
           <Link href="#">
-            <Image alt="logo" src={logo} className="w-32 h-8" />
+            <p className="text-xl text-secondaryBorder font-medium uppercase">
+              {data?.name || ""}
+            </p>
+
+            {/* <Image alt="logo" src={logo} className="w-32 h-8" /> */}
           </Link>
         </div>
         <div className="md:flex hidden w-fit h-full justify-start items-center xl:gap-x-64 lg:gap-x-40 md:gap-x-1">

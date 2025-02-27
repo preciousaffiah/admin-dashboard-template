@@ -72,7 +72,7 @@ const Navbar: FC = () => {
         <div className="flex lg:text-base text-sm justify-end w-[40%] gap-x-1 text-white">
           {!token && (
             <Link href="/auth/sign-in">
-              <p className="px-3 py-1 bg-primary-orange rounded-md ">SignIn</p>
+              <p className="px-3 py-1 bg-primary-orange rounded-md ">Sign In</p>
             </Link>
           )}
           {path !== "/business/sign-up" && (
@@ -148,12 +148,12 @@ const Navbar: FC = () => {
                 </li>
               ))}
               {token && (
-                <div className="flex items-center">
+                <div onClick={logout} className="flex items-center cursor-pointer">
                   <LogOut className="size-7" />
                   <p className=" px-4 ">Logout</p>
                 </div>
               )}
-              <div className="text-white flex flex-col gap-y-3">
+              <div className="text-white flex flex-col gap-y-3 cursor-pointer">
                 {!token && (
                   <Link href="/auth/sign-in">
                     <p className="p-2 bg-primary-orange rounded-md ">Sign In</p>
@@ -169,7 +169,6 @@ const Navbar: FC = () => {
 
                 <div className="bg-primary-orange flex items-center p-2 rounded-md">
                   <Play fill="white" className="pr-2" />
-
                   <p className="text-base">Watch Video</p>
                 </div>
               </div>

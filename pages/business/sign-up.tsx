@@ -175,9 +175,9 @@ const ResturantSignUp: FC = () => {
     <AuthenticatedLayout title={"Resturant sign-up"}>
       <Navbar />
       <Container className={"min-h-[40rem]"}>
-        <div className="authcard3 md:min-h-[50rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
-          <div className="authcard4">
-            <div className="authcard5 md:rounded-xl py-8 rounded-none">
+        <div className="authcard3 h-fit md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
+          <div className="authcard4 md:bg-primaryDark md:rounded-xl rounded-none">
+            <div className="authcard5 md:bg-inherit bg-foreground md:rounded-xl py-8 rounded-none">
               {success ? (
                 <div className="md:px-16 px-6 m-auto">
                   <AnimatePresence>
@@ -211,12 +211,12 @@ const ResturantSignUp: FC = () => {
                   <Image
                     alt="img"
                     src={logo1}
-                    className="authimg2 mb-[2.2rem]"
+                    className="md:block hidden authimg2 mb-[2.2rem]"
                   />
                   <div className="pb-8">
                     <div>
-                      <h1 className="md:text-[1.6rem] text-[1.9rem] font-semibold text-txWhite">
-                        Create Your Business's Account
+                      <h1 className="text-[1.6rem] font-semibold text-txWhite">
+                        Create A Business Account
                       </h1>
                       <p className="font-medium text-secondaryBorder">
                         Enter your details to get started

@@ -245,19 +245,19 @@ const invoiceData = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Chicken Burger",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Bread With Veggies",
         quantity: 5,
         price: 1105,
@@ -283,7 +283,7 @@ const invoiceData = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
@@ -308,13 +308,13 @@ const invoiceData = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Chicken Burger",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 7,
         price: 235,
@@ -339,7 +339,7 @@ const invoiceData = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
@@ -364,19 +364,19 @@ const invoiceData = [
     TableNo: "A103",
     MenuItems: [
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Macaroni with Chicken",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Chicken Burger",
         quantity: 2,
         price: 335,
       },
       {
-        mealImage: "macaroni-image.jpg",
+        itemImage: "macaroni-image.jpg",
         name: "Bread With Veggies",
         quantity: 5,
         price: 1105,
@@ -450,13 +450,13 @@ const Dashboard: FC = () => {
                     </div>
                   ))}
                 </TabsList>
-                <p className="text-primary md:text-sm text-xs gap-x-1 md: flex w-full items-center lg:justify-end justify-start sm:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
+                <div className="text-primary md:text-sm text-xs gap-x-1 md: flex w-full items-center lg:justify-end justify-start sm:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
                   Sign in link:
                   <span className="font-normal text-xs">
                     {`${domain}/auth/sign-in/${url}`}
                   </span>
                   <Copy textToCopy={`${domain}/auth/sign-in/${url}`} />
-                </p>
+                </div>
                 {/* <div className="flex justify-end w-full">
                     <DropdownMenu>
                       <DropdownMenuTrigger

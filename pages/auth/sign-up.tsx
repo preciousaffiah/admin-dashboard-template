@@ -165,7 +165,7 @@ const SignUp: FC = () => {
                 </div>
               </div> */}
               <div className="md:m-auto md:px-8 px-4 md:pt-0 pt-6 w-full">
-                <Image alt="img" src={logo} className="authimg2 mb-[2.2rem]" />
+                <Image alt="img" src={logo} className="md:block hidden authimg2 mb-[2.2rem]" />
                 <div className="pb-8">
                   <div>
                     <h1 className="md:text-[1.6rem] text-[1.9rem] font-medium text-txWhite">

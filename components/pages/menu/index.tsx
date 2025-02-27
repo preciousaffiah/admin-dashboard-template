@@ -36,7 +36,7 @@ const data = [
     value: "all",
     Category: "1Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -48,7 +48,7 @@ const data = [
     value: "all",
     Category: "2Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -60,7 +60,7 @@ const data = [
     value: "all",
     Category: "3Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -72,7 +72,7 @@ const data = [
     value: "all",
     Category: "4Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -84,7 +84,7 @@ const data = [
     value: "all",
     Category: "1Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -96,7 +96,7 @@ const data = [
     value: "all",
     Category: "2Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -108,7 +108,7 @@ const data = [
     value: "all",
     Category: "3Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -120,7 +120,7 @@ const data = [
     value: "all",
     Category: "4Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -132,7 +132,7 @@ const data = [
     value: "all",
     Category: "1Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -144,7 +144,7 @@ const data = [
     value: "all",
     Category: "1Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -156,7 +156,7 @@ const data = [
     value: "all",
     Category: "2Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -168,7 +168,7 @@ const data = [
     value: "all",
     Category: "3Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -180,7 +180,7 @@ const data = [
     value: "all",
     Category: "1Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -192,7 +192,7 @@ const data = [
     value: "all",
     Category: "2Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -204,7 +204,7 @@ const data = [
     value: "all",
     Category: "3Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -216,7 +216,7 @@ const data = [
     value: "all",
     Category: "4Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -228,7 +228,7 @@ const data = [
     value: "all",
     Category: "4Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -240,7 +240,7 @@ const data = [
     value: "all",
     Category: "2Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -252,7 +252,7 @@ const data = [
     value: "all",
     Category: "3Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -264,7 +264,7 @@ const data = [
     value: "all",
     Category: "4Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -276,7 +276,7 @@ const data = [
     value: "all",
     Category: "1Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -288,7 +288,7 @@ const data = [
     value: "all",
     Category: "2Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -300,7 +300,7 @@ const data = [
     value: "all",
     Category: "3Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -312,7 +312,7 @@ const data = [
     value: "all",
     Category: "4Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: 120,
     Discount: "No Discount",
@@ -331,7 +331,7 @@ const tabHeaders = {
 const defaultInvoice: Menus = {
   Category: "",
   MenuId: 0,
-  mealImage: "",
+  itemImage: "",
   Name: "",
   Price: 0,
   Discount: "",
@@ -340,7 +340,7 @@ const defaultInvoice: Menus = {
 };
 const defaultValues = {
   Category: null,
-  mealImage: null,
+  itemImage: null,
   Name: null,
   Price: null,
   Discount: null,
@@ -372,7 +372,7 @@ const validationSchema = z.object({
       message: "Cannot contain whitespace", // Error message
     }),
 
-  mealImage: z
+  itemImage: z
     .string()
     .nullable()
     .optional()
@@ -516,407 +516,407 @@ const Menu: FC = () => {
     }, 2000);
   };
 
-
   return (
-      <div className="flex justify-end h-screen w-full">
-        <Container>
-          <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-            <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
-              <div className="w-full bg-primaryDark pt-4 rounded-md">
-                <div className="w-full h-full">
-                  <div className="px-3 flex pb-4 border-b border-primary-border">
-                    <div className="flex w-full items-center gap-x-8">
-                      <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
-                        Your Menu
-                      </h1>
-                      {userData?.department === DeptEnum.ADMIN ? (
-                        <Link
-                          href="/admin/create-menu"
-                          className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
-                        >
-                          Create Menu
-                        </Link>
-                      ) : null}
-                    </div>
-                    <div>
-                      <Button
-                        onClick={() => setView(!view)}
-                        className="transparent-btn text-secondaryBorder"
+    <div className="flex justify-end h-screen w-full">
+      <Container>
+        <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
+          <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
+            <div className="w-full bg-primaryDark pt-4 rounded-md">
+              <div className="w-full h-full">
+                <div className="px-3 flex pb-4 border-b border-primary-border">
+                  <div className="flex w-full items-center gap-x-8">
+                    <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
+                      Your Menu
+                    </h1>
+                    {userData?.department === DeptEnum.ADMIN ? (
+                      <Link
+                        href="/admin/create-menu"
+                        target="_blank"
+                        className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
                       >
-                        {view ? (
-                          <>
-                            <LayoutGrid className="w-5" />
-                            <p className="capitalize text-sm">Grid view</p>
-                          </>
-                        ) : (
-                          <>
-                            <List className="w-5" />
-                            <p className="capitalize text-sm">List view</p>
-                          </>
-                        )}
-                      </Button>
-                    </div>
+                        Add to Menu
+                      </Link>
+                    ) : null}
                   </div>
+                  <div>
+                    <Button
+                      onClick={() => setView(!view)}
+                      className="transparent-btn text-secondaryBorder"
+                    >
+                      {view ? (
+                        <>
+                          <LayoutGrid className="w-5" />
+                          <p className="capitalize text-sm">Grid view</p>
+                        </>
+                      ) : (
+                        <>
+                          <List className="w-5" />
+                          <p className="capitalize text-sm">List view</p>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
 
-                  <AdminMenuTable
-                    view={view}
-                    tableHeaders={tableHeaders}
-                    tabHeaders={tabHeaders}
-                    invoiceData={getPaginatedData}
-                    setIsOpen={setIsOpen}
-                    setSelectedInvoice={setSelectedInvoice}
-                    selectedInvoice={selectedInvoice}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    total_pages={total_pages}
-                    items_per_page={items_per_page}
-                  >
-                    <TableBody>
-                      {getPaginatedData().map((invoice, index) => (
-                        <TableRow
-                          key={index}
-                          className={`${
-                            selectedInvoice.MenuId === invoice.MenuId
-                              ? "border border-primaryGreen bg-selectedRow"
-                              : "bg-primaryDark"
-                          } truncate text-center py-2 rounded-lg cursor-pointer`}
-                          onClick={() => {
-                            handleRowClick(
-                              invoice,
-                              setIsOpen,
-                              setSelectedInvoice
-                            );
-                            reset();
-                          }}
-                        >
-                          <TableCell className="truncate">
-                            <Circle
-                              fill={`
+                <AdminMenuTable
+                  view={view}
+                  tableHeaders={tableHeaders}
+                  tabHeaders={tabHeaders}
+                  invoiceData={getPaginatedData}
+                  setIsOpen={setIsOpen}
+                  setSelectedInvoice={setSelectedInvoice}
+                  selectedInvoice={selectedInvoice}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  total_pages={total_pages}
+                  items_per_page={items_per_page}
+                >
+                  <TableBody>
+                    {getPaginatedData().map((invoice, index) => (
+                      <TableRow
+                        key={index}
+                        className={`${
+                          selectedInvoice.MenuId === invoice.MenuId
+                            ? "border border-primaryGreen bg-selectedRow"
+                            : "bg-primaryDark"
+                        } truncate text-center py-2 rounded-lg cursor-pointer`}
+                        onClick={() => {
+                          handleRowClick(
+                            invoice,
+                            setIsOpen,
+                            setSelectedInvoice
+                          );
+                          reset();
+                        }}
+                      >
+                        <TableCell className="truncate">
+                          <Circle
+                            fill={`
                               ${
                                 selectedInvoice.MenuId === invoice.MenuId
                                   ? "lime"
                                   : "none"
                               }
                               `}
-                              className={` text-primary-border`}
-                            />
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {items_per_page * (currentPage - 1) + (index + 1)}
-                          </TableCell>
-                          <TableCell>
-                            <div className="m-auto w-fit flex items-center gap-x-1">
-                              <div className="w-8 h-4">
-                                <Image
-                                  alt="img"
-                                  src={orderImg}
-                                  className="w-10 h-8 rounded-full"
-                                />
-                              </div>
-                              <p className="flex break-words">{invoice.Name}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>{invoice.Category}</TableCell>
-                          <TableCell>${invoice.Price}</TableCell>
-                          <TableCell>{invoice.Discount}</TableCell>
-
-                          <TableCell>
-                            <div className="flex justify-center">
-                              <p
-                                className={`status-cancelled text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                              >
-                                {invoice.Department}
-                              </p>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </AdminMenuTable>
-                </div>
-              </div>
-            </Tabs>
-            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-              <div>
-                <div className="">
-                  <div className="px-3">
-                    <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
-                      <div className="flex flex-col h-full justify-center gap-y-3">
-                        <p className="md:text-xl text-lg font-medium">
-                          Meal Details
-                        </p>
-                      </div>
-                      <div>
-                        <div className="flex justify-center">
-                          <p
-                            className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                          >
-                            {selectedInvoice.Category}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
-                      <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
-                        <div className="flex w-full h-full justify-center items-end">
-                          <div className="w-36 h-36">
-                            {imagePreview ? (
-                              <div className="relative w-full h-full">
-                                <Image
-                                  src={imagePreview}
-                                  alt="img"
-                                  layout="fill"
-                                  objectFit="cover"
-                                  className="object-cover rounded-full"
-                                />
-                              </div>
-                            ) : (
+                            className={` text-primary-border`}
+                          />
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {items_per_page * (currentPage - 1) + (index + 1)}
+                        </TableCell>
+                        <TableCell>
+                          <div className="m-auto w-fit flex items-center gap-x-1">
+                            <div className="w-8 h-4">
                               <Image
                                 alt="img"
-                                src={orderImg2}
-                                className="w-full h-full rounded-full"
+                                src={orderImg}
+                                className="w-10 h-8 rounded-full"
                               />
-                            )}
+                            </div>
+                            <p className="flex break-words">{invoice.Name}</p>
                           </div>
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            ref={fileInputRef}
-                            className="hidden"
-                          />
-                          {isImageLoading ? (
-                            <LoaderCircle className="text-secondaryBorder rotate-icon" />
+                        </TableCell>
+                        <TableCell>{invoice.Category}</TableCell>
+                        <TableCell>${invoice.Price}</TableCell>
+                        <TableCell>{invoice.Discount}</TableCell>
+
+                        <TableCell>
+                          <div className="flex justify-center">
+                            <p
+                              className={`status-cancelled text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                            >
+                              {invoice.Department}
+                            </p>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </AdminMenuTable>
+              </div>
+            </div>
+          </Tabs>
+          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <div>
+              <div className="">
+                <div className="px-3">
+                  <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
+                    <div className="flex flex-col h-full justify-center gap-y-3">
+                      <p className="md:text-xl text-lg font-medium">
+                        Item Details
+                      </p>
+                    </div>
+                    <div>
+                      <div className="flex justify-center">
+                        <p
+                          className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                        >
+                          {selectedInvoice.Category}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
+                    <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
+                      <div className="flex w-full h-full justify-center items-end">
+                        <div className="w-36 h-36">
+                          {imagePreview ? (
+                            <div className="relative w-full h-full">
+                              <Image
+                                src={imagePreview}
+                                alt="img"
+                                layout="fill"
+                                objectFit="cover"
+                                className="object-cover rounded-full"
+                              />
+                            </div>
                           ) : (
-                            <Edit3
-                              onClick={handleIconClick}
-                              className="text-primaryLime cursor-pointer"
+                            <Image
+                              alt="img"
+                              src={orderImg2}
+                              className="w-full h-full rounded-full"
                             />
                           )}
                         </div>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          ref={fileInputRef}
+                          className="hidden"
+                        />
+                        {isImageLoading ? (
+                          <LoaderCircle className="text-secondaryBorder rotate-icon" />
+                        ) : (
+                          <Edit3
+                            onClick={handleIconClick}
+                            className="text-primaryLime cursor-pointer"
+                          />
+                        )}
+                      </div>
 
-                        <div className="w-full flex flex-col text-center">
-                          <p className="text-2xl font-medium capitalize text-txWhite">
-                            {selectedInvoice.Name}
-                          </p>
-                        </div>
-                        <div className="m-auto">
-                          <p className="flex bg-primaryGreen rounded-md items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold">
-                            View Full Menu
-                          </p>
-                        </div>
+                      <div className="w-full flex flex-col text-center">
+                        <p className="text-2xl font-medium capitalize text-txWhite">
+                          {selectedInvoice.Name}
+                        </p>
+                      </div>
+                      <div className="m-auto">
+                        <p className="flex bg-primaryGreen rounded-md items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold">
+                          View Full Menu
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <Tabs
-                  defaultValue="items"
-                  className="md:text-base text-sm w-full
+              </div>
+              <Tabs
+                defaultValue="items"
+                className="md:text-base text-sm w-full
                     border-b-[0.3px] border-b-primary-border -border"
-                >
-                  <div className="w-full px-4">
-                    <TabsList className="w-fit flex px-0 gap-x-4">
-                      <TabsTrigger
-                        value="items"
-                        className="active-order-tab px-0 py-1 rounded-lg capitalize"
-                        onClick={() => setMenuHeader(false)}
-                      >
-                        items
-                      </TabsTrigger>
-                      <TabsTrigger
-                        value="edit"
-                        className="active-order-tab px-0 py-1 rounded-lg capitalize"
-                        onClick={() => setMenuHeader(true)}
-                      >
-                        <Edit3 />
-                        edit
-                      </TabsTrigger>
-                    </TabsList>
-                  </div>
-                  <TabsContent value="items" className="w-full">
-                    <div>
-                      <div className="flex py-2 px-4">
-                        <div className="w-full">
-                          <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
-                            <h1 className="">Menu Summary</h1>
-                          </div>
+              >
+                <div className="w-full px-4">
+                  <TabsList className="w-fit flex px-0 gap-x-4">
+                    <TabsTrigger
+                      value="items"
+                      className="active-order-tab px-0 py-1 rounded-lg capitalize"
+                      onClick={() => setMenuHeader(false)}
+                    >
+                      items
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="edit"
+                      className="active-order-tab px-0 py-1 rounded-lg capitalize"
+                      onClick={() => setMenuHeader(true)}
+                    >
+                      <Edit3 />
+                      edit
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="items" className="w-full">
+                  <div>
+                    <div className="flex py-2 px-4">
+                      <div className="w-full">
+                        <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
+                          <h1 className="">Item Summary</h1>
                         </div>
                       </div>
+                    </div>
+                    <div>
                       <div>
                         <div>
-                          <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <div className="flex flex-col gap-y-3 w-full">
-                                <div className="flex justify-between">
-                                  <p>Department</p>
-                                  <p className="text-txWhite">
-                                    {selectedInvoice.Department}{" "}
-                                  </p>
-                                </div>
-                                <div className="flex justify-between">
-                                  <p>Category</p>
-                                  <p>{selectedInvoice.Category} </p>
-                                </div>
-                                <div className="flex justify-between">
-                                  <p>Discount</p>
-                                  <p>{selectedInvoice.Discount} </p>
-                                </div>
-                                <div className="flex justify-between">
-                                  <p>Price</p>
-                                  <p>${selectedInvoice.Price} </p>
-                                </div>
-                                <div className="flex justify-between gap-x-8">
-                                  <p>Description</p>
-                                  <p>{selectedInvoice.Description} </p>
-                                </div>
+                          <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                            <div className="flex flex-col gap-y-3 w-full">
+                              <div className="flex justify-between">
+                                <p>Department</p>
+                                <p className="text-txWhite">
+                                  {selectedInvoice.Department}{" "}
+                                </p>
+                              </div>
+                              <div className="flex justify-between">
+                                <p>Category</p>
+                                <p>{selectedInvoice.Category} </p>
+                              </div>
+                              <div className="flex justify-between">
+                                <p>Discount</p>
+                                <p>{selectedInvoice.Discount} </p>
+                              </div>
+                              <div className="flex justify-between">
+                                <p>Price</p>
+                                <p>${selectedInvoice.Price} </p>
+                              </div>
+                              <div className="flex justify-between gap-x-8">
+                                <p>Description</p>
+                                <p>{selectedInvoice.Description} </p>
                               </div>
                             </div>
                           </div>
-
-                          <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
-                                <X /> Remove Menu
-                              </button>
-                            </div>
-                          </div>
-                          <div></div>
                         </div>
+
+                        <div>
+                          <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                            <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
+                              <X /> Remove Menu
+                            </button>
+                          </div>
+                        </div>
+                        <div></div>
                       </div>
                     </div>
-                  </TabsContent>
-                  <TabsContent value="edit" className="w-full">
+                  </div>
+                </TabsContent>
+                <TabsContent value="edit" className="w-full">
+                  <div>
                     <div>
                       <div>
                         <div>
-                          <div>
-                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                              <form
-                                onSubmit={handleSubmit(onSubmit)}
-                                className="flex flex-col gap-y-3 w-full text-base"
-                              >
-                                <div>
-                                  <div className="flex justify-between items-baseline">
-                                    <label>Discount</label>
-                                    <Input
-                                      {...register("Discount")}
-                                      autoComplete="off"
-                                      type="text"
-                                      placeholder={selectedInvoice.Discount}
-                                      className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
-                                    />
-                                  </div>
-                                  <p className="text-red-400 text-end text-sm">
-                                    {errors.Discount?.message}
-                                  </p>
+                          <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                            <form
+                              onSubmit={handleSubmit(onSubmit)}
+                              className="flex flex-col gap-y-3 w-full text-base"
+                            >
+                              <div>
+                                <div className="flex justify-between items-baseline">
+                                  <label>Discount</label>
+                                  <Input
+                                    {...register("Discount")}
+                                    autoComplete="off"
+                                    type="text"
+                                    placeholder={selectedInvoice.Discount}
+                                    className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                  />
                                 </div>
-                                <div>
-                                  <div className="flex justify-between items-baseline">
-                                    <label>Price</label>
-                                    <Input
-                                      {...register("Price")}
-                                      autoComplete="off"
-                                      type="number"
-                                      placeholder={selectedInvoice.Price.toString()}
-                                      className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
-                                    />
-                                  </div>
-                                  <p className="text-red-400 text-end text-sm">
-                                    {errors.Price?.message}
-                                  </p>
+                                <p className="text-red-400 text-end text-sm">
+                                  {errors.Discount?.message}
+                                </p>
+                              </div>
+                              <div>
+                                <div className="flex justify-between items-baseline">
+                                  <label>Price</label>
+                                  <Input
+                                    {...register("Price")}
+                                    autoComplete="off"
+                                    type="number"
+                                    placeholder={selectedInvoice.Price.toString()}
+                                    className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                  />
                                 </div>
-                                <div>
-                                  <div className="flex justify-between gap-x-8 items-baseline">
-                                    <label>Description</label>
-                                    <Input
-                                      {...register("Description")}
-                                      autoComplete="off"
-                                      type="text"
-                                      placeholder={selectedInvoice.Description}
-                                      className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
-                                    />
-                                  </div>
-                                  <p className="text-red-400 text-end text-sm">
-                                    {errors.Description?.message}
-                                  </p>
+                                <p className="text-red-400 text-end text-sm">
+                                  {errors.Price?.message}
+                                </p>
+                              </div>
+                              <div>
+                                <div className="flex justify-between gap-x-8 items-baseline">
+                                  <label>Description</label>
+                                  <Input
+                                    {...register("Description")}
+                                    autoComplete="off"
+                                    type="text"
+                                    placeholder={selectedInvoice.Description}
+                                    className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                  />
                                 </div>
-                                <div>
-                                  <div className="md:flex justify-between items-baseline">
-                                    <label>Department</label>
-                                    <select
-                                      {...register("Department")}
-                                      id="department"
-                                      className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
-                                    >
-                                      <option value="" disabled selected hidden>
-                                        Select an option
+                                <p className="text-red-400 text-end text-sm">
+                                  {errors.Description?.message}
+                                </p>
+                              </div>
+                              <div>
+                                <div className="md:flex justify-between items-baseline">
+                                  <label>Department</label>
+                                  <select
+                                    {...register("Department")}
+                                    id="department"
+                                    className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
+                                  >
+                                    <option value="" disabled selected hidden>
+                                      Select an option
+                                    </option>
+                                    {deptArray.map((option) => (
+                                      <option key={option} value={option}>
+                                        {option}
                                       </option>
-                                      {deptArray.map((option) => (
-                                        <option key={option} value={option}>
-                                          {option}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                  <p className="text-red-400 text-end text-sm">
-                                    {errors.Department?.message}
-                                  </p>
+                                    ))}
+                                  </select>
                                 </div>
-                                <div>
-                                  <div className="flex justify-between items-baseline">
-                                    <label>Category</label>
-                                    <select
-                                      {...register("Category")}
-                                      id="category"
-                                      className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
-                                    >
-                                      <option value="" disabled selected hidden>
-                                        Select an option
+                                <p className="text-red-400 text-end text-sm">
+                                  {errors.Department?.message}
+                                </p>
+                              </div>
+                              <div>
+                                <div className="flex justify-between items-baseline">
+                                  <label>Category</label>
+                                  <select
+                                    {...register("Category")}
+                                    id="category"
+                                    className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
+                                  >
+                                    <option value="" disabled selected hidden>
+                                      Select an option
+                                    </option>
+                                    {categoryArray.map((option) => (
+                                      <option key={option} value={option}>
+                                        {option}
                                       </option>
-                                      {categoryArray.map((option) => (
-                                        <option key={option} value={option}>
-                                          {option}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                  <p className="text-red-400 text-end text-sm">
-                                    {errors.Category?.message}
-                                  </p>
+                                    ))}
+                                  </select>
                                 </div>
-                                <div>
-                                  <div className="flex justify-between p-3 items-center text-txWhite">
-                                    <button
-                                      disabled={!isButtonEnabled}
-                                      className={`place-order-btn text-white font-medium ${
-                                        isButtonEnabled
-                                          ? "bg-primaryGreen"
-                                          : "bg-lime-600"
-                                      }
+                                <p className="text-red-400 text-end text-sm">
+                                  {errors.Category?.message}
+                                </p>
+                              </div>
+                              <div>
+                                <div className="flex justify-between p-3 items-center text-txWhite">
+                                  <button
+                                    disabled={!isButtonEnabled}
+                                    className={`place-order-btn text-white font-medium ${
+                                      isButtonEnabled
+                                        ? "bg-primaryGreen"
+                                        : "bg-lime-600"
+                                    }
                                       flex items-center gap-x-1 m-auto rounded-xl p-2`}
-                                    >
-                                      Save
-                                      {isLoading ? (
-                                        <LoaderCircle className="w-5 h-5 rotate-icon" />
-                                      ) : (
-                                        <Check />
-                                      )}
-                                    </button>
-                                  </div>
+                                  >
+                                    Save
+                                    {isLoading ? (
+                                      <LoaderCircle className="w-5 h-5 rotate-icon" />
+                                    ) : (
+                                      <Check />
+                                    )}
+                                  </button>
                                 </div>
-                              </form>
-                            </div>
+                              </div>
+                            </form>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </Modal>
-          </div>
-        </Container>
-      </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </Modal>
+        </div>
+      </Container>
+    </div>
   );
 };
 

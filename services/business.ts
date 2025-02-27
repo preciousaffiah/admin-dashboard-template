@@ -15,8 +15,19 @@ class BusinessService {
       ...payload,
     });
   }
+  
+  getBusinessByNameOrIdOrEmailWithoutAuth(name?: string, email?: string, id?: string) {
+    return axiosWithoutToken.get("/business/general", {
+      params: {
+        name,
+        email,
+        _id:id,
+      },
+    });
+  }
+
   getBusinessByNameOrIdOrEmail(name?: string, email?: string, id?: string) {
-    return axiosWithoutToken.get("/business", {
+    return axiosWithToken().get("/business", {
       params: {
         name,
         email,

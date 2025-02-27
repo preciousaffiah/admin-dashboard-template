@@ -49,7 +49,7 @@ const invoiceData = [
     value: "all",
     Category: "Intercontinental",
     MenuId: 101,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: "120",
     Discount: "No Discount",
@@ -61,7 +61,7 @@ const invoiceData = [
     value: "all",
     Category: "Intercontinental",
     MenuId: 102,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chickessssssssssssssssssssssssssn",
     Price: "120",
     Discount: "No Discount",
@@ -73,7 +73,7 @@ const invoiceData = [
     value: "all",
     Category: "Intercontinental",
     MenuId: 103,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: "120",
     Discount: "No Discount",
@@ -85,7 +85,7 @@ const invoiceData = [
     value: "all",
     Category: "Intercontinental",
     MenuId: 104,
-    mealImage: "macaroni-image.jpg",
+    itemImage: "macaroni-image.jpg",
     Name: "Macaroni with Chicken",
     Price: "120",
     Discount: "No Discount",
@@ -187,31 +187,31 @@ const CreateOrder: FC = () => {
     });
   };
 
-  const addOrder = (selectedMeal: any) => {
-    setActiveId(selectedMeal.MenuId);
+  const addOrder = (selectedItem: any) => {
+    setActiveId(selectedItem.MenuId);
 
-    const mealToOrder: OrderMenuItem = {
-      MenuId: selectedMeal.MenuId,
-      Name: selectedMeal.Name,
+    const itemToOrder: OrderMenuItem = {
+      MenuId: selectedItem.MenuId,
+      Name: selectedItem.Name,
       quantity: 1,
-      Price: selectedMeal.Price,
+      Price: selectedItem.Price,
     };
 
     const existingItem = order.orderItems.find(
-      (item) => item.MenuId === mealToOrder.MenuId
+      (item) => item.MenuId === itemToOrder.MenuId
     );
 
     if (!existingItem) {
       setOrder((prevOrder) => ({
         ...prevOrder,
-        orderItems: [...prevOrder.orderItems, mealToOrder],
+        orderItems: [...prevOrder.orderItems, itemToOrder],
       }));
     } else {
       // Update quantity if item already exists
       setOrder((prevOrder) => ({
         ...prevOrder,
         orderItems: prevOrder.orderItems.map((item) =>
-          item.MenuId === mealToOrder.MenuId
+          item.MenuId === itemToOrder.MenuId
             ? { ...item, quantity: item.quantity + 1 }
             : item
         ),
@@ -219,14 +219,14 @@ const CreateOrder: FC = () => {
     }
   };
 
-  const handleQuantityChange = (mealIndex: number, type: string) => {
+  const handleQuantityChange = (itemIndex: number, type: string) => {
     setOrder((prevOrder) => {
       const newOrderItems = [...prevOrder.orderItems];
 
       return {
         ...prevOrder,
         orderItems: newOrderItems.map((item, index) =>
-          index === mealIndex
+          index === itemIndex
             ? {
                 ...item,
                 quantity:
@@ -241,7 +241,7 @@ const CreateOrder: FC = () => {
   };
 
   const removeOrder = (itemToRemove: any) => {
-    const mealToOrder: OrderMenuItem = {
+    const itemToOrder: OrderMenuItem = {
       MenuId: itemToRemove.MenuId,
       Name: itemToRemove.Name,
       quantity: itemToRemove.quantity,
@@ -251,7 +251,7 @@ const CreateOrder: FC = () => {
     setOrder((prevOrder) => ({
       ...prevOrder,
       orderItems: prevOrder.orderItems.filter(
-        (item) => JSON.stringify(item) !== JSON.stringify(mealToOrder)
+        (item) => JSON.stringify(item) !== JSON.stringify(itemToOrder)
       ),
     }));
   };

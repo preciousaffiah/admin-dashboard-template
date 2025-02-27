@@ -7,7 +7,7 @@ const useBusinessDetails = ({ name, id, email }: BDetails) => {
   const fetchBusinessRequest = async () => {
     if (!name && !id && !email) return;
     try {
-      const response = await BusService.getBusinessByNameOrIdOrEmail(
+      const response = await BusService.getBusinessByNameOrIdOrEmailWithoutAuth(
         name,
         email,
         id

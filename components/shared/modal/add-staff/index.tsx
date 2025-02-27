@@ -12,11 +12,17 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { EyeIcon, EyeOff } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { StaffService } from "@/services";
+import { useAuthToken } from "@/hooks";
+import { ToastMessage } from "@/components/serviette-ui";
+import { handleMediaUpload } from "@/utils/upload";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
@@ -24,6 +30,7 @@ const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
 const formSchema = z
   .object({
     email: z.string().email("invalid email address"),
+    businessId: z.string(),
     fullname: z
       .string()
       .min(1, "fullname is required")
@@ -62,23 +69,45 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
       department: undefined,
       image: "",
       password: "",
+      businessId: "",
     },
     mode: "onChange", // Ensures validation checks on each change
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const { userData } = useAuthToken();
+  const addStaffRequest: any = async () => {
+    form.setValue("businessId", userData?.businessId || "");
 
-  const onSubmit = (data: any) => {
-    setSuccess(true);
-    form.reset();
+    try {
+      const response = await StaffService.addStaff(form.getValues());
+
+      return response.data;
+    } catch (error: any) {
+      throw new Error(
+        error?.response?.data?.message ||
+          error?.response?.data?.data?.message ||
+          "An error occurred"
+      );
+    }
   };
+
+  const mutation: any = useMutation({
+    mutationFn: addStaffRequest,
+    onSuccess: (res: any) => {
+      setSuccess(true);
+      form.reset();
+    },
+  });
+
+  const onSubmit = () => mutation.mutate();
 
   return (
     <DialogContent className="sm:max-w-[425px] text-black">
       {success ? (
         <div className="flex flex-col justify-center items-center">
           <video
-            className="w-40 h-36"
+            className="w-28 h-24"
             src="/svg.mp4" // Place the MP4/WebM file in "public"
             autoPlay
             muted
@@ -96,10 +125,27 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
           </DialogHeader>
           <div className="grid gap-4">
             <div>
+              <AnimatePresence>
+                {mutation.isError && (
+                  <motion.div
+                    initial={{ y: -20, opacity: 0.5 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0.2 }}
+                  >
+                    <ToastMessage
+                      message={
+                        mutation?.error?.message ||
+                        "An error occured during process"
+                      }
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-y-3"
+                  className="flex flex-col gap-y-1"
                 >
                   <FormField
                     control={form.control}
@@ -182,15 +228,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                             type="file"
                             accept=".png,.jpg,.jpeg"
                             onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
-                                  const base64 = reader.result as string; // Get the base64 string
-                                  field.onChange(base64); // Update the form state with the base64 string
-                                };
-                                reader.readAsDataURL(file); // Convert the file to base64
-                              }
+                              handleMediaUpload(e, field);
                             }}
                             placeholder="Upload image"
                             className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
@@ -246,9 +284,12 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                   <DialogFooter>
                     <button
                       type="submit"
-                      className="self-end bg-primary-orange rounded-md w-fit text-white px-3 py-1.5 text-sm font-medium"
+                      className="flex gap-x-1 items-center self-end bg-primary-orange rounded-md w-fit text-white px-3 py-1.5 text-sm font-medium"
                     >
                       Add
+                      {form.formState.isValid && mutation.isPending && (
+                        <LoaderCircle className="text-white w-4 rotate-icon" />
+                      )}
                     </button>
                   </DialogFooter>
                 </form>

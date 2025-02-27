@@ -1,15 +1,12 @@
 import { AdminLayout, GeneralLayout } from "@layouts";
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MainNavbar } from "@/components/shared";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import Sidebar from "@/components/shared/nav/sidebar/admin";
-import {
-  ChevronUp,
-  CircleCheckBig,
-  LoaderCircle,
-  Plus,
-} from "lucide-react";
+import { ChevronUp, CircleCheckBig, LoaderCircle, Plus } from "lucide-react";
 import Container from "@/components/shared/container";
 import { createMenu } from "@/types";
 import Image from "next/image";
@@ -17,36 +14,134 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import ComboboxDemo from "@/components/shared/waiter/combobox";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ItemService } from "@/services";
+import { useAuthToken } from "@/hooks";
+import { useMutation } from "@tanstack/react-query";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { ToastMessage } from "@/components/serviette-ui";
+
+const categoryArray: any = ["intercontinental"];
+const deptArray: any = [
+  "kitchen",
+  "bar",
+  "reception",
+  "hospitality",
+  "bakery",
+  "waiter",
+  "counter",
+  "utilities",
+];
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
+const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
+
+const formSchema = z
+  .object({
+    name: z.string().min(1, "required"),
+    price: z
+      .string()
+      .min(1, { message: "required" })
+      .regex(/^\d+$/, { message: "digits only" }),
+    description: z.string().min(1, "required"),
+    department: z.enum([
+      "kitchen",
+      "bar",
+      "reception",
+      "hospitality",
+      "bakery",
+      "waiter",
+      "counter",
+      "utilities",
+    ]), //add field for other
+
+    category: z.enum(["intercontinental"]), //add field for other
+    image: z
+      .string()
+      .refine((val) => val.startsWith("data:"), {
+        message: "Invalid file format",
+      })
+      .refine((val) => val.length <= MAX_BASE64_LENGTH, {
+        message: "File size must be less than 2MB.",
+      }),
+    businessId: z.string().min(1, "required"),
+  })
+  .required();
 
 const defaultMenu: createMenu = {
   name: "",
   price: 0,
-  category: "",
   description: "",
-  mealImage: "",
+  category: "",
   department: "",
+  image: "",
+  businessId: "",
 };
 
 const CreateMenu: FC = () => {
-  const [success, setSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      price: "0",
+      description: "",
+      category: undefined,
+      department: undefined,
+      image: "",
+      businessId: "",
+    },
+    mode: "onChange", // Ensures validation checks on each change
+  });
 
-  const categoryArray = ["intercontinental"];
-  const deptArray = [
-    "kitchen",
-    "bar",
-    "reception",
-    "hospitality",
-    "bakery",
-    "counter",
-    "utilities",
-  ];
+  const [success, setSuccess] = useState(false);
 
   const [menu, setMenu] = useState<createMenu>(defaultMenu);
-  const [errorMsg, setErrorMsg] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const { userData } = useAuthToken();
+
+  const handleChange = (event: any, field: any) => {
+    const inputValue = event.target.value;
+    // Allow only digits
+    const digitsOnly = inputValue.replace(/\D/g, "");
+    field.onChange(digitsOnly); // Pass the filtered value to the parent
+  };
+
+  const addItemRequest: any = async () => {
+    try {
+      const response = await ItemService.addItem(form.getValues());
+
+      return response.data;
+    } catch (error: any) {
+      throw new Error(
+        error?.response?.data?.message ||
+          error?.response?.data?.data?.message ||
+          "An error occurred"
+      );
+    }
+  };
+
+  const mutation: any = useMutation({
+    mutationFn: addItemRequest,
+    onSuccess: (res: any) => {
+      setSuccess(true);
+      setMenu(defaultMenu); // clear menu
+      form.reset();
+    },
+  });
+
+  const onSubmit = () => mutation.mutate();
+
   // Ref for the hidden file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -54,13 +149,18 @@ const CreateMenu: FC = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-
-      setMenu((prevOrder) => ({
-        ...prevOrder,
-        mealImage: imageUrl,
-      }));
-      setImagePreview(imageUrl);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string; // Get the base64 string
+        form.setValue("image", base64);
+        form.setValue("businessId", userData?.businessId || "");
+        setMenu((prevOrder) => ({
+          ...prevOrder,
+          image: base64,
+        }));
+        setImagePreview(base64);
+      };
+      reader.readAsDataURL(file); // Convert the file to base64
     }
   };
 
@@ -69,80 +169,46 @@ const CreateMenu: FC = () => {
     fileInputRef.current?.click();
   };
 
-  const {
-    register: register1,
-    handleSubmit: handleSubmit1,
-    formState: { errors: errors1 },
-    setValue,
-  } = useForm({
-    defaultValues: defaultMenu,
-  });
-
-  const onSubmit1 = (data: any) => {
-    data.mealImage = menu.mealImage;
-
-    if (!data.mealImage || "") {
-      return setImgError(true);
-    } else {
-      setImgError(false);
-    }
-    if (
-      !data.category ||
-      data.category === "" ||
-      !data.department ||
-      data.department === ""
-    )
-      return setErrorMsg(true);
-
+  const setItemPreview = () => {
+    form.trigger();
     setMenu((prevOrder) => ({
       ...prevOrder,
-      ...data,
-      price: Number(data.price),
+      category: form.getValues("category"),
+      description: form.getValues("description"),
+      name: form.getValues("name"),
+      department: form.getValues("department"),
+      price: Number(form.getValues("price")),
     }));
-    setErrorMsg(false);
+
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000); // Reset after 2 seconds
   };
 
-  const isOrderComplete = () => {
-    return (
-      menu.mealImage !== "" &&
-      menu.name !== "" &&
-      menu.category !== "" &&
-      menu.department !== "" &&
-      menu.description !== "" &&
-      menu.price > 0
-    );
-  };
-
-  const handleMenu = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log("...where submit menu aapi comes in");
-      setSuccess(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        setMenu(defaultMenu); // clear menu
-        console.log("menu created");
-
-        return window.location.reload();
-      }, 2000);
-    }, 2000);
-  };
-  const title = "Create Menu";
+  const title = "Add to Menu";
 
   return (
     <AdminLayout title={title}>
       <div className="flex justify-end h-screen w-full">
         <Container>
-          <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 md:px-8 px-0">
+          <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 md:px-8 px-0 md:bg-inherit bg-primaryDark">
             {success ? (
               <div className="md:w-1/2 w-full h-screen m-auto bg-primaryDark z-50 rounded-xl">
                 <div className="text-txWhite gap-y-4 flex flex-col justify-center items-center h-full">
-                  <CircleCheckBig
+                  {/* <CircleCheckBig
                     fill="green"
                     className="text-txWhite md:w-24 md:h-20 w-16 h-20"
-                  />
+                  /> */}
+                  <div className="w-fit">
+                    <video
+                      className="w-28 h-24"
+                      src="/svg.mp4" // Place the MP4/WebM file in "public"
+                      autoPlay
+                      muted
+                      playsInline
+                    />
+                  </div>
                   <p className="font-semibold text-lg">
-                    Menu Created Successfully!
+                    Item Created Successfully!
                   </p>
                 </div>
               </div>
@@ -153,174 +219,263 @@ const CreateMenu: FC = () => {
                     <div className="px-3 flex pb-4 border-b border-primary-border">
                       <div className="flex w-full items-center gap-x-8">
                         <h1 className="capitalize font-semibold text-txWhite text-xl">
-                          Create Menu
+                          Add to Menu
                         </h1>
                       </div>
                       <div></div>
                     </div>
                     <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondaryBorder">
                       <div className="md:w-[60%] w-full flex flex-col gap-y-3">
-                        <h1 className="pb-4">Meal Details</h1>
+                        <h1 className="pb-4">Item Details</h1>
                         <div className="flex flex-col gap-y-4">
-                          <form
-                            onSubmit={handleSubmit1(onSubmit1)}
-                            className="w-full "
-                          >
-                            <div className="w-full text-txWhite  bg-secondaryDark mb-4 p-3 rounded-md">
-                              <div className="flex text-txWhite w-full pb-4 justify-between">
-                                <h2 className="font-medium">Add meal image</h2>
+                          <Form {...form}>
+                            <form
+                              onSubmit={form.handleSubmit(onSubmit)}
+                              className="w-full "
+                            >
+                              <div className="w-full text-txWhite  bg-secondaryDark mb-4 p-3 rounded-md">
+                                <div className="flex text-txWhite w-full pb-4 justify-between">
+                                  <h2 className="font-medium">
+                                    Add item image
+                                  </h2>
+                                </div>
+
+                                <div
+                                  onClick={handleIconClick}
+                                  className="gap-x-2 bg-primaryDark cursor-pointer w-52 h-52 rounded-md items-center flex"
+                                >
+                                  {imagePreview && (
+                                    <div className="relative w-full h-full">
+                                      <Image
+                                        src={imagePreview}
+                                        alt="Uploaded Preview"
+                                        layout="fill"
+                                        objectFit="cover"
+                                        className="object-cover rounded"
+                                      />
+                                    </div>
+                                  )}
+                                  <FormField
+                                    control={form.control}
+                                    name="image"
+                                    render={({ field }) => (
+                                      <FormItem className="hidden">
+                                        <FormControl>
+                                          <input
+                                            type="file"
+                                            accept=".png,.jpg,.jpeg"
+                                            onChange={handleImageChange}
+                                            ref={fileInputRef}
+                                            className="hidden"
+                                          />
+                                        </FormControl>
+                                        <FormMessage className="text-end" />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  {!imagePreview && (
+                                    <Plus className="m-auto w-5" />
+                                  )}
+                                </div>
                               </div>
 
-                              <div
-                                onClick={handleIconClick}
-                                className="gap-x-2 bg-primaryDark cursor-pointer w-52 h-52 rounded-md items-center flex"
-                              >
-                                {imagePreview && (
-                                  <div className="relative w-full h-full">
-                                    <Image
-                                      src={imagePreview}
-                                      alt="Uploaded Preview"
-                                      layout="fill"
-                                      objectFit="cover"
-                                      className="object-cover rounded"
-                                    />
-                                  </div>
-                                )}
-                                <Input
-                                  type="file"
-                                  accept="image/*"
-                                  {...register1("mealImage")}
-                                  onChange={handleImageChange}
-                                  ref={fileInputRef}
-                                  className="hidden"
+                              <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark text-sm rounded-md px-4">
+                                <div className="flex flex-col items-start justify-between py-4">
+                                  <h4 className="font-semibold">
+                                    Add Item Details
+                                  </h4>
+                                  <AnimatePresence>
+                                    {mutation.isError && (
+                                      <motion.div
+                                        initial={{ y: -20, opacity: 0.5 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0.2 }}
+                                      >
+                                        <ToastMessage
+                                          message={
+                                            mutation?.error?.message ||
+                                            "An error occured during process"
+                                          }
+                                        />
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+
+                                <FormField
+                                  control={form.control}
+                                  name="name"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <p className="text-txWhite font-normal pb-2">
+                                          Name
+                                        </p>
+
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="Enter Item Name"
+                                            {...field}
+                                            className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                          />
+                                        </FormControl>
+                                      </div>
+
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
                                 />
 
-                                {!imagePreview && (
-                                  <Plus className="m-auto w-5" />
-                                )}
-                              </div>
-                              {imgError && (
-                                <p className="text-textCancelled text-sm">
-                                  meal image is required
-                                </p>
-                              )}
-                            </div>
-                            <div className="bg-secondaryDark rounded-md">
-                              <div className="flex items-center justify-between p-4">
-                                <h4 className="text-sm font-semibold">
-                                  Add Meal Details
-                                </h4>
-                              </div>
-                              <div className="px-4 py-3">
-                                <div className="pb-4">
-                                  <Label
-                                    htmlFor="fname"
-                                    className="text-txWhite font-normal"
-                                  >
-                                    Name
-                                  </Label>
-
-                                  <Input
-                                    type="text"
-                                    id="name"
-                                    placeholder="Enter Meal Name"
-                                    {...register1("name", {
-                                      required: true,
-                                    })}
-                                    className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                  />
-                                  {errors1.name && (
-                                    <p className="text-textCancelled text-sm">
-                                      meal name is required
-                                    </p>
+                                <FormField
+                                  control={form.control}
+                                  name="price"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <p className="text-txWhite font-normal pb-2">
+                                          Price
+                                        </p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="price"
+                                            placeholder="Enter Iteem Price"
+                                            {...field}
+                                            onChange={(e) => {
+                                              // Allow only numbers
+                                              const numericValue =
+                                                e.target.value.replace(
+                                                  /\D/g,
+                                                  ""
+                                                );
+                                              field.onChange(numericValue); // Update the form value
+                                            }}
+                                            value={field.value} // Ensure the value is controlled
+                                            className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
                                   )}
-                                </div>
-                                <div className="pb-4">
-                                  <Label
-                                    htmlFor="price"
-                                    className="text-txWhite font-normal"
-                                  >
-                                    Price
-                                  </Label>
-                                  <Input
-                                    type="number"
-                                    id="price"
-                                    placeholder="Enter Meal Price"
-                                    {...register1("price", {
-                                      required: true,
-                                      min: 1,
-                                    })}
-                                    className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                  />
-                                  {errors1.price && (
-                                    <p className="text-textCancelled text-sm">
-                                      Invalid value
-                                    </p>
-                                  )}
-                                </div>
-                                <div className="pb-4">
-                                  <Label
-                                    htmlFor="phone"
-                                    className="text-txWhite font-normal"
-                                  >
-                                    Description
-                                  </Label>
-                                  <Input
-                                    type="text"
-                                    id="description"
-                                    placeholder="Enter Meal Description"
-                                    {...register1("description", {
-                                      required: true,
-                                    })}
-                                    className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                  />
-                                  {errors1.description && (
-                                    <p className="text-textCancelled text-sm">
-                                      description is required
-                                    </p>
-                                  )}
-                                </div>
+                                />
 
-                                <div className="pb-4">
-                                  <div className="flex items-center gap-x-3">
-                                    <h1>Category</h1>
-                                    <ComboboxDemo
-                                      selectValue="category"
-                                      itemsArray={categoryArray}
-                                      setValue={setValue}
-                                    />
-                                  </div>
-                                </div>
+                                <FormField
+                                  control={form.control}
+                                  name="description"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <p className="text-txWhite font-normal pb-2">
+                                          Description
+                                        </p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="description"
+                                            placeholder="Enter Item Description"
+                                            {...field}
+                                            className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
 
-                                <div className="pb-4">
-                                  <div className="flex items-center gap-x-3">
-                                    <h1>Handling Department</h1>
-                                    <ComboboxDemo
-                                      selectValue="department"
-                                      itemsArray={deptArray}
-                                      setValue={setValue}
-                                    />
-                                  </div>
-                                </div>
-                                {errorMsg && (
-                                  <p className="text-textCancelled text-sm">
-                                    Please select the required inputs
+                                <FormField
+                                  control={form.control}
+                                  name="category"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="flex items-center gap-x-3 pb-2 md:w-1/2 w-full justify-between  border-0">
+                                        <h1>Category</h1>
+                                        <FormControl>
+                                          <select
+                                            {...field}
+                                            className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                          >
+                                            <option
+                                              value="none"
+                                              selected
+                                              disabled
+                                              hidden
+                                            >
+                                              Select category
+                                            </option>
+                                            <option value="intercontinental">
+                                              intercontinental
+                                            </option>
+                                          </select>
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+
+                                <FormField
+                                  control={form.control}
+                                  name="department"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="flex items-center gap-x-3 pb-2 md:w-1/2 w-full justify-between  border-0">
+                                        <h1 className="w-full">
+                                          Handling Department
+                                        </h1>
+                                        <FormControl>
+                                          <select
+                                            {...field}
+                                            className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                          >
+                                            <option
+                                              value="none"
+                                              selected
+                                              disabled
+                                              hidden
+                                            >
+                                              Select department
+                                            </option>
+                                            <option value="bar">bar</option>
+                                            <option value="waiter">
+                                              waiter
+                                            </option>
+                                            <option value="kitchen">
+                                              kitchen
+                                            </option>
+                                          </select>
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <div
+                                  onClick={setItemPreview}
+                                  className="md:w-1/2 w-full text-base flex gap-x-4 justify-end text-primaryLime font-medium"
+                                >
+                                  <p className="cursor-pointer">
+                                    {saved ? "Saved" : "Save"}
                                   </p>
-                                )}
-                                <div className="md:w-1/2 w-full flex gap-x-4 justify-end text-primaryLime font-medium">
-                                  <button type="submit">Save</button>
                                 </div>
                               </div>
-                            </div>
-                          </form>
+                            </form>
+                          </Form>
                         </div>
                       </div>
                       <div className="w-[40%] md:block hidden">
-                        <h1 className="pb-4">Menu Summary</h1>
-                        <div className={`${!menu.mealImage ? "h-[40rem]" : "h-fit"} w-full flex justify-center bg-secondaryDark rounded-md`}>
-                          {!menu.mealImage ? (
+                        <h1 className="pb-4">Item Summary</h1>
+                        <div
+                          className={`${
+                            !menu.image ? "h-[40rem]" : "h-fit"
+                          } w-full flex justify-center bg-secondaryDark rounded-md`}
+                        >
+                          {!menu.image ? (
                             <p className="w-full m-auto text-center px-3">
-                              Your menu summary will show here.
+                              Your item summary will show here.
                             </p>
                           ) : (
                             <div className="w-full flex flex-col justify-between">
@@ -329,7 +484,7 @@ const CreateMenu: FC = () => {
                                   <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
                                     <div className="flex flex-col h-full justify-center gap-y-3">
                                       <p className="md:text-xl text-lg font-medium">
-                                        Meal Details
+                                        Item Details
                                       </p>
                                     </div>
                                     <div>
@@ -369,7 +524,7 @@ const CreateMenu: FC = () => {
                                 <div className="flex py-2 px-4">
                                   <div className="w-full">
                                     <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
-                                      <h1 className="">Menu Summary</h1>
+                                      <h1 className="">Item Summary</h1>
                                     </div>
                                   </div>
                                 </div>
@@ -394,7 +549,9 @@ const CreateMenu: FC = () => {
                                           </div>
                                           <div className="flex justify-between">
                                             <p>Description</p>
-                                            <p className="w-full word-breaks text-right">{menu.description} </p>
+                                            <p className="w-full word-breaks text-right">
+                                              {menu.description}{" "}
+                                            </p>
                                           </div>
                                         </div>
                                       </div>
@@ -403,25 +560,19 @@ const CreateMenu: FC = () => {
                                       <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                                         <div className="p-3 w-full bg-foreground rounded-b-md">
                                           <button
-                                            disabled={!isOrderComplete()}
-                                            onClick={() => handleMenu()}
-                                            className={`place-menu-btn ${
-                                              isOrderComplete()
-                                                ? "bg-primaryGreen"
-                                                : "bg-lime-700"
-                                            } w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
+                                            type="submit"
+                                            onClick={onSubmit}
+                                            className={`place-menu-btn bg-primaryGreen w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
                                           >
-                                            <LoaderCircle
-                                              className={`${
-                                                isLoading ? "flex" : "hidden"
-                                              } text-black w-5 h-5 rotate-icon`}
-                                            />
-                                            Create Menu
+                                            {form.formState.isValid &&
+                                              mutation.isPending && (
+                                                <LoaderCircle className="text-black flex w-5 h-5 rotate-icon" />
+                                              )}
+                                            Add to Menu
                                           </button>
                                         </div>
                                       </div>
                                     </div>
-                                    <div></div>
                                   </div>
                                 </div>
                               </div>
@@ -432,7 +583,7 @@ const CreateMenu: FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="md:hidden flex bg-foreground px-4 h-20 fixed bottom-0 w-full z-50">
+                <div className="md:hidden flex bg-background px-4 h-20 fixed bottom-0 w-full z-50">
                   <div className="text-xs flex w-full justify-between items-center">
                     <div className="text-txWhite font-medium w-full flex justify-between">
                       <Drawer>
@@ -440,119 +591,124 @@ const CreateMenu: FC = () => {
                           <DrawerTrigger asChild>
                             <Button className="capitalize transparent-btn bg-transparent rounded-lg text-secondaryBorder">
                               <ChevronUp className="w-5 h-5" />
-                              Menu Details
+                              Item Details
                             </Button>
                           </DrawerTrigger>
                           <button
-                            disabled={!isOrderComplete()}
-                            onClick={() => handleMenu()}
-                            className={`place-menu-btn ${
-                              isOrderComplete()
-                                ? "bg-primaryGreen"
-                                : "bg-lime-700"
-                            } w-full py-2 rounded-md text-sm text-black
+                            type="submit"
+                            onClick={onSubmit}
+                            disabled={!menu.image}
+                            className={`place-menu-btn 
+                               ${
+                                 menu.image ? "bg-primaryGreen" : "bg-lime-700"
+                               } 
+                             w-full py-2 rounded-md text-sm text-black
                              flex items-center justify-center gap-x-2
                             `}
                           >
-                            <LoaderCircle
-                              className={`${
-                                isLoading ? "flex" : "hidden"
-                              } text-black w-5 h-5 rotate-icon`}
-                            />
-                            Create Menu
+                            {form.formState.isValid && mutation.isPending && (
+                              <LoaderCircle className="text-black flex w-5 h-5 rotate-icon" />
+                            )}
+                            Add to Menu
                           </button>
                         </div>
                         <DrawerContent className="h-[85%]  text-secondaryBorder bg-secondaryDark border-secondary-transparent-border w-full flex px-4 pb-4">
                           <div>
-                          <h1 className="pb-4">Menu Summary</h1>
-                        <div className={`${!menu.mealImage ? "h-[40rem]" : "h-fit"} w-full flex justify-center bg-secondaryDark rounded-md`}>
-                          {!menu.mealImage ? (
-                            <p className="w-full m-auto text-center px-3">
-                              Your menu summary will show here.
-                            </p>
-                          ) : (
-                            <div className="w-full flex flex-col justify-between">
-                              <div className="border-b-[0.3px] border-b-primary-border -border">
-                                <div className="pt-3">
-                                  <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
-                                    <div className="flex flex-col h-full justify-center gap-y-3">
-                                      <p className="md:text-xl text-lg font-medium">
-                                        Meal Details
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <div className="flex justify-center">
-                                        <p
-                                          className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                                        >
-                                          {menu.department}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
-                                    <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
-                                      <div className="w-36 h-36 m-auto">
-                                        {imagePreview && (
-                                          <Image
-                                            alt="img"
-                                            src={imagePreview}
-                                            className="w-full h-full rounded-full"
-                                            width={128}
-                                            height={128}
-                                          />
-                                        )}
-                                      </div>
-                                      <div className="w-full flex flex-col text-center">
-                                        <p className="text-2xl  break-all font-medium capitalize text-txWhite">
-                                          {menu.name}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div>
-                                <div className="flex py-2 px-4">
-                                  <div className="w-full">
-                                    <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
-                                      <h1 className="">Menu Summary</h1>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div>
-                                  <div>
-                                    <div>
-                                      <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                                        <div className="flex flex-col gap-y-3 w-full">
-                                          <div className="flex justify-between">
-                                            <p>Department</p>
-                                            <p className="text-txWhite">
+                            <h1 className="pb-4">Item Summary</h1>
+                            <div
+                              className={`${
+                                !menu.image ? "h-[40rem]" : "h-fit"
+                              } w-full flex justify-center bg-secondaryDark rounded-md`}
+                            >
+                              {!menu.image ? (
+                                <p className="w-full m-auto text-center px-3">
+                                  Your item summary will show here.
+                                </p>
+                              ) : (
+                                <div className="w-full flex flex-col justify-between">
+                                  <div className="border-b-[0.3px] border-b-primary-border -border">
+                                    <div className="pt-3">
+                                      <div className="flex justify-between rounded-xl px-2 items-center bg-selectedRow h-16 text-txWhite">
+                                        <div className="flex flex-col h-full justify-center gap-y-3">
+                                          <p className="md:text-xl text-lg font-medium">
+                                            Item Details
+                                          </p>
+                                        </div>
+                                        <div>
+                                          <div className="flex justify-center">
+                                            <p
+                                              className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                            >
                                               {menu.department}
                                             </p>
                                           </div>
-                                          <div className="flex justify-between">
-                                            <p>Category</p>
-                                            <p>{menu.category} </p>
+                                        </div>
+                                      </div>
+                                      <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
+                                        <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
+                                          <div className="w-36 h-36 m-auto">
+                                            {imagePreview && (
+                                              <Image
+                                                alt="img"
+                                                src={imagePreview}
+                                                className="w-full h-full rounded-full"
+                                                width={128}
+                                                height={128}
+                                              />
+                                            )}
                                           </div>
-                                          <div className="flex justify-between">
-                                            <p>Price</p>
-                                            <p>{menu.price} </p>
+                                          <div className="w-full flex flex-col text-center">
+                                            <p className="text-2xl  break-all font-medium capitalize text-txWhite">
+                                              {menu.name}
+                                            </p>
                                           </div>
-                                          <div className="flex gap-x-5 justify-between">
-                                            <p>Description</p>
-                                            <p className="w-full truncate text-end">{menu.description} </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div>
+                                    <div className="flex py-2 px-4">
+                                      <div className="w-full">
+                                        <div className="text-txWhite justify-between w-full flex px-0 gap-x-4">
+                                          <h1 className="">Item Summary</h1>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <div>
+                                        <div>
+                                          <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                                            <div className="flex flex-col gap-y-3 w-full">
+                                              <div className="flex justify-between">
+                                                <p>Department</p>
+                                                <p className="text-txWhite">
+                                                  {menu.department}
+                                                </p>
+                                              </div>
+                                              <div className="flex justify-between">
+                                                <p>Category</p>
+                                                <p>{menu.category} </p>
+                                              </div>
+                                              <div className="flex justify-between">
+                                                <p>Price</p>
+                                                <p>{menu.price} </p>
+                                              </div>
+                                              <div className="flex gap-x-5 justify-between">
+                                                <p>Description</p>
+                                                <p className="w-full truncate text-end">
+                                                  {menu.description}{" "}
+                                                </p>
+                                              </div>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              )}
                             </div>
-                          )}
-                        </div>
                           </div>
                         </DrawerContent>
                       </Drawer>
