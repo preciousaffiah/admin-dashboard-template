@@ -55,6 +55,7 @@ const StaffAuth: FC = () => {
     return (
       <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
         <Loader className="rotate-icon size-8" />
+        Loading
       </div>
     );
   }
