@@ -132,7 +132,7 @@ const Navbar: FC = () => {
             side="left"
             className="px-0 border-none flex justify-start"
           >
-            <div className="text-secondaryBorder flex flex-col gap-y-3 py-8 font-medium px-3 mt-7">
+            <div className="text-secondaryBorder flex flex-col gap-y-5 py-8 font-medium px-3 mt-7">
               {navItems.map((item: any, index) => (
                 <li key={index} className="flex items-center list-none">
                   <item.tag className="size-7" />
