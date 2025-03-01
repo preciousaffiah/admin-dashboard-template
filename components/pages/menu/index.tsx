@@ -33,297 +33,10 @@ import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 
+let tabKey: string = "";
+
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
-const data = [
-  {
-    value: "all",
-    Category: "1Intercontinental",
-    MenuId: 101,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "2Intercontinental",
-    MenuId: 102,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "3Intercontinental",
-    MenuId: 103,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "4Intercontinental",
-    MenuId: 104,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "1Intercontinental",
-    MenuId: 101,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "2Intercontinental",
-    MenuId: 102,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "3Intercontinental",
-    MenuId: 103,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "4Intercontinental",
-    MenuId: 104,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "1Intercontinental",
-    MenuId: 101,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "1Intercontinental",
-    MenuId: 101,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "2Intercontinental",
-    MenuId: 102,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "3Intercontinental",
-    MenuId: 103,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "1Intercontinental",
-    MenuId: 101,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "2Intercontinental",
-    MenuId: 102,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "3Intercontinental",
-    MenuId: 103,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "4Intercontinental",
-    MenuId: 104,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "4Intercontinental",
-    MenuId: 104,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "2Intercontinental",
-    MenuId: 102,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "3Intercontinental",
-    MenuId: 103,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "4Intercontinental",
-    MenuId: 104,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "1Intercontinental",
-    MenuId: 101,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "2Intercontinental",
-    MenuId: 102,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "3Intercontinental",
-    MenuId: 103,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-  {
-    value: "all",
-    Category: "4Intercontinental",
-    MenuId: 104,
-    itemImage: "macaroni-image.jpg",
-    Name: "Macaroni with Chicken",
-    Price: 120,
-    Discount: "No Discount",
-    Description:
-      "random text about some lorem ipsum intercontinental dish or whatever",
-    Department: "Kitchen",
-  },
-];
+
 const tabHeaders = {
   all: "all",
   wines: "wines",
@@ -332,23 +45,23 @@ const tabHeaders = {
   intercontinental: "intercontinental",
 };
 const defaultInvoice: Menus = {
-  Category: "",
-  MenuId: 0,
-  itemImage: "",
-  Name: "",
-  Price: 0,
-  Discount: "",
-  Description: "",
-  Department: "",
+  category: "",
+  _id: 0,
+  image: "",
+  name: "",
+  price: 0,
+  discount: "",
+  description: "",
+  department: "",
 };
 const defaultValues = {
-  Category: null,
-  itemImage: null,
-  Name: null,
-  Price: null,
-  Discount: null,
-  Description: null,
-  Department: null,
+  category: null,
+  image: null,
+  name: null,
+  price: null,
+  discount: null,
+  description: null,
+  department: null,
 };
 const tableHeaders = [
   "S/N",
@@ -423,24 +136,23 @@ const Menu: FC = () => {
     resolver: zodResolver(validationSchema),
     defaultValues,
   });
+
   const { token, userData } = useAuthToken();
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
-  const [invoiceData, setInvoiceData] = useState<Menus[]>(data);
+  // const [invoiceData, setInvoiceData] = useState<Menus[]>(data);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHeader, setMenuHeader] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
-  // Ref for the hidden file input
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const items_per_page = 10;
-  const total_pages = Math.ceil(data.length / items_per_page);
+
 
   const categoryArray = ["intercontinental"];
   const deptArray = [
@@ -452,12 +164,6 @@ const Menu: FC = () => {
     "counter",
     "utilities",
   ];
-
-  const getPaginatedData = () => {
-    const startIndex = (currentPage - 1) * items_per_page;
-    const endIndex = startIndex + items_per_page;
-    return invoiceData.slice(startIndex, endIndex);
-  };
 
   // Handle image upload and create preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -475,10 +181,13 @@ const Menu: FC = () => {
     }
   };
 
-  // Function to trigger the file input click
-  const handleIconClick = () => {
-    fileInputRef.current?.click();
-  };
+    // Ref for the hidden file input
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    // Function to trigger the file input click
+    const handleIconClick = () => {
+      fileInputRef.current?.click();
+    };
 
   const formCheck = () => {
     // Filter out empty values
@@ -519,42 +228,6 @@ const Menu: FC = () => {
     }, 2000);
   };
 
-  const [page, setPage] = useState(1);
-
-  // GET ITEMS
-  const fetchItems = async () => {
-    try {
-      // setPage(pageParam);
-      const response = await ItemService.getItems(
-        userData?.businessId || "", // businessId
-        page // page
-        // { category: "dd" } // filters object
-      );
-
-      return response?.data?.data?.data;
-    } catch (error: any) {
-      
-      console.error(
-        error?.response?.data?.message || "An error occurred"
-      );
-      // setError(true);
-      handleAxiosError(error, "");
-    }
-  };
-
-  const {
-    isLoading: isItemsLoading,
-    isRefetching,
-    refetch,
-    isError,
-    data: itemsData,
-  } = useQuery<any, Error>({
-    queryKey: ["get-items", userData?.businessId || ""],
-    queryFn: fetchItems,
-    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
-    refetchOnWindowFocus: true,
-  });
-console.log(itemsData);
 
   return (
     <div className="flex justify-end h-screen w-full">
@@ -600,79 +273,16 @@ console.log(itemsData);
 
                 <AdminMenuTable
                   view={view}
+                  currentPage={currentPage}
+                  handleRowClick={handleRowClick}
                   tableHeaders={tableHeaders}
                   tabHeaders={tabHeaders}
-                  invoiceData={itemsData}
+                  tabKey={tabKey}
                   setIsOpen={setIsOpen}
                   setSelectedInvoice={setSelectedInvoice}
                   selectedInvoice={selectedInvoice}
-                  currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
-                  total_pages={total_pages}
-                  items_per_page={items_per_page}
-                >
-                  <TableBody>
-                    {getPaginatedData().map((invoice, index) => (
-                      <TableRow
-                        key={index}
-                        className={`${
-                          selectedInvoice.MenuId === invoice.MenuId
-                            ? "border border-primaryGreen bg-selectedRow"
-                            : "bg-primaryDark"
-                        } truncate text-center py-2 rounded-lg cursor-pointer`}
-                        onClick={() => {
-                          handleRowClick(
-                            invoice,
-                            setIsOpen,
-                            setSelectedInvoice
-                          );
-                          reset();
-                        }}
-                      >
-                        <TableCell className="truncate">
-                          <Circle
-                            fill={`
-                              ${
-                                selectedInvoice.MenuId === invoice.MenuId
-                                  ? "lime"
-                                  : "none"
-                              }
-                              `}
-                            className={` text-primary-border`}
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          {items_per_page * (currentPage - 1) + (index + 1)}
-                        </TableCell>
-                        <TableCell>
-                          <div className="m-auto w-fit flex items-center gap-x-1">
-                            <div className="w-8 h-4">
-                              <Image
-                                alt="img"
-                                src={orderImg}
-                                className="w-10 h-8 rounded-full"
-                              />
-                            </div>
-                            <p className="flex break-words">{invoice.Name}</p>
-                          </div>
-                        </TableCell>
-                        <TableCell>{invoice.Category}</TableCell>
-                        <TableCell>${invoice.Price}</TableCell>
-                        <TableCell>{invoice.Discount}</TableCell>
-
-                        <TableCell>
-                          <div className="flex justify-center">
-                            <p
-                              className={`status-cancelled text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                            >
-                              {invoice.Department}
-                            </p>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </AdminMenuTable>
+                />
               </div>
             </div>
           </Tabs>
@@ -691,7 +301,7 @@ console.log(itemsData);
                         <p
                           className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                         >
-                          {selectedInvoice.Category}
+                          {selectedInvoice.category}
                         </p>
                       </div>
                     </div>
@@ -711,9 +321,8 @@ console.log(itemsData);
                               />
                             </div>
                           ) : (
-                            <Image
-                              alt="img"
-                              src={orderImg2}
+                            <img
+                              src={selectedInvoice.image}
                               className="w-full h-full rounded-full"
                             />
                           )}
@@ -737,7 +346,7 @@ console.log(itemsData);
 
                       <div className="w-full flex flex-col text-center">
                         <p className="text-2xl font-medium capitalize text-txWhite">
-                          {selectedInvoice.Name}
+                          {selectedInvoice.name}
                         </p>
                       </div>
                       <div className="m-auto">
@@ -790,24 +399,24 @@ console.log(itemsData);
                               <div className="flex justify-between">
                                 <p>Department</p>
                                 <p className="text-txWhite">
-                                  {selectedInvoice.Department}{" "}
+                                  {selectedInvoice.department}{" "}
                                 </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Category</p>
-                                <p>{selectedInvoice.Category} </p>
+                                <p>{selectedInvoice.category} </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Discount</p>
-                                <p>{selectedInvoice.Discount} </p>
+                                <p>₦{Number(selectedInvoice.discount)?.toFixed(2)} </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Price</p>
-                                <p>${selectedInvoice.Price} </p>
+                                <p>₦{Number(selectedInvoice?.price)?.toFixed(2)} </p>
                               </div>
                               <div className="flex justify-between gap-x-8">
                                 <p>Description</p>
-                                <p>{selectedInvoice.Description} </p>
+                                <p>{selectedInvoice.description} </p>
                               </div>
                             </div>
                           </div>
@@ -839,52 +448,52 @@ console.log(itemsData);
                                 <div className="flex justify-between items-baseline">
                                   <label>Discount</label>
                                   <Input
-                                    {...register("Discount")}
+                                    {...register("discount")}
                                     autoComplete="off"
                                     type="text"
-                                    placeholder={selectedInvoice.Discount}
+                                    placeholder={selectedInvoice.discount}
                                     className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
                                   />
                                 </div>
                                 <p className="text-red-400 text-end text-sm">
-                                  {errors.Discount?.message}
+                                  {errors.discount?.message}
                                 </p>
                               </div>
                               <div>
                                 <div className="flex justify-between items-baseline">
                                   <label>Price</label>
                                   <Input
-                                    {...register("Price")}
+                                    {...register("price")}
                                     autoComplete="off"
                                     type="number"
-                                    placeholder={selectedInvoice.Price.toString()}
+                                    placeholder={selectedInvoice?.price?.toString()}
                                     className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
                                   />
                                 </div>
                                 <p className="text-red-400 text-end text-sm">
-                                  {errors.Price?.message}
+                                  {errors.price?.message}
                                 </p>
                               </div>
                               <div>
                                 <div className="flex justify-between gap-x-8 items-baseline">
                                   <label>Description</label>
                                   <Input
-                                    {...register("Description")}
+                                    {...register("description")}
                                     autoComplete="off"
                                     type="text"
-                                    placeholder={selectedInvoice.Description}
+                                    placeholder={selectedInvoice.description}
                                     className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
                                   />
                                 </div>
                                 <p className="text-red-400 text-end text-sm">
-                                  {errors.Description?.message}
+                                  {errors.description?.message}
                                 </p>
                               </div>
                               <div>
                                 <div className="md:flex justify-between items-baseline">
-                                  <label>Department</label>
+                                  <label>department</label>
                                   <select
-                                    {...register("Department")}
+                                    {...register("department")}
                                     id="department"
                                     className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
                                   >
@@ -899,14 +508,14 @@ console.log(itemsData);
                                   </select>
                                 </div>
                                 <p className="text-red-400 text-end text-sm">
-                                  {errors.Department?.message}
+                                  {errors.department?.message}
                                 </p>
                               </div>
                               <div>
                                 <div className="flex justify-between items-baseline">
                                   <label>Category</label>
                                   <select
-                                    {...register("Category")}
+                                    {...register("category")}
                                     id="category"
                                     className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
                                   >
@@ -921,7 +530,7 @@ console.log(itemsData);
                                   </select>
                                 </div>
                                 <p className="text-red-400 text-end text-sm">
-                                  {errors.Category?.message}
+                                  {errors.category?.message}
                                 </p>
                               </div>
                               <div>

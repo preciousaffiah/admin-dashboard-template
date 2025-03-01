@@ -46,14 +46,14 @@ export type Invoice = {
 
 export type Menus = {
   // value?: string;
-  MenuId: number;
-  Price: number;
-  Category: string;
-  Description: string;
-  itemImage: string;
-  Name: string;
-  Discount: string;
-  Department: string;
+  _id: number;
+  price: number;
+  category: string;
+  description: string;
+  image: string;
+  name: string;
+  discount: string;
+  department: string;
 };
 
 export type User = {
@@ -75,15 +75,16 @@ export type AdminTable = {
   view?: any;
   grid?: any;
   invoiceData?: any;
+  isLoading?: boolean;
+  handleRowClick: any;
+  tabKey: any;
   setIsOpen?: any;
   setSelectedInvoice?: any;
   selectedInvoice?: any;
   tabHeaders?: {};
   tableHeaders?: any;
-  currentPage?: number;
+  currentPage: number;
   setCurrentPage?: any;
-  total_pages?: number;
-  items_per_page?: number;
   getPageNumbers?: any;
   handlePageChange?: any;
   className?: any;

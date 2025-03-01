@@ -26,6 +26,8 @@ class ItemsService {
 
 
   getItems(businessId: string, page: number, filters?: { name?: string, _id?: string, category?: string, department?: string }) {
+    console.log(filters);
+    
     return axiosWithoutToken.get(`/item/all-items/${businessId}`, {
       params: {
         page,

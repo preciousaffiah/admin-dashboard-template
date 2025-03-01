@@ -1,52 +1,96 @@
-import React from "react";
+import React, { useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable } from "@/types";
 import DefaultTable from "../../../table";
 import MenuGrid from "../../menuGrid";
 import DataPagination from "@/components/serviette-ui/Pagination";
+import { useQuery } from "@tanstack/react-query";
+import { handleAxiosError } from "@/utils/axios";
+import { ItemService } from "@/services";
+import { useAuthToken } from "@/hooks";
+import { TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Circle, FolderOpen, Loader } from "lucide-react";
 
 const AdminMenuTable = ({
   children,
   view,
-  invoiceData,
+  handleRowClick,
+  tabKey,
   setIsOpen,
   setSelectedInvoice,
   selectedInvoice,
-  currentPage,
-  setCurrentPage,
-  total_pages,
-  items_per_page,
-  getPageNumbers,
   tabHeaders,
   tableHeaders,
+  currentPage,
+  setCurrentPage,
+  getPageNumbers,
   className,
 }: AdminTable) => {
-  let tabKey: any = "";
-  let tabValue: any = "";
+  const { token, userData } = useAuthToken();
 
-  const handleTabChange: any = (event: any, key: any, value: any) => {
-    tabKey = key;
-    tabValue = value;
+  const [page, setPage] = useState(1);
+
+  // GET ITEMS
+  const fetchItems = async () => {
+    try {
+      // setPage(pageParam);
+
+      const response = await ItemService.getItems(
+        userData?.businessId || "", // businessId
+        page, // page
+        tabKey // filters object
+      );
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
+    }
+  };
+
+  const {
+    isLoading: isItemsLoading,
+    isRefetching,
+    refetch,
+    isError,
+    data: itemsData,
+  } = useQuery<any, Error>({
+    queryKey: ["get-items", userData?.businessId || ""],
+    queryFn: fetchItems,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: true,
+  });
+
+  const handleTabChange: any = (key: any) => {
+    if (key === "all") {
+      tabKey = null;
+    } else {
+      tabKey = { category: key };
+    }
+    refetch();
+  };
+
+  const items_per_page = 10;
+  const total_pages = Math.ceil(itemsData?.length / items_per_page);
+
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * items_per_page;
+    const endIndex = startIndex + items_per_page;
+    return itemsData.slice(startIndex, endIndex);
   };
 
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
         <div className="flex m-auto justify-between py-3 px-3 overflow-x-scroll md:gapx-0 gap-x-2">
-          {/* <div className="md:block hidden">
-            <Button className="transparent-btn text-secondaryBorder border-[0.3px]">
-              <p className="capitalize text-sm">bulk actions</p>
-              <ChevronDown className="w-5" />
-            </Button>
-          </div> */}
           <TabsList className="w-fit bg-secondaryDark">
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(event, key, value)}
+                  onClick={(event) => handleTabChange(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}
@@ -54,12 +98,6 @@ const AdminMenuTable = ({
               )
             )}
           </TabsList>
-          {/* <div>
-            <Button className="md:rounded-xl rounded-full md:px-3 transparent-btn text-secondaryBorder">
-              <Filter className="w-5" />
-              <ChevronDown className="md:block hidden w-5" />
-            </Button>
-          </div> */}
           <div>
             <SearchBar
               placeholder="Search for food, drinks and more"
@@ -73,35 +111,128 @@ const AdminMenuTable = ({
               view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
-            {Object.keys(tabHeaders || {}).map((item, index) => (
-              <TabsContent key={index} value={item} className="w-full">
-                {view ? (
-                  <div>
-                    <MenuGrid
-                      invoiceData={invoiceData}
-                      setIsOpen={setIsOpen}
-                      setSelectedInvoice={setSelectedInvoice}
-                      selectedInvoice={selectedInvoice}
-                    />
-                  </div>
-                ) : (
-                  <div className={className}>
-                    <DefaultTable
-                      children={children}
-                      tableHeaders={tableHeaders}
-                    />
-                  </div>
-                )}
-                <DataPagination
-                  data={invoiceData}
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  total_pages={total_pages}
-                  items_per_page={items_per_page}
-                  getPageNumbers={getPageNumbers}
-                />
-              </TabsContent>
-            ))}
+            {itemsData &&
+              itemsData.currentItemCount > 0 &&
+              Object.keys(tabHeaders || {}).map((item: any, index: number) => (
+                <TabsContent key={index} value={item} className="w-full">
+                  {view ? (
+                    <div>
+                      <MenuGrid
+                        invoiceData={itemsData}
+                        isLoading={isItemsLoading}
+                        currentPage={currentPage}
+                        handleRowClick={handleRowClick}
+                        setIsOpen={setIsOpen}
+                        tabKey={tabKey}
+                        setSelectedInvoice={setSelectedInvoice}
+                        selectedInvoice={selectedInvoice}
+                      />
+                    </div>
+                  ) : (
+                    <div className={className}>
+                      <DefaultTable
+                        // children={children}
+                        tableHeaders={tableHeaders}
+                      >
+                        <TableBody>
+                          {itemsData?.items.map(
+                            (invoice: any, index: number) => (
+                              <TableRow
+                                key={index}
+                                className={`${
+                                  selectedInvoice._id === invoice._id
+                                    ? "border border-primaryGreen bg-selectedRow"
+                                    : "bg-primaryDark"
+                                } truncate text-center py-2 rounded-lg cursor-pointer`}
+                                onClick={() => {
+                                  handleRowClick(
+                                    invoice,
+                                    setIsOpen,
+                                    setSelectedInvoice
+                                  );
+                                  // reset();
+                                }}
+                              >
+                                <TableCell className="truncate">
+                                  <Circle
+                                    fill={`
+                                  ${
+                                    selectedInvoice._id === invoice._id
+                                      ? "lime"
+                                      : "none"
+                                  }
+                                  `}
+                                    className={` text-primary-border`}
+                                  />
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {items_per_page * (currentPage - 1) +
+                                    (index + 1)}
+                                </TableCell>
+                                <TableCell>
+                                  <div className="m-auto w-fit flex items-center gap-x-1">
+                                    <div className="w-8 h-4">
+                                      <img
+                                        src={invoice.image}
+                                        className="w-10 h-8 rounded-full"
+                                      />
+                                    </div>
+                                    <p className="flex break-words">
+                                      {invoice.name}
+                                    </p>
+                                  </div>
+                                </TableCell>
+                                <TableCell>{invoice.category}</TableCell>
+                                <TableCell>
+                                  ₦{Number(invoice.price)?.toFixed(2)}
+                                </TableCell>
+                                <TableCell>
+                                  ₦{Number(invoice.discount)?.toFixed(2)}
+                                </TableCell>
+
+                                <TableCell>
+                                  <div className="flex justify-center">
+                                    <p
+                                      className={`status-cancelled text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                    >
+                                      {invoice.department}
+                                    </p>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          )}
+                        </TableBody>
+                      </DefaultTable>
+                    </div>
+                  )}
+                  <DataPagination
+                    // data={itemsData}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={itemsData.page}
+                    total_items={itemsData.total}
+                    total_pages={itemsData.totalPages}
+                    items_per_page={itemsData.perPage}
+                    current_item_count={itemsData.currentItemCount} // Total number of items matching the filter
+
+                    // getPageNumbers={getPageNumbers}
+                  />
+                </TabsContent>
+              ))}
+
+            {itemsData?.length < 1 && (
+              <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                <FolderOpen />
+                Empty
+              </div>
+            )}
+
+            {isItemsLoading && (
+              <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                <Loader className="rotate-icon size-8" />
+                Loading
+              </div>
+            )}
           </div>
         </div>
       </Tabs>

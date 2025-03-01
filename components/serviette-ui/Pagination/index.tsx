@@ -12,8 +12,9 @@ const DataPagination = ({
   setCurrentPage,
   items_per_page,
   total_pages,
-}:
-any) => {
+  total_items,
+  current_item_count
+}: any) => {
   const getPageNumbers = () => {
     // const totalGroups = Math.ceil(total_pages / 10);
     const currentGroup = Math.ceil(currentPage / 10);
@@ -43,7 +44,7 @@ any) => {
     <div className="text-txWhite pt-3 font-medium flex flex-col justify-center items-center w-full gap-y-2 ">
       <p className="flex items-center gap-3">
         <button className="transparent-btn rounded-md py-1">
-          showing {items_per_page}
+          showing {current_item_count}
         </button>{" "}
         page {currentPage} of {total_pages ? total_pages : "Many"}
       </p>
@@ -58,14 +59,14 @@ any) => {
 
           {getPageNumbers().map((pageNumber) => (
             <PaginationItem key={pageNumber}>
-              <PaginationLink
-                href="#"
-                isActive={currentPage === pageNumber}
+              <p
+                // href="#"
+                // isActive={currentPage === pageNumber}
                 onClick={() => handlePageClick(pageNumber)}
-                className="w-auto h-auto px-3 py-1"
+                className={`${currentPage === pageNumber ? "bg-secondaryDark" : "bg-inherit" } w-auto h-auto px-3 py-1 rounded-md border-secondaryBorderDarker border-[1px] cursor-pointer`}
               >
                 {pageNumber}
-              </PaginationLink>
+              </p>
             </PaginationItem>
           ))}
 
