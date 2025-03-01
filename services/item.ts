@@ -15,25 +15,21 @@ class ItemsService {
     });
   }
 
-  getItem(businessId: string, name?: string, id?: string) {
+  getItem(businessId: string, filters: { name?: string, _id?: string }) {
     return axiosWithoutToken.get(`/item/${businessId}`, {
       params: {
         businessId,
-        name,
-        _id:id,
+       ...filters
       },
     });
   }
 
 
-  getItems(businessId: string, name?: string, id?: string, category?: string, department?: string) {
+  getItems(businessId: string, page: number, filters?: { name?: string, _id?: string, category?: string, department?: string }) {
     return axiosWithoutToken.get(`/item/all-items/${businessId}`, {
       params: {
-        businessId,
-        name,
-        _id:id,
-        category,
-        department
+        page,
+       ...filters
       },
     });
   }

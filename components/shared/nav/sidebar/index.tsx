@@ -16,7 +16,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
     <div className="h-screen">
       <div className=" bg-background md:flex hidden group transition-all duration-300 ease-in overflow-y-scroll top-16 left-0 fixed h-screen  text-secondaryBorder flex-col hover:w-[14rem] w-14  z-50 py-3 px-4">
         <div className="flex h-fit flex-col gap-y-10 ">
-          <Menu className="w-7 h-7" />
+          <Menu className="w-8 h-8" />
 
           {navItems.map((item: any, index: number) => (
             <Link
@@ -33,7 +33,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
                   item.link === path
                     ? "text-black bg-primaryGreen rounded-md group-hover/tag:text-black"
                     : ""
-                }  w-[1.9rem] px-1 h-8`}
+                }  w-[2.3rem] px-1.5 h-10`}
               />
               <p className="text-sm">{item.title}</p>
             </Link>

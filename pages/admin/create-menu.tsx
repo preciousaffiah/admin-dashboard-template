@@ -545,7 +545,7 @@ const CreateMenu: FC = () => {
                                           </div>
                                           <div className="flex justify-between">
                                             <p>Price</p>
-                                            <p>{menu.price} </p>
+                                            <p>₦{menu.price} </p>
                                           </div>
                                           <div className="flex justify-between">
                                             <p>Description</p>
@@ -692,7 +692,7 @@ const CreateMenu: FC = () => {
                                               </div>
                                               <div className="flex justify-between">
                                                 <p>Price</p>
-                                                <p>{menu.price} </p>
+                                                <p>₦{menu.price} </p>
                                               </div>
                                               <div className="flex gap-x-5 justify-between">
                                                 <p>Description</p>

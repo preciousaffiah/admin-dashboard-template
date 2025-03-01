@@ -14,23 +14,20 @@ class StaffsService {
     });
   }
 
-  getStaff(businessId: string, email?: string, id?: string) {
+  getStaff(businessId: string, filters: {  email?: string, _id?: string}) {
     return axiosWithToken().get(`/staff/${businessId}`, {
       params: {
         businessId,
-        email,
-        _id:id,
+       ...filters
       },
     });
   }
 
-  getAllStaff(businessId: string, department?: string, isActive?: string, fullname?: string) {
+  getAllStaff(businessId: string, filters: { department?: string, isActive?: string, fullname?: string}) {
     return axiosWithToken().get(`/staff/all-staff/${businessId}`, {
       params: {
         businessId,
-        department,
-        isActive,
-        fullname
+       ...filters
       },
     });
   }

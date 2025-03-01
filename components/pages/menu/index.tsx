@@ -29,6 +29,9 @@ import AdminLayout from "@/components/layouts/admin-layout";
 import { Input } from "@/components/ui/input";
 import { DeptEnum } from "@/types/enums";
 import { useAuthToken } from "@/hooks";
+import { handleAxiosError } from "@/utils/axios";
+import { ItemService } from "@/services";
+import { useQuery } from "@tanstack/react-query";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 const data = [
@@ -516,6 +519,43 @@ const Menu: FC = () => {
     }, 2000);
   };
 
+  const [page, setPage] = useState(1);
+
+  // GET ITEMS
+  const fetchItems = async () => {
+    try {
+      // setPage(pageParam);
+      const response = await ItemService.getItems(
+        userData?.businessId || "", // businessId
+        page // page
+        // { category: "dd" } // filters object
+      );
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      
+      console.error(
+        error?.response?.data?.message || "An error occurred"
+      );
+      // setError(true);
+      handleAxiosError(error, "");
+    }
+  };
+
+  const {
+    isLoading: isItemsLoading,
+    isRefetching,
+    refetch,
+    isError,
+    data: itemsData,
+  } = useQuery<any, Error>({
+    queryKey: ["get-items", userData?.businessId || ""],
+    queryFn: fetchItems,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: true,
+  });
+console.log(itemsData);
+
   return (
     <div className="flex justify-end h-screen w-full">
       <Container>
@@ -562,7 +602,7 @@ const Menu: FC = () => {
                   view={view}
                   tableHeaders={tableHeaders}
                   tabHeaders={tabHeaders}
-                  invoiceData={getPaginatedData}
+                  invoiceData={itemsData}
                   setIsOpen={setIsOpen}
                   setSelectedInvoice={setSelectedInvoice}
                   selectedInvoice={selectedInvoice}
