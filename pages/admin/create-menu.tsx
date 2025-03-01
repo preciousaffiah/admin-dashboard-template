@@ -263,7 +263,7 @@ const CreateMenu: FC = () => {
                                         <FormControl>
                                           <input
                                             type="file"
-                                            accept=".png,.jpg,.jpeg"
+                                            accept=".png,.jpg,.jpeg,.webp"
                                             onChange={handleImageChange}
                                             ref={fileInputRef}
                                             className="hidden"

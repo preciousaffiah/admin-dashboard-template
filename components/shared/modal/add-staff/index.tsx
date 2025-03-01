@@ -226,7 +226,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                         <FormControl>
                           <input
                             type="file"
-                            accept=".png,.jpg,.jpeg"
+                            accept=".png,.jpg,.jpeg,.webp"
                             onChange={(e) => {
                               handleMediaUpload(e, field);
                             }}
