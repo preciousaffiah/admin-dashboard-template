@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/router";
 
-import avatar from "public/avatar.png"
+import avatar from "public/avatar.png";
 import { useAuthToken } from "@/hooks";
 import { deleteStore } from "@/utils/local-storage";
 import useBusinessDetails from "@/hooks/useBusinessDetails";
@@ -81,7 +81,7 @@ const MainNavbar = ({ title, subtitle }: any) => {
                 <div className="items-center text-xs leading-4 h-fit w-fit flex bg-foreground px-1 py-1 rounded-full gap-x-1">
                   <div>
                     <img
-                      src={`${userData?.image ? userData.image : avatar}`}
+                      src={`${userData?.image || avatar.src}`}
                       className="rounded-full size-10 object-cover"
                     />
                   </div>

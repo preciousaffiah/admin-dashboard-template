@@ -38,6 +38,7 @@ import { handleAxiosError } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { StaffService } from "@/services";
 import { useAuthToken } from "@/hooks";
+import avatar from "public/avatar.png";
 
 const AdminUsersTable = ({
   view,
@@ -169,9 +170,9 @@ console.log("isRefetching",isRefetching);
                             </TableCell>
                             <TableCell>
                               <div className="m-auto w-fit flex items-center gap-x-1">
-                                <div className="w-8 h-4">
+                                <div className="w-8 h-fit">
                                   <img
-                                    src={invoice.image}
+                                    src={`${invoice.image || avatar.src}`}
                                     className="w-10 h-8 rounded-full object-cover"
                                   />
                                 </div>

@@ -16,6 +16,7 @@ import AdminUsersTable from "@/components/shared/admin/table/users";
 import { AdminLayout, GeneralLayout } from "@layouts";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddStaffModal from "@/components/shared/modal/add-staff";
+import avatar from "public/avatar.png";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 
@@ -108,8 +109,6 @@ const Users: FC = () => {
                     selectedInvoice={selectedInvoice}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
-                    // total_pages={total_pages}
-                    // items_per_page={items_per_page}
                     tabKey={tabKey}
                     handleRowClick={handleRowClick}
                   />
@@ -141,7 +140,7 @@ const Users: FC = () => {
                       <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
                         <div className="w-36 h-36 m-auto">
                           <img
-                            src={selectedInvoice.image}
+                            src={`${selectedInvoice.image || avatar.src}`}
                             className="w-full h-full rounded-full object-cover"
                           />
                         </div>
