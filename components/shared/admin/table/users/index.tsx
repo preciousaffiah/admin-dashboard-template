@@ -31,8 +31,8 @@ const AdminUsersTable = ({
   invoiceData,
   currentPage,
   setCurrentPage,
-  total_pages,
-  items_per_page,
+  // total_pages,
+  // items_per_page,
   getPageNumbers,
   tabHeaders,
   tableHeaders,
@@ -101,8 +101,8 @@ const AdminUsersTable = ({
                   data={invoiceData}
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
-                  total_pages={total_pages}
-                  items_per_page={items_per_page}
+                  // total_pages={total_pages}
+                  // items_per_page={items_per_page}
                   getPageNumbers={getPageNumbers}
                 />
               </TabsContent>

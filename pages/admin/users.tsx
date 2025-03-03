@@ -10,20 +10,11 @@ import orderImg2 from "public/auth-email.png";
 import { handleRowClick } from "@/utils/modal";
 import Sidebar from "@/components/shared/nav/sidebar/admin";
 // import gif from "../../public/svg.mp4";
-import {
-  Circle,
-  Mail,
-  Phone,
-  Plus,
-  X,
-} from "lucide-react";
+import { Circle, Mail, Phone, Plus, X } from "lucide-react";
 import { Tabs } from "@/components/ui/tabs";
 import AdminUsersTable from "@/components/shared/admin/table/users";
 import AdminLayout from "@/components/layouts/admin-layout";
-import {
-  Dialog,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddStaffModal from "@/components/shared/modal/add-staff";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
@@ -111,10 +102,7 @@ const tableHeaders = [
   "Status",
 ];
 
-
-
 const Users: FC = () => {
-
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [orderHeader, setOrderHeader] = useState(false);
@@ -144,7 +132,6 @@ const Users: FC = () => {
   };
 
   const updatedInvoice = { ...selectedInvoice };
-
 
   return (
     <AdminLayout title={title}>
@@ -192,8 +179,10 @@ const Users: FC = () => {
                     selectedInvoice={selectedInvoice}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
-                    total_pages={total_pages}
-                    items_per_page={items_per_page}
+                    // total_pages={total_pages}
+                    // items_per_page={items_per_page}
+                    tabKey={tabKey}
+                    handleRowClick={handleRowClick}
                   >
                     <TableBody>
                       {getPaginatedData().map((invoice, index) => (

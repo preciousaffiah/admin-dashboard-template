@@ -296,8 +296,12 @@ const Orders: FC = () => {
                         selectedInvoice={selectedInvoice}
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        total_pages={total_pages}
-                        items_per_page={items_per_page}
+
+
+                        handleRowClick={handleRowClick}
+                        tabKey={tabKey}
+                        // total_pages={total_pages}
+                        // items_per_page={items_per_page}
                       >
                         <TableBody>
                           {getPaginatedData().map((invoice, index) => (

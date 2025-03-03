@@ -26,8 +26,6 @@ const AdminOrdersTable = ({
   selectedInvoice,
   currentPage,
   setCurrentPage,
-  total_pages,
-  items_per_page,
   getPageNumbers,
   tabHeaders,
   tableHeaders,
@@ -93,6 +91,9 @@ const AdminOrdersTable = ({
                       setIsOpen={setIsOpen}
                       setSelectedInvoice={setSelectedInvoice}
                       selectedInvoice={selectedInvoice}
+                      handleRowClick={undefined} //TODO:
+                      tabKey={undefined} //TODO:
+                      currentPage={1}
                     />
                   </div>
                 ) : (
@@ -104,11 +105,11 @@ const AdminOrdersTable = ({
                   </div>
                 )}
                 <DataPagination
-                  data={invoiceData}
+                  // data={invoiceData}
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
-                  total_pages={total_pages}
-                  items_per_page={items_per_page}
+                  total_pages={invoiceData.totalPages}
+                  items_per_page={invoiceData.perPage}
                   getPageNumbers={getPageNumbers}
                 />
               </TabsContent>

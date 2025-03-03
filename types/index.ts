@@ -76,7 +76,7 @@ export type AdminTable = {
   grid?: any;
   invoiceData?: any;
   isLoading?: boolean;
-  handleRowClick: any;
+  handleRowClick?: any;
   tabKey: any;
   setIsOpen?: any;
   setSelectedInvoice?: any;
