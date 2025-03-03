@@ -16,11 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/router";
 
-import orderImg from "public/orderimg.png";
-import Link from "next/link";
+import avatar from "public/avatar.png"
 import { useAuthToken } from "@/hooks";
 import { deleteStore } from "@/utils/local-storage";
 import useBusinessDetails from "@/hooks/useBusinessDetails";
+import Link from "next/link";
 
 const MainNavbar = ({ title, subtitle }: any) => {
   const navItems = [
@@ -80,10 +80,9 @@ const MainNavbar = ({ title, subtitle }: any) => {
               <DropdownMenuTrigger asChild className="cursor-pointer">
                 <div className="items-center text-xs leading-4 h-fit w-fit flex bg-foreground px-1 py-1 rounded-full gap-x-1">
                   <div>
-                    <Image
-                      alt="img"
-                      src={orderImg}
-                      className="rounded-full w-10"
+                    <img
+                      src={`${userData?.image ? userData.image : avatar}`}
+                      className="rounded-full size-10 object-cover"
                     />
                   </div>
 

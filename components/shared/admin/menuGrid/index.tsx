@@ -6,7 +6,7 @@ import orderImg from "public/orderimg.png";
 import { handleRowClick } from "@/utils/modal";
 
 const defaultInvoice: Menus = {
-  _id: 0,
+  _id: "",
   price: 0,
   category: "",
   image: "",

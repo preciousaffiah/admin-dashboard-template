@@ -6,6 +6,7 @@ export type TAppUser = {
   businessId: string | null;
   role: string | null;
   department: string | null;
+  image: string | null
 };
 
 export type TAppUserState = {
@@ -46,7 +47,7 @@ export type Invoice = {
 
 export type Menus = {
   // value?: string;
-  _id: number;
+  _id: string;
   price: number;
   category: string;
   description: string;
@@ -57,14 +58,14 @@ export type Menus = {
 };
 
 export type User = {
-  UserId: number;
-  Name: string;
-  Email: string;
-  userImage: string;
-  Phone: string;
-  Department: string;
+  _id: string;
+  fullname: string;
+  email: string;
+  image: string;
+  phone: string;
+  department: string;
   Date: string;
-  Status: string;
+  status: string;
   Requests: number;
   Completed: number;
   Sales: number;

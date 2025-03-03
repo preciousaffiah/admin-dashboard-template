@@ -4,6 +4,7 @@ class StaffsService {
   addStaff(payload: {
     email: string;
     fullname: string;
+    phone: string;
     password: string;
     image: string;
     department: string;
@@ -14,20 +15,26 @@ class StaffsService {
     });
   }
 
-  getStaff(businessId: string, filters: {  email?: string, _id?: string}) {
+  getStaff(businessId: string, filters: { email?: string; _id?: string }) {
     return axiosWithToken().get(`/staff/${businessId}`, {
       params: {
         businessId,
-       ...filters
+        ...filters,
       },
     });
   }
 
-  getAllStaff(businessId: string, filters: { department?: string, isActive?: string, fullname?: string}) {
-    return axiosWithToken().get(`/staff/all-staff/${businessId}`, {
+  getAllStaff(
+    businessId: string,
+    page: number,
+    filters: { department?: string; status?: string; fullname?: string }
+  ) {
+    console.log(businessId, page);
+
+    return axiosWithToken().get(`/staff/all-staffs/${businessId}`, {
       params: {
-        businessId,
-       ...filters
+        page,
+        ...filters,
       },
     });
   }

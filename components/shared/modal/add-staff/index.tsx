@@ -12,6 +12,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import PhoneInput from "react-phone-number-input";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import React, { useState } from "react";
@@ -23,6 +25,7 @@ import { StaffService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import { handleMediaUpload } from "@/utils/upload";
+import "react-phone-number-input/style.css";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
@@ -44,6 +47,7 @@ const formSchema = z
       .refine((value) => !/\s{2,}/.test(value), {
         message: "contain multiple consecutive spaces.",
       }),
+    phone: z.string().min(10, "must be at least 10 digits"),
     department: z.enum(["kitchen", "waiter", "bar"]), //add field for other
     image: z
       .string()
@@ -66,6 +70,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
     defaultValues: {
       email: "",
       fullname: "",
+      phone: "",
       department: undefined,
       image: "",
       password: "",
@@ -190,6 +195,29 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                       </FormItem>
                     )}
                   />
+
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div 
+                        className="flex gap-x-3 items-center pb-2"
+                        >
+                          <p>Phone</p>
+                          <FormControl>
+                            <PhoneInput
+                              className="md:pt-0 pt-4 w-full rounded-none text-txWhite mt-1 border-b-[1px] border-primary-border focus:border-b-orange-500 transition-colors duration-500"
+                              placeholder="Mobile Number"
+                              {...field}
+                            />
+                          </FormControl>
+                        </div>
+                        <FormMessage className="text-end" />
+                      </FormItem>
+                    )}
+                  />
+
 
                   <FormField
                     control={form.control}

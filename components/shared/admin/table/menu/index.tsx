@@ -59,7 +59,7 @@ const AdminMenuTable = ({
     queryKey: ["get-items", userData?.businessId || ""],
     queryFn: fetchItems,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
   const handleTabChange: any = (key: any) => {
@@ -69,15 +69,6 @@ const AdminMenuTable = ({
       tabKey = { category: key };
     }
     refetch();
-  };
-
-  const items_per_page = 10;
-  const total_pages = Math.ceil(itemsData?.length / items_per_page);
-
-  const getPaginatedData = () => {
-    const startIndex = (currentPage - 1) * items_per_page;
-    const endIndex = startIndex + items_per_page;
-    return itemsData.slice(startIndex, endIndex);
   };
 
   return (
@@ -111,8 +102,8 @@ const AdminMenuTable = ({
               view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
-            {itemsData &&
-              itemsData.currentItemCount > 0 &&
+            {(itemsData && !isRefetching && !isItemsLoading &&
+              itemsData.currentItemCount > 0 ) &&
               Object.keys(tabHeaders || {}).map((item: any, index: number) => (
                 <TabsContent key={index} value={item} className="w-full">
                   {view ? (
@@ -166,8 +157,7 @@ const AdminMenuTable = ({
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">
-                                  {items_per_page * (currentPage - 1) +
-                                    (index + 1)}
+                                  {index + 1}
                                 </TableCell>
                                 <TableCell>
                                   <div className="m-auto w-fit flex items-center gap-x-1">
@@ -207,27 +197,25 @@ const AdminMenuTable = ({
                     </div>
                   )}
                   <DataPagination
-                    // data={itemsData}
+                    currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
-                    currentPage={itemsData.page}
+                    refetch={refetch}
                     total_items={itemsData.total}
                     total_pages={itemsData.totalPages}
                     items_per_page={itemsData.perPage}
                     current_item_count={itemsData.currentItemCount} // Total number of items matching the filter
-
-                    // getPageNumbers={getPageNumbers}
                   />
                 </TabsContent>
               ))}
 
-            {itemsData?.currentItemCount < 1 && (
+            {(itemsData?.currentItemCount < 1 && !isRefetching && !isItemsLoading)  && (
               <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
                 <FolderOpen />
                 Empty
               </div>
             )}
 
-            {isItemsLoading && (
+            {(isItemsLoading || isRefetching)  && (
               <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
                 <Loader className="rotate-icon size-8" />
                 Loading

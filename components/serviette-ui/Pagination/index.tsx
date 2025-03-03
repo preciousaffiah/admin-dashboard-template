@@ -10,10 +10,11 @@ import {
 const DataPagination = ({
   currentPage,
   setCurrentPage,
+  refetch,
   items_per_page,
   total_pages,
   total_items,
-  current_item_count
+  current_item_count,
 }: any) => {
   const getPageNumbers = () => {
     // const totalGroups = Math.ceil(total_pages / 10);
@@ -28,8 +29,9 @@ const DataPagination = ({
     return pageNumbers;
   };
 
-  const handlePageClick = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+  const handlePageClick = async (pageNumber: number) => {
+    await setCurrentPage(pageNumber);
+    refetch();
   };
 
   const handleNextGroup = () => {
@@ -63,7 +65,9 @@ const DataPagination = ({
                 // href="#"
                 // isActive={currentPage === pageNumber}
                 onClick={() => handlePageClick(pageNumber)}
-                className={`${currentPage === pageNumber ? "bg-secondaryDark" : "bg-inherit" } w-auto h-auto px-3 py-1 rounded-md border-secondaryBorderDarker border-[1px] cursor-pointer`}
+                className={`${
+                  currentPage === pageNumber ? "bg-secondaryDark" : "bg-inherit"
+                } w-auto h-auto px-3 py-1 rounded-md border-secondaryBorderDarker border-[1px] cursor-pointer`}
               >
                 {pageNumber}
               </p>

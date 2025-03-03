@@ -13,81 +13,27 @@ import Sidebar from "@/components/shared/nav/sidebar/admin";
 import { Circle, Mail, Phone, Plus, X } from "lucide-react";
 import { Tabs } from "@/components/ui/tabs";
 import AdminUsersTable from "@/components/shared/admin/table/users";
-import AdminLayout from "@/components/layouts/admin-layout";
+import { AdminLayout, GeneralLayout } from "@layouts";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddStaffModal from "@/components/shared/modal/add-staff";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
-const data = [
-  {
-    UserId: 1,
-    Email: "wunmi@gmail.com",
-    userImage: "abc def",
-    Name: "abc def",
-    Department: "waiter",
-    Phone: "+234-800-123-4567",
-    Date: "22-07-24",
-    Status: "active",
-    Requests: 300,
-    Completed: 200,
-    Sales: 12000,
-  },
-  {
-    UserId: 2,
-    Email: "wunmi@gmail.com",
-    userImage: "abc def",
-    Name: "abc def",
-    Department: "kitchen",
-    Phone: "+234-800-123-4567",
-    Date: "22-07-24",
-    Status: "active",
-    Requests: 300,
-    Completed: 200,
-    Sales: 12000,
-  },
-  {
-    UserId: 3,
-    Email: "wunmi@gmail.com",
-    userImage: "abc def",
-    Name: "abc def",
-    Department: "waiter",
-    Phone: "+234-800-123-4567",
-    Date: "22-07-24",
-    Status: "active",
-    Requests: 300,
-    Completed: 200,
-    Sales: 12000,
-  },
-  {
-    UserId: 4,
-    Email: "wunmi@gmail.com",
-    userImage: "abc def",
-    Name: "abc def",
-    Department: "kitchen",
-    Phone: "+234-800-123-4567",
-    Date: "22-07-24",
-    Status: "inactive",
-    Requests: 300,
-    Completed: 200,
-    Sales: 12000,
-  },
-];
+
 const tabHeaders = {
   all: "all",
-  customers: "customers",
-  admins: "admins",
-  waiters: "waiters",
-  more: "more categories",
+  admin: "admins",
+  waiter: "waiters",
+  bar: "bars",
 };
 const defaultInvoice: User = {
-  UserId: 0,
-  Name: "",
-  Email: "",
-  userImage: "",
-  Department: "",
-  Phone: "",
+  _id: "",
+  fullname: "",
+  email: "",
+  image: "",
+  department: "",
+  phone: "",
   Date: "",
-  Status: "",
+  status: "",
   Requests: 0,
   Completed: 0,
   Sales: 0,
@@ -110,33 +56,17 @@ const Users: FC = () => {
 
   const [success, setSuccess] = useState(false);
 
-  const [invoiceData, setInvoiceData] = useState<User[]>(data);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const items_per_page = 10;
-  const total_pages = Math.ceil(data.length / items_per_page);
-
-  const getPaginatedData = () => {
-    const startIndex = (currentPage - 1) * items_per_page;
-    const endIndex = startIndex + items_per_page;
-    return data.slice(startIndex, endIndex);
-  };
 
   let tabKey: any = "";
-  let tabValue: any = "";
   let title = "User Management";
-
-  const handleTabChange: any = (event: any, key: any, value: any) => {
-    tabKey = key;
-    tabValue = value;
-  };
 
   const updatedInvoice = { ...selectedInvoice };
 
   return (
     <AdminLayout title={title}>
       <div className="flex justify-end h-screen w-full">
-        <Sidebar />
         <Container>
           <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
             <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
@@ -173,7 +103,6 @@ const Users: FC = () => {
                     view={view}
                     tabHeaders={tabHeaders}
                     tableHeaders={tableHeaders}
-                    invoiceData={invoiceData}
                     setIsOpen={setIsOpen}
                     setSelectedInvoice={setSelectedInvoice}
                     selectedInvoice={selectedInvoice}
@@ -183,69 +112,8 @@ const Users: FC = () => {
                     // items_per_page={items_per_page}
                     tabKey={tabKey}
                     handleRowClick={handleRowClick}
-                  >
-                    <TableBody>
-                      {getPaginatedData().map((invoice, index) => (
-                        <TableRow
-                          key={index}
-                          className={`${
-                            selectedInvoice.UserId === invoice.UserId
-                              ? "border border-primaryGreen bg-selectedRow"
-                              : "bg-primaryDark"
-                          } truncate text-center py-2 rounded-lg cursor-pointer`}
-                          onClick={() =>
-                            handleRowClick(
-                              invoice,
-                              setIsOpen,
-                              setSelectedInvoice
-                            )
-                          }
-                        >
-                          <TableCell className="truncate">
-                            <Circle
-                              fill={`
-                              ${
-                                selectedInvoice.UserId === invoice.UserId
-                                  ? "lime"
-                                  : "none"
-                              }
-                              `}
-                              className={` text-primary-border`}
-                            />
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {index + 1}
-                          </TableCell>
-                          <TableCell>
-                            <div className="m-auto w-fit flex items-center gap-x-1">
-                              <div className="w-8 h-4">
-                                <Image
-                                  alt="img"
-                                  src={orderImg}
-                                  className="w-10 h-8 rounded-full"
-                                />
-                              </div>
-                              <p className="flex break-words">{invoice.Name}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>{invoice.Email}</TableCell>
-                          <TableCell>{invoice.Department}</TableCell>
-                          <TableCell>{invoice.Phone}</TableCell>
-                          <TableCell>{invoice.Date}</TableCell>
-
-                          <TableCell>
-                            <div className="flex justify-center">
-                              <p
-                                className={`status-${invoice.Status} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                              >
-                                {invoice.Status}
-                              </p>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </AdminUsersTable>
+                  />
+                   
                 </div>
               </div>
             </Tabs>
@@ -264,7 +132,7 @@ const Users: FC = () => {
                           <p
                             className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                           >
-                            {selectedInvoice.Department}
+                            {selectedInvoice.department}
                           </p>
                         </div>
                       </div>
@@ -272,17 +140,16 @@ const Users: FC = () => {
                     <div className="my-2 md:mb-3 md:mt-8 flex justify-center px-2 items-center text-txWhite">
                       <div className="gap-y-3 flex flex-col h-full justify-center text-secondaryBorder">
                         <div className="w-36 h-36 m-auto">
-                          <Image
-                            alt="img"
-                            src={orderImg2}
-                            className="w-full h-full rounded-full"
+                          <img
+                            src={selectedInvoice.image}
+                            className="w-full h-full rounded-full object-cover"
                           />
                         </div>
                         <div className="w-full flex flex-col text-center">
                           <p className="text-2xl font-medium capitalize text-txWhite">
-                            {selectedInvoice.Name}
+                            {selectedInvoice.fullname}
                           </p>
-                          <p className="text-sm">{selectedInvoice.Email}</p>
+                          <p className="text-sm">{selectedInvoice.email}</p>
                         </div>
                         <div className="flex w-full gap-x-2 justify-center">
                           <Phone className="w-8 h-8 py-2 px-1 rounded-full bg-foreground text-secondaryBorder" />
@@ -317,7 +184,7 @@ const Users: FC = () => {
                             <div className="flex justify-between">
                               <p>Department</p>
                               <p className="text-txWhite">
-                                {selectedInvoice.Department}{" "}
+                                {selectedInvoice.department}{" "}
                               </p>
                             </div>
                             <div className="flex justify-between">
@@ -330,14 +197,14 @@ const Users: FC = () => {
                             </div>
                             <div className="flex justify-between">
                               <p>Sales</p>
-                              <p>${selectedInvoice.Sales} </p>
+                              <p>₦{selectedInvoice.Sales} </p>
                             </div>
                             <div className="flex justify-between">
                               <p>Status</p>
                               <p
-                                className={`capitalize text-sm status-${selectedInvoice.Status} text-center  flex items-center rounded-xl py-[0.1rem] px-2 w-fit`}
+                                className={`capitalize text-sm status-${selectedInvoice.status} text-center  flex items-center rounded-xl py-[0.1rem] px-2 w-fit`}
                               >
-                                {selectedInvoice.Status}{" "}
+                                {selectedInvoice.status}{" "}
                               </p>
                             </div>
                           </div>

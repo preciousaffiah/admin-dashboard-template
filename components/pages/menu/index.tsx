@@ -46,7 +46,7 @@ const tabHeaders = {
 };
 const defaultInvoice: Menus = {
   category: "",
-  _id: 0,
+  _id: "",
   image: "",
   name: "",
   price: 0,

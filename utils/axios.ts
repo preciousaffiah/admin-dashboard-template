@@ -26,8 +26,10 @@ export const handleAxiosError = (err: any, thunkAPI: any) => {
   const { message, status } = err.toJSON();
 
   if (status === 401) {
-    deleteStore();
-    router.push("/auth/sign-in");
+    console.log(err);
+    
+    // deleteStore();
+    // router.push("/auth/sign-in");
     // router.reload();
   }
 
