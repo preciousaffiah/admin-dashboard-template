@@ -39,14 +39,13 @@ const MenuGrid = ({
               <div className="flex w-full border-b border-primary-border pb-3 px-4">
                 <div className="w-full flex flex-col items-center gap-x-1  justify-between">
                   <p className="w-full text-end font-medium text-lg">
-                    ${invoice.price}
+                  ₦{invoice.price}
                   </p>
 
                   <div className="flex flex-col gap-x-2 w-full">
                     <div className="size-16">
-                      <Image
-                        alt="img"
-                        src={orderImg}
+                      <img
+                        src={invoice.image}
                         className="w-full h-full rounded-full"
                       />
                     </div>
@@ -73,7 +72,7 @@ const MenuGrid = ({
                     </div>
                   </div>
                 </div>
-                <div className="gap-x-8 px-4 flex justify-between">
+                <div className="gap-x-16 px-4 flex justify-between">
                   <div className="flex gap-x-2">
                     <div className="flex gap-x-1">
                       <UtensilsCrossed className="w-4" />

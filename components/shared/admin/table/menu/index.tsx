@@ -220,7 +220,7 @@ const AdminMenuTable = ({
                 </TabsContent>
               ))}
 
-            {itemsData?.length < 1 && (
+            {itemsData?.currentItemCount < 1 && (
               <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
                 <FolderOpen />
                 Empty
