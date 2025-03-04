@@ -12,7 +12,7 @@ const defaultInvoice: Menus = {
   image: "",
   name: "",
   description: "",
-  discount: "",
+  discount: 0,
   department: "",
 };
 
