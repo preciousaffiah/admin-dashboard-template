@@ -42,6 +42,8 @@ import {
 } from "@/components/ui/form";
 import { motion, AnimatePresence } from "framer-motion";
 import { ToastMessage } from "@/components/serviette-ui";
+import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
+import DeleteItemModal from "@/components/shared/modal/delete-item";
 
 let tabKey: string = "";
 
@@ -441,13 +443,17 @@ const Menu: FC = () => {
                         </div>
 
                         <div>
-                          <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                            <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
-                              <X /> Delete Item
-                            </button>
-                          </div>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                                <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
+                                  <X /> Delete Item
+                                </button>
+                              </div>
+                            </DialogTrigger>
+                              <DeleteItemModal />
+                          </Dialog>
                         </div>
-                        <div></div>
                       </div>
                     </div>
                   </div>

@@ -3,6 +3,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
@@ -108,6 +109,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
   const onSubmit = () => mutation.mutate();
 
   return (
+
     <DialogContent className="sm:max-w-[425px] text-black">
       {success ? (
         <div className="flex flex-col justify-center items-center">
