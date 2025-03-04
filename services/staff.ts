@@ -15,14 +15,30 @@ class StaffsService {
     });
   }
 
-  getStaff(businessId: string, filters: { email?: string; _id?: string }) {
-    return axiosWithToken().get(`/staff/${businessId}`, {
-      params: {
-        businessId,
-        ...filters,
-      },
+  updateStaff(
+    staffId: string,
+    payload: {
+      fullname?: string;
+      phone?: string;
+      image?: string;
+      department?: string;
+      status?: string;
+      businessId: string;
+    }
+  ) {
+    return axiosWithToken().put(`/staff/update-staff/${staffId}`, {
+      ...payload,
     });
   }
+
+  // getStaff(businessId: string, filters: { email?: string; _id?: string }) {
+  //   return axiosWithToken().get(`/staff/${businessId}`, {
+  //     params: {
+  //       businessId,
+  //       ...filters,
+  //     },
+  //   });
+  // }
 
   getAllStaff(
     businessId: string,

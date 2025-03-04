@@ -3,6 +3,9 @@ import Router from "next/router";
 import { deleteStore, loadStore, saveStore } from "@/utils/local-storage";
 import { TAppUser, TAppUserState } from "@types";
 import { usePathname } from "next/navigation";
+import useLogoutStatus from "./useUpdateLogoutStatus";
+import { StaffStatusEnum } from "@/types/enums";
+import { updateLogoutStatus } from "@/utils/update-logout-status";
 
 function useAuthToken() {
   const [token, setToken] = useState<string | null>(null);
@@ -22,6 +25,18 @@ function useAuthToken() {
   };
 
   const logout = () => {
+    console.log(
+      userData?.user_id,
+      userData?.businessId,
+      StaffStatusEnum.INACTIVE
+    );
+
+    const updateStatus = updateLogoutStatus({
+      staffId: userData?.user_id || "",
+      businessId: userData?.businessId || "",
+      status: StaffStatusEnum.INACTIVE,
+    });
+
     deleteStore();
     if (path === "/") {
       Router.reload();

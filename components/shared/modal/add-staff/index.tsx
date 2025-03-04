@@ -56,7 +56,7 @@ const formSchema = z
       })
       .refine((val) => val.length <= MAX_BASE64_LENGTH, {
         message: "File size must be less than 2MB.",
-      }),
+      }), //TODO: add width and height
     password: z
       .string()
       .min(6, "must be at least 6 characters")

@@ -10,3 +10,8 @@ export enum DeptEnum {
   WAITER = "waiter", 
   BAR = "bar"
 }
+
+export enum StaffStatusEnum {
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+}

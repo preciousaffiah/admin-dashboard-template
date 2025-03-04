@@ -1,17 +1,27 @@
 export type TAppUser = {
-  id: string;
+  user_id: string;
   fullname: string;
   email: string;
   subscriptionPlan: string;
   businessId: string | null;
   role: string | null;
   department: string | null;
-  image: string | null
+  image: string | null;
 };
 
 export type TAppUserState = {
   token: string;
   userData: TAppUser;
+};
+
+export type SDetails = {
+  staffId: string;
+  // fullname?: string;
+  // phone?: string;
+  // image?: string;
+  // department?: string;
+  status?: string;
+  businessId: string;
 };
 
 export type BDetails = {
