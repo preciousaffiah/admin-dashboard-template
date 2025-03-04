@@ -31,7 +31,16 @@ import { DeptEnum } from "@/types/enums";
 import { useAuthToken } from "@/hooks";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { motion, AnimatePresence } from "framer-motion";
+import { ToastMessage } from "@/components/serviette-ui";
 
 let tabKey: string = "";
 
@@ -72,87 +81,74 @@ const tableHeaders = [
   "Department",
 ];
 
-const validationSchema = z.object({
-  Department: z
-    .string()
-    .nullable()
-    .optional()
-    .refine((value) => !value || value.trim() !== "", {
-      message: "Cannot contain whitespace", // Error message
-    }),
-  Name: z
-    .string()
-    .nullable()
-    .optional()
-    .refine((value) => !value || value.trim() !== "", {
-      message: "Cannot contain whitespace", // Error message
-    }),
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
+const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
 
-  itemImage: z
+const formSchema = z.object({
+  price: z
     .string()
-    .nullable()
-    .optional()
-    .refine((value) => !value || value.trim() !== "", {
-      message: "Cannot contain whitespace", // Error message
-    }),
-  Category: z
+    .min(1, { message: "required" })
+    .regex(/^\d+$/, { message: "digits only" })
+    .optional(),
+  discount: z
     .string()
-    .nullable()
-    .optional()
-    .refine((value) => !value || value.trim() !== "", {
-      message: "Cannot contain whitespace", // Error message
-    }),
-  Discount: z
-    .string()
-    .nullable()
-    .optional()
-    .refine((value) => !value || value.trim() !== "", {
-      message: "Cannot contain whitespace", // Error message
-    }),
-  Price: z
-    .union([z.number().min(1, "Price must be at least 1"), z.null()])
-    .transform((value: any) => (value === "" ? null : value)),
+    .min(1, { message: "required" })
+    .regex(/^\d+$/, { message: "digits only" })
+    .optional(),
+  description: z.string().min(1, "required").optional(),
+  department: z
+    .enum([
+      "kitchen",
+      "bar",
+      "reception",
+      "hospitality",
+      "bakery",
+      "waiter",
+      "counter",
+      "utilities",
+    ])
+    .optional(), //add field for other
 
-  Description: z
+  category: z.enum(["intercontinental"]).optional(), //add field for other
+  image: z
     .string()
-    .nullable()
-    .optional()
-    .refine((value) => !value || value.trim() !== "", {
-      message: "Cannot contain whitespace", // Error message
-    }),
+    .refine((val) => val.startsWith("data:"), {
+      message: "Invalid file format",
+    })
+    .refine((val) => val.length <= MAX_BASE64_LENGTH, {
+      message: "File size must be less than 2MB.",
+    })
+    .optional(),
+  businessId: z.string().min(1, "required"),
 });
 
 const Menu: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    setError,
-    setValue,
-    watch,
-    reset,
-  } = useForm({
-    resolver: zodResolver(validationSchema),
-    defaultValues,
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      price: "",
+      discount: "",
+      description: "",
+      category: undefined,
+      department: undefined,
+      image: "",
+      businessId: "",
+    },
+    mode: "onChange", // Ensures validation checks on each change
   });
-
   const { token, userData } = useAuthToken();
+
+  form.setValue("businessId", userData?.businessId || "");
+
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
   // const [invoiceData, setInvoiceData] = useState<Menus[]>(data);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHeader, setMenuHeader] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
-
-
 
   const categoryArray = ["intercontinental"];
   const deptArray = [
@@ -175,59 +171,69 @@ const Menu: FC = () => {
       setTimeout(() => {
         console.log("...where image upload aapi comes in");
         setImagePreview(imageUrl);
-
+        form.setValue("image", imageUrl);
         return setIsImageLoading(false);
       }, 3000);
     }
   };
 
-    // Ref for the hidden file input
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
+  // Ref for the hidden file input
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-    // Function to trigger the file input click
-    const handleIconClick = () => {
-      fileInputRef.current?.click();
-    };
+  // Function to trigger the file input click
+  const handleIconClick = () => {
+    fileInputRef.current?.click();
+  };
+  console.log(form.getValues());
 
-  const formCheck = () => {
-    // Filter out empty values
-    const nonEmptyValues = Object.fromEntries(
-      Object.entries(getValues()).filter(
-        ([, value]) => value !== null && value !== undefined && value !== ""
-      )
-    );
+  const updateItemRequest: any = async () => {
+    try {
+      console.log("ch");
+      const response = await ItemService.updateItem(
+        selectedInvoice._id,
+        form.getValues()
+      );
 
-    // Check if all values are empty; if so, exit early
-    if (Object.keys(nonEmptyValues).length === 0) {
-      return false;
+      return response.data;
+    } catch (error: any) {
+      throw new Error(
+        error?.response?.data?.message ||
+          error?.response?.data?.data?.message ||
+          "An error occurred"
+      );
     }
-
-    return nonEmptyValues;
   };
 
-  useEffect(() => {
-    const subscription = watch(() => {
-      setIsButtonEnabled(!!formCheck());
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  const mutation: any = useMutation({
+    mutationFn: updateItemRequest,
+    onSuccess: (res: any) => {
+      // setSuccess(true);
+      form.reset();
+    },
+  });
 
   const onSubmit = () => {
-    const nonEmptyValues = formCheck(); // Store result of formCheck
+    console.log("sss");
 
-    if (!nonEmptyValues) {
-      return null; // Stop if all values are empty
-    }
-
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log("...where update item api comes in");
-      setIsLoading(false);
-      return setSuccess(true);
-    }, 2000);
+    mutation.mutate();
   };
+  console.log(form.formState.isValid);
 
+  // const onSubmit = () => {
+  //   const nonEmptyValues = "";
+  //   // = formCheck(); // Store result of formCheck
+
+  //   if (!nonEmptyValues) {
+  //     return null; // Stop if all values are empty
+  //   }
+
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     console.log("...where update item api comes in");
+  //     setIsLoading(false);
+  //     return setSuccess(true);
+  //   }, 2000);
+  // };
 
   return (
     <div className="flex justify-end h-screen w-full">
@@ -408,11 +414,16 @@ const Menu: FC = () => {
                               </div>
                               <div className="flex justify-between">
                                 <p>Discount</p>
-                                <p>₦{Number(selectedInvoice.discount)?.toFixed(2)} </p>
+                                <p>
+                                  ₦
+                                  {Number(selectedInvoice.discount)?.toFixed(2)}{" "}
+                                </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Price</p>
-                                <p>₦{Number(selectedInvoice?.price)?.toFixed(2)} </p>
+                                <p>
+                                  ₦{Number(selectedInvoice?.price)?.toFixed(2)}{" "}
+                                </p>
                               </div>
                               <div className="flex justify-between gap-x-8">
                                 <p>Description</p>
@@ -440,120 +451,202 @@ const Menu: FC = () => {
                       <div>
                         <div>
                           <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                            <form
-                              onSubmit={handleSubmit(onSubmit)}
-                              className="flex flex-col gap-y-3 w-full text-base"
-                            >
-                              <div>
-                                <div className="flex justify-between items-baseline">
-                                  <label>Discount</label>
-                                  <Input
-                                    {...register("discount")}
-                                    autoComplete="off"
-                                    type="text"
-                                    placeholder={selectedInvoice.discount}
-                                    className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
-                                  />
-                                </div>
-                                <p className="text-red-400 text-end text-sm">
-                                  {errors.discount?.message}
-                                </p>
-                              </div>
-                              <div>
-                                <div className="flex justify-between items-baseline">
-                                  <label>Price</label>
-                                  <Input
-                                    {...register("price")}
-                                    autoComplete="off"
-                                    type="number"
-                                    placeholder={selectedInvoice?.price?.toString()}
-                                    className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
-                                  />
-                                </div>
-                                <p className="text-red-400 text-end text-sm">
-                                  {errors.price?.message}
-                                </p>
-                              </div>
-                              <div>
-                                <div className="flex justify-between gap-x-8 items-baseline">
-                                  <label>Description</label>
-                                  <Input
-                                    {...register("description")}
-                                    autoComplete="off"
-                                    type="text"
-                                    placeholder={selectedInvoice.description}
-                                    className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
-                                  />
-                                </div>
-                                <p className="text-red-400 text-end text-sm">
-                                  {errors.description?.message}
-                                </p>
-                              </div>
-                              <div>
-                                <div className="md:flex justify-between items-baseline">
-                                  <label>department</label>
-                                  <select
-                                    {...register("department")}
-                                    id="department"
-                                    className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
-                                  >
-                                    <option value="" disabled selected hidden>
-                                      Select an option
-                                    </option>
-                                    {deptArray.map((option) => (
-                                      <option key={option} value={option}>
-                                        {option}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                <p className="text-red-400 text-end text-sm">
-                                  {errors.department?.message}
-                                </p>
-                              </div>
-                              <div>
-                                <div className="flex justify-between items-baseline">
-                                  <label>Category</label>
-                                  <select
-                                    {...register("category")}
-                                    id="category"
-                                    className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
-                                  >
-                                    <option value="" disabled selected hidden>
-                                      Select an option
-                                    </option>
-                                    {categoryArray.map((option) => (
-                                      <option key={option} value={option}>
-                                        {option}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                <p className="text-red-400 text-end text-sm">
-                                  {errors.category?.message}
-                                </p>
-                              </div>
-                              <div>
+                            <Form {...form}>
+                              <form
+                                onSubmit={form.handleSubmit(onSubmit)}
+                                className="w-full flex flex-col gap-y-5"
+                              >
+                                <AnimatePresence>
+                                  {mutation.isError && (
+                                    <motion.div
+                                      initial={{ y: -20, opacity: 0.5 }}
+                                      animate={{ y: 0, opacity: 1 }}
+                                      exit={{ y: -20, opacity: 0.2 }}
+                                    >
+                                      <ToastMessage
+                                        message={
+                                          mutation?.error?.message ||
+                                          "An error occured during process"
+                                        }
+                                      />
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+
+                                <FormField
+                                  control={form.control}
+                                  name="discount"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="flex justify-between items-baseline">
+                                        <p
+                                        // className="text-txWhite font-normal pb-2"
+                                        >
+                                          Discount
+                                        </p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="price"
+                                            placeholder="Enter Iteem Price"
+                                            {...field}
+                                            onChange={(e) => {
+                                              // Allow only numbers
+                                              const numericValue =
+                                                e.target.value.replace(
+                                                  /\D/g,
+                                                  ""
+                                                );
+                                              field.onChange(numericValue); // Update the form value
+                                            }}
+                                            value={field.value} // Ensure the value is controlled
+                                            className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name="price"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="flex justify-between items-baseline">
+                                        <p>Price</p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="price"
+                                            placeholder="Enter Iteem Price"
+                                            {...field}
+                                            onChange={(e) => {
+                                              // Allow only numbers
+                                              const numericValue =
+                                                e.target.value.replace(
+                                                  /\D/g,
+                                                  ""
+                                                );
+                                              field.onChange(numericValue); // Update the form value
+                                            }}
+                                            value={field.value} // Ensure the value is controlled
+                                            className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+
+                                <FormField
+                                  control={form.control}
+                                  name="description"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="md:flex justify-between items-baseline">
+                                        <p>Description</p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="description"
+                                            placeholder="Enter Item Description"
+                                            {...field}
+                                            className="text-txWhite bg-transparent md:w-9/12 w-full md:placeholder:text-end border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name="department"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="md:flex justify-between items-baseline">
+                                        <h1>Department</h1>
+                                        <FormControl>
+                                          <select
+                                            {...field}
+                                            className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
+                                          >
+                                            <option
+                                              value="none"
+                                              selected
+                                              disabled
+                                              hidden
+                                            >
+                                              Select department
+                                            </option>
+                                            <option value="waiter">
+                                              waiter
+                                            </option>
+                                            <option value="bar">bar</option>
+                                            <option value="kitchen">
+                                              kitchen
+                                            </option>
+                                          </select>
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name="category"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div className="md:flex justify-between items-baseline">
+                                        <h1>Category</h1>
+                                        <FormControl>
+                                          <select
+                                            {...field}
+                                            className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
+                                          >
+                                            <option
+                                              value="none"
+                                              selected
+                                              disabled
+                                              hidden
+                                            >
+                                              Select category
+                                            </option>
+                                            <option value="intercontinental">
+                                              intercontinental
+                                            </option>
+                                          </select>
+                                        </FormControl>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
                                 <div className="flex justify-between p-3 items-center text-txWhite">
                                   <button
-                                    disabled={!isButtonEnabled}
-                                    className={`place-order-btn text-white font-medium ${
-                                      isButtonEnabled
+                                    type="submit"
+                                    disabled={!form.formState.isValid}
+                                    className={`place-order-btn text-white font-medium cursor-pointer ${
+                                      form.formState.isValid
                                         ? "bg-primaryGreen"
                                         : "bg-lime-600"
                                     }
                                       flex items-center gap-x-1 m-auto rounded-xl p-2`}
                                   >
                                     Save
-                                    {isLoading ? (
+                                    {form.formState.isValid &&
+                                    mutation.isPending ? (
                                       <LoaderCircle className="w-5 h-5 rotate-icon" />
                                     ) : (
                                       <Check />
                                     )}
                                   </button>
                                 </div>
-                              </div>
-                            </form>
+                              </form>
+                            </Form>
                           </div>
                         </div>
                       </div>

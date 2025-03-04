@@ -3,7 +3,6 @@ import Router from "next/router";
 import { deleteStore, loadStore, saveStore } from "@/utils/local-storage";
 import { TAppUser, TAppUserState } from "@types";
 import { usePathname } from "next/navigation";
-import useLogoutStatus from "./useUpdateLogoutStatus";
 import { StaffStatusEnum } from "@/types/enums";
 import { updateLogoutStatus } from "@/utils/update-logout-status";
 
