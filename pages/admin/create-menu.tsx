@@ -40,8 +40,8 @@ const deptArray: any = [
   "utilities",
 ];
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
-const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
+const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
 
 const formSchema = z
   .object({
@@ -69,7 +69,7 @@ const formSchema = z
         message: "Invalid file format",
       })
       .refine((val) => val.length <= MAX_BASE64_LENGTH, {
-        message: "File size must be less than 2MB.",
+        message: "File size must be less than 4MB.",
       }),
     businessId: z.string().min(1, "required"),
   })
@@ -263,7 +263,7 @@ const CreateMenu: FC = () => {
                                         <FormControl>
                                           <input
                                             type="file"
-                                            accept=".png,.jpg,.jpeg,.webp"
+                                            accept="image/*"
                                             onChange={handleImageChange}
                                             ref={fileInputRef}
                                             className="hidden"

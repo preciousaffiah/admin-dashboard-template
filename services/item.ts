@@ -18,18 +18,22 @@ class ItemsService {
   updateItem(
     itemId: string,
     payload: {
-      name?: string;
       category?: string;
+      businessId?: string;
       price?: string;
       discount?: string;
       department?: string;
       description?: string;
       image?: string;
-      businessId: string;
     }
   ) {
-    return axiosWithToken().put(`/staff/update-staff/${itemId}`, {
-      ...payload,
+    const filteredData = Object.fromEntries(
+      Object.entries(payload).filter(([_, value]) => value !== undefined)
+    );
+    console.log("filteredData", filteredData);
+    
+    return axiosWithToken().put(`/item/update-item/${itemId}`, {
+      ...filteredData,
     });
   }
 
@@ -42,13 +46,20 @@ class ItemsService {
   //   });
   // }
 
-
-  getItems(businessId: string, page: number, filters?: { name?: string, _id?: string, category?: string, department?: string }) {
-    
+  getItems(
+    businessId: string,
+    page: number,
+    filters?: {
+      name?: string;
+      _id?: string;
+      category?: string;
+      department?: string;
+    }
+  ) {
     return axiosWithoutToken.get(`/item/all-items/${businessId}`, {
       params: {
         page,
-       ...filters
+        ...filters,
       },
     });
   }

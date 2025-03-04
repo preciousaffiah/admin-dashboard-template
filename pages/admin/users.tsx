@@ -155,8 +155,8 @@ const Users: FC = () => {
                           <Mail className="w-8 h-8 py-2 px-1 rounded-full bg-foreground text-secondaryBorder" />
                         </div>
                         <div>
-                          <p className="flex bg-primaryGreen rounded-md text-background items-center 1 w-fit m-0 px-6 py-2 text-sm font-semibold">
-                            View Full Profile
+                          <p className="m-auto flex bg-primaryGreen rounded-md text-background items-center 1 w-fit px-6 py-2 text-sm font-semibold">
+                            Full Profile
                           </p>
                         </div>
                       </div>
@@ -250,7 +250,7 @@ const Users: FC = () => {
                                 <Wrench /> Set Permissions
                               </button> */}
                               <button className="m-auto flex rounded-xl bg-cancel p-2 ">
-                                <X /> Remove User
+                                <X /> Delete Staff
                               </button>
                             </div>
                           </div>

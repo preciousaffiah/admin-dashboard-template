@@ -17,6 +17,7 @@ import * as z from "zod";
 import {
   Check,
   Circle,
+  CircleX,
   Edit3,
   EllipsisVertical,
   LayoutGrid,
@@ -59,7 +60,7 @@ const defaultInvoice: Menus = {
   image: "",
   name: "",
   price: 0,
-  discount: "",
+  discount: 0,
   description: "",
   department: "",
 };
@@ -81,74 +82,73 @@ const tableHeaders = [
   "Department",
 ];
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
-const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 1) / 2);
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
+const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
 
-const formSchema = z.object({
-  price: z
-    .string()
-    .min(1, { message: "required" })
-    .regex(/^\d+$/, { message: "digits only" })
-    .optional(),
-  discount: z
-    .string()
-    .min(1, { message: "required" })
-    .regex(/^\d+$/, { message: "digits only" })
-    .optional(),
-  description: z.string().min(1, "required").optional(),
-  department: z
-    .enum([
-      "kitchen",
-      "bar",
-      "reception",
-      "hospitality",
-      "bakery",
-      "waiter",
-      "counter",
-      "utilities",
-    ])
-    .optional(), //add field for other
+// TODO: compress files and images using sharp
 
-  category: z.enum(["intercontinental"]).optional(), //add field for other
-  image: z
-    .string()
-    .refine((val) => val.startsWith("data:"), {
-      message: "Invalid file format",
-    })
-    .refine((val) => val.length <= MAX_BASE64_LENGTH, {
-      message: "File size must be less than 2MB.",
-    })
-    .optional(),
-  businessId: z.string().min(1, "required"),
-});
+const formSchema = z
+  .object({
+    price: z
+      .string()
+      .min(1, { message: "required" })
+      .regex(/^\d+$/, { message: "digits only" })
+      .optional(),
+    discount: z
+      .string()
+      .min(1, { message: "required" })
+      .regex(/^\d+$/, { message: "digits only" })
+      .optional(),
+    description: z.string().min(1, "required").optional(),
+    department: z
+      .enum([
+        "kitchen",
+        "bar",
+        "reception",
+        "hospitality",
+        "bakery",
+        "waiter",
+        "counter",
+        "utilities",
+      ])
+      .optional(), //add field for other
+
+    category: z.enum(["intercontinental"]).optional(), //add field for other
+    image: z
+      .string()
+      .refine((val) => val.startsWith("data:"), {
+        message: "Invalid file format",
+      })
+      .refine((val) => val.length <= MAX_BASE64_LENGTH, {
+        message: "File size must be less than 4MB.",
+      })
+      .optional(),
+    businessId: z.string().min(1, "required").optional(),
+  })
+  .refine(
+    (data) =>
+      Object.values(data).some((value) => value !== undefined && value !== ""),
+    { message: "At least one field must be filled" }
+  );
 
 const Menu: FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      price: "",
-      discount: "",
-      description: "",
-      category: undefined,
-      department: undefined,
-      image: "",
-      businessId: "",
-    },
     mode: "onChange", // Ensures validation checks on each change
   });
   const { token, userData } = useAuthToken();
 
-  form.setValue("businessId", userData?.businessId || "");
-
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
-  // const [invoiceData, setInvoiceData] = useState<Menus[]>(data);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHeader, setMenuHeader] = useState(false);
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [imageStatus, setImageStatus] = useState<"edit" | "loading" | "error">(
+    "edit"
+  );
 
   const categoryArray = ["intercontinental"];
   const deptArray = [
@@ -165,15 +165,27 @@ const Menu: FC = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
+      setImageStatus("loading"); // Show loading icon
+      // setIsImageLoading(true);
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = reader.result as string; // Get the base64 string
+        form.setValue("image", base64);
+        form.setValue("businessId", userData?.businessId || "");
+        setImagePreview(base64);
 
-      setIsImageLoading(true);
-      setTimeout(() => {
-        console.log("...where image upload aapi comes in");
-        setImagePreview(imageUrl);
-        form.setValue("image", imageUrl);
-        return setIsImageLoading(false);
-      }, 3000);
+        // Validate only the 'image' field
+        const isValid = await form.trigger("image");
+
+        if (!isValid) {
+          console.error(form.formState.errors.image?.message); // Log validation error
+        }
+        setImageStatus(isValid ? "edit" : "error"); // Update icon based on validation
+
+        // await form.trigger(); // Ensure validation runs before submitting
+        form.handleSubmit(onSubmit)(); // Call your form submission logic
+      };
+      reader.readAsDataURL(file); // Convert the file to base64
     }
   };
 
@@ -184,18 +196,20 @@ const Menu: FC = () => {
   const handleIconClick = () => {
     fileInputRef.current?.click();
   };
-  console.log(form.getValues());
 
   const updateItemRequest: any = async () => {
     try {
-      console.log("ch");
+      form.setValue("businessId", userData?.businessId || "");
+
       const response = await ItemService.updateItem(
         selectedInvoice._id,
         form.getValues()
       );
-
+      console.log("form response", response.data);
       return response.data;
     } catch (error: any) {
+      console.log("form error response", error.response.data);
+
       throw new Error(
         error?.response?.data?.message ||
           error?.response?.data?.data?.message ||
@@ -207,33 +221,12 @@ const Menu: FC = () => {
   const mutation: any = useMutation({
     mutationFn: updateItemRequest,
     onSuccess: (res: any) => {
-      // setSuccess(true);
+      setImageStatus("edit");
       form.reset();
     },
   });
 
-  const onSubmit = () => {
-    console.log("sss");
-
-    mutation.mutate();
-  };
-  console.log(form.formState.isValid);
-
-  // const onSubmit = () => {
-  //   const nonEmptyValues = "";
-  //   // = formCheck(); // Store result of formCheck
-
-  //   if (!nonEmptyValues) {
-  //     return null; // Stop if all values are empty
-  //   }
-
-  //   setIsLoading(true);
-  //   setTimeout(() => {
-  //     console.log("...where update item api comes in");
-  //     setIsLoading(false);
-  //     return setSuccess(true);
-  //   }, 2000);
-  // };
+  const onSubmit = () => mutation.mutate();
 
   return (
     <div className="flex justify-end h-screen w-full">
@@ -329,7 +322,7 @@ const Menu: FC = () => {
                           ) : (
                             <img
                               src={selectedInvoice.image}
-                              className="w-full h-full rounded-full"
+                              className="w-full h-full rounded-full object-cover"
                             />
                           )}
                         </div>
@@ -340,16 +333,30 @@ const Menu: FC = () => {
                           ref={fileInputRef}
                           className="hidden"
                         />
-                        {isImageLoading ? (
-                          <LoaderCircle className="text-secondaryBorder rotate-icon" />
-                        ) : (
-                          <Edit3
-                            onClick={handleIconClick}
-                            className="text-primaryLime cursor-pointer"
-                          />
-                        )}
-                      </div>
 
+                        <div className="relative right-6 cursor-pointer">
+                          {imageStatus === "edit" && (
+                            <Edit3
+                              onClick={handleIconClick}
+                              className="text-primaryLime"
+                            />
+                          )}
+                          {imageStatus === "loading" && (
+                            <LoaderCircle className="text-secondaryBorder rotate-icon" />
+                          )}
+                          {imageStatus === "error" && (
+                            <CircleX
+                              onClick={handleIconClick}
+                              className="text-secondaryBorder text-cancel"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      {form.formState.errors.image && (
+                        <p className="text-cancel text-sm">
+                          {form.formState.errors.image.message}
+                        </p>
+                      )}
                       <div className="w-full flex flex-col text-center">
                         <p className="text-2xl font-medium capitalize text-txWhite">
                           {selectedInvoice.name}
@@ -357,7 +364,7 @@ const Menu: FC = () => {
                       </div>
                       <div className="m-auto">
                         <p className="flex bg-primaryGreen rounded-md items-center text-background 1 w-fit m-0 px-6 py-2 text-sm font-semibold">
-                          View Full Menu
+                          Full Menu
                         </p>
                       </div>
                     </div>
@@ -436,7 +443,7 @@ const Menu: FC = () => {
                         <div>
                           <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                             <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
-                              <X /> Remove Menu
+                              <X /> Delete Item
                             </button>
                           </div>
                         </div>
@@ -487,8 +494,8 @@ const Menu: FC = () => {
                                         <FormControl>
                                           <input
                                             type="text"
-                                            id="price"
-                                            placeholder="Enter Iteem Price"
+                                            id="discount"
+                                            placeholder="Enter Item Discount Price"
                                             {...field}
                                             onChange={(e) => {
                                               // Allow only numbers

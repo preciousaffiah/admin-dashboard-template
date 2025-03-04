@@ -164,7 +164,7 @@ const AdminMenuTable = ({
                                     <div className="w-8 h-fit">
                                       <img
                                         src={invoice.image}
-                                        className="w-10 h-8 rounded-full"
+                                        className="w-10 h-8 rounded-full object-cover"
                                       />
                                     </div>
                                     <p className="flex break-words">

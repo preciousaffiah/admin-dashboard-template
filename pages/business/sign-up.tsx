@@ -31,7 +31,7 @@ import { BusService } from "@/services";
 import { ToastMessage } from "@/components/serviette-ui";
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
-const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 2) / 3); // Max base64 length for 5MB
+const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3); // Max base64 length for 5MB
 
 // Define Zod schemas for each step
 const businessDetailsSchema = z.object({
@@ -76,6 +76,7 @@ const businessDetailsSchema = z.object({
   }),
   role: z.enum(["owner", "manager"]),
 });
+
 
 // const paymentDetailsSchema = z.object({
 //   cardholderName: z.string().min(1, "Cardholder name is required"),

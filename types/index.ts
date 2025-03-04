@@ -63,7 +63,7 @@ export type Menus = {
   description: string;
   image: string;
   name: string;
-  discount: string;
+  discount: number;
   department: string;
 };
 
