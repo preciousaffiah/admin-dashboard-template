@@ -7,9 +7,12 @@ import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Circle, FolderOpen, Loader } from "lucide-react";
+import { Circle, FolderOpen, Loader, ShoppingCart } from "lucide-react";
 import ItemBox from "../itemBox";
 import { Menus } from "@/types";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import DeleteItemModal from "@/components/shared/modal/delete-item";
+import CartModal from "@/components/shared/modal/cart";
 
 let tabKey: any = "";
 
@@ -32,7 +35,13 @@ const defaultInvoice: Menus = {
   department: "",
 };
 
-const BusinessMenu = ({ businessId, BusinessName }: { businessId: string, BusinessName: string }) => {
+const BusinessMenu = ({
+  businessId,
+  BusinessName,
+}: {
+  businessId: string;
+  BusinessName: string;
+}) => {
   const { token, userData } = useAuthToken();
 
   const [page, setPage] = useState(1);
@@ -107,6 +116,9 @@ const BusinessMenu = ({ businessId, BusinessName }: { businessId: string, Busine
               placeholder="Search for food, drinks and more"
               className="md:rounded-xl rounded-full md:px-3 px-1"
             />
+          </div>
+          <div>
+              <CartModal tableId={selectedInvoice._id}/>
           </div>
         </div>
         <div>

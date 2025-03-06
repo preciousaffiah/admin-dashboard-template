@@ -52,7 +52,7 @@ const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
                   ₦{invoice.price}
                 </p>
               </div>
-              <p className="flex text-xs">
+              <p className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1">
                 Add to cart
                 <ShoppingCart className="size-4" />
               </p>
