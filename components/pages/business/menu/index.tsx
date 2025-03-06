@@ -132,8 +132,8 @@ const BusinessMenu = ({
               itemsData.currentItemCount > 0 &&
               Object.keys(tabHeaders || {}).map((item: any, index: number) => (
                 <TabsContent key={index} value={item} className="w-full">
-                  <div className="h-[20rem] bg-black m-auto rounded-md">
-                    <p className="text-5xl text-center m-auto flex items-center justify-center h-full uppercase font-edu">
+                  <div className="md:h-[20rem] h-[10rem] bg-black m-auto rounded-md">
+                    <p className="md:text-5xl text-4xl text-center m-auto flex items-center justify-center h-full uppercase font-edu">
                       {BusinessName} menu
                     </p>
                   </div>
