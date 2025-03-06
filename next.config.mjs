@@ -1,3 +1,5 @@
+import withVideo from 'next-videos';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -6,4 +8,5 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// Wrap the nextConfig with the next-video plugin
+export default withVideo(nextConfig);

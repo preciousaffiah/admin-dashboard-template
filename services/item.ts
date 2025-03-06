@@ -7,7 +7,7 @@ class ItemsService {
     price: string;
     department: string;
     image: string;
-    businessId: string;
+    businessId?: string;
     description: string;
   }) {
     return axiosWithToken().post("/item", {
@@ -30,11 +30,16 @@ class ItemsService {
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(([_, value]) => value !== undefined)
     );
-    console.log("filteredData", filteredData);
-    
+
     return axiosWithToken().put(`/item/update-item/${itemId}`, {
       ...filteredData,
     });
+  }
+
+  deleteItem(itemId: string, businessId: string) {
+    console.log(itemId, businessId);
+    
+    return axiosWithToken().delete(`/item/delete-item/${itemId}/${businessId}`);
   }
 
   // getItem(businessId: string, filters: { name?: string, _id?: string }) {

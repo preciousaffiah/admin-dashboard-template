@@ -59,7 +59,7 @@ const AdminMenuTable = ({
     queryKey: ["get-items", userData?.businessId || ""],
     queryFn: fetchItems,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
   const handleTabChange: any = (key: any) => {
@@ -102,7 +102,7 @@ const AdminMenuTable = ({
               view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
-            {(itemsData && !isRefetching && !isItemsLoading &&
+            {(itemsData && !isItemsLoading && !isRefetching &&
               itemsData.currentItemCount > 0 ) &&
               Object.keys(tabHeaders || {}).map((item: any, index: number) => (
                 <TabsContent key={index} value={item} className="w-full">

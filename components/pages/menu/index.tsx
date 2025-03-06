@@ -207,11 +207,8 @@ const Menu: FC = () => {
         selectedInvoice._id,
         form.getValues()
       );
-      console.log("form response", response.data);
       return response.data;
     } catch (error: any) {
-      console.log("form error response", error.response.data);
-
       throw new Error(
         error?.response?.data?.message ||
           error?.response?.data?.data?.message ||
@@ -451,7 +448,7 @@ const Menu: FC = () => {
                                 </button>
                               </div>
                             </DialogTrigger>
-                              <DeleteItemModal />
+                              <DeleteItemModal itemId={selectedInvoice._id} />
                           </Dialog>
                         </div>
                       </div>

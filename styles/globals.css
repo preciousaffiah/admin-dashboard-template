@@ -93,6 +93,45 @@ tr td:last-child {
   color: rgba(var(--textCompleted));
 }
 
+.cover {
+  background-image: url("../public/cover.png");
+  background-size: cover;
+}
+
+.changing-text {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.5rem; /* Ensure space for animations */
+  overflow: hidden;
+  position: relative;
+}
+
+.word {
+  position: absolute;
+  opacity: 0;
+  animation: slide 9s infinite;
+  color: #f97316;
+}
+
+.word:nth-child(1) {
+  animation-delay: 0s;
+}
+.word:nth-child(2) {
+  animation-delay: 3s;
+}
+.word:nth-child(3) {
+  animation-delay: 6s;
+}
+
+@keyframes slide {
+  0% { opacity: 0; transform: translateY(100%); }
+  10%, 20% { opacity: 1; transform: translateY(0); }
+  30%, 100% { opacity: 0; transform: translateY(-50%); }
+} 
+
 @layer components {
   button {
     border-color: transparent;
@@ -194,7 +233,6 @@ tr td:last-child {
     --selectedRow: 226, 240, 184;
     --secondaryDarker: 239, 239, 239;
 
-
     --background: 0, 0%, 100%; /* white */
     --foreground: 180, 9.8%, 90%; /* whiteish */
 
@@ -282,8 +320,6 @@ tr td:last-child {
     @apply bg-background text-foreground;
   }
 }
-
-
 
 @layer base {
   /* * {

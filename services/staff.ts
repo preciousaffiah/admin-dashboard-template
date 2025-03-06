@@ -49,7 +49,6 @@ class StaffsService {
     page: number,
     filters: { department?: string; status?: string; fullname?: string }
   ) {
-    console.log(businessId, page);
 
     return axiosWithToken().get(`/staff/all-staffs/${businessId}`, {
       params: {

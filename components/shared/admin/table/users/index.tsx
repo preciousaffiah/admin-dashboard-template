@@ -130,7 +130,7 @@ console.log("isRefetching",isRefetching);
               view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
-            {(staffsData && !isRefetching && !isItemsLoading &&
+            {(staffsData && !isItemsLoading && !isRefetching &&
               staffsData.currentItemCount > 0 )&&
               Object.keys(tabHeaders || {}).map((item, index) => (
                 <TabsContent key={index} value={item} className="w-full">

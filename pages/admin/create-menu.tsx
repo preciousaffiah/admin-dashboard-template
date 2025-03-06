@@ -71,9 +71,8 @@ const formSchema = z
       .refine((val) => val.length <= MAX_BASE64_LENGTH, {
         message: "File size must be less than 4MB.",
       }),
-    businessId: z.string().min(1, "required"),
+    businessId: z.string().min(1, "required").optional(),
   })
-  .required();
 
 const defaultMenu: createMenu = {
   name: "",
@@ -150,7 +149,7 @@ const CreateMenu: FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const base64 = reader.result as string; // Get the base64 string
         form.setValue("image", base64);
         form.setValue("businessId", userData?.businessId || "");
@@ -159,6 +158,15 @@ const CreateMenu: FC = () => {
           image: base64,
         }));
         setImagePreview(base64);
+
+        // Validate only the 'image' field
+        const isValid = await form.trigger("image");
+
+        if (!isValid) {
+          console.error(form.formState.errors.image?.message); // Log validation error
+        }
+
+        // form.handleSubmit(onSubmit)(); // Call your form submission logic
       };
       reader.readAsDataURL(file); // Convert the file to base64
     }
@@ -169,8 +177,8 @@ const CreateMenu: FC = () => {
     fileInputRef.current?.click();
   };
 
-  const setItemPreview = () => {
-    form.trigger();
+  const setItemPreview = async () => {
+    await form.trigger();
     setMenu((prevOrder) => ({
       ...prevOrder,
       category: form.getValues("category"),
@@ -182,6 +190,8 @@ const CreateMenu: FC = () => {
 
     setSaved(true);
     setTimeout(() => setSaved(false), 2000); // Reset after 2 seconds
+    console.log(form.formState.isValid, form.getValues());
+    
   };
 
   const title = "Add to Menu";
@@ -255,6 +265,7 @@ const CreateMenu: FC = () => {
                                       />
                                     </div>
                                   )}
+
                                   <FormField
                                     control={form.control}
                                     name="image"
@@ -277,6 +288,11 @@ const CreateMenu: FC = () => {
                                     <Plus className="m-auto w-5" />
                                   )}
                                 </div>
+                                {form.formState.errors.image && (
+                                  <p className="text-cancel text-sm">
+                                    {form.formState.errors.image.message}
+                                  </p>
+                                )}
                               </div>
 
                               <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark text-sm rounded-md px-4">
@@ -504,7 +520,7 @@ const CreateMenu: FC = () => {
                                           <Image
                                             alt="img"
                                             src={imagePreview}
-                                            className="w-full h-full rounded-full"
+                                            className="w-full h-full rounded-full object-cover"
                                             width={128}
                                             height={128}
                                           />
@@ -560,15 +576,17 @@ const CreateMenu: FC = () => {
                                       <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                                         <div className="p-3 w-full bg-foreground rounded-b-md">
                                           <button
-                                            type="submit"
+                                          type="submit"
                                             onClick={onSubmit}
-                                            className={`place-menu-btn bg-primaryGreen w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
+                                            className={`place-menu-btn  ${
+                                              form.formState.isValid ? "bg-primaryGreen" : "bg-lime-700"
+                                             }  w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
                                           >
+                                            Add to Menu
                                             {form.formState.isValid &&
                                               mutation.isPending && (
                                                 <LoaderCircle className="text-black flex w-5 h-5 rotate-icon" />
                                               )}
-                                            Add to Menu
                                           </button>
                                         </div>
                                       </div>
@@ -597,10 +615,10 @@ const CreateMenu: FC = () => {
                           <button
                             type="submit"
                             onClick={onSubmit}
-                            disabled={!menu.image}
+                            disabled={!form.formState.isValid}
                             className={`place-menu-btn 
                                ${
-                                 menu.image ? "bg-primaryGreen" : "bg-lime-700"
+                                form.formState.isValid ? "bg-primaryGreen" : "bg-lime-700"
                                } 
                              w-full py-2 rounded-md text-sm text-black
                              flex items-center justify-center gap-x-2

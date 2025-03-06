@@ -53,11 +53,11 @@ const AdminSidebar = () => {
     //   link: "/",
     //   tag: User,
     // },
-    // {
-    //   title: "Account Settings",
-    //   link: "/",
-    //   tag: Bolt,
-    // },
+    {
+      title: "Settings",
+      link: "/",
+      tag: Bolt,
+    },
     // {
     //   title: "Help Center",
     //   link: "/",
