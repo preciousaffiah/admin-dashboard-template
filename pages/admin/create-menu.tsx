@@ -27,6 +27,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ToastMessage } from "@/components/serviette-ui";
+import { handleAxiosError } from "@/utils/axios";
 
 const categoryArray: any = ["intercontinental"];
 const deptArray: any = [
@@ -122,11 +123,7 @@ const CreateMenu: FC = () => {
 
       return response.data;
     } catch (error: any) {
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 

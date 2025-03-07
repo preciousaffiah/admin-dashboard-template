@@ -1,6 +1,6 @@
 import axios from "axios";
 import router from "next/router";
-import { deleteStore, loadStore } from "./local-storage"
+import { deleteStore, loadStore } from "./local-storage";
 export const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
 
 export const axiosWithoutToken = axios.create({
@@ -26,10 +26,8 @@ export const handleAxiosError = (err: any, thunkAPI: any) => {
   const { message, status } = err.toJSON();
 
   if (status === 401) {
-    console.log(err);
-    
-    // deleteStore();
-    // router.push("/auth/sign-in");
+    deleteStore();
+    router.push("/");
     // router.reload();
   }
 
@@ -47,7 +45,11 @@ export const handleAxiosError = (err: any, thunkAPI: any) => {
     //   message: "You are offline", //TODO: chek tthid
     // });
   } else {
-    throw new Error(err?.response?.data?.data?.message || "An error occurred");
+    throw new Error(
+      err?.response?.data?.message ||
+        err?.response?.data?.data?.message ||
+        "An error occurred"
+    );
     // throw thunkAPI.rejectWithValue({
     //   status: err.response.status || 0,
     //   message: err.response.data.message,

@@ -29,6 +29,7 @@ class StaffsService {
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(([_, value]) => value !== undefined)
     );
+console.log(filteredData);
 
     return axiosWithToken().put(`/staff/update-staff/${staffId}`, {
       filteredData,

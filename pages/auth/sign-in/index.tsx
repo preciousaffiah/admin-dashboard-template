@@ -28,6 +28,7 @@ import { AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import { EyeIcon, EyeOff } from "lucide-react";
+import { handleAxiosError } from "@/utils/axios";
 // Define Zod schemas for each step
 const formSchema = z
   .object({
@@ -67,11 +68,7 @@ const SignIn: FC = () => {
     } catch (error: any) {
       console.log(error);
 
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 

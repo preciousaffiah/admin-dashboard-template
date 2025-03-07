@@ -15,13 +15,17 @@ class BusinessService {
       ...payload,
     });
   }
-  
-  getBusinessByNameOrIdOrEmailWithoutAuth(name?: string, email?: string, id?: string) {
+
+  getBusinessByNameOrIdOrEmailWithoutAuth(
+    name?: string,
+    email?: string,
+    id?: string
+  ) {
     return axiosWithoutToken.get("/business/general", {
       params: {
         name,
         email,
-        _id:id,
+        _id: id,
       },
     });
   }
@@ -31,9 +35,13 @@ class BusinessService {
       params: {
         name,
         email,
-        _id:id,
+        _id: id,
       },
     });
+  }
+
+  getTable(businessId: string, tableNumber: number) {
+    return axiosWithToken().get(`/business/tables/${businessId}/${tableNumber}`);
   }
 }
 

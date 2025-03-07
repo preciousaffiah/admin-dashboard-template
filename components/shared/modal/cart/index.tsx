@@ -39,7 +39,13 @@ import "react-phone-number-input/style.css";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { handleAxiosError } from "@/utils/axios";
 
 const CartModal = ({ tableId }: { tableId: string }) => {
   const { userData } = useAuthToken();
@@ -54,11 +60,7 @@ const CartModal = ({ tableId }: { tableId: string }) => {
 
       return response.data;
     } catch (error: any) {
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 
@@ -105,16 +107,21 @@ const CartModal = ({ tableId }: { tableId: string }) => {
                   </div>
                 </div>
               </div>
-              <div className="px-4 text-center flex flex-col gap-y-2">
-                <p className="bg-primaryGreen px-1.5 rounded-sm py-1">
-                  Checkout
-                </p>
+              <div className="px-4 text-center">
                 <p className="border-primary-orange text-primary-orange border px-1.5 rounded-sm py-1">
                   Clear
                 </p>
               </div>
             </div>
-           
+          </div>
+          <div className="w-full left-0 absolute bottom-0 text-black">
+            <button
+              type="submit"
+              // onClick={onSubmit}
+              className={`place-menu-btn bg-primaryGreen w-full py-2 text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
+            >
+              Place Order
+            </button>
           </div>
         </div>
       </SheetContent>

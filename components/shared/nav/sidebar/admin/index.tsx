@@ -55,7 +55,7 @@ const AdminSidebar = () => {
     // },
     {
       title: "Settings",
-      link: "/",
+      link: "/admin/settings",
       tag: Bolt,
     },
     // {

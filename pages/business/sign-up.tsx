@@ -29,6 +29,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuthToken } from "@/hooks";
 import { BusService } from "@/services";
 import { ToastMessage } from "@/components/serviette-ui";
+import { handleAxiosError } from "@/utils/axios";
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3); // Max base64 length for 5MB
@@ -138,12 +139,7 @@ const ResturantSignUp: FC = () => {
       return response.data.data;
     } catch (error: any) {
       console.log(error);
-
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 

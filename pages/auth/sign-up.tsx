@@ -30,6 +30,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
+import { handleAxiosError } from "@/utils/axios";
 
 // Define Zod schemas for each step
 const personalDetailsSchema = z.object({
@@ -113,11 +114,7 @@ const SignUp: FC = () => {
 
       return response.data;
     } catch (error: any) {
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 

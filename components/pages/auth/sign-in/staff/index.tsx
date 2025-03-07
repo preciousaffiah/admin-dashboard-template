@@ -32,6 +32,7 @@ import { ToastMessage } from "@/components/serviette-ui";
 import useBusinessDetails from "@/hooks/useBusinessDetails";
 import { BDetails } from "@/types";
 import { DeptEnum, RoleEnum } from "@/types/enums";
+import { handleAxiosError } from "@/utils/axios";
 
 // Define Zod schemas for each step
 const formSchema = z
@@ -70,12 +71,7 @@ const StaffSignIn = ({ data, name }: { data: any; name: string }) => {
       return response.data;
     } catch (error: any) {
       console.log(error);
-
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 

@@ -27,6 +27,7 @@ import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import { handleMediaUpload } from "@/utils/upload";
 import "react-phone-number-input/style.css";
+import { handleAxiosError } from "@/utils/axios";
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
@@ -90,11 +91,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
 
       return response.data;
     } catch (error: any) {
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 

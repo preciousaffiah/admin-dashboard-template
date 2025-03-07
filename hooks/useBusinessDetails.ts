@@ -1,5 +1,6 @@
 import { BusService } from "@/services";
 import { BDetails } from "@/types";
+import { handleAxiosError } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";
 
 const useBusinessDetails = ({ name, id, email }: BDetails) => {
@@ -16,7 +17,7 @@ const useBusinessDetails = ({ name, id, email }: BDetails) => {
       return response?.data?.data?.data;
     } catch (error: any) {
       console.log("error messge:",error.response?.data?.message );
-      throw new Error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
     }
   };
 

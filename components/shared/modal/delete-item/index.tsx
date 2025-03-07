@@ -31,6 +31,7 @@ import "react-phone-number-input/style.css";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { handleAxiosError } from "@/utils/axios";
 
 const DeleteItemModal = ({ itemId }: { itemId: string }) => {
   const { userData } = useAuthToken();
@@ -45,11 +46,7 @@ const DeleteItemModal = ({ itemId }: { itemId: string }) => {
 
       return response.data;
     } catch (error: any) {
-      throw new Error(
-        error?.response?.data?.message ||
-          error?.response?.data?.data?.message ||
-          "An error occurred"
-      );
+      handleAxiosError(error, "");
     }
   };
 
