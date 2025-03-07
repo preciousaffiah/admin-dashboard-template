@@ -24,12 +24,6 @@ function useAuthToken() {
   };
 
   const logout = () => {
-    console.log(
-      userData?.user_id,
-      userData?.businessId,
-      StaffStatusEnum.INACTIVE
-    );
-
     const updateStatus = updateLogoutStatus({
       staffId: userData?.user_id || "",
       businessId: userData?.businessId || "",

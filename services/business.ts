@@ -40,8 +40,22 @@ class BusinessService {
     });
   }
 
+  createTables(payload: { businessId: string; tableQuantity: number }) {
+    return axiosWithToken().post("/business/tables/create", {
+      ...payload,
+    });
+  }
+
+  addTables(payload: { businessId: string; tableQuantity: number }) {
+    return axiosWithToken().post("/business/tables/add", {
+      ...payload,
+    });
+  }
+
   getTable(businessId: string, tableNumber: number) {
-    return axiosWithToken().get(`/business/tables/${businessId}/${tableNumber}`);
+    return axiosWithToken().get(
+      `/business/tables/${businessId}/${tableNumber}`
+    );
   }
 }
 

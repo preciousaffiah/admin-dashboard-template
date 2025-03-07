@@ -179,9 +179,6 @@ const Menu: FC = () => {
         // Validate only the 'image' field
         const isValid = await form.trigger("image");
 
-        if (!isValid) {
-          console.error(form.formState.errors.image?.message); // Log validation error
-        }
         setImageStatus(isValid ? "edit" : "error"); // Update icon based on validation
 
         // await form.trigger(); // Ensure validation runs before submitting

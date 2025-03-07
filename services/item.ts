@@ -37,8 +37,6 @@ class ItemsService {
   }
 
   deleteItem(itemId: string, businessId: string) {
-    console.log(itemId, businessId);
-    
     return axiosWithToken().delete(`/item/delete-item/${itemId}/${businessId}`);
   }
 

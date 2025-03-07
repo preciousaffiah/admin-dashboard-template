@@ -9,6 +9,7 @@ import Sidebar from "@/components/shared/nav/sidebar/admin";
 import {
   ChevronUp,
   CircleCheckBig,
+  CircleX,
   Edit,
   Edit2,
   Edit3,
@@ -114,40 +115,47 @@ const Settings = ({ title }: { title: string }) => {
   const [menu, setMenu] = useState<createMenu>(defaultMenu);
   const [imgError, setImgError] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [imageStatus, setImageStatus] = useState<"edit" | "loading" | "error">(
+    "edit"
+  );
 
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const { userData } = useAuthToken();
+  const { userData, updateUser, token } = useAuthToken();
 
-  const handleChange = (event: any, field: any) => {
-    const inputValue = event.target.value;
-    // Allow only digits
-    const digitsOnly = inputValue.replace(/\D/g, "");
-    field.onChange(digitsOnly); // Pass the filtered value to the parent
-  };
-
-  const updateImageRequest: any = async () => {
+  const updateImageRequest: any = async (image: string) => {
     try {
-      console.log(userData?.businessId || "");
-
       const response = await StaffService.updateStaff(userData?.user_id || "", {
-        image: imagePreview || "",
-        businessId: "userData?.businessId || ",
+        image: image,
+        businessId: userData?.businessId || "",
       });
-      console.log("d", response.data);
 
       return response.data;
     } catch (error: any) {
-      console.log("d", error.response.data);
-
+      setImageStatus("error"); // Update icon based on validation
       handleAxiosError(error, "");
     }
   };
 
   const imageMutation = useMutation({
-    mutationFn: updateImageRequest,
-    onSuccess: () => {},
+    mutationFn: (image: string) => updateImageRequest(image),
+    onSuccess: (res: any) => {
+      setImageStatus("edit");
+      updateUser({
+        token: token || "",
+        userData: {
+          businessId: userData?.businessId || "",
+          department: userData?.department || "",
+          email: userData?.email || "",
+          fullname: userData?.fullname || "",
+          role: userData?.role || "",
+          subscriptionPlan: userData?.subscriptionPlan || "",
+          user_id: userData?.user_id || "",
+          image: res.data.data.image,
+        },
+      });
+    },
   });
 
   // Ref for the hidden file input
@@ -170,17 +178,17 @@ const Settings = ({ title }: { title: string }) => {
 
         // Validate only the 'image' field
         const isValid = await form.trigger("image");
-
-        // form.handleSubmit(onSubmit)(); // Call your form submission logic
+        setImageStatus("loading"); // Update icon based on validation
       };
       reader.readAsDataURL(file); // Convert the file to base64
     }
 
-    imageMutation.mutate();
+    imageMutation.mutate(imagePreview);
   };
 
   // Function to trigger the file input click
   const handleIconClick = () => {
+    if (imageStatus === "loading") return null;
     fileInputRef.current?.click();
   };
 
@@ -238,9 +246,7 @@ const Settings = ({ title }: { title: string }) => {
                     <div className="md:w-[60%] w-full flex flex-col gap-y-3">
                       <div className="flex flex-col gap-y-4">
                         <Form {...form}>
-                          <form
-                            className="w-full "
-                          >
+                          <form className="w-full ">
                             <div className="w-full bg-secondaryDark text-txWhite mb-4 p-3 rounded-md">
                               <div className="flex text-txWhite w-full pb-4 justify-between">
                                 <h2 className="font-medium capitalize">
@@ -255,7 +261,10 @@ const Settings = ({ title }: { title: string }) => {
                                 >
                                   <div className="relative w-full h-full">
                                     <img
-                                      src={imagePreview || avatar.src}
+                                      src={
+                                        imagePreview ||
+                                        `${userData?.image || avatar.src}`
+                                      }
                                       alt="Uploaded Preview"
                                       className="object-cover rounded-full w-full h-full"
                                     />
@@ -280,9 +289,17 @@ const Settings = ({ title }: { title: string }) => {
                                     )}
                                   />
                                 </div>
-                                {imageMutation.isPending && (
+                                {/* {imageMutation.isPending && (
                                   <LoaderCircle className="text-black w-4 rotate-icon" />
-                                )}
+                                )} */}
+                                <div className="relative right-6 cursor-pointer">
+                                  {imageStatus === "loading" && (
+                                    <LoaderCircle className="text-secondaryBorder rotate-icon w-5" />
+                                  )}
+                                  {imageStatus === "error" && (
+                                    <CircleX className="text-secondaryBorder text-cancel w-5" />
+                                  )}
+                                </div>
                               </div>
                               {form.formState.errors.image && (
                                 <p className="text-cancel text-sm">
@@ -296,7 +313,6 @@ const Settings = ({ title }: { title: string }) => {
                                 <h4 className="font-semibold">
                                   Add Business Details
                                 </h4>
-                               
                               </div>
                               <FormField
                                 control={form.control}
@@ -307,12 +323,14 @@ const Settings = ({ title }: { title: string }) => {
                                       <p className="text-txWhite font-normal pb-2">
                                         Create Tables
                                       </p>
-                                      <div className="w-full flex items-end">
+                                      <div className="w-full flex items-end gap-x-2">
+                                        <p className="text-txWhite font-normal">
+                                          Number of Tables:
+                                        </p>
                                         <FormControl>
                                           <input
                                             type="text"
                                             id="price"
-                                            placeholder="Enter Number of tables"
                                             {...field}
                                             onChange={(e) => {
                                               // Allow only numbers
@@ -324,7 +342,7 @@ const Settings = ({ title }: { title: string }) => {
                                               field.onChange(numericValue); // Update the form value
                                             }}
                                             value={field.value} // Ensure the value is controlled
-                                            className="md:w-1/2 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            className="md:w-16 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
                                         </FormControl>
                                         <p className="cursor-pointer text-primaryLime font-medium">
