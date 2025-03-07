@@ -310,7 +310,7 @@ const Settings = ({ title }: { title: string }) => {
 
                             <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
                               <div className="flex flex-col items-start justify-between py-4">
-                                <h4 className="font-semibold">
+                                <h4 className="font-semibold text-lg">
                                   Add Business Details
                                 </h4>
                               </div>
@@ -320,7 +320,7 @@ const Settings = ({ title }: { title: string }) => {
                                 render={({ field }) => (
                                   <FormItem>
                                     <div>
-                                      <p className="text-txWhite font-normal pb-2">
+                                      <p className="text-primary font-medium pb-2">
                                         Create Tables
                                       </p>
                                       <div className="w-full flex items-end gap-x-2">
@@ -360,7 +360,7 @@ const Settings = ({ title }: { title: string }) => {
                                 render={({ field }) => (
                                   <FormItem>
                                     <div>
-                                      <h4 className="font-semibold pb-2">
+                                      <h4 className="font-medium pb-2">
                                         Generate Table QR Code
                                       </h4>
                                       <div className="w-full flex gap-x-2 items-end">
