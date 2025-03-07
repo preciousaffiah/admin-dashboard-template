@@ -187,8 +187,6 @@ const CreateMenu: FC = () => {
 
     setSaved(true);
     setTimeout(() => setSaved(false), 2000); // Reset after 2 seconds
-    console.log(form.formState.isValid, form.getValues());
-    
   };
 
   const title = "Add to Menu";

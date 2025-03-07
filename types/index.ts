@@ -129,3 +129,10 @@ export type createMenu = {
   department: string | null;
   businessId: string | null;
 };
+
+export type settings = {
+  tableQuantity: number;
+  image: string;
+  tableNumber: number;
+  businessId: string;
+};

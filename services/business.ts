@@ -40,7 +40,7 @@ class BusinessService {
     });
   }
 
-  createTables(payload: { businessId: string; tableQuantity: number }) {
+  createTables(payload: { businessId: string; tableQuantity: string }) {
     return axiosWithToken().post("/business/tables/create", {
       ...payload,
     });

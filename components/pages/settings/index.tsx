@@ -17,14 +17,14 @@ import {
   Plus,
 } from "lucide-react";
 import Container from "@/components/shared/container";
-import { createMenu } from "@/types";
+import { createMenu, settings } from "@/types";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import ComboboxDemo from "@/components/shared/waiter/combobox";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ItemService, StaffService } from "@/services";
+import { BusService, ItemService, StaffService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -55,24 +55,16 @@ const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
 
 const formSchema = z.object({
-  name: z.string().min(1, "required"),
-  price: z
+  tableQuantity: z
     .string()
     .min(1, { message: "required" })
-    .regex(/^\d+$/, { message: "digits only" }),
-  description: z.string().min(1, "required"),
-  department: z.enum([
-    "kitchen",
-    "bar",
-    "reception",
-    "hospitality",
-    "bakery",
-    "waiter",
-    "counter",
-    "utilities",
-  ]), //add field for other
-
-  category: z.enum(["intercontinental"]), //add field for other
+    .regex(/^\d+$/, { message: "digits only" })
+    .optional(),
+  tableNumber: z
+    .string()
+    .min(1, { message: "required" })
+    .regex(/^\d+$/, { message: "digits only" })
+    .optional(),
   image: z
     .string()
     .refine((val) => val.startsWith("data:"), {
@@ -80,16 +72,14 @@ const formSchema = z.object({
     })
     .refine((val) => val.length <= MAX_BASE64_LENGTH, {
       message: "File size must be less than 4MB.",
-    }),
+    })
+    .optional(),
   businessId: z.string().min(1, "required").optional(),
 });
 
-const defaultMenu: createMenu = {
-  name: "",
-  price: 0,
-  description: "",
-  category: "",
-  department: "",
+const defaultMenu: settings = {
+  tableQuantity: 0,
+  tableNumber: 0,
   image: "",
   businessId: "",
 };
@@ -98,11 +88,8 @@ const Settings = ({ title }: { title: string }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      price: "0",
-      description: "",
-      category: undefined,
-      department: undefined,
+      tableQuantity: "",
+      tableNumber: "",
       image: "",
       businessId: "",
     },
@@ -112,7 +99,7 @@ const Settings = ({ title }: { title: string }) => {
   const { Image } = useQRCode();
   const [success, setSuccess] = useState(false);
 
-  const [menu, setMenu] = useState<createMenu>(defaultMenu);
+  const [menu, setMenu] = useState<settings>(defaultMenu);
   const [imgError, setImgError] = useState(false);
   const [saved, setSaved] = useState(false);
   const [imageStatus, setImageStatus] = useState<"edit" | "loading" | "error">(
@@ -124,39 +111,6 @@ const Settings = ({ title }: { title: string }) => {
 
   const { userData, updateUser, token } = useAuthToken();
 
-  const updateImageRequest: any = async (image: string) => {
-    try {
-      const response = await StaffService.updateStaff(userData?.user_id || "", {
-        image: image,
-        businessId: userData?.businessId || "",
-      });
-
-      return response.data;
-    } catch (error: any) {
-      setImageStatus("error"); // Update icon based on validation
-      handleAxiosError(error, "");
-    }
-  };
-
-  const imageMutation = useMutation({
-    mutationFn: (image: string) => updateImageRequest(image),
-    onSuccess: (res: any) => {
-      setImageStatus("edit");
-      updateUser({
-        token: token || "",
-        userData: {
-          businessId: userData?.businessId || "",
-          department: userData?.department || "",
-          email: userData?.email || "",
-          fullname: userData?.fullname || "",
-          role: userData?.role || "",
-          subscriptionPlan: userData?.subscriptionPlan || "",
-          user_id: userData?.user_id || "",
-          image: res.data.data.image,
-        },
-      });
-    },
-  });
 
   // Ref for the hidden file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -178,19 +132,83 @@ const Settings = ({ title }: { title: string }) => {
 
         // Validate only the 'image' field
         const isValid = await form.trigger("image");
+        console.log(isValid);
+
+        if (!isValid) {
+          console.log("mmm");
+
+          return null;
+        }
+        imageMutation.mutate();
+
         setImageStatus("loading"); // Update icon based on validation
       };
       reader.readAsDataURL(file); // Convert the file to base64
     }
-
-    imageMutation.mutate(imagePreview);
   };
+
+  const updateImageRequest: any = async () => {
+    try {
+      const response = await StaffService.updateStaff(userData?.user_id || "", {
+        image: form.getValues("image"),
+        businessId: userData?.businessId || "",
+      });
+
+      return response.data;
+    } catch (error: any) {
+      setImageStatus("error"); // Update icon based on validation
+      handleAxiosError(error, "");
+    }
+  };
+
+  const imageMutation = useMutation({
+    mutationFn: updateImageRequest,
+    onSuccess: (res: any) => {
+      setImageStatus("edit");
+      updateUser({
+        token: token || "",
+        userData: {
+          businessId: userData?.businessId || "",
+          department: userData?.department || "",
+          email: userData?.email || "",
+          fullname: userData?.fullname || "",
+          role: userData?.role || "",
+          subscriptionPlan: userData?.subscriptionPlan || "",
+          user_id: userData?.user_id || "",
+          image: res.data.data.image,
+        },
+      });
+    },
+  });
+
 
   // Function to trigger the file input click
   const handleIconClick = () => {
     if (imageStatus === "loading") return null;
     fileInputRef.current?.click();
   };
+
+  const createTablesRequest: any = async (tableQuantity: string) => {
+    try {
+      const response = await BusService.createTables({
+        businessId: userData?.businessId || "",
+        tableQuantity,
+      });
+
+      return response.data;
+    } catch (error: any) {
+      setImageStatus("error"); // Update icon based on validation
+      handleAxiosError(error, "");
+    }
+  };
+
+  const tablesMutation = useMutation({
+    mutationFn: (tableQuantity: string) => createTablesRequest(tableQuantity),
+    onSuccess: (res: any) => {},
+  });
+
+  const handleCreateTable = () =>
+    tablesMutation.mutate(form.getValues("tableQuantity") || "0");
 
   const handlePrint = () => {
     if (sectionRef.current) {
@@ -316,7 +334,7 @@ const Settings = ({ title }: { title: string }) => {
                               </div>
                               <FormField
                                 control={form.control}
-                                name="price"
+                                name="tableQuantity"
                                 render={({ field }) => (
                                   <FormItem>
                                     <div>
@@ -330,7 +348,7 @@ const Settings = ({ title }: { title: string }) => {
                                         <FormControl>
                                           <input
                                             type="text"
-                                            id="price"
+                                            id="tableQuantity"
                                             {...field}
                                             onChange={(e) => {
                                               // Allow only numbers
@@ -356,7 +374,7 @@ const Settings = ({ title }: { title: string }) => {
                               />
                               <FormField
                                 control={form.control}
-                                name="description"
+                                name="tableNumber"
                                 render={({ field }) => (
                                   <FormItem>
                                     <div>
@@ -370,7 +388,7 @@ const Settings = ({ title }: { title: string }) => {
                                         <FormControl>
                                           <input
                                             type="text"
-                                            id="description"
+                                            id="tableNumber"
                                             {...field}
                                             className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
