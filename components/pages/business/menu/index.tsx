@@ -98,7 +98,7 @@ const BusinessMenu = ({
         defaultValue={Object.keys(tabHeaders || {})[0]}
         className="w-full h-full"
       >
-        <div className="bg-[#e6e3e34f] backdrop-blur-sm fixed h-fit w-full flex m-auto justify-between py-3 px-3 overflow-x-scroll md:gapx-0 gap-x-2">
+        <div className="bg-transparent backdrop-blur-sm fixed h-fit w-full flex m-auto justify-between py-3 px-3 overflow-x-scroll md:gapx-0 gap-x-2">
           <TabsList className="w-fit bg-secondaryDark">
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
