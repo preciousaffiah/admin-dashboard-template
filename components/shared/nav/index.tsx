@@ -26,7 +26,7 @@ const Navbar: FC = () => {
   const navItems = [
     {
       title: "Home",
-      link: "#",
+      link: "/",
       tag: Home,
     },
     {
