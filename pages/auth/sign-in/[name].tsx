@@ -37,7 +37,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
-import useBusinessDetails from "@/hooks/useBusinessDetails";
+import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import StaffSignIn from "@/components/pages/auth/sign-in/staff";
 
 const StaffAuth: FC = () => {
@@ -47,7 +47,7 @@ const StaffAuth: FC = () => {
   const decodedName = slug?.replace(/-/g, " ");
   // const decodedName = name ? decodeURIComponent(name as string) : "";
 
-  const { isLoading, isError, data } = useBusinessDetails({
+  const { isLoading, isError, data } = useBusinessDetailsWithoutAuth({
     name: decodedName,
   });
 

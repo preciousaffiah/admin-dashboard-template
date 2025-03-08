@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/chart";
 import dynamic from "next/dynamic";
 import AdminOrdersTable from "@/components/shared/admin/table/orders";
-import useBusinessDetails from "@/hooks/useBusinessDetails";
+import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import { useAuthToken } from "@/hooks";
 import { slugify } from "@/utils/slugify";
 import Copy from "@/components/serviette-ui/copy-button";
@@ -418,7 +418,7 @@ const tabHeaders = {
 
 const Dashboard: FC = () => {
   const { userData } = useAuthToken();
-  const { data } = useBusinessDetails({
+  const { data } = useBusinessDetailsWithoutAuth({
     id: userData?.businessId || undefined,
   });
 

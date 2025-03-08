@@ -2,7 +2,7 @@
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { FolderOpen, Loader } from "lucide-react";
-import useBusinessDetails from "@/hooks/useBusinessDetails";
+import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import BusinessMenu from "@/components/pages/business/menu";
 import Image from "next/image";
 import cover from "public/cover.png";
@@ -17,7 +17,7 @@ const BusinessMenuPage: FC = () => {
   const decodedName = slug?.replace(/-/g, " ");
   // const decodedName = name ? decodeURIComponent(name as string) : "";
 
-  const { isLoading, isError, data } = useBusinessDetails({
+  const { isLoading, isError, data } = useBusinessDetailsWithoutAuth({
     name: decodedName,
   });
 

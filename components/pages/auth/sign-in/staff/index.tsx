@@ -29,7 +29,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
-import useBusinessDetails from "@/hooks/useBusinessDetails";
+import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import { BDetails } from "@/types";
 import { DeptEnum, RoleEnum } from "@/types/enums";
 import { handleAxiosError } from "@/utils/axios";

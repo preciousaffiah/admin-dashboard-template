@@ -3,12 +3,12 @@ import { BDetails } from "@/types";
 import { handleAxiosError } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";
 
-const useBusinessDetails = ({ name, id, email }: BDetails) => {
+const useBusinessDetailsWithoutAuth = ({ name, id, email }: BDetails) => {
 
   const fetchBusinessRequest = async () => {
     if (!name && !id && !email) return;
     try {
-      const response = await BusService.getBusinessByNameOrIdOrEmail(
+      const response = await BusService.getBusinessByNameOrIdOrEmailWithoutAuth(
         name,
         email,
         id
@@ -22,9 +22,9 @@ const useBusinessDetails = ({ name, id, email }: BDetails) => {
   };
 
   return useQuery<any, Error>({
-    queryKey: ["business-details", [name, id, email]],
+    queryKey: ["business-details-withoutauth", [name, id, email]],
     queryFn: fetchBusinessRequest,
   });
 };
 
-export default useBusinessDetails;
+export default useBusinessDetailsWithoutAuth;

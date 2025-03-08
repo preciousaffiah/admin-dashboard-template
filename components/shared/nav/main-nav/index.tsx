@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import avatar from "public/avatar.png";
 import { useAuthToken } from "@/hooks";
 import { deleteStore } from "@/utils/local-storage";
-import useBusinessDetails from "@/hooks/useBusinessDetails";
+import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import Link from "next/link";
 
 const MainNavbar = ({ title, subtitle }: any) => {
@@ -42,7 +42,7 @@ const MainNavbar = ({ title, subtitle }: any) => {
     },
   ];
   const { userData, logout } = useAuthToken();
-  const { data } = useBusinessDetails({ id: userData?.businessId || "" });
+  const { data } = useBusinessDetailsWithoutAuth({ id: userData?.businessId || "" });
   const router = useRouter();
 
   return (

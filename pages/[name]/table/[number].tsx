@@ -2,7 +2,7 @@
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { FolderOpen, Loader } from "lucide-react";
-import useBusinessDetails from "@/hooks/useBusinessDetails";
+import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import BusinessMenu from "@/components/pages/business/menu";
 import Image from "next/image";
 import cover from "public/cover.png";
