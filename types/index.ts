@@ -67,7 +67,7 @@ export type Menus = {
   department: string;
 };
 
-export type Tables = {
+export type TablesType = {
   _id: string;
   tableNumber: string;
   status: string;

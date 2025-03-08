@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MainNavbar, Modal } from "@/components/shared";
 import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Menus, Tables } from "@/types";
+import { Menus, TablesType } from "@/types";
 import Image from "next/image";
 import orderImg from "public/orderimg.png";
 import { handleRowClick } from "@/utils/modal";
@@ -56,7 +56,7 @@ const tabHeaders = {
   available: "Available",
   occupied: "Occupied",
 };
-const defaultInvoice: Tables = {
+const defaultInvoice: TablesType = {
   _id: "",
   tableNumber: "",
   status: "",
@@ -97,7 +97,7 @@ const Tables: FC = () => {
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] =
-    useState<Tables>(defaultInvoice);
+    useState<TablesType>(defaultInvoice);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHeader, setMenuHeader] = useState(false);
 

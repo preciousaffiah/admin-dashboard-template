@@ -1,12 +1,12 @@
 import React from "react";
 import { Edit3, X } from "lucide-react";
-import { AdminTable, Menus, Tables } from "@/types";
+import { AdminTable, Menus, TablesType } from "@/types";
 import { handleRowClick } from "@/utils/modal";
 import { Dinner } from "@/components/serviette-icons";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import UpdateTableModal from "../../modal/update-table";
 
-const defaultInvoice: Tables = {
+const defaultInvoice: TablesType = {
   _id: "",
   tableNumber: "",
   status: "",
@@ -25,7 +25,7 @@ const MenuGrid = ({
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-4">
-        {invoiceData?.tables.map((invoice: Tables, index: number) => (
+        {invoiceData?.tables.map((invoice: TablesType, index: number) => (
           <Dialog>
             <DialogTrigger asChild>
               <div
