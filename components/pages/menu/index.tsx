@@ -47,8 +47,6 @@ import DeleteItemModal from "@/components/shared/modal/delete-item";
 
 let tabKey: string = "";
 
-const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
-
 const tabHeaders = {
   all: "all",
   wines: "wines",
@@ -224,7 +222,6 @@ const Menu: FC = () => {
     <div className="flex justify-end h-screen w-full">
       <Container>
         <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-          <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
             <div className="w-full bg-primaryDark pt-4 rounded-md">
               <div className="w-full h-full">
                 <div className="px-3 flex pb-4 border-b border-primary-border">
@@ -276,7 +273,6 @@ const Menu: FC = () => {
                 />
               </div>
             </div>
-          </Tabs>
           <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <div>
               <div className="">

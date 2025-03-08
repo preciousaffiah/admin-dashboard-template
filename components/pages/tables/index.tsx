@@ -14,42 +14,15 @@ import AdminMenuTable from "@/components/shared/admin/table/menu";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import {
-  Check,
-  Circle,
-  CircleX,
-  Edit3,
-  EllipsisVertical,
-  LayoutGrid,
-  List,
-  LoaderCircle,
-  X,
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AdminLayout from "@/components/layouts/admin-layout";
-import { Input } from "@/components/ui/input";
-import { DeptEnum } from "@/types/enums";
+import { LayoutGrid, List } from "lucide-react";
+import { Tabs } from "@/components/ui/tabs";
 import { useAuthToken } from "@/hooks";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { motion, AnimatePresence } from "framer-motion";
-import { ToastMessage } from "@/components/serviette-ui";
-import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
-import DeleteItemModal from "@/components/shared/modal/delete-item";
+import { useMutation } from "@tanstack/react-query";
 import TablesTable from "@/components/shared/admin/table/tables";
-import { Dinner } from "@/components/serviette-icons";
 
 let tabKey: string = "";
-
-const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 
 const tabHeaders = {
   all: "all",
@@ -99,10 +72,6 @@ const Tables: FC = () => {
   const [selectedInvoice, setSelectedInvoice] =
     useState<TablesType>(defaultInvoice);
   const [currentPage, setCurrentPage] = useState(1);
-  const [orderHeader, setMenuHeader] = useState(false);
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isImageLoading, setIsImageLoading] = useState(false);
 
   const updateItemRequest: any = async () => {
     try {
@@ -131,49 +100,47 @@ const Tables: FC = () => {
     <div className="flex justify-end h-screen w-full">
       <Container>
         <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-          <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
-            <div className="w-full bg-primaryDark pt-4 rounded-md">
-              <div className="w-full h-full">
-                <div className="px-3 flex pb-4 border-b border-primary-border">
-                  <div className="flex w-full items-center gap-x-8">
-                    <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
-                      Tables
-                    </h1>
-                  </div>
-                  <div>
-                    <Button
-                      onClick={() => setView(!view)}
-                      className="transparent-btn text-secondaryBorder"
-                    >
-                      {view ? (
-                        <>
-                          <LayoutGrid className="w-5" />
-                          <p className="capitalize text-sm">Grid view</p>
-                        </>
-                      ) : (
-                        <>
-                          <List className="w-5" />
-                          <p className="capitalize text-sm">List view</p>
-                        </>
-                      )}
-                    </Button>
-                  </div>
+          <div className="w-full bg-primaryDark pt-4 rounded-md">
+            <div className="w-full h-full">
+              <div className="px-3 flex pb-4 border-b border-primary-border">
+                <div className="flex w-full items-center gap-x-8">
+                  <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
+                    Tables
+                  </h1>
                 </div>
-
-                <TablesTable
-                  view={view}
-                  currentPage={currentPage}
-                  tableHeaders={tableHeaders}
-                  tabHeaders={tabHeaders}
-                  tabKey={tabKey}
-                  setIsOpen={setIsOpen}
-                  setSelectedInvoice={setSelectedInvoice}
-                  selectedInvoice={selectedInvoice}
-                  setCurrentPage={setCurrentPage}
-                />
+                <div>
+                  <Button
+                    onClick={() => setView(!view)}
+                    className="transparent-btn text-secondaryBorder"
+                  >
+                    {view ? (
+                      <>
+                        <LayoutGrid className="w-5" />
+                        <p className="capitalize text-sm">Grid view</p>
+                      </>
+                    ) : (
+                      <>
+                        <List className="w-5" />
+                        <p className="capitalize text-sm">List view</p>
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
+
+              <TablesTable
+                view={view}
+                currentPage={currentPage}
+                tableHeaders={tableHeaders}
+                tabHeaders={tabHeaders}
+                tabKey={tabKey}
+                setIsOpen={setIsOpen}
+                setSelectedInvoice={setSelectedInvoice}
+                selectedInvoice={selectedInvoice}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
-          </Tabs>
+          </div>
         </div>
       </Container>
     </div>
