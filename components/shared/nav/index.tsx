@@ -20,7 +20,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import orderImg from "public/orderimg.png";
+import avatar from "public/avatar.png";
 
 const Navbar: FC = () => {
   const navItems = [
@@ -95,10 +95,9 @@ const Navbar: FC = () => {
               <DropdownMenuTrigger asChild className="cursor-pointer">
                 <div className="items-center text-xs leading-4 h-fit w-fit flex bg-foreground px-1 py-1 rounded-full gap-x-1">
                   <div>
-                    <Image
-                      alt="img"
-                      src={orderImg}
-                      className="rounded-full w-10"
+                    <img
+                      src={`${userData?.image || avatar.src}`}
+                      className="rounded-full size-10 object-cover"
                     />
                   </div>
 
@@ -148,7 +147,10 @@ const Navbar: FC = () => {
                 </li>
               ))}
               {token && (
-                <div onClick={logout} className="flex items-center cursor-pointer">
+                <div
+                  onClick={logout}
+                  className="flex items-center cursor-pointer"
+                >
                   <LogOut className="size-7" />
                   <p className=" px-4 ">Logout</p>
                 </div>
