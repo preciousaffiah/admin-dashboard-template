@@ -24,12 +24,16 @@ const BusinessMenuPage: FC = () => {
   const decodedName = slug?.replace(/-/g, " ");
   // const decodedName = name ? decodeURIComponent(name as string) : "";
 
-  const fetchBusinessRequest = async () => {
+  const { isLoading, isError, data } = useBusinessDetailsWithoutAuth({
+    name: decodedName,
+  });
+
+  const fetchTableRequest = async () => {
     if (!number) return;
 
     try {
       const response = await BusService.getTable(
-        userData?.businessId || "",
+        data?._id || "",
         Number(number)
       );
 
@@ -40,20 +44,20 @@ const BusinessMenuPage: FC = () => {
     }
   };
 
-  const { isLoading, isRefetching, refetch, isError, data } = useQuery<
-    any,
-    Error
-  >({
+  const {
+    isLoading: isTableLoading,
+    isRefetching: isTableRefetching,
+    refetch: tableRefetch,
+    isError: isTableError,
+    data: tableData,
+  } = useQuery<any, Error>({
     queryKey: ["table", [userData?.businessId || "", number]],
-    queryFn: fetchBusinessRequest,
+    queryFn: fetchTableRequest,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
 
-  console.log(data);
-
-  
-  if (isLoading) {
+  if (isTableLoading) {
     return (
       <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
         <Loader className="rotate-icon size-8" />
@@ -62,7 +66,7 @@ const BusinessMenuPage: FC = () => {
     );
   }
 
-  if (isError || !data) {
+  if (isTableError || !tableData) {
     return (
       <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
         <FolderOpen />
@@ -73,7 +77,11 @@ const BusinessMenuPage: FC = () => {
 
   return (
     <div>
-      <ScannedComp businessId={data._id} BusinessName={decodedName} tabelNumber={number as string} />
+      <ScannedComp
+        businessId={tableData._id}
+        BusinessName={decodedName}
+        tabelNumber={number as string}
+      />
     </div>
   );
 };
