@@ -98,11 +98,7 @@ const Settings = ({ title }: { title: string }) => {
   });
 
   const { Image } = useQRCode();
-  const [success, setSuccess] = useState(false);
-
   const [menu, setMenu] = useState<settings>(defaultMenu);
-  const [imgError, setImgError] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [imageStatus, setImageStatus] = useState<"edit" | "loading" | "error">(
     "edit"
   );
@@ -221,6 +217,8 @@ const Settings = ({ title }: { title: string }) => {
       handleAxiosError(error, "");
     }
   };
+
+  console.log(form.formState.isValid);
 
   const tablesMutation = useMutation({
     mutationFn: createTablesRequest,
@@ -383,6 +381,9 @@ const Settings = ({ title }: { title: string }) => {
                                   {form.formState.errors.image.message}
                                 </p>
                               )}
+                              <p className="text-xs text-secondaryBorder font-medium">
+                                *Image must be less than 4MB
+                              </p>
                             </div>
 
                             <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
@@ -412,7 +413,7 @@ const Settings = ({ title }: { title: string }) => {
                                 name="tableQuantity"
                                 render={({ field }) => (
                                   <FormItem>
-                                    {data?.tableCount > 0 ? (
+                                    {data?.tableCount > 0 && (
                                       <div>
                                         <p className="text-primary font-medium pb-2">
                                           Add more Tables
@@ -439,15 +440,22 @@ const Settings = ({ title }: { title: string }) => {
                                               className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                             />
                                           </FormControl>
-                                          <p
-                                            onClick={handleCreateTable}
-                                            className="cursor-pointer text-primaryLime font-medium"
-                                          >
-                                            Add
-                                          </p>
+                                          {!tablesMutation.isPending && (
+                                            <p
+                                              onClick={handleCreateTable}
+                                              className=" cursor-pointer text-primaryLime font-medium"
+                                            >
+                                              Add
+                                            </p>
+                                          )}
+
+                                          {tablesMutation.isPending && (
+                                            <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                                          )}
                                         </div>
                                       </div>
-                                    ) : (
+                                    )}
+                                    {data?.tableCount < 1 && (
                                       <div>
                                         <p className="text-primary font-medium pb-2">
                                           Create Tables
@@ -474,12 +482,18 @@ const Settings = ({ title }: { title: string }) => {
                                               className="md:w-16 w-full border-y-0 border-x-0 outline-none rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                             />
                                           </FormControl>
-                                          <p
-                                            onClick={handleCreateTable}
-                                            className="cursor-pointer text-primaryLime font-medium"
-                                          >
-                                            Create
-                                          </p>
+                                          {!tablesMutation.isPending && (
+                                            <p
+                                              onClick={handleCreateTable}
+                                              className=" cursor-pointer text-primaryLime font-medium"
+                                            >
+                                              Create
+                                            </p>
+                                          )}
+
+                                          {tablesMutation.isPending && (
+                                            <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                                          )}
                                         </div>
                                       </div>
                                     )}
