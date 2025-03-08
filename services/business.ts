@@ -46,6 +46,14 @@ class BusinessService {
     });
   }
 
+  updateTable(payload: { tableId: string; businessId: string; tableNumber: string; status: string }) {
+    console.log(payload);
+    
+    return axiosWithToken().put(`/business/table/update`, {
+      ...payload,
+    });
+  }
+
   addTables(payload: { businessId: string; tableQuantity: number }) {
     return axiosWithToken().post("/business/tables/add", {
       ...payload,
@@ -53,9 +61,22 @@ class BusinessService {
   }
 
   getTable(businessId: string, tableNumber: number) {
-    return axiosWithToken().get(
-      `/business/tables/${businessId}/${tableNumber}`
-    );
+    return axiosWithToken().get(`/business/table/${businessId}/${tableNumber}`);
+  }
+
+  getAllTables(
+    businessId: string,
+    page: number,
+    filters?: {
+      status?: string;
+    }
+  ) {
+    return axiosWithToken().get(`/business/tables/${businessId}`, {
+      params: {
+        page,
+        ...filters,
+      },
+    });
   }
 }
 

@@ -33,7 +33,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
                   item.link === path
                     ? "text-black bg-primaryGreen rounded-md group-hover/tag:text-black"
                     : ""
-                }  w-[2.3rem] px-1.5 h-10`}
+                }  w-[2.3rem] px-1.5 h-10 `}
               />
               <p className="text-sm">{item.title}</p>
             </Link>

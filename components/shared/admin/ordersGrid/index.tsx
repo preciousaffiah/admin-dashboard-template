@@ -101,7 +101,7 @@ const OrdersGrid = ({
                   </div>
                 </div>
                 <p
-                  className={`status-${invoice.Status} font-medium statusPending text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                  className={`status-${invoice.Status} font-medium text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                 >
                   {invoice.Status}
                 </p>

@@ -3,6 +3,7 @@ import InputHide from "./InputHide";
 import InputShow from "./InputShow";
 import GoogleSignIn from "./GoogleSignIn";
 import Loading from "./Loading";
+import Dinner from "./Dinner";
 
 
 export {
@@ -10,5 +11,6 @@ export {
     InputHide,
     InputShow,
     GoogleSignIn,
-    Loading
+    Loading,
+    Dinner
 };

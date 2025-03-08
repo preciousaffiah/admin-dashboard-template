@@ -1,19 +1,16 @@
-import React, { FC, useState } from "react";
-import { Edit3, FolderOpen, Loader, UtensilsCrossed, X } from "lucide-react";
-import { AdminTable, Menus } from "@/types";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
+import React from "react";
+import { Edit3, X } from "lucide-react";
+import { AdminTable, Menus, Tables } from "@/types";
 import { handleRowClick } from "@/utils/modal";
+import { Dinner } from "@/components/serviette-icons";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import UpdateTableModal from "../../modal/update-table";
 
-const defaultInvoice: Menus = {
+const defaultInvoice: Tables = {
   _id: "",
-  price: 0,
-  category: "",
+  tableNumber: "",
+  status: "",
   image: "",
-  name: "",
-  description: "",
-  discount: 0,
-  department: "",
 };
 
 const MenuGrid = ({
@@ -21,50 +18,50 @@ const MenuGrid = ({
   setIsOpen,
   setSelectedInvoice,
   selectedInvoice,
+  success,
+  setSuccess,
+  businessId,
 }: AdminTable) => {
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-4">
-          {invoiceData?.items.map((invoice: Menus, index: number) => (
-            <div
-              onClick={() =>
-                handleRowClick(invoice, setIsOpen, setSelectedInvoice)
-              }
-              className={`${
-                selectedInvoice._id === invoice._id
-                  ? "border border-primaryGreen bg-selectedRow"
-                  : "bg-primaryDark"
-              } md:w-auto w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
-            >
-              <div className="flex w-full border-b border-primary-border pb-3 px-4">
-                <div className="w-full flex flex-col items-center gap-x-1  justify-between">
-                  <p className="w-full text-end font-medium text-lg">
-                  ₦{invoice.price}
-                  </p>
+        {invoiceData?.tables.map((invoice: Tables, index: number) => (
+          <Dialog>
+            <DialogTrigger asChild>
+              <div
+                onClick={() =>
+                  handleRowClick(invoice, setIsOpen, setSelectedInvoice)
+                }
+                className={`${
+                  selectedInvoice._id === invoice._id
+                    ? "border border-primaryGreen bg-selectedRow"
+                    : "bg-primaryDark"
+                } md:w-[17rem] w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
+              >
+                <div className="flex w-full border-b border-primary-border pb-3 px-4">
+                  <div className="w-full flex flex-col items-center gap-x-1  justify-between">
+                    <p className="w-full text-end font-medium text-lg">
+                      #{String(invoice.tableNumber).padStart(2, "0")}
+                    </p>
 
-                  <div className="flex flex-col gap-x-2 w-full">
-                    <div className="size-16">
-                      <img
-                        src={invoice.image}
-                        className="w-full h-full rounded-full"
-                      />
-                    </div>
-                    <div className="max-w-60">
-                      <p className="text-lg font-medium text-ellipsis break-words">
-                        {invoice.name}
-                      </p>
-                      <p className="text-ellipsis truncate">
-                        {invoice.description}
-                      </p>
+                    <div className="flex flex-col gap-x-2 w-full">
+                      <div className="size-14">
+                        <Dinner className="size-full" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="text-secondaryBorder">
-                <div className="px-4 py-6">
+                <div className="text-secondaryBorder flex flex-col gap-y-3 px-2">
+                  <div className="pt-3">
+                    <p
+                      className={`status-${invoice.status} font-medium text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                    >
+                      {invoice.status}
+                    </p>
+                  </div>
                   <div className="pl-1 flex justify-between">
                     <h1 className="text-primaryLime font-medium">
-                      View Details
+                      Update Status
                     </h1>
                     <div className="flex gap-x-4">
                       <X />
@@ -72,22 +69,17 @@ const MenuGrid = ({
                     </div>
                   </div>
                 </div>
-                <div className="gap-x-16 px-4 flex justify-between">
-                  <div className="flex gap-x-2">
-                    <div className="flex gap-x-1">
-                      <UtensilsCrossed className="w-4" />
-                      <h1>{invoice.category}</h1>
-                    </div>
-                  </div>
-                  <p
-                    className={`status-cancelled font-medium statusPending text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                  >
-                    {invoice.department}
-                  </p>
-                </div>
               </div>
-            </div>
-          ))}
+            </DialogTrigger>
+            <UpdateTableModal
+              success={success || false}
+              setSuccess={setSuccess}
+              tableId={invoice._id}
+              tableNumber={invoice.tableNumber}
+              businessId={businessId || ""}
+            />
+          </Dialog>
+        ))}
       </div>
     </div>
   );

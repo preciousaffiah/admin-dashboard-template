@@ -13,6 +13,7 @@ import {
   Edit,
   Edit2,
   Edit3,
+  FolderOpen,
   LoaderCircle,
   Plus,
 } from "lucide-react";
@@ -26,7 +27,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BusService, ItemService, StaffService } from "@/services";
 import { useAuthToken, useBusinessDetails } from "@/hooks";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   Form,
   FormControl,
@@ -94,7 +95,6 @@ const Settings = ({ title }: { title: string }) => {
       image: "",
       businessId: "",
     },
-    mode: "onChange", // Ensures validation checks on each change
   });
 
   const { Image } = useQRCode();
@@ -119,6 +119,15 @@ const Settings = ({ title }: { title: string }) => {
   // Ref for the hidden file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [domain, setDomain] = useState("");
+
+  useEffect(() => {
+    // Check if window is defined (client side)
+    if (typeof window !== "undefined") {
+      setDomain(window.location.origin);
+    }
+  }, []);
+
   // Handle image upload and create preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -136,7 +145,6 @@ const Settings = ({ title }: { title: string }) => {
 
         // Validate only the 'image' field
         const isValid = await form.trigger("image");
-        console.log(isValid);
 
         if (!isValid) {
           return null;
@@ -180,6 +188,7 @@ const Settings = ({ title }: { title: string }) => {
           image: res.data.data.image,
         },
       });
+      form.reset();
     },
   });
 
@@ -189,7 +198,16 @@ const Settings = ({ title }: { title: string }) => {
     fileInputRef.current?.click();
   };
 
-  const handleCreateTable = () => tablesMutation.mutate();
+  const handleCreateTable = async () => {
+    // Validate only the 'image' field
+    const isValid = await form.trigger("tableQuantity");
+
+    if (!isValid) {
+      return null;
+    }
+
+    tablesMutation.mutate();
+  };
 
   const createTablesRequest: any = async () => {
     try {
@@ -206,7 +224,9 @@ const Settings = ({ title }: { title: string }) => {
 
   const tablesMutation = useMutation({
     mutationFn: createTablesRequest,
-    onSuccess: (res: any) => {},
+    onSuccess: (res: any) => {
+      form.reset();
+    },
   });
 
   const handlePrint = () => {
@@ -243,6 +263,46 @@ const Settings = ({ title }: { title: string }) => {
     }
   };
 
+  // GET ITEMS
+  const fetchTable = async () => {
+    try {
+      const response = await BusService.getTable(
+        userData?.businessId || "", // businessId
+        Number(form.getValues("tableNumber"))
+      );
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
+    }
+  };
+
+  const {
+    isLoading: isTableLoading,
+    isError: isTableError,
+    data: tableData,
+    refetch: tableRefetch,
+    isRefetching: isTableRefetching,
+  } = useQuery<any, Error>({
+    queryKey: [
+      "get-table",
+      userData?.businessId || "",
+      form.getValues("tableNumber"),
+    ],
+    queryFn: fetchTable,
+    enabled: false,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: false,
+  });
+
+  const handleGenerateQrCode = async () => {
+    const isValid = await form.trigger("tableNumber");
+    if (!isValid) {
+      return null;
+    }
+    tableRefetch();
+  };
   return (
     <AdminLayout title={title}>
       <div className="flex justify-end h-screen w-full">
@@ -376,7 +436,7 @@ const Settings = ({ title }: { title: string }) => {
                                                 field.onChange(numericValue); // Update the form value
                                               }}
                                               value={field.value} // Ensure the value is controlled
-                                              className="md:w-16 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                              className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                             />
                                           </FormControl>
                                           <p
@@ -411,7 +471,7 @@ const Settings = ({ title }: { title: string }) => {
                                                 field.onChange(numericValue); // Update the form value
                                               }}
                                               value={field.value} // Ensure the value is controlled
-                                              className="md:w-16 w-full border-y-0 border-x-0 rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                              className="md:w-16 w-full border-y-0 border-x-0 outline-none rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                             />
                                           </FormControl>
                                           <p
@@ -445,11 +505,24 @@ const Settings = ({ title }: { title: string }) => {
                                             type="text"
                                             id="tableNumber"
                                             {...field}
+                                            onChange={(e) => {
+                                              const numericValue =
+                                                e.target.value.replace(
+                                                  /^0+|[^0-9]/g,
+                                                  ""
+                                                );
+
+                                              field.onChange(numericValue); // Update the form value
+                                            }}
+                                            value={field.value} // Ensure the value is controlled
                                             className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
                                         </FormControl>
-                                        <p className="cursor-pointer text-primaryLime font-medium">
-                                          {saved ? "Generated" : "Generate"}
+                                        <p
+                                          onClick={handleGenerateQrCode}
+                                          className="cursor-pointer text-primaryLime font-medium"
+                                        >
+                                          Generate
                                         </p>
                                       </div>
                                     </div>
@@ -457,33 +530,50 @@ const Settings = ({ title }: { title: string }) => {
                                   </FormItem>
                                 )}
                               />
-                              <div className="flex items-end gap-x-2">
-                                <div
-                                  ref={sectionRef}
-                                  className="p-4 border mt-4"
-                                  id="print-section"
-                                >
-                                  <Image
-                                    text={
-                                      "https://github.com/bunlong/next-qrcode"
-                                    }
-                                    options={{
-                                      type: "image/jpeg",
-                                      errorCorrectionLevel: "M",
-                                      margin: 2,
-                                      scale: 1,
-                                      width: 250,
-                                    }}
-                                  />
+                              {(isTableRefetching || isTableLoading) && (
+                                <div className="w-1/2 flex justify-center">
+                                  <LoaderCircle className="text-secondaryBorder rotate-icon" />
                                 </div>
+                              )}
 
-                                <p
-                                  onClick={handlePrint}
-                                  className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
-                                >
-                                  Print
-                                </p>
-                              </div>
+                              {isTableError && (
+                                <div className="w-1/2 text-xs flex flex-col items-center justify-center">
+                                  <FolderOpen className="w-4 text-secondaryBorder" />
+                                  Table not found
+                                </div>
+                              )}
+
+                              {tableData &&
+                                !isTableRefetching &&
+                                !isTableLoading && (
+                                  <div className="flex items-end gap-x-2">
+                                    <div
+                                      ref={sectionRef}
+                                      className="p-4 border mt-4"
+                                      id="print-section"
+                                    >
+                                      <Image
+                                        text={`${domain}/flenjo/table/${form.getValues(
+                                          "tableNumber"
+                                        )}`}
+                                        options={{
+                                          type: "image/jpeg",
+                                          errorCorrectionLevel: "M",
+                                          margin: 2,
+                                          scale: 1,
+                                          width: 250,
+                                        }}
+                                      />
+                                    </div>
+
+                                    <p
+                                      onClick={handlePrint}
+                                      className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
+                                    >
+                                      Print
+                                    </p>
+                                  </div>
+                                )}
                             </div>
                           </form>
                         </Form>

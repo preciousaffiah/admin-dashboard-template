@@ -41,9 +41,11 @@ const defaultInvoice: Menus = {
 const ScannedComp = ({
   businessId,
   BusinessName,
+  tabelNumber
 }: {
   businessId: string;
   BusinessName: string;
+  tabelNumber: string
 }) => {
   const { token, userData } = useAuthToken();
 
@@ -100,7 +102,7 @@ const ScannedComp = ({
           {BusinessName}
         </p>
       </div>
-      <p className="text-2xl">Welcome table 7!</p>
+      <p className="text-2xl">Welcome table {tabelNumber}!</p>
 
       <div className="text-xl flex gap-y-3 flex-col md:w-[27rem] w-[75%] text-center capitalize">
         <Link href={`/${BusinessName}/menu`} className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">

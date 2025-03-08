@@ -7,6 +7,7 @@ import {
   Bolt,
   ShieldQuestion,
 } from "lucide-react";
+import { Dinner } from "@/components/serviette-icons";
 import React from "react";
 import { Mail, User, Users } from "lucide-react";
 import Sidebar from "..";
@@ -24,10 +25,16 @@ const AdminSidebar = () => {
       tag: UtensilsCrossed,
     },
     {
+      title: "Tables",
+      link: "/staff/tables",
+      tag: Dinner,
+    },
+    {
       title: "Orders",
       link: "/staff/orders",
       tag: NotepadText,
     },
+
     // {
     //   title: "Messages",
     //   link: "/",
@@ -53,6 +60,7 @@ const AdminSidebar = () => {
     //   link: "/",
     //   tag: User,
     // },
+
     {
       title: "Settings",
       link: "/admin/settings",

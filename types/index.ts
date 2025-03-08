@@ -67,6 +67,13 @@ export type Menus = {
   department: string;
 };
 
+export type Tables = {
+  _id: string;
+  tableNumber: string;
+  status: string;
+  image: string;
+};
+
 export type User = {
   _id: string;
   fullname: string;
@@ -99,6 +106,9 @@ export type AdminTable = {
   getPageNumbers?: any;
   handlePageChange?: any;
   className?: any;
+  success?: boolean;
+  setSuccess?: any;
+  businessId?: string
 };
 
 export type OrderMenuItem = {
