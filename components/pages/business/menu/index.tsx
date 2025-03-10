@@ -58,7 +58,7 @@ const BusinessMenu = ({
       const response = await ItemService.getItems(
         businessId,
         page, // page
-        tabKey // filters object
+        tabKey ? tabKey : null // filters object
       );
 
       return response?.data?.data?.data;

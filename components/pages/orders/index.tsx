@@ -196,7 +196,7 @@ const Orders: FC = () => {
     return invoiceData.slice(startIndex, endIndex);
   };
 
-  let tabKey: any = "";
+  let tabKey: any = null;
   let tabValue: any = "";
   let title = "Orders";
 

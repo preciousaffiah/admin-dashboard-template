@@ -27,7 +27,7 @@ const OrdersGrid = ({
   setSelectedInvoice,
   selectedInvoice,
 }: AdminTable) => {
-  let tabKey: any = "";
+  let tabKey: any = null;
   let tabValue: any = "";
 
   const handleTabChange: any = (event: any, key: any, value: any) => {
