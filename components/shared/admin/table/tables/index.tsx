@@ -15,6 +15,7 @@ import { Dinner } from "@/components/serviette-icons";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddStaffModal from "@/components/shared/modal/add-staff";
 import UpdateTableModal from "@/components/shared/modal/update-table";
+import TablesGrid from "../../tablesGrid";
 
 const TablesTable = ({
   children,
@@ -114,7 +115,7 @@ const TablesTable = ({
                 <TabsContent key={index} value={item} className="w-full">
                   {view ? (
                     <div>
-                      <MenuGrid
+                      <TablesGrid
                         invoiceData={tablesData}
                         isLoading={isTablesLoading}
                         currentPage={currentPage}

@@ -41,17 +41,6 @@ const BusinessMenuPage: FC = () => {
 
   return (
     <div>
-      {/* <div className="pattern h-[40rem] w-full px-4 cover">
-        <div className="m-auto h-full flex flex-col justify-center text-8xl font-edu capitalize font-medium text-white">
-          <p className="text-[7.5rem] uppercase">Servlette</p>
-          <p>
-            good
-            <span className="word">drink</span>
-            <span className="word">food</span>
-            <span className="word">life</span>
-          </p>
-        </div>
-      </div> */}
       <BusinessMenu businessId={data._id} BusinessName={decodedName} />
     </div>
   );

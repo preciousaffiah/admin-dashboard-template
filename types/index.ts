@@ -118,6 +118,15 @@ export type OrderMenuItem = {
   Price: number;
 };
 
+export type CartOrderItem = {
+  itemId: string;
+  name: string;
+  image: string;
+  quantity: number;
+  price: number;
+  total: number;
+};
+
 export type OrderItems = {
   fname: string;
   lname: string;

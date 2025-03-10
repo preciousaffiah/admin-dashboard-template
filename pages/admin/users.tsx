@@ -60,7 +60,7 @@ const Users: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
 
-  let tabKey: any = "";
+  let tabKey: any = null;
   let title = "User Management";
 
   const updatedInvoice = { ...selectedInvoice };

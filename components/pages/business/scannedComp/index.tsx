@@ -17,7 +17,7 @@ import logo from "public/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
 
-let tabKey: any = "";
+let tabKey: any = null;
 
 const tabHeaders = {
   all: "all",

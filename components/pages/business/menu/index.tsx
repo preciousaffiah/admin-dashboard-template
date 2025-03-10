@@ -16,7 +16,7 @@ import CartModal from "@/components/shared/modal/cart";
 import logo from "public/Logo.png";
 import Image from "next/image";
 
-let tabKey: any = "";
+let tabKey: any = null;
 
 const tabHeaders = {
   all: "all",
@@ -48,7 +48,7 @@ const BusinessMenu = ({
 
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
+  const [selectedInvoice, setSelectedInvoice] = useState<Menus[]>([]);
 
   // GET ITEMS
   const fetchItems = async () => {
@@ -118,7 +118,10 @@ const BusinessMenu = ({
             />
           </div>
           <div>
-            <CartModal tableId={selectedInvoice._id} />
+            <CartModal
+              selectedInvoice={selectedInvoice}
+              setSelectedInvoice={setSelectedInvoice}
+            />
           </div>
         </div>
         <div>

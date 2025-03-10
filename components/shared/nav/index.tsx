@@ -61,7 +61,7 @@ const Navbar: FC = () => {
               <Link
                 href={item.link}
                 className={`${
-                  item.link === path ? "font-bold" : ""
+                  item.link === path ? "font-bold text-primary-orange" : ""
                 } text-base auth-subheader`}
               >
                 {item.title}
@@ -139,7 +139,7 @@ const Navbar: FC = () => {
                   <Link
                     href={item.link}
                     className={`${
-                      item.link === path ? "text-yellow-400 font-bold" : ""
+                      item.link === path ? "text-primary-orange font-bold" : ""
                     } px-4`}
                   >
                     {item.title}
