@@ -104,57 +104,60 @@ const CartModal = ({
             </div>
           ) : (
             <>
-              {selectedInvoice?.map((invoice: CartOrderItem, index: number) => (
-                <div
-                  className="
+              <div className="h-full overflow-y-scroll">
+                {selectedInvoice?.map(
+                  (invoice: CartOrderItem, index: number) => (
+                    <div
+                      className="
             bg-primaryDark
             w-full cursor-pointer text-sm text-primary rounded-md border-[1px]"
-                >
-                  <div className="p-2">
-                    <div className="flex gap-x-2 w-full pb-4">
-                      <div className="size-[3rem] rounded-full">
-                        <img
-                          src={`${invoice.image}`}
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-lg font-medium text-ellipsis break-words capitalize">
-                          {invoice.name}
-                        </p>
-
-                        <div className="flex items-center text-xs text-txWhite w-full text-end font-medium text-md">
-                          <p>{invoice.quantity} items</p>
-                          <Dot />
-                          <p>₦{invoice.price}</p>
-                        </div>
-                        <div className="text-center text-xs text-txWhite w-full font-medium text-md">
-                          <p>₦{invoice.total}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      onClick={() => clearOrder(invoice.itemId)}
-                      className="px-4 text-center"
                     >
-                      <p className="border-primary-orange text-primary-orange border px-1.5 rounded-sm py-1">
-                        Clear
-                      </p>
+                      <div className="p-2">
+                        <div className="flex gap-x-2 w-full pb-4">
+                          <div className="size-[3rem] rounded-full">
+                            <img
+                              src={`${invoice.image}`}
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-lg font-medium text-ellipsis break-words capitalize">
+                              {invoice.name}
+                            </p>
+
+                            <div className="flex items-center text-xs text-txWhite w-full text-end font-medium text-md">
+                              <p>{invoice.quantity} items</p>
+                              <Dot />
+                              <p>₦{invoice.price}</p>
+                            </div>
+                            <div className="text-center text-xs text-txWhite w-full font-medium text-md">
+                              <p>₦{invoice.total}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          onClick={() => clearOrder(invoice.itemId)}
+                          className="px-4 text-center"
+                        >
+                          <p className="border-primary-orange text-primary-orange border px-1.5 rounded-sm py-1">
+                            Clear
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )
+                )}
+
+                <div className="pt-6 text-center">
+                  <p className="border-primary-orange text-primary-orange border-2 px-1.5 rounded-sm py-1">
+                    Total{" "}
+                    {selectedInvoice.reduce(
+                      (sum: number, item: CartOrderItem) => sum + item.total,
+                      0
+                    )}
+                  </p>
                 </div>
-              ))}
-
-              <div className="pt-6 text-center">
-                <p className="border-primary-orange text-primary-orange border-2 px-1.5 rounded-sm py-1">
-                  Total{" "}
-                  {selectedInvoice.reduce(
-                    (sum: number, item: CartOrderItem) => sum + item.total,
-                    0
-                  )}
-                </p>
               </div>
-
               <div className="w-full left-0 absolute bottom-0 text-black">
                 <button
                   type="submit"
