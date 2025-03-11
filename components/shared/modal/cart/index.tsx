@@ -25,6 +25,8 @@ import {
   EyeOff,
   FolderOpen,
   LoaderCircle,
+  Minus,
+  Plus,
   ShoppingCart,
 } from "lucide-react";
 import React, { useState } from "react";
@@ -80,6 +82,29 @@ const CartModal = ({
   // });
 
   // const onSubmit = () => mutation.mutate();
+
+  const handleQuantityChange = (itemId: string, type: string) => {
+    setSelectedInvoice((prevOrder: CartOrderItem[]) => 
+      prevOrder.map((item) => {
+        if (item.itemId === itemId) {
+          const newQuantity = type === "increment" 
+            ? item.quantity + 1 
+            : Math.max(item.quantity - 1, 1); // Ensure quantity doesn't go below 1
+  
+          return {
+            ...item,
+            quantity: newQuantity,
+            total: newQuantity * item.price, // Calculate total with updated quantity
+          };
+        }
+        return item;
+      })
+    );
+  };
+  
+
+
+
   const clearOrder = (itemId: string) => {
     setSelectedInvoice((prevOrder: any) =>
       prevOrder.filter((item: CartOrderItem) => item.itemId !== itemId)
@@ -134,6 +159,21 @@ const CartModal = ({
                               <p>₦{invoice.total}</p>
                             </div>
                           </div>
+                        </div>
+                        <div className="flex  justify-between items-center px-3 rounded-2xl text-neutral-500 w-full h-10 bg-primaryDark">
+                          <Plus
+                            onClick={() =>
+                              handleQuantityChange(invoice.itemId, "increment")
+                            }
+                            className="cursor-pointer"
+                          />
+                          <p className="text-txWhite">{invoice.quantity}</p>
+                          <Minus
+                            onClick={() =>
+                              handleQuantityChange(invoice.itemId, "decrement")
+                            }
+                            className="cursor-pointer"
+                          />
                         </div>
                         <div
                           onClick={() => clearOrder(invoice.itemId)}
