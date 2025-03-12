@@ -49,6 +49,7 @@ const BusinessMenu = ({
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus[]>([]);
+  const [carted, setCarted] = useState(false);
 
   // GET ITEMS
   const fetchItems = async () => {
@@ -145,6 +146,8 @@ const BusinessMenu = ({
                       invoiceData={itemsData}
                       setSelectedInvoice={setSelectedInvoice}
                       selectedInvoice={selectedInvoice}
+                      setCarted={setCarted}
+                      carted={carted}
                     />
                   </div>
                   <DataPagination

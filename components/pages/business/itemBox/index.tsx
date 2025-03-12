@@ -24,11 +24,18 @@ const defaultInvoice: Menus = {
   department: "",
 };
 
-const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
+const ItemBox = ({
+  invoiceData,
+  setSelectedInvoice,
+  selectedInvoice,
+  setCarted,
+  carted,
+}: any) => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const addToCart = (invoice: Menus) => {
     setActiveId(invoice._id);
+    setCarted(true);
 
     const itemToOrder: CartOrderItem = {
       itemId: invoice._id,
@@ -36,7 +43,7 @@ const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
       quantity: 1,
       image: invoice.image,
       price: invoice.price,
-      total: invoice.price * 1
+      total: invoice.price * 1,
     };
 
     setSelectedInvoice((prevOrder: CartOrderItem) => {
@@ -52,7 +59,11 @@ const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
         // Increase quantity if item exists
         return prevOrder.map((item: CartOrderItem) =>
           item.itemId === itemToOrder.itemId
-            ? { ...item, quantity: item.quantity + 1, total: item.price * (item.quantity + 1) }
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+                total: item.price * (item.quantity + 1),
+              }
             : item
         );
       } else {
@@ -60,6 +71,7 @@ const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
         return [...prevOrder, itemToOrder];
       }
     });
+    setTimeout(() => setCarted(false), 2000); // Reset after 2 seconds
   };
 
   return (
@@ -81,10 +93,7 @@ const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
                 />
               </div>
             </div>
-            <div
-              onClick={() => addToCart(invoice)}
-              className=" px-4 pt-2 w-full"
-            >
+            <div className=" px-4 pt-2 w-full">
               <div className="flex justify-between gap-x-16 w-full">
                 <p className="text-lg w-[10rem] font-medium text-ellipsis break-words">
                   {invoice.name}
@@ -93,11 +102,19 @@ const ItemBox = ({ invoiceData, setSelectedInvoice, selectedInvoice }: any) => {
                   ₦{invoice.price}
                 </p>
               </div>
-              <p className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1">
-                Add to cart
-                <ShoppingCart className="size-4" />
-                {/* <BadgeCheck className="fill-background text-primaryGreen" /> */}
-              </p>
+              {carted ? (
+                <BadgeCheck
+                  className="fill-background text-primaryLime transition-all"
+                />
+              ) : (
+                <p
+                  onClick={() => addToCart(invoice)}
+                  className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1 transition-all"
+                >
+                  Add to cart
+                  <ShoppingCart className="size-4" />
+                </p>
+              )}
             </div>
           </div>
         ))}

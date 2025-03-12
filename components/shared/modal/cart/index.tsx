@@ -135,7 +135,7 @@ const CartModal = ({
                     <div
                       className="
             bg-primaryDark
-            w-full cursor-pointer text-sm text-primary rounded-md border-[1px]"
+            w-full text-sm text-primary rounded-md border-[1px]"
                     >
                       <div className="p-2">
                         <div className="flex gap-x-2 w-full pb-4">
@@ -160,19 +160,19 @@ const CartModal = ({
                             </div>
                           </div>
                         </div>
-                        <div className="flex  justify-between items-center px-3 rounded-2xl text-neutral-500 w-full h-10 bg-primaryDark">
+                        <div className="flex justify-center gap-x-6 pb-2 items-center text-primary w-full">
                           <Plus
                             onClick={() =>
                               handleQuantityChange(invoice.itemId, "increment")
                             }
-                            className="cursor-pointer"
+                            className="cursor-pointer rounded-md w-7 bg-neutral-200 px-2"
                           />
                           <p className="text-txWhite">{invoice.quantity}</p>
                           <Minus
                             onClick={() =>
                               handleQuantityChange(invoice.itemId, "decrement")
                             }
-                            className="cursor-pointer"
+                            className="cursor-pointer rounded-md w-7 bg-neutral-200 px-2"
                           />
                         </div>
                         <div
