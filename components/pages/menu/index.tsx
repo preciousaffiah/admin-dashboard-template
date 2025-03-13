@@ -58,6 +58,7 @@ const defaultInvoice: Menus = {
   category: "",
   _id: "",
   image: "",
+  available: false,
   name: "",
   price: 0,
   discount: 0,
@@ -80,6 +81,7 @@ const tableHeaders = [
   "price",
   "Discount",
   "Department",
+  "Status",
 ];
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
@@ -222,57 +224,57 @@ const Menu: FC = () => {
     <div className="flex justify-end h-screen w-full">
       <Container>
         <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-            <div className="w-full bg-primaryDark pt-4 rounded-md">
-              <div className="w-full h-full">
-                <div className="px-3 flex pb-4 border-b border-primary-border">
-                  <div className="flex w-full items-center gap-x-8">
-                    <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
-                      Your Menu
-                    </h1>
-                    {userData?.department === DeptEnum.ADMIN ? (
-                      <Link
-                        href="/admin/create-menu"
-                        target="_blank"
-                        className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
-                      >
-                        Add to Menu
-                      </Link>
-                    ) : null}
-                  </div>
-                  <div>
-                    <Button
-                      onClick={() => setView(!view)}
-                      className="transparent-btn text-secondaryBorder"
+          <div className="w-full bg-primaryDark pt-4 rounded-md">
+            <div className="w-full h-full">
+              <div className="px-3 flex pb-4 border-b border-primary-border">
+                <div className="flex w-full items-center gap-x-8">
+                  <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
+                    Your Menu
+                  </h1>
+                  {userData?.department === DeptEnum.ADMIN ? (
+                    <Link
+                      href="/admin/create-menu"
+                      target="_blank"
+                      className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
                     >
-                      {view ? (
-                        <>
-                          <LayoutGrid className="w-5" />
-                          <p className="capitalize text-sm">Grid view</p>
-                        </>
-                      ) : (
-                        <>
-                          <List className="w-5" />
-                          <p className="capitalize text-sm">List view</p>
-                        </>
-                      )}
-                    </Button>
-                  </div>
+                      Add to Menu
+                    </Link>
+                  ) : null}
                 </div>
-
-                <AdminMenuTable
-                  view={view}
-                  currentPage={currentPage}
-                  handleRowClick={handleRowClick}
-                  tableHeaders={tableHeaders}
-                  tabHeaders={tabHeaders}
-                  tabKey={tabKey}
-                  setIsOpen={setIsOpen}
-                  setSelectedInvoice={setSelectedInvoice}
-                  selectedInvoice={selectedInvoice}
-                  setCurrentPage={setCurrentPage}
-                />
+                <div>
+                  <Button
+                    onClick={() => setView(!view)}
+                    className="transparent-btn text-secondaryBorder"
+                  >
+                    {view ? (
+                      <>
+                        <LayoutGrid className="w-5" />
+                        <p className="capitalize text-sm">Grid view</p>
+                      </>
+                    ) : (
+                      <>
+                        <List className="w-5" />
+                        <p className="capitalize text-sm">List view</p>
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
+
+              <AdminMenuTable
+                view={view}
+                currentPage={currentPage}
+                handleRowClick={handleRowClick}
+                tableHeaders={tableHeaders}
+                tabHeaders={tabHeaders}
+                tabKey={tabKey}
+                setIsOpen={setIsOpen}
+                setSelectedInvoice={setSelectedInvoice}
+                selectedInvoice={selectedInvoice}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
+          </div>
           <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <div>
               <div className="">
@@ -286,9 +288,11 @@ const Menu: FC = () => {
                     <div>
                       <div className="flex justify-center">
                         <p
-                          className={`capitalize text-txWhite font-medium status-cancelled text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                          className={`capitalize text-txWhite font-medium status-${selectedInvoice.available} text-center  flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                         >
-                          {selectedInvoice.category}
+                          {selectedInvoice.available === true
+                            ? "available"
+                            : "unavailable"}
                         </p>
                       </div>
                     </div>
@@ -437,7 +441,7 @@ const Menu: FC = () => {
                                 </button>
                               </div>
                             </DialogTrigger>
-                              <DeleteItemModal itemId={selectedInvoice._id} />
+                            <DeleteItemModal itemId={selectedInvoice._id} />
                           </Dialog>
                         </div>
                       </div>

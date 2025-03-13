@@ -70,6 +70,7 @@ const AdminMenuTable = ({
     }
     refetch();
   };
+console.log(itemsData);
 
   return (
     <div>
@@ -183,9 +184,18 @@ const AdminMenuTable = ({
                                 <TableCell>
                                   <div className="flex justify-center">
                                     <p
-                                      className={`status-cancelled text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                      className={`font-medium text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                                     >
                                       {invoice.department}
+                                    </p>
+                                  </div>
+                                </TableCell>
+                                <TableCell>
+                                  <div className="flex justify-center">
+                                    <p
+                                      className={`capitalize status-${invoice.available} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                    >
+                                      {invoice.available === true ? "available" : "unavailable"}
                                     </p>
                                   </div>
                                 </TableCell>

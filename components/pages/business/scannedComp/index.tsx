@@ -30,6 +30,7 @@ const tabHeaders = {
 const defaultInvoice: Menus = {
   category: "",
   _id: "",
+  available: false,
   image: "",
   name: "",
   price: 0,
@@ -105,7 +106,7 @@ const ScannedComp = ({
       <p className="text-2xl">Welcome table {tabelNumber}!</p>
 
       <div className="text-xl flex gap-y-3 flex-col md:w-[27rem] w-[75%] text-center capitalize">
-        <Link href={`/${BusinessName}/menu`} className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">
+        <Link href={`/${BusinessName}/menu?number=${tabelNumber}`} className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">
           menu
         </Link>
         <div className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">

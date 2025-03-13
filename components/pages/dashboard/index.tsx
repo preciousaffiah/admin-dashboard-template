@@ -8,6 +8,8 @@ import {
   Circle,
   EllipsisVertical,
   TrendingDown,
+  FolderOpen,
+  Loader,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "@/components/shared/container";
@@ -29,6 +31,11 @@ import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth
 import { useAuthToken } from "@/hooks";
 import { slugify } from "@/utils/slugify";
 import Copy from "@/components/serviette-ui/copy-button";
+import DefaultTable from "@/components/shared/table";
+import { handleAxiosError } from "@/utils/axios";
+import OrderService from "@/services/order";
+import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
 
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
@@ -239,181 +246,23 @@ const chartConfig = {
 let tabKey: string = "";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
-const invoiceData = [
-  {
-    value: "all",
-    OrderID: 11356,
-    Customer: "Chima Paul",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Chicken Burger",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Bread With Veggies",
-        quantity: 5,
-        price: 1105,
-      },
-    ],
-    Price: "670",
-    Discount: "10",
-    subTotal: "660",
-    amountPaid: "300",
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Susan Jackson",
-      },
-    ],
-    Status: "pending",
-  },
-  {
-    value: "dine",
-    OrderID: 11357,
-    Customer: "David Strong",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-    ],
-    Price: "160",
-    Discount: "2",
-    amountPaid: "158",
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "David Mark",
-      },
-    ],
-    Status: "cancelled",
-  },
-  {
-    value: "togo",
-    OrderID: 11358,
-    Customer: "Alice Strong",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Chicken Burger",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 7,
-        price: 235,
-      },
-    ],
-    Price: "200",
-    Discount: "0",
-    amountPaid: "200",
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Susan Jackson",
-      },
-    ],
-    Status: "pending",
-  },
-  {
-    value: "delivery",
-    OrderID: 11359,
-    Customer: "David Strong",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-    ],
-    Price: "320",
-    Discount: "5",
-    amountPaid: "300",
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Jason Mason",
-      },
-    ],
-    Status: "completed",
-  },
-  {
-    value: "all",
-    OrderID: 11360,
-    Customer: "Chima Paul",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Chicken Burger",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Bread With Veggies",
-        quantity: 5,
-        price: 1105,
-      },
-    ],
-    Price: "670",
-    Discount: "10",
-    subTotal: "660",
-    amountPaid: "300",
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Susan Jackson",
-      },
-    ],
-    Status: "pending",
-  },
-];
+
 const tableHeaders = [
   "S/N",
-  "Assigned to",
-  "Customer",
+  // "_id",
+  // "Customer",
   "Table No.",
   "Menu Items",
-  "Price",
+  "Total",
   "Time of Order",
-  "OrderID",
+  // "Assigned to",
   "Status",
 ];
 const tabHeaders = {
   all: "all",
-  dine: "dine in",
-  togo: "to go",
-  delivery: "delivery",
+  pending: "pending",
+  served: "served",
+  cancelled: "cancelled",
 };
 
 const Dashboard: FC = () => {
@@ -425,6 +274,7 @@ const Dashboard: FC = () => {
   const url: any = slugify(data?.name || "");
 
   const [domain, setDomain] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     // Check if window is defined (client side)
@@ -432,6 +282,37 @@ const Dashboard: FC = () => {
       setDomain(window.location.origin);
     }
   }, []);
+
+  // GET ORDERS
+  const fetchOrders = async () => {
+    try {
+      // setPage(pageParam);
+
+      const response = await OrderService.getOrders(
+        userData?.businessId || "", // businessId
+        page, // page
+        {} // filters object
+      );
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
+    }
+  };
+
+  const {
+    isLoading: isItemsLoading,
+    isRefetching,
+    refetch,
+    isError,
+    data: itemsData,
+  } = useQuery<any, Error>({
+    queryKey: ["get-orders", userData?.businessId || ""],
+    queryFn: fetchOrders,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: true,
+  });
 
   return (
     <div className="flex justify-end h-screen w-full">
@@ -723,82 +604,93 @@ const Dashboard: FC = () => {
                           </div>
                         </div>
 
-                        <AdminOrdersTable
-                          tableHeaders={tableHeaders}
-                          tabHeaders={tabHeaders}
-                          invoiceData={invoiceData}
-                          currentPage={1}
-                          // items_per_page={4}
-                          tabKey={tabKey}
-                          className="h-80 overflow-scroll"
-                        >
-                          <TableBody className="h-80">
-                            {invoiceData.slice(0, 10).map((invoice, index) => (
-                              <TableRow
-                                key={index}
-                                className="bg-primaryDark truncate text-center py-2 rounded-lg cursor-pointer"
+                        {itemsData &&
+                          !isItemsLoading &&
+                          !isRefetching &&
+                          itemsData.currentItemCount > 0 && (
+                            <>
+                              <DefaultTable
+                                // children={children}
+                                tableHeaders={tableHeaders}
                               >
-                                <TableCell className="truncate">
-                                  <Circle
-                                    fill="none"
-                                    className={` text-primary-border`}
-                                  />
-                                </TableCell>
-                                <TableCell className="font-medium">
-                                  {index + 1}
-                                </TableCell>
-                                <TableCell className="truncate">
-                                  #{invoice.OrderID}
-                                </TableCell>
-                                <TableCell>{invoice.Customer}</TableCell>
-                                <TableCell>{invoice.TableNo}</TableCell>
-                                <TableCell>
-                                  <div className="flex items-center gap-x-1">
-                                    {invoice.MenuItems[0].name}
-                                    {invoice.MenuItems.length > 1 ? (
-                                      <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-textCompleted border-dashed rounded-full font-medium">
-                                        +{invoice.MenuItems.length - 1}
-                                      </h1>
-                                    ) : null}
-                                  </div>
-                                </TableCell>
-                                <TableCell>${invoice.Price}</TableCell>
-                                <TableCell>{invoice.TimeofOrder}</TableCell>
-                                <TableCell>
-                                  <div className="w-fit flex items-center gap-x-1">
-                                    <div className="w-8 h-4">
-                                      <Image
-                                        alt="img"
-                                        src={orderImg}
-                                        className="w-10 h-8 rounded-full"
-                                      />
-                                    </div>
-                                    <p className="flex break-words">
-                                      {invoice.AssignedTo[0].name}
-                                    </p>
-                                  </div>
-                                </TableCell>
+                                <TableBody>
+                                  {itemsData?.orders
+                                    .slice(0, 5)
+                                    .map((invoice: any, index: number) => (
+                                      <TableRow
+                                        key={index}
+                                        className="bg-primaryDark truncate text-center py-2 rounded-lg"
+                                      >
+                                        <TableCell className="truncate">
+                                          <Circle
+                                            fill="none"
+                                            className={` text-primary-border`}
+                                          />
+                                        </TableCell>
+                                        <TableCell className="font-medium">
+                                          {index + 1}
+                                        </TableCell>
+                                        <TableCell>
+                                          #
+                                          {String(
+                                            invoice.tableId.tableNumber
+                                          ).padStart(2, "0")}
+                                        </TableCell>
+                                        <TableCell>
+                                          <div className="capitalize flex justify-center items-center gap-x-1">
+                                            {invoice.items[0].itemId.name}
+                                            {invoice.items.length > 1 ? (
+                                              <h1 className="w-fit py-[0.1rem] px-[0.2rem] border-2 border-textCompleted border-dashed rounded-full font-medium">
+                                                +{invoice.items.length - 1}
+                                              </h1>
+                                            ) : null}
+                                          </div>
+                                        </TableCell>
+                                        <TableCell>₦{invoice.total}</TableCell>
+                                        <TableCell>
+                                          {moment(invoice?.createdAt).format(
+                                            "DD-MM-YY"
+                                          )}
+                                        </TableCell>
+                                        <TableCell>
+                                          <div className="flex justify-center">
+                                            <p
+                                              className={`status-${invoice.status} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
+                                            >
+                                              {invoice.status}
+                                            </p>
+                                          </div>
+                                        </TableCell>
+                                      </TableRow>
+                                    ))}
+                                </TableBody>
+                              </DefaultTable>
 
-                                <TableCell>
-                                  <div className="flex justify-center">
-                                    <p
-                                      className={`status-${invoice.Status} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
-                                    >
-                                      {invoice.Status}
-                                    </p>
-                                  </div>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </AdminOrdersTable>
-                        <Link
-                          href="orders"
-                          className="text-txWhite md:text-base text-sm py-2 m-auto transparent-btn w-fit px-5"
-                        >
-                          View All Orders
-                          <ChevronRight color="#c0bfbc" />
-                        </Link>
+                              <Link
+                                href="orders"
+                                className="text-txWhite md:text-base text-sm mt-4 py-2 m-auto transparent-btn w-fit px-5"
+                              >
+                                View All Orders
+                                <ChevronRight color="#c0bfbc" />
+                              </Link>
+                            </>
+                          )}
+
+                        {itemsData?.currentItemCount < 1 &&
+                          !isRefetching &&
+                          !isItemsLoading && (
+                            <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                              <FolderOpen />
+                              Empty
+                            </div>
+                          )}
+
+                        {(isItemsLoading || isRefetching) && (
+                          <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                            <Loader className="rotate-icon size-8" />
+                            Loading
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

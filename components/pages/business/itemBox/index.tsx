@@ -16,6 +16,7 @@ import { handleRowClick } from "@/utils/modal";
 const defaultInvoice: Menus = {
   _id: "",
   price: 0,
+  available: false,
   category: "",
   image: "",
   name: "",
@@ -30,6 +31,7 @@ const ItemBox = ({
   selectedInvoice,
   setCarted,
   carted,
+  tableOrderData,
 }: any) => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -95,26 +97,28 @@ const ItemBox = ({
             </div>
             <div className=" px-4 pt-2 w-full">
               <div className="flex justify-between gap-x-16 w-full">
-                <p className="text-lg w-[10rem] font-medium text-ellipsis break-words">
+                <p className="capitalize text-lg w-[50%] font-medium text-ellipsis break-words">
                   {invoice.name}
                 </p>
-                <p className="w-full text-end font-medium text-lg">
+                <p className="w-[50%] text-end font-medium text-lg">
                   ₦{invoice.price}
                 </p>
               </div>
-              {carted ? (
-                <BadgeCheck
-                  className="fill-background text-primaryLime transition-all"
-                />
-              ) : (
-                <p
-                  onClick={() => addToCart(invoice)}
-                  className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1 transition-all"
-                >
-                  Add to cart
-                  <ShoppingCart className="size-4" />
-                </p>
-              )}
+              {tableOrderData?.length < 1 ? (
+                <>
+                  {carted ? (
+                    <BadgeCheck className="fill-background text-primaryLime transition-all" />
+                  ) : (
+                    <p
+                      onClick={() => addToCart(invoice)}
+                      className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1 transition-all"
+                    >
+                      Add to cart
+                      <ShoppingCart className="size-4" />
+                    </p>
+                  )}
+                </>
+              ) : null}
             </div>
           </div>
         ))}

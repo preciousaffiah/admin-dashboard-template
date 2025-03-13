@@ -14,6 +14,11 @@ export type TAppUserState = {
   userData: TAppUser;
 };
 
+export type TAppTable = {
+  _id: string;
+  tableNumber: string;
+}
+
 export type SDetails = {
   staffId: string;
   // fullname?: string;
@@ -43,21 +48,22 @@ interface AssignedTo {
 }
 
 export type Invoice = {
-  OrderID: number;
-  Customer: string;
-  TableNo: string;
-  MenuItems: MenuItem[];
-  AssignedTo?: AssignedTo[];
-  Price: number;
-  Discount: number;
+  _id: string;
+  // Customer: string;
+  tableNumber: string;
+  items: MenuItem[];
+  // AssignedTo?: AssignedTo[];
+  total: number;
+  discount: number;
   amountPaid: number;
-  TimeofOrder: string;
-  Status: string;
+  createdAt: string;
+  status: string;
 };
 
 export type Menus = {
   // value?: string;
   _id: string;
+  available: boolean;
   price: number;
   category: string;
   description: string;
@@ -150,6 +156,9 @@ export type createMenu = {
 };
 
 export type settings = {
+  accountNumber: number,
+  accountName: string;
+  bankName: string,
   tableQuantity: number;
   image: string;
   tableNumber: number;

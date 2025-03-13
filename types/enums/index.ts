@@ -15,3 +15,8 @@ export enum StaffStatusEnum {
   ACTIVE = "active",
   INACTIVE = "inactive",
 }
+
+export enum PaymentStatusEnum {
+  PENDING = "pending",
+  PAID = "paid",
+}

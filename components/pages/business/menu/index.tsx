@@ -15,6 +15,7 @@ import DeleteItemModal from "@/components/shared/modal/delete-item";
 import CartModal from "@/components/shared/modal/cart";
 import logo from "public/Logo.png";
 import Image from "next/image";
+import OrderService from "@/services/order";
 
 let tabKey: any = null;
 
@@ -28,6 +29,7 @@ const tabHeaders = {
 
 const defaultInvoice: Menus = {
   category: "",
+  available: false,
   _id: "",
   image: "",
   name: "",
@@ -40,9 +42,13 @@ const defaultInvoice: Menus = {
 const BusinessMenu = ({
   businessId,
   BusinessName,
+  tableId,
+  table,
 }: {
   businessId: string;
   BusinessName: string;
+  tableId: string;
+  table: boolean;
 }) => {
   const { token, userData } = useAuthToken();
 
@@ -91,6 +97,28 @@ const BusinessMenu = ({
     refetch();
   };
 
+  // GET ORDER
+  const fetchLastOrder = async () => {
+    try {
+      const response = await OrderService.getTableOrder(businessId, tableId);
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
+    }
+  };
+
+  const { isLoading: isTableOrderLoading, data: tableOrderData } = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ["get-table-order", tableId],
+    queryFn: fetchLastOrder,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: true,
+  });
+
   return (
     <div>
       <Tabs
@@ -118,12 +146,17 @@ const BusinessMenu = ({
               className="md:flex hidden md:rounded-xl rounded-full md:px-3 px-1"
             />
           </div>
-          <div>
-            <CartModal
-              selectedInvoice={selectedInvoice}
-              setSelectedInvoice={setSelectedInvoice}
-            />
-          </div>
+          {table ? (
+            <div>
+              <CartModal
+                selectedInvoice={selectedInvoice}
+                setSelectedInvoice={setSelectedInvoice}
+                tableId={tableId}
+                businessId={businessId}
+                tableOrderData={tableOrderData}
+              />
+            </div>
+          ) : null}
         </div>
         <div>
           <div
@@ -148,6 +181,7 @@ const BusinessMenu = ({
                       selectedInvoice={selectedInvoice}
                       setCarted={setCarted}
                       carted={carted}
+                      tableOrderData={tableOrderData?.[0]}
                     />
                   </div>
                   <DataPagination

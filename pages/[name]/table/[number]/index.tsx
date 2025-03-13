@@ -14,6 +14,7 @@ import { BusService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthToken } from "@/hooks";
 import { handleAxiosError } from "@/utils/axios";
+import { TableContext } from "contexts/tableContext/index";
 
 const BusinessMenuPage: FC = () => {
   const router = useRouter();
@@ -76,13 +77,13 @@ const BusinessMenuPage: FC = () => {
   }
 
   return (
-    <div>
-      <ScannedComp
-        businessId={tableData._id}
-        BusinessName={decodedName}
-        tabelNumber={number as string}
-      />
-    </div>
+      <div>
+        <ScannedComp
+          businessId={tableData._id}
+          BusinessName={decodedName}
+          tabelNumber={number as string}
+        />
+      </div>
   );
 };
 

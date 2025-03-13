@@ -82,6 +82,7 @@ tr td:last-child {
 .status-cancelled,
 .status-occupied,
 .status-inactive,
+.status-false,
 .status-high {
   background: rgba(var(--statusCancelled));
   color: rgba(var(--textCancelled));
@@ -90,6 +91,7 @@ tr td:last-child {
 .status-completed,
 .status-available,
 .status-active,
+.status-true,
 .status-low {
   background: rgba(var(--statusCompleted));
   color: rgba(var(--textCompleted));
