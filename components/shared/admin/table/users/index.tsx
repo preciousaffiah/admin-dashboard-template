@@ -60,15 +60,11 @@ const AdminUsersTable = ({
   const fetchStaffs = async () => {
     try {
       // setPage(pageParam);
-      console.log("dd", currentPage);
-
       const response = await StaffService.getAllStaff(
         userData?.businessId || "", // businessId
         currentPage, // page
         tabKey // filters object
       );
-      console.log(response?.data?.data);
-
       return response?.data?.data?.data;
     } catch (error: any) {
       console.error(error?.response?.data?.message || "An error occurred");

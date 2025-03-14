@@ -20,3 +20,9 @@ export enum PaymentStatusEnum {
   PENDING = "pending",
   PAID = "paid",
 }
+
+export enum OrderStatusEnum {
+  PENDING = "pending",
+  SERVED = "served",
+  CANCELLED = "cancelled",
+}

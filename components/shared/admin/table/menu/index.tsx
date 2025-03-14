@@ -70,8 +70,6 @@ const AdminMenuTable = ({
     }
     refetch();
   };
-console.log(itemsData);
-
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
@@ -168,17 +166,17 @@ console.log(itemsData);
                                         className="w-10 h-8 rounded-full object-cover"
                                       />
                                     </div>
-                                    <p className="flex break-words">
+                                    <p className="capitalize flex break-words">
                                       {invoice.name}
                                     </p>
                                   </div>
                                 </TableCell>
                                 <TableCell>{invoice.category}</TableCell>
                                 <TableCell>
-                                  ₦{Number(invoice.price)?.toFixed(2)}
+                                  ₦{Number(invoice.price)?.toLocaleString()}
                                 </TableCell>
                                 <TableCell>
-                                  ₦{Number(invoice.discount)?.toFixed(2)}
+                                  ₦{Number(invoice.discount)?.toLocaleString()}
                                 </TableCell>
 
                                 <TableCell>

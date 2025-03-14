@@ -72,7 +72,7 @@ const OrdersGrid = ({
                       </p>
                     </div>
                   </div>
-                  <p>₦{invoice.total}</p>
+                  <p>₦{invoice.total.toLocaleString()}</p>
                 </div>
               </div>
             </div>

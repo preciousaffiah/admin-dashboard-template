@@ -336,8 +336,6 @@ const CreateOrder: FC = () => {
       setTimeout(() => {
         setIsLoading(false);
         setOrder(defaultOrder); // clear order
-        console.log("order created");
-
         return window.location.reload();
       }, 2000);
     }, 2000);

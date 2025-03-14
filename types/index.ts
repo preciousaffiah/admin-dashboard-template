@@ -129,6 +129,7 @@ export type CartOrderItem = {
   name: string;
   image: string;
   quantity: number;
+  discount?: number;
   price: number;
   total: number;
 };

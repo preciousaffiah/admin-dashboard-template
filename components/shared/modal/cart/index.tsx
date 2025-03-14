@@ -59,13 +59,13 @@ const CartModal = ({
   setSelectedInvoice,
   tableId,
   businessId,
-  tableOrderData
+  tableOrderData,
 }: {
   selectedInvoice: any;
   setSelectedInvoice: any;
   tableId: string;
   businessId: string;
-  tableOrderData: any
+  tableOrderData: any;
 }) => {
   const { userData } = useAuthToken();
 
@@ -120,6 +120,7 @@ const CartModal = ({
       prevOrder.filter((item: CartOrderItem) => item.itemId !== itemId)
     );
   };
+  console.log(tableOrderData);
 
   return (
     <Sheet>
@@ -138,7 +139,7 @@ const CartModal = ({
                     <div
                       className="
        bg-primaryDark
-       w-full text-sm text-primary rounded-md border-[1px]"
+       w-full mb-3 text-sm text-primary rounded-md border-[1px]"
                     >
                       <div className="p-2">
                         <div className="flex gap-x-2 w-full pb-4">
@@ -156,10 +157,10 @@ const CartModal = ({
                             <div className="flex items-center text-xs text-txWhite w-full text-end font-medium text-md">
                               <p>{invoice.quantity} items</p>
                               <Dot />
-                              <p>₦{invoice.price}</p>
+                              <p>₦{invoice.price.toLocaleString()}</p>
                             </div>
                             <div className="text-center text-xs text-txWhite w-full font-medium text-md">
-                              <p>₦{invoice.quantity * invoice.price}</p>
+                              <p>₦{(invoice.quantity * invoice.price).toLocaleString()}</p>
                             </div>
                           </div>
                         </div>
@@ -170,7 +171,7 @@ const CartModal = ({
 
                 <div className="pt-6 text-center">
                   <p className="border-primary-orange text-primary-orange border-2 px-1.5 rounded-sm py-1">
-                    Total {tableOrderData?.[0].total}
+                    Total {(tableOrderData?.[0].total).toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -222,7 +223,7 @@ const CartModal = ({
                       <div
                         className="
             bg-primaryDark
-            w-full text-sm text-primary rounded-md border-[1px]"
+            w-full mb-3 text-sm text-primary rounded-md border-[1px]"
                       >
                         <div className="p-2">
                           <div className="flex gap-x-2 w-full pb-4">
@@ -240,10 +241,10 @@ const CartModal = ({
                               <div className="flex items-center text-xs text-txWhite w-full text-end font-medium text-md">
                                 <p>{invoice.quantity} items</p>
                                 <Dot />
-                                <p>₦{invoice.price}</p>
+                                <p>₦{invoice.price.toLocaleString()}</p>
                               </div>
                               <div className="text-center text-xs text-txWhite w-full font-medium text-md">
-                                <p>₦{invoice.total}</p>
+                                <p>₦{(invoice.quantity * invoice.price).toLocaleString()}</p>
                               </div>
                             </div>
                           </div>

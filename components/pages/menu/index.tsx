@@ -415,13 +415,13 @@ const Menu: FC = () => {
                                 <p>Discount</p>
                                 <p>
                                   ₦
-                                  {Number(selectedInvoice.discount)?.toFixed(2)}{" "}
+                                  {Number(selectedInvoice.discount)?.toLocaleString()}{" "}
                                 </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Price</p>
                                 <p>
-                                  ₦{Number(selectedInvoice?.price)?.toFixed(2)}{" "}
+                                  ₦{Number(selectedInvoice?.price)?.toLocaleString()}{" "}
                                 </p>
                               </div>
                               <div className="flex justify-between gap-x-8">

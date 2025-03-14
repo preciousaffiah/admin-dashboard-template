@@ -118,6 +118,8 @@ const BusinessMenu = ({
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
+console.log(tableOrderData);
+console.log(tableOrderData?.length < 1);
 
   return (
     <div>
@@ -146,7 +148,7 @@ const BusinessMenu = ({
               className="md:flex hidden md:rounded-xl rounded-full md:px-3 px-1"
             />
           </div>
-          {table ? (
+          {table && (
             <div>
               <CartModal
                 selectedInvoice={selectedInvoice}
@@ -156,7 +158,7 @@ const BusinessMenu = ({
                 tableOrderData={tableOrderData}
               />
             </div>
-          ) : null}
+          )}
         </div>
         <div>
           <div

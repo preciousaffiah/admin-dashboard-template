@@ -23,8 +23,6 @@ const MenuGrid = ({
   setSuccess,
   businessId,
 }: AdminTable) => {
-  console.log(invoiceData);
-
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-4">
@@ -37,12 +35,12 @@ const MenuGrid = ({
               selectedInvoice._id === invoice._id
                 ? "border border-primaryGreen bg-selectedRow"
                 : "bg-primaryDark"
-            }  md:w-[20rem] w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
+            }  md:w-[18rem] w-full cursor-pointer text-sm text-txWhite rounded-md py-3`}
           >
-            <div className="flex w-full h-[10rem] border-b border-primary-border pb-3 px-4">
+            <div className="flex w-full border-b border-primary-border pb-3 px-4">
               <div className="w-full flex flex-col items-center gap-x-1  justify-between">
                 <p className="w-full text-end font-medium text-lg">
-                  ₦{invoice.price}
+                  ₦{Number(invoice.price).toLocaleString()}
                 </p>
 
                 <div className="flex flex-col gap-x-2 w-full">
@@ -53,7 +51,7 @@ const MenuGrid = ({
                     />
                   </div>
                   <div className="max-w-60">
-                    <p className="text-lg font-medium text-ellipsis break-words">
+                    <p className="capitalize text-lg font-medium text-ellipsis break-words">
                       {invoice.name}
                     </p>
                     <p className="text-ellipsis truncate">

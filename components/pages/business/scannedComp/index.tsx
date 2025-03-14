@@ -85,8 +85,6 @@ const ScannedComp = ({
     refetchOnWindowFocus: true,
   });
 
-  console.log(itemsData);
-
   const handleTabChange: any = (key: any) => {
     if (key === "all") {
       tabKey = null;

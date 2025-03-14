@@ -89,6 +89,7 @@ tr td:last-child {
 }
 
 .status-completed,
+.status-served,
 .status-available,
 .status-active,
 .status-true,

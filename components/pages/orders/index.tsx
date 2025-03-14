@@ -5,11 +5,13 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { MainNavbar, Modal } from "@/components/shared";
 import {
   Check,
+  CheckCheck,
   Circle,
   Edit3,
   EllipsisVertical,
   LayoutGrid,
   List,
+  LoaderCircle,
   Minus,
   Plus,
   Trash2,
@@ -25,7 +27,10 @@ import { handleRowClick } from "@/utils/modal";
 import Sidebar from "@/components/shared/nav/sidebar/admin";
 import AdminOrdersTable from "@/components/shared/admin/table/orders";
 import AdminLayout from "@/components/layouts/admin-layout";
-import { PaymentStatusEnum } from "@/types/enums";
+import { OrderStatusEnum, PaymentStatusEnum } from "@/types/enums";
+import { useMutation } from "@tanstack/react-query";
+import { handleAxiosError } from "@/utils/axios";
+import OrderService from "@/services/order";
 
 const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
 const tableHeaders = [
@@ -45,127 +50,7 @@ const tabHeaders = {
   served: "served",
   cancelled: "cancelled",
 };
-const data = [
-  {
-    value: "all",
-    _id: 11356,
-    Customer: "Chima Paul",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Chicken Burger",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Bread With Veggies",
-        quantity: 5,
-        price: 1105,
-      },
-    ],
-    Price: 670,
-    Discount: 10,
-    subTotal: "660",
-    amountPaid: 300,
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Susan Jackson",
-      },
-    ],
-    Status: "pending",
-  },
-  {
-    value: "dine",
-    OrderID: 11357,
-    Customer: "David Strong",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-    ],
-    Price: 160,
-    Discount: 2,
-    amountPaid: 158,
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "David Mark",
-      },
-    ],
-    Status: "cancelled",
-  },
-  {
-    value: "togo",
-    OrderID: 11358,
-    Customer: "Alice Strong",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Chicken Burger",
-        quantity: 2,
-        price: 335,
-      },
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 7,
-        price: 235,
-      },
-    ],
-    Price: 200,
-    Discount: 0,
-    amountPaid: 200,
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Susan Jackson",
-      },
-    ],
-    Status: "pending",
-  },
-  {
-    value: "delivery",
-    OrderID: 11359,
-    Customer: "David Strong",
-    TableNo: "A103",
-    MenuItems: [
-      {
-        itemImage: "macaroni-image.jpg",
-        name: "Macaroni with Chicken",
-        quantity: 2,
-        price: 335,
-      },
-    ],
-    Price: 320,
-    Discount: 5,
-    amountPaid: 300,
-    TimeofOrder: "1:00pm",
-    AssignedTo: [
-      {
-        staffImage: "macaroni-image.jpg",
-        name: "Jason Mason",
-      },
-    ],
-    Status: "completed",
-  },
-];
+
 const defaultInvoice: any = {
   _id: "",
   // Customer: "",
@@ -188,8 +73,6 @@ const Orders: FC = () => {
   // const [invoiceData, setInvoiceData] = useState<Invoice[]>(data);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const items_per_page = 10;
-  const total_pages = Math.ceil(data.length / items_per_page);
 
   // const getPaginatedData = () => {
   //   const startIndex = (currentPage - 1) * items_per_page;
@@ -221,6 +104,10 @@ const Orders: FC = () => {
   };
 
   const onDeleteItem = (itemIndex: number) => {
+    if(selectedInvoice.items.length < 2){
+      return null
+    }
+
     const updateditems = selectedInvoice.items.filter(
       (item: any, index: number) => index !== itemIndex
     );
@@ -229,7 +116,67 @@ const Orders: FC = () => {
       items: updateditems,
     });
   };
-  console.log(selectedInvoice);
+
+  const updateOrderStatusRequest: any = async (status: OrderStatusEnum) => {
+    try {
+      const response = await OrderService.updateOrder(selectedInvoice._id, {
+        status,
+      });
+
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const [loadingButton, setLoadingButton] = useState<string | null>(null);
+
+  const orderStatusMutation = useMutation({
+    mutationFn: (status: OrderStatusEnum) => updateOrderStatusRequest(status),
+    onSuccess: (res: any) => {
+      setLoadingButton(null);
+    },
+    onError: (error: any) => {
+      setLoadingButton(null);
+    },
+  });
+
+  const onUpdateStatusOrder = (status: OrderStatusEnum, action: string) => {
+    setLoadingButton(action);
+    orderStatusMutation.mutate(status);
+  };
+
+  const updateOrderItemsRequest: any = async () => {
+    try {
+
+      const itemData = selectedInvoice.items.map((item: any) => ({
+        itemId: item.itemId._id,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+
+      const response = await OrderService.updateOrderItems(selectedInvoice._id, {
+        itemData,
+      });
+
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const orderItemsMutation = useMutation({
+    mutationFn: updateOrderItemsRequest,
+    onSuccess: (res: any) => {},
+  });
+
+  const onUpdateOrderItems = () => {
+  // console.log(selectedInvoice);
+
+    orderItemsMutation.mutate();
+  };
+
+console.log("selectedInvoie", selectedInvoice);
 
   return (
     <div className="flex justify-end h-screen w-full">
@@ -391,13 +338,13 @@ const Orders: FC = () => {
                       </TabsList>
                     </div>
                     {orderHeader ? (
-                      <div className="text-primary-border flex w-[40%] items-center justify-end">
-                        <div className="w-[65%]">
+                      <div className="text-primary-border flex w-[40%] items-center justify-between">
+                        <div className="w-[35%]">
                           <h1>Quantity</h1>
                         </div>
-                        {/* <div className="w-[30%]">
+                        <div className="w-[30%]">
                           <h1>Action</h1>
-                        </div> */}
+                        </div>
                       </div>
                     ) : (
                       <div className="text-primary-border flex w-[40%] items-center justify-center gap-x-4">
@@ -440,7 +387,7 @@ const Orders: FC = () => {
                                     </p>
                                   </div>
                                   <div className="w-[45%] text-[0.8rem]">
-                                    <p>₦{item.price}</p>
+                                    <p>₦{item.price.toLocaleString()}</p>
                                   </div>
                                   <div className="w-[25%]">
                                     <EllipsisVertical className="m-auto w-5" />
@@ -456,24 +403,50 @@ const Orders: FC = () => {
                             <div className=" w-full text-secondaryBorder">
                               <div className="flex justify-between">
                                 <p>Sub-total</p>
-                                <p>₦{selectedInvoice.total} </p>
+                                <p>₦{(selectedInvoice?.subTotal)?.toLocaleString()} </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Discount</p>
-                                <p>₦{selectedInvoice.discount} </p>
+                                <p>₦{(selectedInvoice?.totalDiscount)?.toLocaleString()} </p>
                               </div>
                               <div className="flex justify-between text-lg font-medium ">
                                 <p>Total</p>
-                                <p>₦{selectedInvoice.total} </p>
+                                <p>₦{selectedInvoice?.total.toLocaleString()} </p>
                               </div>
                             </div>
                           </div>
                         </div>
 
                         <div>
-                          <div className="p-3 text-background items-center border-t border-primary-border">
-                            <button className="flex m-auto rounded-xl bg-cancel p-2 ">
+                          <div className="flex justify-between p-3 text-background items-center border-t border-primary-border">
+                            <button
+                              onClick={() =>
+                                onUpdateStatusOrder(
+                                  OrderStatusEnum.CANCELLED,
+                                  "cancel"
+                                )
+                              }
+                              className="flex m-auto rounded-xl bg-cancel p-2 gap-x-1 "
+                            >
                               <X /> Cancel Order
+                              {loadingButton === "cancel" && (
+                                <LoaderCircle className="text-txwhite rotate-icon w-5" />
+                              )}
+                            </button>
+
+                            <button
+                              onClick={() =>
+                                onUpdateStatusOrder(
+                                  OrderStatusEnum.SERVED,
+                                  "serve"
+                                )
+                              }
+                              className="flex m-auto rounded-xl bg-primaryLime p-2 "
+                            >
+                              <CheckCheck /> Serve Order
+                              {loadingButton === "serve" && (
+                                <LoaderCircle className="text-txwhite rotate-icon w-5" />
+                              )}
                             </button>
                           </div>
                         </div>
@@ -497,7 +470,7 @@ const Orders: FC = () => {
                                   <p>{item.itemId.name}</p>
                                 </div>
                                 <div className="w-[40%] text-center flex">
-                                  <div className="w-full flex justify-evenly">
+                                  <div className="w-[70%] flex justify-evenly">
                                     <p
                                       onClick={() =>
                                         handleQuantityChange(
@@ -524,12 +497,12 @@ const Orders: FC = () => {
                                       <Minus className="w-3" />
                                     </p>
                                   </div>
-                                  {/* <div className="w-[30%]">
+                                  <div className="w-[30%]">
                                     <Trash2
                                       onClick={() => onDeleteItem(itemIndex)}
                                       className="m-auto cursor-pointer text-textCancelled"
                                     />
-                                  </div> */}
+                                  </div>
                                 </div>
                               </div>
                             )
@@ -538,9 +511,15 @@ const Orders: FC = () => {
 
                         <div>
                           <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                            <div className=" w-fit m-auto text-primary">
-                              <button className="flex rounded-xl bg-primaryGreen p-2 ">
+                            <div className=" w-fit m-auto text-white">
+                              <button 
+                              onClick={onUpdateOrderItems}
+                              className="flex rounded-xl bg-primaryLime p-2 ">
                                 <Check /> Save Changes
+
+                                {orderItemsMutation.isPending && (
+                                <LoaderCircle className="text-txwhite rotate-icon w-5" />
+                              )}
                               </button>
                             </div>
                           </div>

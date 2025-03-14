@@ -43,9 +43,10 @@ const ItemBox = ({
       itemId: invoice._id,
       name: invoice.name,
       quantity: 1,
+      discount: invoice.discount,
       image: invoice.image,
-      price: invoice.price,
-      total: invoice.price * 1,
+      price: invoice.price - invoice.discount,
+      total: (invoice.price - invoice.discount) * 1,
     };
 
     setSelectedInvoice((prevOrder: CartOrderItem) => {
@@ -75,6 +76,7 @@ const ItemBox = ({
     });
     setTimeout(() => setCarted(false), 2000); // Reset after 2 seconds
   };
+  console.log("carted", invoiceData.items);
 
   return (
     <div>
@@ -100,25 +102,39 @@ const ItemBox = ({
                 <p className="capitalize text-lg w-[50%] font-medium text-ellipsis break-words">
                   {invoice.name}
                 </p>
-                <p className="w-[50%] text-end font-medium text-lg">
-                  ₦{invoice.price}
-                </p>
+                <div className="w-[50%] justify-end gap-x-1 flex text-end font-medium text-lg">
+                  {invoice.discount > 0 ? (
+                    <>
+                      <p className="line-through">₦{invoice.price.toLocaleString()}</p>
+
+                      <p>₦{(invoice.price - invoice.discount).toLocaleString()}</p>
+                    </>
+                  ) : (
+                    <p>₦{invoice.price.toLocaleString()}</p>
+                  )}
+                </div>
               </div>
-              {tableOrderData?.length < 1 ? (
+              {!tableOrderData && invoice.available ? (
                 <>
-                  {carted ? (
+                  {activeId === invoice._id && carted ? (
                     <BadgeCheck className="fill-background text-primaryLime transition-all" />
                   ) : (
                     <p
                       onClick={() => addToCart(invoice)}
-                      className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1 transition-all"
+                      className="flex text-xs bg-primaryGreen w-fit px-1.5 rounded-sm py-1 transition-all cursor-pointer"
                     >
                       Add to cart
                       <ShoppingCart className="size-4" />
                     </p>
                   )}
                 </>
-              ) : null}
+              ) : (
+                !invoice.available && (
+                  <p className="flex text-xs font-medium w-fit px-1.5 border-2 border-cancel text-cancel rounded-sm py-1 transition-all">
+                    Out of Stock
+                  </p>
+                )
+              )}
             </div>
           </div>
         ))}

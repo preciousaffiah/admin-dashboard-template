@@ -22,8 +22,6 @@ const TablesGrid = ({
   setSuccess,
   businessId,
 }: AdminTable) => {
-  console.log(invoiceData);
-  
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-4">

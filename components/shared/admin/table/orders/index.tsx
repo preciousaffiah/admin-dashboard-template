@@ -80,12 +80,13 @@ const AdminOrdersTable = ({
     if (key === "all") {
       tabKey = null;
     } else {
-      tabKey = { category: key };
+      tabKey = { status: key };
     }
     refetch();
   };
-  console.log(itemsData);
 
+  console.log(itemsData);
+  
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
@@ -102,7 +103,7 @@ const AdminOrdersTable = ({
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(event, key, value)}
+                  onClick={(event) => handleTabChange(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}
@@ -206,7 +207,7 @@ const AdminOrdersTable = ({
                                     ) : null}
                                   </div>
                                 </TableCell>
-                                <TableCell>₦{invoice.total}</TableCell>
+                                <TableCell>₦{invoice.total.toLocaleString()}</TableCell>
                                 <TableCell>
                                   {moment(invoice?.createdAt).format(
                                     "DD-MM-YY"
