@@ -140,6 +140,9 @@ const Settings = ({ title }: { title: string }) => {
     id: userData?.businessId || undefined,
   });
 
+  const [categories, setCategories] = useState<string[]>([]);
+  const [newCategory, setNewCategory] = useState("");
+
   const [imagePreview, setImagePreview] = useState<string>("");
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -154,6 +157,14 @@ const Settings = ({ title }: { title: string }) => {
       setDomain(window.location.origin);
     }
   }, []);
+
+  // Sync categories with businessData
+  useEffect(() => {
+    if (data?.menuCategories) {
+      setCategories(data.menuCategories);
+      form.setValue("menuCategories", data.menuCategories);
+    }
+  }, [data, form.setValue]);
 
   // Handle image upload and create preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -272,9 +283,11 @@ const Settings = ({ title }: { title: string }) => {
 
   const accountDetailsRequest: any = async () => {
     try {
+      console.log(form.getValues(), "form");
+
       const response = await BusService.updateBusiness(
         userData?.businessId || "",
-        form.getValues()
+        { ...form.getValues(), menuCategories: categories }
       );
 
       return response.data;
@@ -297,6 +310,30 @@ const Settings = ({ title }: { title: string }) => {
     },
   });
 
+  // Remove category
+  const handleRemoveCategory = (category: string) => {
+    const updatedCategories = categories.filter((c) => c !== category);
+    setCategories(updatedCategories);
+    form.setValue("menuCategories", updatedCategories);
+  };
+
+  // Add category
+  const handleAddCategory = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (newCategory.trim() !== "") {
+      e.preventDefault();
+      if (!categories.includes(newCategory.trim())) {
+        const updatedCategories = [...categories, newCategory.trim()];
+        setCategories(updatedCategories);
+
+        form.setValue("menuCategories", updatedCategories);
+
+        categoriesMutation.mutate();
+      }
+      setNewCategory("");
+    }
+  };
   const handlePrint = () => {
     if (sectionRef.current) {
       const printContent = sectionRef.current.innerHTML;
@@ -371,7 +408,6 @@ const Settings = ({ title }: { title: string }) => {
     }
     tableRefetch();
   };
-  console.log(data);
 
   return (
     <AdminLayout title={title}>
@@ -393,7 +429,7 @@ const Settings = ({ title }: { title: string }) => {
                     <div className="w-full">
                       <div className="flex flex-col gap-y-4">
                         <Form {...form}>
-                          <form className="w-full flex gap-x-4">
+                          <form className="w-full flex md:flex-row flex-col gap-x-4">
                             <div className="md:w-[60%] w-full flex flex-col gap-y-3">
                               <div className="w-full bg-secondaryDark text-txWhite p-3 rounded-md">
                                 <div className="flex text-txWhite w-full pb-4 justify-between">
@@ -465,7 +501,7 @@ const Settings = ({ title }: { title: string }) => {
                                     Business Bank Details
                                   </h4>
                                   <AnimatePresence>
-                                    {tablesMutation.isError && (
+                                    {accountMutation.isError && (
                                       <motion.div
                                         initial={{ y: -20, opacity: 0.5 }}
                                         animate={{ y: 0, opacity: 1 }}
@@ -473,7 +509,7 @@ const Settings = ({ title }: { title: string }) => {
                                       >
                                         <ToastMessage
                                           message={
-                                            tablesMutation?.error?.message ||
+                                            accountMutation?.error?.message ||
                                             "An error occured during sign up"
                                           }
                                         />
@@ -600,7 +636,7 @@ const Settings = ({ title }: { title: string }) => {
                                     type="button"
                                     className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
                                   >
-                                    Add
+                                    Save
                                   </button>
                                 )}
 
@@ -686,7 +722,7 @@ const Settings = ({ title }: { title: string }) => {
                                                   }
                                                   className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1 cursor-pointer font-medium"
                                                 >
-                                                  Add
+                                                  Save
                                                 </button>
                                               )}
 
@@ -807,7 +843,7 @@ const Settings = ({ title }: { title: string }) => {
                                     Menu
                                   </h4>
                                   <AnimatePresence>
-                                    {tablesMutation.isError && (
+                                    {categoriesMutation.isError && (
                                       <motion.div
                                         initial={{ y: -20, opacity: 0.5 }}
                                         animate={{ y: 0, opacity: 1 }}
@@ -815,7 +851,7 @@ const Settings = ({ title }: { title: string }) => {
                                       >
                                         <ToastMessage
                                           message={
-                                            tablesMutation?.error?.message ||
+                                            categoriesMutation?.error?.message ||
                                             "An error occured during sign up"
                                           }
                                         />
@@ -843,13 +879,14 @@ const Settings = ({ title }: { title: string }) => {
                                               {...field}
                                               onChange={(e) => {
                                                 const letterValue =
-                                                e.target.value.replace(
-                                                  /[^A-Za-z\s]/g,
-                                                  ""
-                                                ); // Remove anything tha's not a letter or space
-                                              field.onChange(letterValue); // Update the form value
+                                                  e.target.value.replace(
+                                                    /[^A-Za-z\s]/g,
+                                                    ""
+                                                  ); // Remove anything tha's not a letter or space
+                                                field.onChange(letterValue); // Update the form value
+                                                setNewCategory(letterValue);
                                               }}
-                                              value={field.value} // Ensure the value is controlled
+                                              value={newCategory}
                                               className="w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                             />
                                           </FormControl>
@@ -860,23 +897,28 @@ const Settings = ({ title }: { title: string }) => {
                                   )}
                                 />
                                 <div className="w-full flex gap-2 flex-wrap p-3">
-                                  {departments.map((item, index) => (
+                                  {categories.map((category, index) => (
                                     <div
                                       key={index}
                                       className="capitalize flex items-center justify-center bg-primaryDark hover:bg-[#ff831754] hover:px-5 transition-all w-fit cursor-pointer text-sm text-gray-800 rounded-xl px-3 py-1"
                                     >
-                                      <p>{item}</p>
-                                      <X className="w-3.5 ml-1 text-secondaryBorder hover:text-primary-border" />
+                                      <p>{category}</p>
+                                      <X
+                                        onClick={() =>
+                                          handleRemoveCategory(category)
+                                        }
+                                        className="w-3.5 ml-1 text-secondaryBorder hover:text-primary-border"
+                                      />
                                     </div>
                                   ))}
                                 </div>
                                 {!categoriesMutation.isPending && (
                                   <button
-                                    onClick={handleAccountDetails}
+                                    onClick={(e: any) => handleAddCategory(e)}
                                     type="button"
                                     className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
                                   >
-                                    Add
+                                    Save
                                   </button>
                                 )}
 

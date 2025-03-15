@@ -24,6 +24,7 @@ const useBusinessDetails = ({ name, id, email }: BDetails) => {
     queryKey: ["business-details", [name, id, email]],
     queryFn: fetchBusinessRequest,
     enabled: !!(name || id || email), // Only fetch if at least one value is provided
+    refetchOnWindowFocus: false,
   });
 
   return {

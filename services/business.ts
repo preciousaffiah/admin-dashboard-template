@@ -46,13 +46,17 @@ class BusinessService {
       accountNumber?: string;
       accountName?: string;
       bankName?: string;
+      menuCategories?: string[];
     }
   ) {
+console.log("payload", payload);
+
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(
         ([_, value]) => value !== "" && value !== undefined
       )
     );
+console.log("filteredData", filteredData);
 
     return axiosWithToken().put("/business/update", {
       businessId,
