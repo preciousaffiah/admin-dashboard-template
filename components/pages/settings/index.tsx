@@ -283,8 +283,6 @@ const Settings = ({ title }: { title: string }) => {
 
   const accountDetailsRequest: any = async () => {
     try {
-      console.log(form.getValues(), "form");
-
       const response = await BusService.updateBusiness(
         userData?.businessId || "",
         { ...form.getValues(), menuCategories: categories }
@@ -321,19 +319,32 @@ const Settings = ({ title }: { title: string }) => {
   const handleAddCategory = async (
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (newCategory.trim() !== "") {
+    const menuCategories = form.getValues("menuCategories") ?? [];
+    if (
+      newCategory.trim() !== "" ||
+      (categories !== menuCategories && menuCategories.length > 0)
+    ) {
       e.preventDefault();
-      if (!categories.includes(newCategory.trim())) {
-        const updatedCategories = [...categories, newCategory.trim()];
-        setCategories(updatedCategories);
 
-        form.setValue("menuCategories", updatedCategories);
+      // Split input by space and filter out empty values
+      const newCategoriesArray = newCategory
+        .trim()
+        .split(" ")
+        .filter((item) => item !== "");
 
-        categoriesMutation.mutate();
-      }
-      setNewCategory("");
+      // Ensure no duplicates
+      const updatedCategories = Array.from(
+        new Set([...categories, ...newCategoriesArray])
+      );
+
+      setCategories(updatedCategories);
+      form.setValue("menuCategories", updatedCategories);
+
+      categoriesMutation.mutate();
+      setNewCategory(""); // Clear input
     }
   };
+
   const handlePrint = () => {
     if (sectionRef.current) {
       const printContent = sectionRef.current.innerHTML;
@@ -648,193 +659,178 @@ const Settings = ({ title }: { title: string }) => {
 
                             <div className="md:w-[40%] w-full flex flex-col gap-y-3">
                               <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
-                                {isLoading ? (
-                                  <div className="text-txWhite h-[17rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
-                                    <Loader className="rotate-icon size-8" />
-                                  </div>
-                                ) : (
-                                  <>
-                                    <div className="flex flex-col items-start justify-between py-4">
-                                      <h4 className="font-semibold text-lg">
-                                        Tables
-                                      </h4>
-                                      <AnimatePresence>
-                                        {tablesMutation.isError && (
-                                          <motion.div
-                                            initial={{ y: -20, opacity: 0.5 }}
-                                            animate={{ y: 0, opacity: 1 }}
-                                            exit={{ y: -20, opacity: 0.2 }}
-                                          >
-                                            <ToastMessage
-                                              message={
-                                                tablesMutation?.error
-                                                  ?.message ||
-                                                "An error occured during sign up"
-                                              }
-                                            />
-                                          </motion.div>
-                                        )}
-                                      </AnimatePresence>
-                                    </div>
-                                    <FormField
-                                      control={form.control}
-                                      name="tableQuantity"
-                                      render={({ field }) => (
-                                        <FormItem>
-                                          <div>
-                                            <p className="text-primary font-medium pb-2">
-                                              Add more Tables
-                                            </p>
-                                            <div className="w-full flex items-end gap-x-2">
-                                              <p className="text-txWhite font-normal">
-                                                Number of Tables:
-                                              </p>
-                                              <FormControl>
-                                                <input
-                                                  type="text"
-                                                  id="tableQuantity"
-                                                  {...field}
-                                                  onChange={(e) => {
-                                                    const numericValue =
-                                                      e.target.value.replace(
-                                                        /^0+|[^0-9]/g,
-                                                        ""
-                                                      );
-
-                                                    field.onChange(
-                                                      numericValue
-                                                    ); // Update the form value
-                                                  }}
-                                                  value={field.value ?? ""}
-                                                  className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                                />
-                                              </FormControl>
-                                              {!tablesMutation.isPending && (
-                                                <button
-                                                  onClick={handleCreateTable}
-                                                  type="button"
-                                                  disabled={
-                                                    !form
-                                                      .getValues(
-                                                        "tableQuantity"
-                                                      )
-                                                      ?.trim()
-                                                  }
-                                                  className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1 cursor-pointer font-medium"
-                                                >
-                                                  Save
-                                                </button>
-                                              )}
-
-                                              {tablesMutation.isPending && (
-                                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
-                                              )}
-                                            </div>
-                                          </div>
-
-                                          <FormMessage className="pt-2" />
-                                        </FormItem>
-                                      )}
-                                    />
-                                    <FormField
-                                      control={form.control}
-                                      name="tableNumber"
-                                      render={({ field }) => (
-                                        <FormItem>
-                                          <div>
-                                            <h4 className="font-medium pb-2">
-                                              Generate Table QR Code
-                                            </h4>
-                                            <div className="w-full flex gap-x-2 items-end">
-                                              <p className="text-txWhite font-normal">
-                                                Table Number:
-                                              </p>
-                                              <FormControl>
-                                                <input
-                                                  type="text"
-                                                  id="tableNumber"
-                                                  {...field}
-                                                  onChange={(e) => {
-                                                    const numericValue =
-                                                      e.target.value.replace(
-                                                        /^0+|[^0-9]/g,
-                                                        ""
-                                                      );
-
-                                                    field.onChange(
-                                                      numericValue
-                                                    ); // Update the form value
-                                                  }}
-                                                  value={field.value ?? ""}
-                                                  className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                                />
-                                              </FormControl>
-                                              <button
-                                                onClick={handleGenerateQrCode}
-                                                type="button"
-                                                disabled={
-                                                  !form
-                                                    .getValues("tableNumber")
-                                                    ?.trim()
-                                                }
-                                                className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  cursor-pointer font-medium"
-                                              >
-                                                Generate
-                                              </button>
-                                            </div>
-                                          </div>
-                                          <FormMessage className="pt-2" />
-                                        </FormItem>
-                                      )}
-                                    />
-                                    {(isTableRefetching || isTableLoading) && (
-                                      <div className="w-1/2 flex justify-center">
-                                        <LoaderCircle className="text-secondaryBorder rotate-icon" />
-                                      </div>
+                                <div className="flex flex-col items-start justify-between py-4">
+                                  <h4 className="font-semibold text-lg">
+                                    Tables
+                                  </h4>
+                                  <AnimatePresence>
+                                    {tablesMutation.isError && (
+                                      <motion.div
+                                        initial={{ y: -20, opacity: 0.5 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0.2 }}
+                                      >
+                                        <ToastMessage
+                                          message={
+                                            tablesMutation?.error?.message ||
+                                            "An error occured during sign up"
+                                          }
+                                        />
+                                      </motion.div>
                                     )}
-
-                                    {isTableError && (
-                                      <div className="w-1/2 text-xs flex flex-col items-center justify-center">
-                                        <FolderOpen className="w-4 text-secondaryBorder" />
-                                        Table not found
-                                      </div>
-                                    )}
-
-                                    {tableData &&
-                                      !isTableRefetching &&
-                                      !isTableLoading && (
-                                        <div className="flex items-end gap-x-2">
-                                          <div
-                                            ref={sectionRef}
-                                            className="p-4 border mt-4"
-                                            id="print-section"
-                                          >
-                                            <Image
-                                              text={`${domain}/${
-                                                data?.name
-                                              }/table/${form.getValues(
-                                                "tableNumber"
-                                              )}`}
-                                              options={{
-                                                type: "image/jpeg",
-                                                errorCorrectionLevel: "M",
-                                                margin: 2,
-                                                scale: 1,
-                                                width: 250,
-                                              }}
-                                            />
-                                          </div>
-
-                                          <p
-                                            onClick={handlePrint}
-                                            className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
-                                          >
-                                            Print
+                                  </AnimatePresence>
+                                </div>
+                                <FormField
+                                  control={form.control}
+                                  name="tableQuantity"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <p className="text-primary font-medium pb-2">
+                                          Add more Tables
+                                        </p>
+                                        <div className="w-full flex items-end gap-x-2">
+                                          <p className="text-txWhite font-normal">
+                                            Number of Tables:
                                           </p>
+                                          <FormControl>
+                                            <input
+                                              type="text"
+                                              id="tableQuantity"
+                                              {...field}
+                                              onChange={(e) => {
+                                                const numericValue =
+                                                  e.target.value.replace(
+                                                    /^0+|[^0-9]/g,
+                                                    ""
+                                                  );
+
+                                                field.onChange(numericValue); // Update the form value
+                                              }}
+                                              value={field.value ?? ""}
+                                              className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            />
+                                          </FormControl>
+                                          {!tablesMutation.isPending && (
+                                            <button
+                                              onClick={handleCreateTable}
+                                              type="button"
+                                              disabled={
+                                                !form
+                                                  .getValues("tableQuantity")
+                                                  ?.trim()
+                                              }
+                                              className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1 cursor-pointer font-medium"
+                                            >
+                                              Save
+                                            </button>
+                                          )}
+
+                                          {tablesMutation.isPending && (
+                                            <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                                          )}
                                         </div>
-                                      )}
-                                  </>
+                                      </div>
+
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name="tableNumber"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <h4 className="font-medium pb-2">
+                                          Generate Table QR Code
+                                        </h4>
+                                        <div className="w-full flex gap-x-2 items-end">
+                                          <p className="text-txWhite font-normal">
+                                            Table Number:
+                                          </p>
+                                          <FormControl>
+                                            <input
+                                              type="text"
+                                              id="tableNumber"
+                                              {...field}
+                                              onChange={(e) => {
+                                                const numericValue =
+                                                  e.target.value.replace(
+                                                    /^0+|[^0-9]/g,
+                                                    ""
+                                                  );
+
+                                                field.onChange(numericValue); // Update the form value
+                                              }}
+                                              value={field.value ?? ""}
+                                              className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            />
+                                          </FormControl>
+                                          <button
+                                            onClick={handleGenerateQrCode}
+                                            type="button"
+                                            disabled={
+                                              !form
+                                                .getValues("tableNumber")
+                                                ?.trim()
+                                            }
+                                            className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  cursor-pointer font-medium"
+                                          >
+                                            Generate
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                {(isTableRefetching || isTableLoading) && (
+                                  <div className="w-1/2 flex justify-center">
+                                    <LoaderCircle className="text-secondaryBorder rotate-icon" />
+                                  </div>
                                 )}
+
+                                {isTableError && (
+                                  <div className="w-1/2 text-xs flex flex-col items-center justify-center">
+                                    <FolderOpen className="w-4 text-secondaryBorder" />
+                                    Table not found
+                                  </div>
+                                )}
+
+                                {tableData &&
+                                  !isTableRefetching &&
+                                  !isTableLoading && (
+                                    <div className="flex items-end gap-x-2">
+                                      <div
+                                        ref={sectionRef}
+                                        className="p-4 border mt-4"
+                                        id="print-section"
+                                      >
+                                        <Image
+                                          text={`${domain}/${
+                                            data?.name
+                                          }/table/${form.getValues(
+                                            "tableNumber"
+                                          )}`}
+                                          options={{
+                                            type: "image/jpeg",
+                                            errorCorrectionLevel: "M",
+                                            margin: 2,
+                                            scale: 1,
+                                            width: 250,
+                                          }}
+                                        />
+                                      </div>
+
+                                      <p
+                                        onClick={handlePrint}
+                                        className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
+                                      >
+                                        Print
+                                      </p>
+                                    </div>
+                                  )}
                               </div>
 
                               <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
@@ -851,7 +847,8 @@ const Settings = ({ title }: { title: string }) => {
                                       >
                                         <ToastMessage
                                           message={
-                                            categoriesMutation?.error?.message ||
+                                            categoriesMutation?.error
+                                              ?.message ||
                                             "An error occured during sign up"
                                           }
                                         />

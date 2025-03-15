@@ -5,7 +5,7 @@ import DataPagination from "@/components/serviette-ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
-import { useAuthToken } from "@/hooks";
+import { useAuthToken, useBusinessDetails } from "@/hooks";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Circle, FolderOpen, Loader, ShoppingCart } from "lucide-react";
 import ItemBox from "../itemBox";
@@ -16,13 +16,8 @@ import CartModal from "@/components/shared/modal/cart";
 import logo from "public/Logo.png";
 import Image from "next/image";
 import OrderService from "@/services/order";
-
-const tabHeaders = {
+const staticTabHeaders = {
   all: "all",
-  wines: "wines",
-  pasta: "pasta",
-  pizza: "pizza",
-  intercontinental: "intercontinental",
 };
 
 const defaultInvoice: Menus = {
@@ -49,12 +44,24 @@ const BusinessMenu = ({
   table: boolean;
 }) => {
   const { token, userData } = useAuthToken();
+  const { data, isLoading } = useBusinessDetails({
+    id: userData?.businessId || undefined,
+  });
+
+  const categoryTabs =
+    data?.menuCategories?.reduce((acc: any, category: any) => {
+      acc[category] = category;
+      return acc;
+    }, {} as Record<string, string>) || {};
+
+  const tabHeaders = { ...staticTabHeaders, ...categoryTabs };
 
   const [tabKey, setTabKey] = useState<string>("");
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus[]>([]);
   const [carted, setCarted] = useState(false);
+  console.log("tabkey", tabKey);
 
   // GET ITEMS
   const fetchItems = async () => {
@@ -89,8 +96,9 @@ const BusinessMenu = ({
 
   useEffect(() => {
     console.log("Updated dateKey:", tabKey);
-    refetch()
+    refetch();
   }, [tabKey]);
+  console.log("itemsData", itemsData);
 
   // GET ORDER
   const fetchLastOrder = async () => {
@@ -156,19 +164,19 @@ const BusinessMenu = ({
         <div>
           <div
             className={`
-            flex py-4 justify-between px-2 pt-16`}
+            flex flex-col py-4 justify-between px-2 pt-16`}
           >
+            <div className="w-full md:h-[20rem] h-[10rem] bg-black m-auto rounded-md">
+              <p className="md:text-5xl text-4xl text-center m-auto flex items-center justify-center h-full uppercase font-edu">
+                {BusinessName} menu
+              </p>
+            </div>
             {itemsData &&
               !isItemsLoading &&
               //   !isRefetching &&
               itemsData.currentItemCount > 0 &&
               Object.keys(tabHeaders || {}).map((item: any, index: number) => (
                 <TabsContent key={index} value={item} className="w-full">
-                  <div className="md:h-[20rem] h-[10rem] bg-black m-auto rounded-md">
-                    <p className="md:text-5xl text-4xl text-center m-auto flex items-center justify-center h-full uppercase font-edu">
-                      {BusinessName} menu
-                    </p>
-                  </div>
                   <div className="min-h-[70vh] py-4">
                     <ItemBox
                       invoiceData={itemsData}
