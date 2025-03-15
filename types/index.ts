@@ -161,6 +161,7 @@ export type createMenu = {
 export type settings = {
   accountNumber: number,
   accountName: string;
+  menuCategories: string[];
   bankName: string,
   tableQuantity: number;
   image: string;

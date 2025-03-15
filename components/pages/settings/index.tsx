@@ -17,6 +17,7 @@ import {
   Loader,
   LoaderCircle,
   Plus,
+  X,
 } from "lucide-react";
 import Container from "@/components/shared/container";
 import { createMenu, settings } from "@/types";
@@ -41,6 +42,16 @@ import { handleAxiosError } from "@/utils/axios";
 import avatar from "public/avatar.png";
 import { useQRCode } from "next-qrcode";
 
+const departments: string[] = [
+  "kitchen",
+  "bar",
+  "reception",
+  "hospitality",
+  "bakery",
+  "counter",
+  "utilities",
+];
+
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
 
@@ -59,6 +70,15 @@ const formSchema = z.object({
     .string()
     .min(1, { message: "required" })
     .regex(/^[A-Za-z\s]+$/, { message: "letters only" })
+    .optional(),
+  menuCategories: z
+    .array(
+      z
+        .string()
+        .min(1, { message: "required" })
+        .regex(/^[A-Za-z\s]+$/, { message: "letters only" })
+    )
+    .min(1, { message: "required" })
     .optional(),
   tableQuantity: z
     .string()
@@ -86,6 +106,7 @@ const defaultMenu: settings = {
   accountNumber: 0,
   bankName: "",
   accountName: "",
+  menuCategories: [],
   tableQuantity: 0,
   tableNumber: 0,
   image: "",
@@ -98,6 +119,7 @@ const Settings = ({ title }: { title: string }) => {
     defaultValues: {
       accountNumber: "",
       accountName: "",
+      menuCategories: [],
       bankName: "",
       tableQuantity: "",
       tableNumber: "",
@@ -268,6 +290,13 @@ const Settings = ({ title }: { title: string }) => {
     },
   });
 
+  const categoriesMutation = useMutation({
+    mutationFn: accountDetailsRequest,
+    onSuccess: (res: any) => {
+      form.reset();
+    },
+  });
+
   const handlePrint = () => {
     if (sectionRef.current) {
       const printContent = sectionRef.current.innerHTML;
@@ -366,258 +395,256 @@ const Settings = ({ title }: { title: string }) => {
                         <Form {...form}>
                           <form className="w-full flex gap-x-4">
                             <div className="md:w-[60%] w-full flex flex-col gap-y-3">
-                            <div className="w-full bg-secondaryDark text-txWhite p-3 rounded-md">
-                              <div className="flex text-txWhite w-full pb-4 justify-between">
-                                <h2 className="font-medium capitalize">
-                                  Update profile image
-                                </h2>
-                              </div>
+                              <div className="w-full bg-secondaryDark text-txWhite p-3 rounded-md">
+                                <div className="flex text-txWhite w-full pb-4 justify-between">
+                                  <h2 className="font-medium capitalize">
+                                    Update profile image
+                                  </h2>
+                                </div>
 
-                              <div className="flex items-baseline">
-                                <div
-                                  onClick={handleIconClick}
-                                  className="rounded-full cursor-pointer gap-x-2 bg-primaryDark w-52 h-52 items-center flex"
-                                >
-                                  <div className="relative w-full h-full">
-                                    <img
-                                      src={
-                                        imagePreview ||
-                                        `${userData?.image || avatar.src}`
-                                      }
-                                      alt="Uploaded Preview"
-                                      className="object-cover rounded-full w-full h-full"
+                                <div className="flex items-baseline">
+                                  <div
+                                    onClick={handleIconClick}
+                                    className="rounded-full cursor-pointer gap-x-2 bg-primaryDark w-52 h-52 items-center flex"
+                                  >
+                                    <div className="relative w-full h-full">
+                                      <img
+                                        src={
+                                          imagePreview ||
+                                          `${userData?.image || avatar.src}`
+                                        }
+                                        alt="Uploaded Preview"
+                                        className="object-cover rounded-full w-full h-full"
+                                      />
+                                    </div>
+
+                                    <FormField
+                                      control={form.control}
+                                      name="image"
+                                      render={({ field }) => (
+                                        <FormItem className="hidden">
+                                          <FormControl>
+                                            <input
+                                              type="file"
+                                              accept="image/*"
+                                              onChange={handleImageChange}
+                                              ref={fileInputRef}
+                                              className="hidden"
+                                            />
+                                          </FormControl>
+                                          <FormMessage className="text-end" />
+                                        </FormItem>
+                                      )}
                                     />
                                   </div>
-
-                                  <FormField
-                                    control={form.control}
-                                    name="image"
-                                    render={({ field }) => (
-                                      <FormItem className="hidden">
-                                        <FormControl>
-                                          <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageChange}
-                                            ref={fileInputRef}
-                                            className="hidden"
-                                          />
-                                        </FormControl>
-                                        <FormMessage className="text-end" />
-                                      </FormItem>
-                                    )}
-                                  />
-                                </div>
-                                {/* {imageMutation.isPending && (
+                                  {/* {imageMutation.isPending && (
                                   <LoaderCircle className="text-black w-4 rotate-icon" />
                                 )} */}
-                                <div className="relative right-6 cursor-pointer">
-                                  {imageStatus === "loading" && (
-                                    <LoaderCircle className="text-secondaryBorder rotate-icon w-5" />
-                                  )}
-                                  {imageStatus === "error" && (
-                                    <CircleX className="text-secondaryBorder text-cancel w-5" />
-                                  )}
+                                  <div className="relative right-6 cursor-pointer">
+                                    {imageStatus === "loading" && (
+                                      <LoaderCircle className="text-secondaryBorder rotate-icon w-5" />
+                                    )}
+                                    {imageStatus === "error" && (
+                                      <CircleX className="text-secondaryBorder text-cancel w-5" />
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                              {form.formState.errors.image && (
-                                <p className="text-cancel text-sm">
-                                  {form.formState.errors.image.message}
+                                {form.formState.errors.image && (
+                                  <p className="text-cancel text-sm">
+                                    {form.formState.errors.image.message}
+                                  </p>
+                                )}
+                                <p className="text-xs text-secondaryBorder font-medium">
+                                  *Image must be less than 4MB
                                 </p>
-                              )}
-                              <p className="text-xs text-secondaryBorder font-medium">
-                                *Image must be less than 4MB
-                              </p>
-                            </div>
-
-                            <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
-                              <div className="flex flex-col items-start justify-between py-4">
-                                <h4 className="font-semibold text-lg">
-                                  Business Bank Details
-                                </h4>
-                                <AnimatePresence>
-                                  {tablesMutation.isError && (
-                                    <motion.div
-                                      initial={{ y: -20, opacity: 0.5 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      exit={{ y: -20, opacity: 0.2 }}
-                                    >
-                                      <ToastMessage
-                                        message={
-                                          tablesMutation?.error?.message ||
-                                          "An error occured during sign up"
-                                        }
-                                      />
-                                    </motion.div>
-                                  )}
-                                </AnimatePresence>
                               </div>
-                              <p className="text-primary font-medium">
-                                Update details
-                              </p>
-                              <FormField
-                                control={form.control}
-                                name="accountNumber"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <div>
-                                      <div className="w-full flex items-end gap-x-2">
-                                        <p className="text-txWhite font-normal">
-                                          Account Number:
-                                        </p>
-                                        <FormControl>
-                                          <input
-                                            type="text"
-                                            id="accountNumber"
-                                            {...field}
-                                            onChange={(e) => {
-                                              const numericValue =
-                                                e.target.value.replace(
-                                                  /^0+|[^0-9]/g,
-                                                  ""
-                                                );
 
-                                              field.onChange(numericValue); // Update the form value
-                                            }}
-                                            value={field.value} // Ensure the value is controlled
-                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                          />
-                                        </FormControl>
-                                      </div>
-                                      <p className="font-medium">
-                                        {data?.accountNumber}
-                                      </p>
-                                    </div>
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
-                                )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name="accountName"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <div>
-                                      <div className="w-full flex items-end gap-x-2">
-                                        <p className="text-txWhite font-normal">
-                                          Account Name:
-                                        </p>
-                                        <FormControl>
-                                          <input
-                                            type="text"
-                                            id="accountName"
-                                            {...field}
-                                            onChange={(e) => {
-                                              const letterValue =
-                                                e.target.value.replace(
-                                                  /[^A-Za-z\s]/g,
-                                                  ""
-                                                ); // Remove anything that's not a letter or space
-                                              field.onChange(letterValue); // Update the form value
-                                            }}
-                                            value={field.value} // Ensure the value is controlled
-                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                          />
-                                        </FormControl>
-                                      </div>
-                                      <p className="font-medium">
-                                        {data?.accountName}
-                                      </p>
-                                    </div>
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
-                                )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name="bankName"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <div>
-                                      <div className="w-full flex items-end gap-x-2">
-                                        <p className="text-txWhite font-normal">
-                                          Bank Name:
-                                        </p>
-                                        <FormControl>
-                                          <input
-                                            type="text"
-                                            id="bankName"
-                                            {...field}
-                                            onChange={(e) => {
-                                              const letterValue =
-                                                e.target.value.replace(
-                                                  /[^A-Za-z\s]/g,
-                                                  ""
-                                                ); // Remove anything that's not a letter or space
-                                              field.onChange(letterValue); // Update the form value
-                                            }}
-                                            value={field.value}
-                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                          />
-                                        </FormControl>
-                                      </div>
-                                      <p className="font-medium">
-                                        {data?.bankName}
-                                      </p>
-                                    </div>
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
-                                )}
-                              />
+                              <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                                <div className="flex flex-col items-start justify-between py-4">
+                                  <h4 className="font-semibold text-lg">
+                                    Business Bank Details
+                                  </h4>
+                                  <AnimatePresence>
+                                    {tablesMutation.isError && (
+                                      <motion.div
+                                        initial={{ y: -20, opacity: 0.5 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0.2 }}
+                                      >
+                                        <ToastMessage
+                                          message={
+                                            tablesMutation?.error?.message ||
+                                            "An error occured during sign up"
+                                          }
+                                        />
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                                <p className="text-primary font-medium">
+                                  Update details
+                                </p>
+                                <FormField
+                                  control={form.control}
+                                  name="accountNumber"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <div className="w-full flex items-end gap-x-2">
+                                          <p className="text-txWhite font-normal">
+                                            Account Number:
+                                          </p>
+                                          <FormControl>
+                                            <input
+                                              type="text"
+                                              id="accountNumber"
+                                              {...field}
+                                              onChange={(e) => {
+                                                const numericValue =
+                                                  e.target.value.replace(
+                                                    /^0+|[^0-9]/g,
+                                                    ""
+                                                  );
 
-                              {!accountMutation.isPending && (
-                                <button
-                                  onClick={handleAccountDetails}
-                                  type="button"
-                                  className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
-                                >
-                                  Add
-                                </button>
-                              )}
+                                                field.onChange(numericValue); // Update the form value
+                                              }}
+                                              value={field.value} // Ensure the value is controlled
+                                              className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            />
+                                          </FormControl>
+                                        </div>
+                                        <p className="font-medium">
+                                          {data?.accountNumber}
+                                        </p>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name="accountName"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <div className="w-full flex items-end gap-x-2">
+                                          <p className="text-txWhite font-normal">
+                                            Account Name:
+                                          </p>
+                                          <FormControl>
+                                            <input
+                                              type="text"
+                                              id="accountName"
+                                              {...field}
+                                              onChange={(e) => {
+                                                const letterValue =
+                                                  e.target.value.replace(
+                                                    /[^A-Za-z\s]/g,
+                                                    ""
+                                                  ); // Remove anything that's not a letter or space
+                                                field.onChange(letterValue); // Update the form value
+                                              }}
+                                              value={field.value} // Ensure the value is controlled
+                                              className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            />
+                                          </FormControl>
+                                        </div>
+                                        <p className="font-medium">
+                                          {data?.accountName}
+                                        </p>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={form.control}
+                                  name="bankName"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <div className="w-full flex items-end gap-x-2">
+                                          <p className="text-txWhite font-normal">
+                                            Bank Name:
+                                          </p>
+                                          <FormControl>
+                                            <input
+                                              type="text"
+                                              id="bankName"
+                                              {...field}
+                                              onChange={(e) => {
+                                                const letterValue =
+                                                  e.target.value.replace(
+                                                    /[^A-Za-z\s]/g,
+                                                    ""
+                                                  ); // Remove anything that's not a letter or space
+                                                field.onChange(letterValue); // Update the form value
+                                              }}
+                                              value={field.value}
+                                              className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            />
+                                          </FormControl>
+                                        </div>
+                                        <p className="font-medium">
+                                          {data?.bankName}
+                                        </p>
+                                      </div>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
 
-                              {accountMutation.isPending && (
-                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
-                              )}
-                            </div>
+                                {!accountMutation.isPending && (
+                                  <button
+                                    onClick={handleAccountDetails}
+                                    type="button"
+                                    className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                  >
+                                    Add
+                                  </button>
+                                )}
+
+                                {accountMutation.isPending && (
+                                  <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                                )}
+                              </div>
                             </div>
 
                             <div className="md:w-[40%] w-full flex flex-col gap-y-3">
-                          
-
-                            <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
-                              {isLoading ? (
-                                <div className="text-txWhite h-[17rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
-                                  <Loader className="rotate-icon size-8" />
-                                </div>
-                              ) : (
-                                <>
-                                  <div className="flex flex-col items-start justify-between py-4">
-                                    <h4 className="font-semibold text-lg">
-                                      Tables
-                                    </h4>
-                                    <AnimatePresence>
-                                      {tablesMutation.isError && (
-                                        <motion.div
-                                          initial={{ y: -20, opacity: 0.5 }}
-                                          animate={{ y: 0, opacity: 1 }}
-                                          exit={{ y: -20, opacity: 0.2 }}
-                                        >
-                                          <ToastMessage
-                                            message={
-                                              tablesMutation?.error?.message ||
-                                              "An error occured during sign up"
-                                            }
-                                          />
-                                        </motion.div>
-                                      )}
-                                    </AnimatePresence>
+                              <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                                {isLoading ? (
+                                  <div className="text-txWhite h-[17rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                                    <Loader className="rotate-icon size-8" />
                                   </div>
-                                  <FormField
-                                    control={form.control}
-                                    name="tableQuantity"
-                                    render={({ field }) => (
-                                      <FormItem>
-                                        {data?.tableCount > 0 && (
+                                ) : (
+                                  <>
+                                    <div className="flex flex-col items-start justify-between py-4">
+                                      <h4 className="font-semibold text-lg">
+                                        Tables
+                                      </h4>
+                                      <AnimatePresence>
+                                        {tablesMutation.isError && (
+                                          <motion.div
+                                            initial={{ y: -20, opacity: 0.5 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            exit={{ y: -20, opacity: 0.2 }}
+                                          >
+                                            <ToastMessage
+                                              message={
+                                                tablesMutation?.error
+                                                  ?.message ||
+                                                "An error occured during sign up"
+                                              }
+                                            />
+                                          </motion.div>
+                                        )}
+                                      </AnimatePresence>
+                                    </div>
+                                    <FormField
+                                      control={form.control}
+                                      name="tableQuantity"
+                                      render={({ field }) => (
+                                        <FormItem>
                                           <div>
                                             <p className="text-primary font-medium pb-2">
                                               Add more Tables
@@ -643,7 +670,6 @@ const Settings = ({ title }: { title: string }) => {
                                                     ); // Update the form value
                                                   }}
                                                   value={field.value ?? ""}
-
                                                   className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                                 />
                                               </FormControl>
@@ -669,20 +695,28 @@ const Settings = ({ title }: { title: string }) => {
                                               )}
                                             </div>
                                           </div>
-                                        )}
-                                        {data?.tableCount < 1 && (
+
+                                          <FormMessage className="pt-2" />
+                                        </FormItem>
+                                      )}
+                                    />
+                                    <FormField
+                                      control={form.control}
+                                      name="tableNumber"
+                                      render={({ field }) => (
+                                        <FormItem>
                                           <div>
-                                            <p className="text-primary font-medium pb-2">
-                                              Create Tables
-                                            </p>
-                                            <div className="w-full flex items-end gap-x-2">
+                                            <h4 className="font-medium pb-2">
+                                              Generate Table QR Code
+                                            </h4>
+                                            <div className="w-full flex gap-x-2 items-end">
                                               <p className="text-txWhite font-normal">
-                                                Number of Tables:
+                                                Table Number:
                                               </p>
                                               <FormControl>
                                                 <input
                                                   type="text"
-                                                  id="tableQuantity"
+                                                  id="tableNumber"
                                                   {...field}
                                                   onChange={(e) => {
                                                     const numericValue =
@@ -699,281 +733,157 @@ const Settings = ({ title }: { title: string }) => {
                                                   className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                                 />
                                               </FormControl>
-                                              {!tablesMutation.isPending && (
-                                                <button
-                                                  onClick={handleCreateTable}
-                                                  type="button"
-                                                  disabled={
-                                                    !form
-                                                      .getValues(
-                                                        "tableQuantity"
-                                                      )
-                                                      ?.trim()
-                                                  }
-                                                  className=" cursor-pointer text-primaryLime font-medium"
-                                                >
-                                                  Create
-                                                </button>
-                                              )}
-
-                                              {tablesMutation.isPending && (
-                                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
-                                              )}
+                                              <button
+                                                onClick={handleGenerateQrCode}
+                                                type="button"
+                                                disabled={
+                                                  !form
+                                                    .getValues("tableNumber")
+                                                    ?.trim()
+                                                }
+                                                className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  cursor-pointer font-medium"
+                                              >
+                                                Generate
+                                              </button>
                                             </div>
                                           </div>
-                                        )}
-                                        <FormMessage className="pt-2" />
-                                      </FormItem>
+                                          <FormMessage className="pt-2" />
+                                        </FormItem>
+                                      )}
+                                    />
+                                    {(isTableRefetching || isTableLoading) && (
+                                      <div className="w-1/2 flex justify-center">
+                                        <LoaderCircle className="text-secondaryBorder rotate-icon" />
+                                      </div>
                                     )}
-                                  />
-                                  <FormField
-                                    control={form.control}
-                                    name="tableNumber"
-                                    render={({ field }) => (
-                                      <FormItem>
-                                        <div>
-                                          <h4 className="font-medium pb-2">
-                                            Generate Table QR Code
-                                          </h4>
-                                          <div className="w-full flex gap-x-2 items-end">
-                                            <p className="text-txWhite font-normal">
-                                              Table Number:
-                                            </p>
-                                            <FormControl>
-                                              <input
-                                                type="text"
-                                                id="tableNumber"
-                                                {...field}
-                                                onChange={(e) => {
-                                                  const numericValue =
-                                                    e.target.value.replace(
-                                                      /^0+|[^0-9]/g,
-                                                      ""
-                                                    );
 
-                                                  field.onChange(numericValue); // Update the form value
-                                                }}
-                                                value={field.value ?? ""}
-                                                className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                              />
-                                            </FormControl>
-                                            <button
-                                              onClick={handleGenerateQrCode}
-                                              type="button"
-                                              disabled={
-                                                !form
-                                                  .getValues("tableNumber")
-                                                  ?.trim()
-                                              }
-                                              className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  cursor-pointer font-medium"
-                                            >
-                                              Generate
-                                            </button>
+                                    {isTableError && (
+                                      <div className="w-1/2 text-xs flex flex-col items-center justify-center">
+                                        <FolderOpen className="w-4 text-secondaryBorder" />
+                                        Table not found
+                                      </div>
+                                    )}
+
+                                    {tableData &&
+                                      !isTableRefetching &&
+                                      !isTableLoading && (
+                                        <div className="flex items-end gap-x-2">
+                                          <div
+                                            ref={sectionRef}
+                                            className="p-4 border mt-4"
+                                            id="print-section"
+                                          >
+                                            <Image
+                                              text={`${domain}/${
+                                                data?.name
+                                              }/table/${form.getValues(
+                                                "tableNumber"
+                                              )}`}
+                                              options={{
+                                                type: "image/jpeg",
+                                                errorCorrectionLevel: "M",
+                                                margin: 2,
+                                                scale: 1,
+                                                width: 250,
+                                              }}
+                                            />
                                           </div>
+
+                                          <p
+                                            onClick={handlePrint}
+                                            className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
+                                          >
+                                            Print
+                                          </p>
                                         </div>
-                                        <FormMessage className="pt-2" />
-                                      </FormItem>
-                                    )}
-                                  />
-                                  {(isTableRefetching || isTableLoading) && (
-                                    <div className="w-1/2 flex justify-center">
-                                      <LoaderCircle className="text-secondaryBorder rotate-icon" />
-                                    </div>
-                                  )}
-
-                                  {isTableError && (
-                                    <div className="w-1/2 text-xs flex flex-col items-center justify-center">
-                                      <FolderOpen className="w-4 text-secondaryBorder" />
-                                      Table not found
-                                    </div>
-                                  )}
-
-                                  {tableData &&
-                                    !isTableRefetching &&
-                                    !isTableLoading && (
-                                      <div className="flex items-end gap-x-2">
-                                        <div
-                                          ref={sectionRef}
-                                          className="p-4 border mt-4"
-                                          id="print-section"
-                                        >
-                                          <Image
-                                            text={`${domain}/${
-                                              data?.name
-                                            }/table/${form.getValues(
-                                              "tableNumber"
-                                            )}`}
-                                            options={{
-                                              type: "image/jpeg",
-                                              errorCorrectionLevel: "M",
-                                              margin: 2,
-                                              scale: 1,
-                                              width: 250,
-                                            }}
-                                          />
-                                        </div>
-
-                                        <p
-                                          onClick={handlePrint}
-                                          className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
-                                        >
-                                          Print
-                                        </p>
-                                      </div>
-                                    )}
-                                </>
-                              )}
-                            </div>
-
-                            <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
-                              <div className="flex flex-col items-start justify-between py-4">
-                                <h4 className="font-semibold text-lg">
-                                  Business Bank Details
-                                </h4>
-                                <AnimatePresence>
-                                  {tablesMutation.isError && (
-                                    <motion.div
-                                      initial={{ y: -20, opacity: 0.5 }}
-                                      animate={{ y: 0, opacity: 1 }}
-                                      exit={{ y: -20, opacity: 0.2 }}
-                                    >
-                                      <ToastMessage
-                                        message={
-                                          tablesMutation?.error?.message ||
-                                          "An error occured during sign up"
-                                        }
-                                      />
-                                    </motion.div>
-                                  )}
-                                </AnimatePresence>
+                                      )}
+                                  </>
+                                )}
                               </div>
-                              <p className="text-primary font-medium">
-                                Update details
-                              </p>
-                              <FormField
-                                control={form.control}
-                                name="accountNumber"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <div>
-                                      <div className="w-full flex items-end gap-x-2">
-                                        <p className="text-txWhite font-normal">
-                                          Account Number:
-                                        </p>
-                                        <FormControl>
-                                          <input
-                                            type="text"
-                                            id="accountNumber"
-                                            {...field}
-                                            onChange={(e) => {
-                                              const numericValue =
-                                                e.target.value.replace(
-                                                  /^0+|[^0-9]/g,
-                                                  ""
-                                                );
 
-                                              field.onChange(numericValue); // Update the form value
-                                            }}
-                                            value={field.value} // Ensure the value is controlled
-                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                          />
-                                        </FormControl>
-                                      </div>
-                                      <p className="font-medium">
-                                        {data?.accountNumber}
-                                      </p>
-                                    </div>
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
-                                )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name="accountName"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <div>
-                                      <div className="w-full flex items-end gap-x-2">
-                                        <p className="text-txWhite font-normal">
-                                          Account Name:
-                                        </p>
-                                        <FormControl>
-                                          <input
-                                            type="text"
-                                            id="accountName"
-                                            {...field}
-                                            onChange={(e) => {
-                                              const letterValue =
+                              <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                                <div className="flex flex-col items-start justify-between py-4">
+                                  <h4 className="font-semibold text-lg">
+                                    Menu
+                                  </h4>
+                                  <AnimatePresence>
+                                    {tablesMutation.isError && (
+                                      <motion.div
+                                        initial={{ y: -20, opacity: 0.5 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0.2 }}
+                                      >
+                                        <ToastMessage
+                                          message={
+                                            tablesMutation?.error?.message ||
+                                            "An error occured during sign up"
+                                          }
+                                        />
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                                <p className="text-primary font-medium">
+                                  Update categories
+                                </p>
+                                <FormField
+                                  control={form.control}
+                                  name="menuCategories"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <div>
+                                        <div className="w-full flex items-end gap-x-2">
+                                          <p className="text-txWhite font-normal">
+                                            Categories:
+                                          </p>
+                                          <FormControl>
+                                            <input
+                                              type="text"
+                                              id="menuCategories"
+                                              {...field}
+                                              onChange={(e) => {
+                                                const letterValue =
                                                 e.target.value.replace(
                                                   /[^A-Za-z\s]/g,
                                                   ""
-                                                ); // Remove anything that's not a letter or space
+                                                ); // Remove anything tha's not a letter or space
                                               field.onChange(letterValue); // Update the form value
-                                            }}
-                                            value={field.value} // Ensure the value is controlled
-                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                          />
-                                        </FormControl>
+                                              }}
+                                              value={field.value} // Ensure the value is controlled
+                                              className="w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            />
+                                          </FormControl>
+                                        </div>
                                       </div>
-                                      <p className="font-medium">
-                                        {data?.accountName}
-                                      </p>
+                                      <FormMessage className="pt-2" />
+                                    </FormItem>
+                                  )}
+                                />
+                                <div className="w-full flex gap-2 flex-wrap p-3">
+                                  {departments.map((item, index) => (
+                                    <div
+                                      key={index}
+                                      className="capitalize flex items-center justify-center bg-primaryDark hover:bg-[#ff831754] hover:px-5 transition-all w-fit cursor-pointer text-sm text-gray-800 rounded-xl px-3 py-1"
+                                    >
+                                      <p>{item}</p>
+                                      <X className="w-3.5 ml-1 text-secondaryBorder hover:text-primary-border" />
                                     </div>
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
+                                  ))}
+                                </div>
+                                {!categoriesMutation.isPending && (
+                                  <button
+                                    onClick={handleAccountDetails}
+                                    type="button"
+                                    className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                  >
+                                    Add
+                                  </button>
                                 )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name="bankName"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <div>
-                                      <div className="w-full flex items-end gap-x-2">
-                                        <p className="text-txWhite font-normal">
-                                          Bank Name:
-                                        </p>
-                                        <FormControl>
-                                          <input
-                                            type="text"
-                                            id="bankName"
-                                            {...field}
-                                            onChange={(e) => {
-                                              const letterValue =
-                                                e.target.value.replace(
-                                                  /[^A-Za-z\s]/g,
-                                                  ""
-                                                ); // Remove anything that's not a letter or space
-                                              field.onChange(letterValue); // Update the form value
-                                            }}
-                                            value={field.value}
-                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                          />
-                                        </FormControl>
-                                      </div>
-                                      <p className="font-medium">
-                                        {data?.bankName}
-                                      </p>
-                                    </div>
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
+
+                                {categoriesMutation.isPending && (
+                                  <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
                                 )}
-                              />
-
-                              {!accountMutation.isPending && (
-                                <button
-                                  onClick={handleAccountDetails}
-                                  type="button"
-                                  className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
-                                >
-                                  Add
-                                </button>
-                              )}
-
-                              {accountMutation.isPending && (
-                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
-                              )}
-                            </div>
+                              </div>
                             </div>
                           </form>
                         </Form>
