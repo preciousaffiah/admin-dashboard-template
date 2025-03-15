@@ -50,7 +50,7 @@ const Navbar: FC = () => {
 
   return (
     <div className="bg-background">
-      <div className="md:flex hidden w-full py-4 text-txWhite items-center px-4">
+      <div className="md:flex hidden w-full py-4 text-txWhite items-center px-4 gap-x-1">
         <div className="w-[13%] lg:w-[17%]">
           <Image alt="logo" src={logo} className="w-32 h-8" />
         </div>

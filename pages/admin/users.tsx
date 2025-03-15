@@ -18,13 +18,13 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddStaffModal from "@/components/shared/modal/add-staff";
 import avatar from "public/avatar.png";
 
-const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
+const tabs = ["today", "yesterday", "This Week", "This Month", "This Year"];
 
 const tabHeaders = {
   all: "all",
   admin: "admins",
   waiter: "waiters",
-  bar: "bars",
+  bar: "bartenders",
 };
 const defaultInvoice: User = {
   _id: "",
@@ -59,8 +59,8 @@ const Users: FC = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [tabKey, setTabKey] = useState<string>("");
 
-  let tabKey: any = null;
   let title = "User Management";
 
   const updatedInvoice = { ...selectedInvoice };
@@ -110,6 +110,7 @@ const Users: FC = () => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     tabKey={tabKey}
+                    setTabKey={setTabKey}
                     handleRowClick={handleRowClick}
                   />
                    
@@ -187,8 +188,8 @@ const Users: FC = () => {
                               </p>
                             </div>
                             <div className="flex justify-between">
-                              <p>Order Requests</p>
-                              <p>{selectedInvoice.Requests} </p>
+                              <p>Phone Number</p>
+                              <p>{selectedInvoice.phone} </p>
                             </div>
                             <div className="flex justify-between">
                               <p>Orders Completed</p>
@@ -242,21 +243,17 @@ const Users: FC = () => {
                           </div>
                         </div>
                       </div> */}
-                      <div>
+                      {/* <div>
                         <div className="flex justify-between p-3 items-center border-t border-primary-border">
                           <div className=" w-full text-white">
                             <div className="flex justify-between">
-                              {/* <button className="text-secondaryBorder flex rounded-xl transparent-btn p-2 ">
-                                <Wrench /> Set Permissions
-                              </button> */}
                               <button className="m-auto flex rounded-xl bg-cancel p-2 ">
                                 <X /> Delete Staff
                               </button>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div></div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

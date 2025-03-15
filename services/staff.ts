@@ -49,10 +49,13 @@ class StaffsService {
     page: number,
     filters: { department?: string; status?: string; fullname?: string }
   ) {
+    const filteredData = Object.fromEntries(
+      Object.entries(filters).filter(([_, value]) => (value !== "" && value !== "all"))
+    );
     return axiosWithToken().get(`/staff/all-staffs/${businessId}`, {
       params: {
         page,
-        ...filters,
+        ...filteredData,
       },
     });
   }

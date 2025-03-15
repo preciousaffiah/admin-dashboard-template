@@ -26,15 +26,17 @@ export const handleAxiosError = (err: any, thunkAPI: any) => {
   const { message, status } = err.toJSON();
 
   if (status === 401) {
-    deleteStore();
-    router.push("/");
-    // router.reload();
+    console.log("403");
+
+    // deleteStore();
+    // router.push("/");
   }
 
   if (status === 403) {
-    deleteStore();
-    router.push("/");
-    // router.reload();
+    console.log("403");
+
+    // deleteStore();
+    // router.push("/");
   }
 
   if (message === "Network Error") {

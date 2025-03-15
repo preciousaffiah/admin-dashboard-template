@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable } from "@/types";
@@ -17,6 +17,7 @@ const AdminMenuTable = ({
   view,
   handleRowClick,
   tabKey,
+  setTabKey,
   setIsOpen,
   setSelectedInvoice,
   selectedInvoice,
@@ -39,7 +40,7 @@ const AdminMenuTable = ({
       const response = await ItemService.getItems(
         userData?.businessId || "", // businessId
         page, // page
-        tabKey // filters object
+        { category: tabKey } // filters object
       );
 
       return response?.data?.data?.data;
@@ -62,14 +63,10 @@ const AdminMenuTable = ({
     refetchOnWindowFocus: true,
   });
 
-  const handleTabChange: any = (key: any) => {
-    if (key === "all") {
-      tabKey = null;
-    } else {
-      tabKey = { category: key };
-    }
+  useEffect(() => {
     refetch();
-  };
+  }, [tabKey]);
+
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
@@ -80,7 +77,7 @@ const AdminMenuTable = ({
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(key)}
+                  onClick={() => setTabKey(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}
@@ -101,8 +98,10 @@ const AdminMenuTable = ({
               view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
-            {(itemsData && !isItemsLoading && !isRefetching &&
-              itemsData.currentItemCount > 0 ) &&
+            {itemsData &&
+              !isItemsLoading &&
+              !isRefetching &&
+              itemsData.currentItemCount > 0 &&
               Object.keys(tabHeaders || {}).map((item: any, index: number) => (
                 <TabsContent key={index} value={item} className="w-full">
                   {view ? (
@@ -114,6 +113,7 @@ const AdminMenuTable = ({
                         handleRowClick={handleRowClick}
                         setIsOpen={setIsOpen}
                         tabKey={tabKey}
+                        setTabKey={setTabKey}
                         setSelectedInvoice={setSelectedInvoice}
                         selectedInvoice={selectedInvoice}
                       />
@@ -193,7 +193,9 @@ const AdminMenuTable = ({
                                     <p
                                       className={`capitalize status-${invoice.available} text-center flex items-center rounded-xl py-[0.1rem] px-3 w-fit`}
                                     >
-                                      {invoice.available === true ? "available" : "unavailable"}
+                                      {invoice.available === true
+                                        ? "available"
+                                        : "unavailable"}
                                     </p>
                                   </div>
                                 </TableCell>
@@ -216,14 +218,16 @@ const AdminMenuTable = ({
                 </TabsContent>
               ))}
 
-            {(itemsData?.currentItemCount < 1 && !isRefetching && !isItemsLoading)  && (
-              <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
-                <FolderOpen />
-                Empty
-              </div>
-            )}
+            {itemsData?.currentItemCount < 1 &&
+              !isRefetching &&
+              !isItemsLoading && (
+                <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                  <FolderOpen />
+                  Empty
+                </div>
+              )}
 
-            {(isItemsLoading || isRefetching)  && (
+            {(isItemsLoading || isRefetching) && (
               <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
                 <Loader className="rotate-icon size-8" />
                 Loading

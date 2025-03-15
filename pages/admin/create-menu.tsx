@@ -454,9 +454,6 @@ const CreateMenu: FC = () => {
                                             <option value="waiter">
                                               waiter
                                             </option>
-                                            <option value="kitchen">
-                                              kitchen
-                                            </option>
                                           </select>
                                         </FormControl>
                                       </div>

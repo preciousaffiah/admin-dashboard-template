@@ -101,7 +101,9 @@ export type AdminTable = {
   invoiceData?: any;
   isLoading?: boolean;
   handleRowClick?: any;
-  tabKey: any;
+  tabKey: string;
+  setTabKey: any;
+  dateKey?: string;
   setIsOpen?: any;
   setSelectedInvoice?: any;
   selectedInvoice?: any;

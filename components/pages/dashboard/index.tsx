@@ -245,7 +245,7 @@ const chartConfig = {
 
 let tabKey: string = "";
 
-const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
+const tabs = ["today", "yesterday", "This Week", "This Month", "This Year"];
 
 const tableHeaders = [
   "S/N",

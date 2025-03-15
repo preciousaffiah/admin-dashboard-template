@@ -40,15 +40,38 @@ class BusinessService {
     });
   }
 
+  updateBusiness(
+    businessId: string,
+    payload: {
+      accountNumber?: string;
+      accountName?: string;
+      bankName?: string;
+    }
+  ) {
+    const filteredData = Object.fromEntries(
+      Object.entries(payload).filter(
+        ([_, value]) => value !== "" && value !== undefined
+      )
+    );
+
+    return axiosWithToken().put("/business/update", {
+      businessId,
+      ...filteredData,
+    });
+  }
+
   createTables(payload: { businessId: string; tableQuantity: string }) {
     return axiosWithToken().post("/business/tables/create", {
       ...payload,
     });
   }
 
-  updateTable(payload: { tableId: string; businessId: string; tableNumber: string; status: string }) {
-    console.log(payload);
-    
+  updateTable(payload: {
+    tableId: string;
+    businessId: string;
+    tableNumber: string;
+    status: string;
+  }) {
     return axiosWithToken().put(`/business/table/update`, {
       ...payload,
     });
@@ -67,14 +90,20 @@ class BusinessService {
   getAllTables(
     businessId: string,
     page: number,
-    filters?: {
+    filters: {
       status?: string;
     }
   ) {
+    const filteredData = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([_, value]) => value !== "" && value !== "all"
+      )
+    );
+
     return axiosWithToken().get(`/business/tables/${businessId}`, {
       params: {
         page,
-        ...filters,
+        ...filteredData,
       },
     });
   }

@@ -6,7 +6,6 @@ export enum RoleEnum {
 
 export enum DeptEnum {
   ADMIN = "admin",
-  KITCHEN = "kitchen", 
   WAITER = "waiter", 
   BAR = "bar"
 }
@@ -25,4 +24,13 @@ export enum OrderStatusEnum {
   PENDING = "pending",
   SERVED = "served",
   CANCELLED = "cancelled",
+}
+
+
+export enum OrderDateFilterEnum {
+  TODAY = "today",
+  YESTERDAY = "yesterday",
+  THISWEEK = "thisWeek",
+  THISMONTH = "thisMonth",
+  THISYEAR = "thisYear",
 }

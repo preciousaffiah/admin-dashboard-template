@@ -52,17 +52,23 @@ class ItemsService {
   getItems(
     businessId: string,
     page: number,
-    filters?: {
+    filters: {
       name?: string;
       _id?: string;
       category?: string;
       department?: string;
     }
   ) {
+    console.log(filters);
+    
+    const filteredData = Object.fromEntries(
+      Object.entries(filters).filter(([_, value]) => (value !== "" && value !== "all" ))
+    );
+
     return axiosWithoutToken.get(`/item/all-items/${businessId}`, {
       params: {
         page,
-        ...filters,
+        ...filteredData,
       },
     });
   }

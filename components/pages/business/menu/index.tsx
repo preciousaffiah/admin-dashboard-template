@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataPagination from "@/components/serviette-ui/Pagination";
@@ -16,8 +16,6 @@ import CartModal from "@/components/shared/modal/cart";
 import logo from "public/Logo.png";
 import Image from "next/image";
 import OrderService from "@/services/order";
-
-let tabKey: any = null;
 
 const tabHeaders = {
   all: "all",
@@ -52,6 +50,7 @@ const BusinessMenu = ({
 }) => {
   const { token, userData } = useAuthToken();
 
+  const [tabKey, setTabKey] = useState<string>("");
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus[]>([]);
@@ -65,7 +64,7 @@ const BusinessMenu = ({
       const response = await ItemService.getItems(
         businessId,
         page, // page
-        tabKey ? tabKey : null // filters object
+        { category: tabKey } // filters object
       );
 
       return response?.data?.data?.data;
@@ -88,14 +87,10 @@ const BusinessMenu = ({
     refetchOnWindowFocus: true,
   });
 
-  const handleTabChange: any = (key: any) => {
-    if (key === "all") {
-      tabKey = null;
-    } else {
-      tabKey = { category: key };
-    }
-    refetch();
-  };
+  useEffect(() => {
+    console.log("Updated dateKey:", tabKey);
+    refetch()
+  }, [tabKey]);
 
   // GET ORDER
   const fetchLastOrder = async () => {
@@ -118,8 +113,6 @@ const BusinessMenu = ({
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
-console.log(tableOrderData);
-console.log(tableOrderData?.length < 1);
 
   return (
     <div>
@@ -134,7 +127,7 @@ console.log(tableOrderData?.length < 1);
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(key)}
+                  onClick={() => setTabKey(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}

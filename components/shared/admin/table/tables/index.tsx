@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable } from "@/types";
@@ -21,6 +21,7 @@ const TablesTable = ({
   children,
   view,
   tabKey,
+  setTabKey,
   setIsOpen,
   setSelectedInvoice,
   selectedInvoice,
@@ -44,7 +45,7 @@ const TablesTable = ({
       const response = await BusService.getAllTables(
         userData?.businessId || "", // businessId
         page, // page
-        tabKey // filters object
+        {status: tabKey} // filters object
       );
 
       return response?.data?.data?.data;
@@ -67,14 +68,9 @@ const TablesTable = ({
     refetchOnWindowFocus: true,
   });
 
-  const handleTabChange: any = (key: any) => {
-    if (key === "all") {
-      tabKey = null;
-    } else {
-      tabKey = { status: key };
-    }
+  useEffect(() => {
     refetch();
-  };
+  }, [tabKey]);
 
   return (
     <div>
@@ -86,7 +82,7 @@ const TablesTable = ({
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(key)}
+                  onClick={() => setTabKey(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}
@@ -121,6 +117,7 @@ const TablesTable = ({
                         currentPage={currentPage}
                         setIsOpen={setIsOpen}
                         tabKey={tabKey}
+                        setTabKey={setTabKey}
                         setSelectedInvoice={setSelectedInvoice}
                         selectedInvoice={selectedInvoice}
                       />

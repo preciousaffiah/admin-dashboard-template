@@ -45,8 +45,6 @@ import { ToastMessage } from "@/components/serviette-ui";
 import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 import DeleteItemModal from "@/components/shared/modal/delete-item";
 
-let tabKey: string = "";
-
 const tabHeaders = {
   all: "all",
   wines: "wines",
@@ -140,6 +138,7 @@ const Menu: FC = () => {
   });
   const { token, userData } = useAuthToken();
 
+  const [tabKey, setTabKey] = useState<string>("");
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
@@ -268,6 +267,7 @@ const Menu: FC = () => {
                 tableHeaders={tableHeaders}
                 tabHeaders={tabHeaders}
                 tabKey={tabKey}
+                setTabKey={setTabKey}
                 setIsOpen={setIsOpen}
                 setSelectedInvoice={setSelectedInvoice}
                 selectedInvoice={selectedInvoice}
@@ -588,9 +588,6 @@ const Menu: FC = () => {
                                               waiter
                                             </option>
                                             <option value="bar">bar</option>
-                                            <option value="kitchen">
-                                              kitchen
-                                            </option>
                                           </select>
                                         </FormControl>
                                       </div>

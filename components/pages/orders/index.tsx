@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { MainNavbar, Modal } from "@/components/shared";
@@ -32,7 +32,13 @@ import { useMutation } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import OrderService from "@/services/order";
 
-const tabs = ["yesterday", "today", "This Week", "This Month", "This Year"];
+const tabs = {
+  today: "today",
+  yesterday: "yesterday",
+  thisWeek: "This Week",
+  thisMonth: "This Month",
+  thisYear: "This Year",
+};
 const tableHeaders = [
   "S/N",
   // "_id",
@@ -70,24 +76,12 @@ const Orders: FC = () => {
   const [orderHeader, setOrderHeader] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<any>(defaultInvoice);
 
-  // const [invoiceData, setInvoiceData] = useState<Invoice[]>(data);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [dateKey, setDateKey] = useState<string>("");
+  const [tabKey, setTabKey] = useState<string>("");
 
-  // const getPaginatedData = () => {
-  //   const startIndex = (currentPage - 1) * items_per_page;
-  //   const endIndex = startIndex + items_per_page;
-  //   return invoiceData.slice(startIndex, endIndex);
-  // };
-
-  let tabKey: any = null;
-  let tabValue: any = "";
   let title = "Orders";
-
-  const handleTabChange: any = (event: any, key: any, value: any) => {
-    tabKey = key;
-    tabValue = value;
-  };
 
   const updatedInvoice = { ...selectedInvoice };
 
@@ -104,8 +98,8 @@ const Orders: FC = () => {
   };
 
   const onDeleteItem = (itemIndex: number) => {
-    if(selectedInvoice.items.length < 2){
-      return null
+    if (selectedInvoice.items.length < 2) {
+      return null;
     }
 
     const updateditems = selectedInvoice.items.filter(
@@ -148,16 +142,18 @@ const Orders: FC = () => {
 
   const updateOrderItemsRequest: any = async () => {
     try {
-
       const itemData = selectedInvoice.items.map((item: any) => ({
         itemId: item.itemId._id,
         quantity: item.quantity,
         price: item.price,
       }));
 
-      const response = await OrderService.updateOrderItems(selectedInvoice._id, {
-        itemData,
-      });
+      const response = await OrderService.updateOrderItems(
+        selectedInvoice._id,
+        {
+          itemData,
+        }
+      );
 
       return response.data;
     } catch (error: any) {
@@ -171,35 +167,35 @@ const Orders: FC = () => {
   });
 
   const onUpdateOrderItems = () => {
-  // console.log(selectedInvoice);
+    // console.log(selectedInvoice);
 
     orderItemsMutation.mutate();
   };
-
-console.log("selectedInvoie", selectedInvoice);
+  console.log(selectedInvoice);
 
   return (
     <div className="flex justify-end h-screen w-full">
       <Sidebar />
       <Container>
         <div className="authcard3 h-fit lg:px-6 md:px-8 px-0">
-          <Tabs defaultValue={tabs[0]} className="w-full">
+          <Tabs defaultValue={Object.keys(tabs || {})[0]} className="w-full">
             <ScrollArea className="px-3 w-full whitespace-nowrap">
               <TabsList className="bg-transparent">
-                {tabs.map((item, index) => (
+                {Object.entries(tabs || {}).map(([key, value], index): any => (
                   <div key={index}>
                     <TabsTrigger
-                      value={item}
+                      value={key}
                       className="active-main-tab text-sm px-6 capitalize"
+                      onClick={() => setDateKey(key)}
                     >
-                      {item}
+                      {value as string}
                     </TabsTrigger>
                   </div>
                 ))}
               </TabsList>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
-            {tabs.map((item, index) => (
+            {Object.keys(tabs || {}).map((item: any, index: number) => (
               <TabsContent key={index} value={item} className="md:px-0 px-2">
                 <div className="w-full bg-primaryDark pt-4 rounded-md">
                   <div className="w-full h-full">
@@ -242,6 +238,8 @@ console.log("selectedInvoie", selectedInvoice);
                       tableHeaders={tableHeaders}
                       tabHeaders={tabHeaders}
                       tabKey={tabKey}
+                      setTabKey={setTabKey}
+                      dateKey={dateKey}
                       setIsOpen={setIsOpen}
                       setSelectedInvoice={setSelectedInvoice}
                       selectedInvoice={selectedInvoice}
@@ -396,6 +394,15 @@ console.log("selectedInvoie", selectedInvoice);
                               </div>
                             )
                           )}
+
+                          {selectedInvoice.paymentStatus !==
+                            PaymentStatusEnum.PAID &&
+                            selectedInvoice.status !==
+                              OrderStatusEnum.CANCELLED && (
+                              <button className="flex m-auto rounded-xl font-medium bg-primaryGreen text-primary px-3 py-2 ">
+                                Checkout
+                              </button>
+                            )}
                         </div>
 
                         <div>
@@ -403,15 +410,22 @@ console.log("selectedInvoie", selectedInvoice);
                             <div className=" w-full text-secondaryBorder">
                               <div className="flex justify-between">
                                 <p>Sub-total</p>
-                                <p>₦{(selectedInvoice?.subTotal)?.toLocaleString()} </p>
+                                <p>
+                                  ₦{selectedInvoice?.subTotal?.toLocaleString()}{" "}
+                                </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Discount</p>
-                                <p>₦{(selectedInvoice?.totalDiscount)?.toLocaleString()} </p>
+                                <p>
+                                  ₦
+                                  {selectedInvoice?.totalDiscount?.toLocaleString()}{" "}
+                                </p>
                               </div>
                               <div className="flex justify-between text-lg font-medium ">
                                 <p>Total</p>
-                                <p>₦{selectedInvoice?.total.toLocaleString()} </p>
+                                <p>
+                                  ₦{selectedInvoice?.total.toLocaleString()}{" "}
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -512,14 +526,14 @@ console.log("selectedInvoie", selectedInvoice);
                         <div>
                           <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                             <div className=" w-fit m-auto text-white">
-                              <button 
-                              onClick={onUpdateOrderItems}
-                              className="flex rounded-xl bg-primaryLime p-2 ">
+                              <button
+                                onClick={onUpdateOrderItems}
+                                className="flex rounded-xl bg-primaryLime p-2 "
+                              >
                                 <Check /> Save Changes
-
                                 {orderItemsMutation.isPending && (
-                                <LoaderCircle className="text-txwhite rotate-icon w-5" />
-                              )}
+                                  <LoaderCircle className="text-txwhite rotate-icon w-5" />
+                                )}
                               </button>
                             </div>
                           </div>

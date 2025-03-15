@@ -14,6 +14,7 @@ import {
   Edit2,
   Edit3,
   FolderOpen,
+  Loader,
   LoaderCircle,
   Plus,
 } from "lucide-react";
@@ -39,19 +40,6 @@ import { ToastMessage } from "@/components/serviette-ui";
 import { handleAxiosError } from "@/utils/axios";
 import avatar from "public/avatar.png";
 import { useQRCode } from "next-qrcode";
-import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
-
-const categoryArray: any = ["intercontinental"];
-const deptArray: any = [
-  "kitchen",
-  "bar",
-  "reception",
-  "hospitality",
-  "bakery",
-  "waiter",
-  "counter",
-  "utilities",
-];
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
@@ -62,8 +50,16 @@ const formSchema = z.object({
     .min(1, { message: "required" })
     .regex(/^\d+$/, { message: "digits only" })
     .optional(),
-  bankName: z.string().min(1, { message: "required" }).optional(),
-  accountName: z.string().min(1, { message: "required" }).optional(),
+  bankName: z
+    .string()
+    .min(1, { message: "required" })
+    .regex(/^[A-Za-z\s]+$/, { message: "letters only" })
+    .optional(),
+  accountName: z
+    .string()
+    .min(1, { message: "required" })
+    .regex(/^[A-Za-z\s]+$/, { message: "letters only" })
+    .optional(),
   tableQuantity: z
     .string()
     .min(1, { message: "required" })
@@ -118,7 +114,7 @@ const Settings = ({ title }: { title: string }) => {
 
   const { userData, updateUser, token } = useAuthToken();
 
-  const { data } = useBusinessDetails({
+  const { data, isLoading } = useBusinessDetails({
     id: userData?.businessId || undefined,
   });
 
@@ -231,10 +227,42 @@ const Settings = ({ title }: { title: string }) => {
     }
   };
 
-  console.log(form.formState.isValid);
-
   const tablesMutation = useMutation({
     mutationFn: createTablesRequest,
+    onSuccess: (res: any) => {
+      form.reset();
+    },
+  });
+
+  const handleAccountDetails = async () => {
+    // Check if at least one field has a value
+    const hasAtLeastOneValue = [
+      form.getValues("accountNumber"),
+      form.getValues("bankName"),
+      form.getValues("accountName"),
+    ].some((value) => value && value.trim() !== "");
+
+    if (!hasAtLeastOneValue) {
+      return null;
+    }
+    accountMutation.mutate();
+  };
+
+  const accountDetailsRequest: any = async () => {
+    try {
+      const response = await BusService.updateBusiness(
+        userData?.businessId || "",
+        form.getValues()
+      );
+
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const accountMutation = useMutation({
+    mutationFn: accountDetailsRequest,
     onSuccess: (res: any) => {
       form.reset();
     },
@@ -314,6 +342,8 @@ const Settings = ({ title }: { title: string }) => {
     }
     tableRefetch();
   };
+  console.log(data);
+
   return (
     <AdminLayout title={title}>
       <div className="flex justify-end h-screen w-full">
@@ -331,10 +361,11 @@ const Settings = ({ title }: { title: string }) => {
                     <div></div>
                   </div>
                   <div className="flex gap-x-4 pt-6 md:pb-6 pb-20 justify-between md:px-8 px-4 text-secondaryBorder">
-                    <div className="md:w-[60%] w-full flex flex-col gap-y-3">
+                    <div className="w-full">
                       <div className="flex flex-col gap-y-4">
                         <Form {...form}>
-                          <form className="w-full flex flex-col gap-y-4">
+                          <form className="w-full flex gap-x-4">
+                            <div className="md:w-[60%] w-full flex flex-col gap-y-3">
                             <div className="w-full bg-secondaryDark text-txWhite p-3 rounded-md">
                               <div className="flex text-txWhite w-full pb-4 justify-between">
                                 <h2 className="font-medium capitalize">
@@ -399,10 +430,10 @@ const Settings = ({ title }: { title: string }) => {
                               </p>
                             </div>
 
-                            <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                            <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
                               <div className="flex flex-col items-start justify-between py-4">
                                 <h4 className="font-semibold text-lg">
-                                  Tables
+                                  Business Bank Details
                                 </h4>
                                 <AnimatePresence>
                                   {tablesMutation.isError && (
@@ -421,116 +452,23 @@ const Settings = ({ title }: { title: string }) => {
                                   )}
                                 </AnimatePresence>
                               </div>
+                              <p className="text-primary font-medium">
+                                Update details
+                              </p>
                               <FormField
                                 control={form.control}
-                                name="tableQuantity"
-                                render={({ field }) => (
-                                  <FormItem>
-                                    {data?.tableCount > 0 && (
-                                      <div>
-                                        <p className="text-primary font-medium pb-2">
-                                          Add more Tables
-                                        </p>
-                                        <div className="w-full flex items-end gap-x-2">
-                                          <p className="text-txWhite font-normal">
-                                            Number of Tables:
-                                          </p>
-                                          <FormControl>
-                                            <input
-                                              type="text"
-                                              id="tableQuantity"
-                                              {...field}
-                                              onChange={(e) => {
-                                                const numericValue =
-                                                  e.target.value.replace(
-                                                    /^0+|[^0-9]/g,
-                                                    ""
-                                                  );
-
-                                                field.onChange(numericValue); // Update the form value
-                                              }}
-                                              value={field.value} // Ensure the value is controlled
-                                              className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                            />
-                                          </FormControl>
-                                          {!tablesMutation.isPending && (
-                                            <p
-                                              onClick={handleCreateTable}
-                                              className=" cursor-pointer text-primaryLime font-medium"
-                                            >
-                                              Add
-                                            </p>
-                                          )}
-
-                                          {tablesMutation.isPending && (
-                                            <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
-                                          )}
-                                        </div>
-                                      </div>
-                                    )}
-                                    {data?.tableCount < 1 && (
-                                      <div>
-                                        <p className="text-primary font-medium pb-2">
-                                          Create Tables
-                                        </p>
-                                        <div className="w-full flex items-end gap-x-2">
-                                          <p className="text-txWhite font-normal">
-                                            Number of Tables:
-                                          </p>
-                                          <FormControl>
-                                            <input
-                                              type="text"
-                                              id="tableQuantity"
-                                              {...field}
-                                              onChange={(e) => {
-                                                const numericValue =
-                                                  e.target.value.replace(
-                                                    /^0+|[^0-9]/g,
-                                                    ""
-                                                  );
-
-                                                field.onChange(numericValue); // Update the form value
-                                              }}
-                                              value={field.value} // Ensure the value is controlled
-                                              className="md:w-16 w-full border-y-0 border-x-0 outline-none rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
-                                            />
-                                          </FormControl>
-                                          {!tablesMutation.isPending && (
-                                            <p
-                                              onClick={handleCreateTable}
-                                              className=" cursor-pointer text-primaryLime font-medium"
-                                            >
-                                              Create
-                                            </p>
-                                          )}
-
-                                          {tablesMutation.isPending && (
-                                            <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
-                                          )}
-                                        </div>
-                                      </div>
-                                    )}
-                                    <FormMessage className="pt-2" />
-                                  </FormItem>
-                                )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name="tableNumber"
+                                name="accountNumber"
                                 render={({ field }) => (
                                   <FormItem>
                                     <div>
-                                      <h4 className="font-medium pb-2">
-                                        Generate Table QR Code
-                                      </h4>
-                                      <div className="w-full flex gap-x-2 items-end">
+                                      <div className="w-full flex items-end gap-x-2">
                                         <p className="text-txWhite font-normal">
-                                          Table Number:
+                                          Account Number:
                                         </p>
                                         <FormControl>
                                           <input
                                             type="text"
-                                            id="tableNumber"
+                                            id="accountNumber"
                                             {...field}
                                             onChange={(e) => {
                                               const numericValue =
@@ -542,67 +480,349 @@ const Settings = ({ title }: { title: string }) => {
                                               field.onChange(numericValue); // Update the form value
                                             }}
                                             value={field.value} // Ensure the value is controlled
-                                            className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
                                         </FormControl>
-                                        <p
-                                          onClick={handleGenerateQrCode}
-                                          className="cursor-pointer text-primaryLime font-medium"
-                                        >
-                                          Generate
-                                        </p>
                                       </div>
+                                      <p className="font-medium">
+                                        {data?.accountNumber}
+                                      </p>
                                     </div>
                                     <FormMessage className="pt-2" />
                                   </FormItem>
                                 )}
                               />
-                              {(isTableRefetching || isTableLoading) && (
-                                <div className="w-1/2 flex justify-center">
-                                  <LoaderCircle className="text-secondaryBorder rotate-icon" />
-                                </div>
-                              )}
-
-                              {isTableError && (
-                                <div className="w-1/2 text-xs flex flex-col items-center justify-center">
-                                  <FolderOpen className="w-4 text-secondaryBorder" />
-                                  Table not found
-                                </div>
-                              )}
-
-                              {tableData &&
-                                !isTableRefetching &&
-                                !isTableLoading && (
-                                  <div className="flex items-end gap-x-2">
-                                    <div
-                                      ref={sectionRef}
-                                      className="p-4 border mt-4"
-                                      id="print-section"
-                                    >
-                                      <Image
-                                        text={`${domain}/${
-                                          data?.name
-                                        }/table/${form.getValues(
-                                          "tableNumber"
-                                        )}`}
-                                        options={{
-                                          type: "image/jpeg",
-                                          errorCorrectionLevel: "M",
-                                          margin: 2,
-                                          scale: 1,
-                                          width: 250,
-                                        }}
-                                      />
+                              <FormField
+                                control={form.control}
+                                name="accountName"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <div>
+                                      <div className="w-full flex items-end gap-x-2">
+                                        <p className="text-txWhite font-normal">
+                                          Account Name:
+                                        </p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="accountName"
+                                            {...field}
+                                            onChange={(e) => {
+                                              const letterValue =
+                                                e.target.value.replace(
+                                                  /[^A-Za-z\s]/g,
+                                                  ""
+                                                ); // Remove anything that's not a letter or space
+                                              field.onChange(letterValue); // Update the form value
+                                            }}
+                                            value={field.value} // Ensure the value is controlled
+                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <p className="font-medium">
+                                        {data?.accountName}
+                                      </p>
                                     </div>
-
-                                    <p
-                                      onClick={handlePrint}
-                                      className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
-                                    >
-                                      Print
-                                    </p>
-                                  </div>
+                                    <FormMessage className="pt-2" />
+                                  </FormItem>
                                 )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name="bankName"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <div>
+                                      <div className="w-full flex items-end gap-x-2">
+                                        <p className="text-txWhite font-normal">
+                                          Bank Name:
+                                        </p>
+                                        <FormControl>
+                                          <input
+                                            type="text"
+                                            id="bankName"
+                                            {...field}
+                                            onChange={(e) => {
+                                              const letterValue =
+                                                e.target.value.replace(
+                                                  /[^A-Za-z\s]/g,
+                                                  ""
+                                                ); // Remove anything that's not a letter or space
+                                              field.onChange(letterValue); // Update the form value
+                                            }}
+                                            value={field.value}
+                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                          />
+                                        </FormControl>
+                                      </div>
+                                      <p className="font-medium">
+                                        {data?.bankName}
+                                      </p>
+                                    </div>
+                                    <FormMessage className="pt-2" />
+                                  </FormItem>
+                                )}
+                              />
+
+                              {!accountMutation.isPending && (
+                                <button
+                                  onClick={handleAccountDetails}
+                                  type="button"
+                                  className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                >
+                                  Add
+                                </button>
+                              )}
+
+                              {accountMutation.isPending && (
+                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                              )}
+                            </div>
+                            </div>
+
+                            <div className="md:w-[40%] w-full flex flex-col gap-y-3">
+                          
+
+                            <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                              {isLoading ? (
+                                <div className="text-txWhite h-[17rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                                  <Loader className="rotate-icon size-8" />
+                                </div>
+                              ) : (
+                                <>
+                                  <div className="flex flex-col items-start justify-between py-4">
+                                    <h4 className="font-semibold text-lg">
+                                      Tables
+                                    </h4>
+                                    <AnimatePresence>
+                                      {tablesMutation.isError && (
+                                        <motion.div
+                                          initial={{ y: -20, opacity: 0.5 }}
+                                          animate={{ y: 0, opacity: 1 }}
+                                          exit={{ y: -20, opacity: 0.2 }}
+                                        >
+                                          <ToastMessage
+                                            message={
+                                              tablesMutation?.error?.message ||
+                                              "An error occured during sign up"
+                                            }
+                                          />
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                  <FormField
+                                    control={form.control}
+                                    name="tableQuantity"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        {data?.tableCount > 0 && (
+                                          <div>
+                                            <p className="text-primary font-medium pb-2">
+                                              Add more Tables
+                                            </p>
+                                            <div className="w-full flex items-end gap-x-2">
+                                              <p className="text-txWhite font-normal">
+                                                Number of Tables:
+                                              </p>
+                                              <FormControl>
+                                                <input
+                                                  type="text"
+                                                  id="tableQuantity"
+                                                  {...field}
+                                                  onChange={(e) => {
+                                                    const numericValue =
+                                                      e.target.value.replace(
+                                                        /^0+|[^0-9]/g,
+                                                        ""
+                                                      );
+
+                                                    field.onChange(
+                                                      numericValue
+                                                    ); // Update the form value
+                                                  }}
+                                                  value={field.value ?? ""}
+
+                                                  className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                                />
+                                              </FormControl>
+                                              {!tablesMutation.isPending && (
+                                                <button
+                                                  onClick={handleCreateTable}
+                                                  type="button"
+                                                  disabled={
+                                                    !form
+                                                      .getValues(
+                                                        "tableQuantity"
+                                                      )
+                                                      ?.trim()
+                                                  }
+                                                  className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1 cursor-pointer font-medium"
+                                                >
+                                                  Add
+                                                </button>
+                                              )}
+
+                                              {tablesMutation.isPending && (
+                                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                                              )}
+                                            </div>
+                                          </div>
+                                        )}
+                                        {data?.tableCount < 1 && (
+                                          <div>
+                                            <p className="text-primary font-medium pb-2">
+                                              Create Tables
+                                            </p>
+                                            <div className="w-full flex items-end gap-x-2">
+                                              <p className="text-txWhite font-normal">
+                                                Number of Tables:
+                                              </p>
+                                              <FormControl>
+                                                <input
+                                                  type="text"
+                                                  id="tableQuantity"
+                                                  {...field}
+                                                  onChange={(e) => {
+                                                    const numericValue =
+                                                      e.target.value.replace(
+                                                        /^0+|[^0-9]/g,
+                                                        ""
+                                                      );
+
+                                                    field.onChange(
+                                                      numericValue
+                                                    ); // Update the form value
+                                                  }}
+                                                  value={field.value ?? ""}
+                                                  className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                                />
+                                              </FormControl>
+                                              {!tablesMutation.isPending && (
+                                                <button
+                                                  onClick={handleCreateTable}
+                                                  type="button"
+                                                  disabled={
+                                                    !form
+                                                      .getValues(
+                                                        "tableQuantity"
+                                                      )
+                                                      ?.trim()
+                                                  }
+                                                  className=" cursor-pointer text-primaryLime font-medium"
+                                                >
+                                                  Create
+                                                </button>
+                                              )}
+
+                                              {tablesMutation.isPending && (
+                                                <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
+                                              )}
+                                            </div>
+                                          </div>
+                                        )}
+                                        <FormMessage className="pt-2" />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={form.control}
+                                    name="tableNumber"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <div>
+                                          <h4 className="font-medium pb-2">
+                                            Generate Table QR Code
+                                          </h4>
+                                          <div className="w-full flex gap-x-2 items-end">
+                                            <p className="text-txWhite font-normal">
+                                              Table Number:
+                                            </p>
+                                            <FormControl>
+                                              <input
+                                                type="text"
+                                                id="tableNumber"
+                                                {...field}
+                                                onChange={(e) => {
+                                                  const numericValue =
+                                                    e.target.value.replace(
+                                                      /^0+|[^0-9]/g,
+                                                      ""
+                                                    );
+
+                                                  field.onChange(numericValue); // Update the form value
+                                                }}
+                                                value={field.value ?? ""}
+                                                className="w-16 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                              />
+                                            </FormControl>
+                                            <button
+                                              onClick={handleGenerateQrCode}
+                                              type="button"
+                                              disabled={
+                                                !form
+                                                  .getValues("tableNumber")
+                                                  ?.trim()
+                                              }
+                                              className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  cursor-pointer font-medium"
+                                            >
+                                              Generate
+                                            </button>
+                                          </div>
+                                        </div>
+                                        <FormMessage className="pt-2" />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  {(isTableRefetching || isTableLoading) && (
+                                    <div className="w-1/2 flex justify-center">
+                                      <LoaderCircle className="text-secondaryBorder rotate-icon" />
+                                    </div>
+                                  )}
+
+                                  {isTableError && (
+                                    <div className="w-1/2 text-xs flex flex-col items-center justify-center">
+                                      <FolderOpen className="w-4 text-secondaryBorder" />
+                                      Table not found
+                                    </div>
+                                  )}
+
+                                  {tableData &&
+                                    !isTableRefetching &&
+                                    !isTableLoading && (
+                                      <div className="flex items-end gap-x-2">
+                                        <div
+                                          ref={sectionRef}
+                                          className="p-4 border mt-4"
+                                          id="print-section"
+                                        >
+                                          <Image
+                                            text={`${domain}/${
+                                              data?.name
+                                            }/table/${form.getValues(
+                                              "tableNumber"
+                                            )}`}
+                                            options={{
+                                              type: "image/jpeg",
+                                              errorCorrectionLevel: "M",
+                                              margin: 2,
+                                              scale: 1,
+                                              width: 250,
+                                            }}
+                                          />
+                                        </div>
+
+                                        <p
+                                          onClick={handlePrint}
+                                          className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
+                                        >
+                                          Print
+                                        </p>
+                                      </div>
+                                    )}
+                                </>
+                              )}
                             </div>
 
                             <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
@@ -655,10 +875,13 @@ const Settings = ({ title }: { title: string }) => {
                                               field.onChange(numericValue); // Update the form value
                                             }}
                                             value={field.value} // Ensure the value is controlled
-                                            className="md:w-16 w-full border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
                                         </FormControl>
                                       </div>
+                                      <p className="font-medium">
+                                        {data?.accountNumber}
+                                      </p>
                                     </div>
                                     <FormMessage className="pt-2" />
                                   </FormItem>
@@ -680,19 +903,21 @@ const Settings = ({ title }: { title: string }) => {
                                             id="accountName"
                                             {...field}
                                             onChange={(e) => {
-                                              const numericValue =
+                                              const letterValue =
                                                 e.target.value.replace(
-                                                  /^0+|[^0-9]/g,
+                                                  /[^A-Za-z\s]/g,
                                                   ""
-                                                );
-
-                                              field.onChange(numericValue); // Update the form value
+                                                ); // Remove anything that's not a letter or space
+                                              field.onChange(letterValue); // Update the form value
                                             }}
                                             value={field.value} // Ensure the value is controlled
-                                            className="md:w-16 w-full border-y-0 border-x-0 outline-none rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
                                         </FormControl>
                                       </div>
+                                      <p className="font-medium">
+                                        {data?.accountName}
+                                      </p>
                                     </div>
                                     <FormMessage className="pt-2" />
                                   </FormItem>
@@ -713,29 +938,42 @@ const Settings = ({ title }: { title: string }) => {
                                             type="text"
                                             id="bankName"
                                             {...field}
-                                            value={field.value} //TODO: make value the fetched data from db
-                                            className="md:w-16 w-full border-y-0 border-x-0 outline-none rounded-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
+                                            onChange={(e) => {
+                                              const letterValue =
+                                                e.target.value.replace(
+                                                  /[^A-Za-z\s]/g,
+                                                  ""
+                                                ); // Remove anything that's not a letter or space
+                                              field.onChange(letterValue); // Update the form value
+                                            }}
+                                            value={field.value}
+                                            className="lg:w-1/5 w-1/2 border-y-0 border-x-0 rounded-none outline-none focus:border-b-primary-orange transition-colors duration-300 border-b border-primary-border focus-visible:ring-offset-0 focus-visible:ring-0 px-0 bg-transparent"
                                           />
                                         </FormControl>
                                       </div>
+                                      <p className="font-medium">
+                                        {data?.bankName}
+                                      </p>
                                     </div>
                                     <FormMessage className="pt-2" />
                                   </FormItem>
                                 )}
                               />
 
-                              {!tablesMutation.isPending && (
-                                <p
-                                  onClick={handleCreateTable}
-                                  className=" cursor-pointer text-primaryLime font-medium"
+                              {!accountMutation.isPending && (
+                                <button
+                                  onClick={handleAccountDetails}
+                                  type="button"
+                                  className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
                                 >
                                   Add
-                                </p>
+                                </button>
                               )}
 
-                              {tablesMutation.isPending && (
+                              {accountMutation.isPending && (
                                 <LoaderCircle className="text-secondaryBorder w-5 h-5 rotate-icon" />
                               )}
+                            </div>
                             </div>
                           </form>
                         </Form>

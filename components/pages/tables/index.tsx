@@ -66,7 +66,8 @@ const Tables: FC = () => {
     mode: "onChange", // Ensures validation checks on each change
   });
   const { token, userData } = useAuthToken();
-
+  
+  const [tabKey, setTabKey] = useState<string>("");
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] =
@@ -134,6 +135,7 @@ const Tables: FC = () => {
                 tableHeaders={tableHeaders}
                 tabHeaders={tabHeaders}
                 tabKey={tabKey}
+                setTabKey={setTabKey}
                 setIsOpen={setIsOpen}
                 setSelectedInvoice={setSelectedInvoice}
                 selectedInvoice={selectedInvoice}

@@ -236,7 +236,6 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                               </option>
                               <option value="bar">bar</option>
                               <option value="waiter">waiter</option>
-                              <option value="kitchen">kitchen</option>
                             </select>
                           </FormControl>
                         </div>

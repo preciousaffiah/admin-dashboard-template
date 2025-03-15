@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable, Invoice } from "@/types";
@@ -14,6 +14,7 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { handleRowClick } from "@/utils/modal";
 import OrderService from "@/services/order";
 import moment from "moment";
+import { OrderDateFilterEnum } from "@/types/enums";
 
 const defaultInvoice: Invoice = {
   _id: "",
@@ -30,6 +31,8 @@ const AdminOrdersTable = ({
   children,
   view,
   tabKey,
+  setTabKey,
+  dateKey,
   invoiceData,
   setIsOpen,
   setSelectedInvoice,
@@ -49,11 +52,12 @@ const AdminOrdersTable = ({
   const fetchOrders = async () => {
     try {
       // setPage(pageParam);
+      console.log("dateKey", dateKey);
 
       const response = await OrderService.getOrders(
         userData?.businessId || "", // businessId
         page, // page
-        tabKey // filters object
+        { status: tabKey, dateFilter: dateKey } // filters object
       );
 
       return response?.data?.data?.data;
@@ -76,17 +80,11 @@ const AdminOrdersTable = ({
     refetchOnWindowFocus: true,
   });
 
-  const handleTabChange: any = (key: any) => {
-    if (key === "all") {
-      tabKey = null;
-    } else {
-      tabKey = { status: key };
-    }
+  useEffect(() => {
     refetch();
-  };
+  }, [tabKey, dateKey]);
 
-  console.log(itemsData);
-  
+
   return (
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
@@ -103,7 +101,7 @@ const AdminOrdersTable = ({
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(key)}
+                  onClick={() => setTabKey(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}
@@ -145,6 +143,7 @@ const AdminOrdersTable = ({
                         handleRowClick={undefined} //TODO:
                         setIsOpen={setIsOpen}
                         tabKey={tabKey}
+                        setTabKey={setTabKey}
                         setSelectedInvoice={setSelectedInvoice}
                         selectedInvoice={selectedInvoice}
                       />
@@ -207,7 +206,9 @@ const AdminOrdersTable = ({
                                     ) : null}
                                   </div>
                                 </TableCell>
-                                <TableCell>₦{invoice.total.toLocaleString()}</TableCell>
+                                <TableCell>
+                                  ₦{invoice.total.toLocaleString()}
+                                </TableCell>
                                 <TableCell>
                                   {moment(invoice?.createdAt).format(
                                     "DD-MM-YY"

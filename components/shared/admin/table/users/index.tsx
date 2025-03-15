@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/shared";
@@ -44,6 +44,7 @@ const AdminUsersTable = ({
   view,
   handleRowClick,
   tabKey,
+  setTabKey,
   setIsOpen,
   setSelectedInvoice,
   selectedInvoice,
@@ -63,7 +64,7 @@ const AdminUsersTable = ({
       const response = await StaffService.getAllStaff(
         userData?.businessId || "", // businessId
         currentPage, // page
-        tabKey // filters object
+        {department: tabKey} // filters object
       );
       return response?.data?.data?.data;
     } catch (error: any) {
@@ -85,15 +86,9 @@ const AdminUsersTable = ({
     refetchOnWindowFocus: false,
   });
 
-  const handleTabChange: any = (key: any) => {
-    if (key === "all") {
-      tabKey = null;
-    } else {
-      tabKey = { department: key };
-    }
+  useEffect(() => {
     refetch();
-  };
-console.log("isRefetching",isRefetching);
+  }, [tabKey]);
 
   return (
     <div>
@@ -105,7 +100,7 @@ console.log("isRefetching",isRefetching);
                 <TabsTrigger
                   key={index}
                   value={key}
-                  onClick={(event) => handleTabChange(key)}
+                  onClick={() => setTabKey(key)}
                   className="active-sub-tab text-xs md:px-6 py-1 rounded-lg capitalize"
                 >
                   {value as string}

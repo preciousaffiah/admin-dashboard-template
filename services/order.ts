@@ -1,3 +1,4 @@
+import { OrderDateFilterEnum } from "@/types/enums";
 import { axiosWithToken, axiosWithoutToken } from "@/utils/axios";
 
 interface OrderItem {
@@ -25,15 +26,21 @@ class OrdersService {
   getOrders(
     businessId: string,
     page: number,
-    filters?: {
+    filters: {
       status?: string;
       paymentStatus?: string;
+      dateFilter?: string;
     }
   ) {
+
+    const filteredData = Object.fromEntries(
+      Object.entries(filters).filter(([_, value]) => (value !== "" && value !== "all"))
+    );
+
     return axiosWithToken().get(`/order/all-orders/${businessId}`, {
       params: {
         page,
-        ...filters,
+        ...filteredData,
       },
     });
   }
