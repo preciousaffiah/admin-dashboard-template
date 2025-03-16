@@ -527,7 +527,7 @@ const Settings = ({ title }: { title: string }) => {
                                   name="accountNumber"
                                   render={({ field }) => (
                                     <FormItem>
-                                      <div>
+                                      <div className="md:text-sm text-base ">
                                         <div className="w-full flex items-end gap-x-2">
                                           <p className="text-txWhite font-normal">
                                             Account Number:
