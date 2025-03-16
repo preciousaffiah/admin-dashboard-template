@@ -497,7 +497,7 @@ const Settings = ({ title }: { title: string }) => {
                                 </p>
                               </div>
 
-                              <div className="mdtext-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
+                              <div className="md:text-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
                                 <div className="flex flex-col items-start justify-between py-4">
                                   <h4 className="font-semibold text-lg">
                                     Business Bank Details
