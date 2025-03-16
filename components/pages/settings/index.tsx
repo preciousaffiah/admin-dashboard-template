@@ -431,7 +431,7 @@ const Settings = ({ title }: { title: string }) => {
                     <div className="w-full">
                       <div className="flex flex-col gap-y-4">
                         <Form {...form}>
-                          <form className="w-full flex md:flex-row flex-col gap-x-4">
+                          <form className="w-full flex md:flex-row flex-col gap-y-3 gap-x-4">
                             <div className="md:w-[60%] w-full flex flex-col gap-y-3">
                               <div className="w-full bg-secondaryDark text-txWhite p-3 rounded-md">
                                 <div className="flex text-txWhite w-full pb-4 justify-between">
@@ -649,7 +649,7 @@ const Settings = ({ title }: { title: string }) => {
                             </div>
 
                             <div className="md:w-[40%] w-full flex flex-col gap-y-3">
-                              <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                              <div className="md:text-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
                                 <div className="flex flex-col items-start justify-between py-4">
                                   <h4 className="font-semibold text-lg">
                                     Tables
@@ -824,7 +824,7 @@ const Settings = ({ title }: { title: string }) => {
                                   )}
                               </div>
 
-                              <div className="flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary text-sm rounded-md px-4">
+                              <div className="md:text-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
                                 <div className="flex flex-col items-start justify-between py-4">
                                   <h4 className="font-semibold text-lg">
                                     Menu
