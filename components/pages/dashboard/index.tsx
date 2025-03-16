@@ -243,27 +243,16 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-let tabKey: string = "";
-
 const tabs = ["today", "yesterday", "This Week", "This Month", "This Year"];
 
 const tableHeaders = [
   "S/N",
-  // "_id",
-  // "Customer",
   "Table No.",
   "Menu Items",
   "Total",
   "Time of Order",
-  // "Assigned to",
   "Status",
 ];
-const tabHeaders = {
-  all: "all",
-  pending: "pending",
-  served: "served",
-  cancelled: "cancelled",
-};
 
 const Dashboard: FC = () => {
   const { userData } = useAuthToken();
@@ -598,7 +587,7 @@ const Dashboard: FC = () => {
                         <div className="pt-4 rounded-t-md px-3 flex pb-4 border-b border-primary-border">
                           <div className="flex justify-between w-full">
                             <p className="capitalize text-lg font-medium text-secondaryBorder">
-                              Recent Orders
+                              Today's Orders
                             </p>
                             <EllipsisVertical className="capitalize text-lg font-medium text-secondaryBorder" />
                           </div>

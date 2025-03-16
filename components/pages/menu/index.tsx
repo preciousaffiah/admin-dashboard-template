@@ -29,7 +29,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminLayout from "@/components/layouts/admin-layout";
 import { Input } from "@/components/ui/input";
 import { DeptEnum } from "@/types/enums";
-import { useAuthToken } from "@/hooks";
+import { useAuthToken, useTabHeaders } from "@/hooks";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -45,13 +45,6 @@ import { ToastMessage } from "@/components/serviette-ui";
 import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 import DeleteItemModal from "@/components/shared/modal/delete-item";
 
-const tabHeaders = {
-  all: "all",
-  wines: "wines",
-  pasta: "pasta",
-  pizza: "pizza",
-  intercontinental: "intercontinental",
-};
 const defaultInvoice: Menus = {
   category: "",
   _id: "",
@@ -100,20 +93,8 @@ const formSchema = z
       .regex(/^\d+$/, { message: "digits only" })
       .optional(),
     description: z.string().min(1, "required").optional(),
-    department: z
-      .enum([
-        "kitchen",
-        "bar",
-        "reception",
-        "hospitality",
-        "bakery",
-        "waiter",
-        "counter",
-        "utilities",
-      ])
-      .optional(), //add field for other
-
-    category: z.enum(["intercontinental"]).optional(), //add field for other
+    department: z.string().min(1, "required").optional(), //add field for other
+    category: z.string().min(1, "required").optional(), //add field for other
     image: z
       .string()
       .refine((val) => val.startsWith("data:"), {
@@ -151,16 +132,9 @@ const Menu: FC = () => {
     "edit"
   );
 
-  const categoryArray = ["intercontinental"];
-  const deptArray = [
-    "kitchen",
-    "bar",
-    "reception",
-    "hospitality",
-    "bakery",
-    "counter",
-    "utilities",
-  ];
+  const tabHeaders = useTabHeaders({
+    id: userData?.businessId || undefined,
+  });
 
   // Handle image upload and create preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -415,13 +389,18 @@ const Menu: FC = () => {
                                 <p>Discount</p>
                                 <p>
                                   ₦
-                                  {Number(selectedInvoice.discount)?.toLocaleString()}{" "}
+                                  {Number(
+                                    selectedInvoice.discount
+                                  )?.toLocaleString()}{" "}
                                 </p>
                               </div>
                               <div className="flex justify-between">
                                 <p>Price</p>
                                 <p>
-                                  ₦{Number(selectedInvoice?.price)?.toLocaleString()}{" "}
+                                  ₦
+                                  {Number(
+                                    selectedInvoice?.price
+                                  )?.toLocaleString()}{" "}
                                 </p>
                               </div>
                               <div className="flex justify-between gap-x-8">
@@ -615,9 +594,19 @@ const Menu: FC = () => {
                                             >
                                               Select category
                                             </option>
-                                            <option value="intercontinental">
-                                              intercontinental
-                                            </option>
+
+                                            {Object.keys(tabHeaders || {})
+                                              .slice(1)
+                                              .map(
+                                                (item: any, index: number) => (
+                                                  <option
+                                                    value={item}
+                                                    key={index}
+                                                  >
+                                                    {item}
+                                                  </option>
+                                                )
+                                              )}
                                           </select>
                                         </FormControl>
                                       </div>

@@ -42,15 +42,6 @@ import { handleAxiosError } from "@/utils/axios";
 import avatar from "public/avatar.png";
 import { useQRCode } from "next-qrcode";
 
-const departments: string[] = [
-  "kitchen",
-  "bar",
-  "reception",
-  "hospitality",
-  "bakery",
-  "counter",
-  "utilities",
-];
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);

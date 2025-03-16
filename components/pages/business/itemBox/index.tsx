@@ -76,7 +76,6 @@ const ItemBox = ({
     });
     setTimeout(() => setCarted(false), 2000); // Reset after 2 seconds
   };
-  console.log("carted", invoiceData.items);
 
   return (
     <div>

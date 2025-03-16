@@ -399,7 +399,7 @@ const Orders: FC = () => {
                             PaymentStatusEnum.PAID &&
                             selectedInvoice.status !==
                               OrderStatusEnum.CANCELLED && (
-                              <button className="flex m-auto rounded-xl font-medium bg-primaryGreen text-primary px-3 py-2 ">
+                              <button className="flex m-auto rounded-xl font-medium bg-primaryLime text-primaryDark px-3 py-2 ">
                                 Checkout
                               </button>
                             )}

@@ -120,7 +120,6 @@ const CartModal = ({
       prevOrder.filter((item: CartOrderItem) => item.itemId !== itemId)
     );
   };
-  console.log(tableOrderData);
 
   return (
     <Sheet>

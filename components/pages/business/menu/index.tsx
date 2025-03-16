@@ -5,7 +5,7 @@ import DataPagination from "@/components/serviette-ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
-import { useAuthToken, useBusinessDetails } from "@/hooks";
+import { useAuthToken, useBusinessDetails, useTabHeaders } from "@/hooks";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Circle, FolderOpen, Loader, ShoppingCart } from "lucide-react";
 import ItemBox from "../itemBox";
@@ -20,18 +20,6 @@ const staticTabHeaders = {
   all: "all",
 };
 
-const defaultInvoice: Menus = {
-  category: "",
-  available: false,
-  _id: "",
-  image: "",
-  name: "",
-  price: 0,
-  discount: 0,
-  description: "",
-  department: "",
-};
-
 const BusinessMenu = ({
   businessId,
   BusinessName,
@@ -43,25 +31,17 @@ const BusinessMenu = ({
   tableId: string;
   table: boolean;
 }) => {
-  const { token, userData } = useAuthToken();
-  const { data, isLoading } = useBusinessDetails({
-    id: userData?.businessId || undefined,
+  const { userData } = useAuthToken();
+
+  const tabHeaders = useTabHeaders({
+    name: BusinessName,
   });
-
-  const categoryTabs =
-    data?.menuCategories?.reduce((acc: any, category: any) => {
-      acc[category] = category;
-      return acc;
-    }, {} as Record<string, string>) || {};
-
-  const tabHeaders = { ...staticTabHeaders, ...categoryTabs };
 
   const [tabKey, setTabKey] = useState<string>("");
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus[]>([]);
   const [carted, setCarted] = useState(false);
-  console.log("tabkey", tabKey);
 
   // GET ITEMS
   const fetchItems = async () => {
