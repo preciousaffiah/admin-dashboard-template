@@ -1,17 +1,15 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import { useAuthToken } from ".";
+import { toast } from "./use-toast";
 // import { ConversationContext } from "./context/conversation";
 
 function useSocket() {
-  const { token } = useAuthToken();
-  const [receivedMsg, setReceivedMsg] = useState<any>([]);
-  // const { handleReceivedMessage, handleStreak, handleOnlineUser } =
-  //   useContext(ConversationContext);
+  const { token, userData } = useAuthToken();
+  const businessId = userData?.businessId;
 
   const socket = useMemo(() => {
     return io(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
-      query: { token: token?.trim() },
       autoConnect: false, // Disable automatic connection on initialization
     });
   }, [token]);
@@ -21,48 +19,42 @@ function useSocket() {
 
     // Event listeners
     socket.on("connect", () => {
-      //take ff when done
       console.log("connected to ws");
+      // Join the staff room
+      if (userData?.businessId) {
+        socket.emit("joinStaffRoom", { businessId });
+      }
     });
 
     socket.on("connect_error", (err: any) => {
       console.error("Connection error", err);
     });
 
-    socket.on("disconnect", () => {});
-
-    socket.on("receive-msg", (data: any) => {
-      if (data) {
-        // handleReceivedMessage(data);
-      }
-      console.log("ws data", data);
-    });
-
-    socket.on("online-status", (data: any) => {
-      if (data) {
-        // handleOnlineUser(data);
-      }
-    });
-
-    socket.on("update-streak", (data: any) => {
-      if (data) {
-        // handleStreak(data);
-      }
-      console.log("ws data", data);
+    // Listen for nudge notifications
+    socket.on("waiterNudged", (data) => {
+      toast({
+        className: "text-base font-semibold border-2 border-primary-orange bg-background text-primary",
+        title: "Nudge Alert",
+        description: data,
+        duration: 120000, // Toast stays for two minutes
+      });
     });
 
     // Cleanup on unmount
     return () => {
       socket.off("connect");
       socket.off("connect_error");
-      socket.off("disconnect");
-      socket.off("receive-msg");
-      socket.off("online-status");
-      socket.off("add-streak");
+      socket.off("waiterNudged");
       socket.disconnect();
     };
-  }, [socket, token]);
-  return { receivedMsg, setReceivedMsg, socket };
+  }, [socket, businessId]);
+
+  const nudgeWaiter = (businessId: string, tableNumber: number) => {
+    if (businessId) {
+      socket.emit("nudgeWaiter", { businessId, tableNumber });
+    }
+  };
+  return { socket, nudgeWaiter };
 }
 
 export default useSocket;

@@ -79,7 +79,7 @@ const BusinessMenuPage: FC = () => {
   return (
       <div>
         <ScannedComp
-          businessId={tableData._id}
+          businessId={tableData.businessId}
           BusinessName={decodedName}
           tabelNumber={number as string}
         />

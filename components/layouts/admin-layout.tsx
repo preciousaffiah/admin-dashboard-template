@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { PageAnimation } from "../serviette-ui";
 import AdminSidebar from "../shared/nav/sidebar/admin";
-import { useAuthToken } from "@/hooks";
+import { useAuthToken, useSocket } from "@/hooks";
 import { DeptEnum, RoleEnum } from "@/types/enums";
 import { MainNavbar } from "../shared";
+import { Toaster } from "../ui/toaster";
 
 interface ILayout {
   children: JSX.Element | React.ReactNode;
@@ -32,6 +33,7 @@ export default function AdminLayout({
   const router = useRouter();
 
   const { token, userData, isLoading } = useAuthToken();
+  useSocket();
 
   useEffect(() => {
     if (isLoading) return;
@@ -83,7 +85,6 @@ export default function AdminLayout({
       <div className="flex flex-col h-screen min-h-screen">
         <AdminSidebar />
         <MainNavbar title={title} subtitle={subtitle} />
-
         <PageAnimation>
           {/* nav */}
 

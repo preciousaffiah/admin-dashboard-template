@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import Head from "next/head";
 import WaiterSidebar from "../shared/nav/sidebar/waiter";
 import { PageAnimation } from "../serviette-ui";
-import { useAuthToken } from "@/hooks";
+import { useAuthToken, useSocket } from "@/hooks";
 import { useRouter } from "next/router";
 import { MainNavbar } from "../shared";
 
@@ -29,8 +29,10 @@ export default function StaffLayout({
   heading = heading || title;
 
   const router = useRouter();
-
   const { token, userData, isLoading } = useAuthToken();
+  console.log(userData);
+  
+  useSocket()
 
   useEffect(() => {
     if (isLoading) return;

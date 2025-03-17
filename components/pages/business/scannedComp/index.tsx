@@ -5,7 +5,7 @@ import DataPagination from "@/components/serviette-ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
-import { useAuthToken } from "@/hooks";
+import { useAuthToken, useSocket } from "@/hooks";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Circle, FolderOpen, Loader, ShoppingCart } from "lucide-react";
 import ItemBox from "../itemBox";
@@ -42,61 +42,26 @@ const defaultInvoice: Menus = {
 const ScannedComp = ({
   businessId,
   BusinessName,
-  tabelNumber
+  tabelNumber,
 }: {
   businessId: string;
   BusinessName: string;
-  tabelNumber: string
+  tabelNumber: string;
 }) => {
-  const { token, userData } = useAuthToken();
+  useSocket();
 
-  const [page, setPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
+  const { nudgeWaiter } = useSocket();
+  const [nudged, setNudged] = useState(false);
 
-  // GET ITEMS
-  const fetchItems = async () => {
-    try {
-      // setPage(pageParam);
-
-      const response = await ItemService.getItems(
-        businessId,
-        page, // page
-        tabKey // filters object
-      );
-
-      return response?.data?.data?.data;
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || "An error occurred");
-      handleAxiosError(error, "");
-    }
-  };
-
-  const {
-    isLoading: isItemsLoading,
-    isRefetching,
-    refetch,
-    isError,
-    data: itemsData,
-  } = useQuery<any, Error>({
-    queryKey: ["get-items", userData?.businessId || ""],
-    queryFn: fetchItems,
-    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
-    refetchOnWindowFocus: true,
-  });
-
-  const handleTabChange: any = (key: any) => {
-    if (key === "all") {
-      tabKey = null;
-    } else {
-      tabKey = { category: key };
-    }
-    refetch();
+  const handleNudged = () => {
+    nudgeWaiter(businessId, Number(tabelNumber));
+    setNudged(true);
+    setTimeout(() => setNudged(false), 4000); // Reset after 4 seconds
   };
 
   return (
     <div className=" min-h-screen font-edu text-primary m-auto w-full h-full flex gap-y-3 justify-center flex-col items-center py-16">
-      <div className="w-[8rem] h-[8rem] border-2 flex items-center rounded-full  bg-black">
+      <div className="w-[8rem] h-[8rem] border-2 flex items-center rounded-full bg-black">
         <p className="text-background text-center m-auto uppercase font-medium text-2xl">
           {BusinessName}
         </p>
@@ -104,13 +69,22 @@ const ScannedComp = ({
       <p className="text-2xl">Welcome table {tabelNumber}!</p>
 
       <div className="text-xl flex gap-y-3 flex-col md:w-[27rem] w-[75%] text-center capitalize">
-        <Link href={`/${BusinessName}/menu?number=${tabelNumber}`} className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">
+        <Link
+          href={`/${BusinessName}/menu?number=${tabelNumber}`}
+          className="w-full rounded-2xl py-4 border-[1px] border-neutral-500"
+        >
           menu
         </Link>
-        <div className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">
-          nudge waiter 👋🏽
+        <div
+          onClick={handleNudged}
+          className="w-full cursor-pointer rounded-2xl py-4 border-[1px] border-neutral-500"
+        >
+          {nudged ? "Nudged 👍🏽" : " Nudge waiter 👋🏽"}
         </div>
-        <Link href={`/${BusinessName}/menu`} className="w-full rounded-2xl py-4 border-[1px] border-neutral-500">
+        <Link
+          href={`/${BusinessName}/menu`}
+          className="w-full rounded-2xl py-4 border-[1px] border-neutral-500"
+        >
           checkout
         </Link>
       </div>

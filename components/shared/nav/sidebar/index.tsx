@@ -4,6 +4,8 @@ import {
   LayoutDashboard,
   NotepadText,
   UtensilsCrossed,
+  Users,
+  Bolt,
 } from "lucide-react";
 import React from "react";
 import { usePathname } from "next/navigation";
@@ -40,68 +42,21 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           ))}
         </div>
       </div>
-      <div className="md:hidden flex bg-background px-4 h-[4.5rem] fixed bottom-0 w-full z-50">
+      <div className="md:hidden flex bg-background px-4 h-[3rem] fixed bottom-0 w-full z-50">
         <div className="flex w-full justify-between items-center">
-          <div
-            className={`nav-item ${
-              path === mobileNavItems.dashboard
-                ? "text-black bg-primaryGreen rounded-md py-1 px-2"
-                : "text-secondaryBorder"
-            }`}
-          >
-            <Link href={mobileNavItems.dashboard}>
-              <LayoutDashboard className="m-auto size-7" />
-              <h1>Dashboard</h1>
-            </Link>
-          </div>
-          <div
-            className={`nav-item ${
-              path === mobileNavItems.menus
-                ? "text-black bg-primaryGreen rounded-md py-1 px-2"
-                : "text-secondaryBorder"
-            }`}
-          >
-            <Link href={mobileNavItems.menus}>
-              <UtensilsCrossed className="m-auto size-7" />
-              <h1>Menu</h1>
-            </Link>
-          </div>
-          <div
-            className={`nav-item ${
-              path === mobileNavItems.orders
-                ? "text-black bg-primaryGreen rounded-md py-1 px-2"
-                : "text-secondaryBorder"
-            }`}
-          >
-            <Link href={mobileNavItems.orders}>
-              <NotepadText className="m-auto size-7" />
-              <h1>Orders</h1>
-            </Link>
-          </div>
-          {/* <div
-            className={`nav-item ${
-              path === "#"
-                ? "text-txWhite border-primaryGreen border-b-2"
-                : "text-secondaryBorder"
-            }`}
-          >
-            <Link href={mobileNavItems.profile}>
-              <User className="m-auto w-6" />
-              <h1>Profile</h1>
-            </Link>
-          </div> */}
-          {/* <div
-            className={`nav-item ${
-              path === mobileNavItems.profile
-                ? "text-txWhite border-primaryGreen border-b-2"
-                : "text-secondaryBorder"
-            }`}
-          >
-            <Link href="#">
-              <Mail className="m-auto w-6" />
-              <h1>Messages</h1>
-            </Link>
-          </div> */}
+          {mobileNavItems.map((item: any, index: number) => (
+            <div
+              className={`nav-item ${
+                item.link === path
+                  ? "text-black bg-primaryGreen rounded-md py-1 px-2"
+                  : "text-secondaryBorder"
+              }`}
+            >
+              <Link key={index} href={item.link}>
+                <item.tag className="m-auto size-[1.6rem]" />
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>

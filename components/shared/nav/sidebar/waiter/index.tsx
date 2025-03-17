@@ -65,13 +65,23 @@ const WaiterSidebar = () => {
     // },
   ];
 
-  const mobileNavItems = {
-    dashboard: "/staff/dashboard",
-    menus: "/staff/menu",
-    orders: "/staff/orders",
-    profile: "#",
-    message: "#",
-  };
+  const mobileNavItems = [
+    {
+      title: "Dashboard",
+      link: "/staff/dashboard",
+      tag: LayoutDashboard,
+    },
+    {
+      title: "Menu",
+      link: "/staff/menu",
+      tag: UtensilsCrossed,
+    },
+    {
+      title: "Orders",
+      link: "/staff/orders",
+      tag: NotepadText,
+    },
+  ];
 
   return (
     <>

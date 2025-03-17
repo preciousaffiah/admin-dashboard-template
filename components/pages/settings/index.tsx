@@ -636,7 +636,7 @@ const Settings = ({ title }: { title: string }) => {
                                   <button
                                     onClick={handleAccountDetails}
                                     type="button"
-                                    className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                    className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  w-fit cursor-pointer font-medium"
                                   >
                                     Save
                                   </button>
@@ -711,7 +711,7 @@ const Settings = ({ title }: { title: string }) => {
                                                   .getValues("tableQuantity")
                                                   ?.trim()
                                               }
-                                              className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1 cursor-pointer font-medium"
+                                              className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1 cursor-pointer font-medium"
                                             >
                                               Save
                                             </button>
@@ -766,7 +766,7 @@ const Settings = ({ title }: { title: string }) => {
                                                 .getValues("tableNumber")
                                                 ?.trim()
                                             }
-                                            className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  cursor-pointer font-medium"
+                                            className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  cursor-pointer font-medium"
                                           >
                                             Generate
                                           </button>
@@ -816,7 +816,7 @@ const Settings = ({ title }: { title: string }) => {
 
                                       <p
                                         onClick={handlePrint}
-                                        className="cursor-pointer text-primaryLime font-semibold pt-4 w-fit"
+                                        className="w-fit bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  cursor-pointer font-medium"
                                       >
                                         Print
                                       </p>
@@ -904,7 +904,7 @@ const Settings = ({ title }: { title: string }) => {
                                   <button
                                     onClick={(e: any) => handleAddCategory(e)}
                                     type="button"
-                                    className="bg-primaryGreen rounded-sm text-xs text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                    className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  w-fit cursor-pointer font-medium"
                                   >
                                     Save
                                   </button>
