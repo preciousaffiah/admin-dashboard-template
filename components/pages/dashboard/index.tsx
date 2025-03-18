@@ -635,7 +635,7 @@ const Dashboard: FC = () => {
                                             ) : null}
                                           </div>
                                         </TableCell>
-                                        <TableCell>₦{invoice.total}</TableCell>
+                                        <TableCell>₦{invoice.total.toLocaleString()}</TableCell>
                                         <TableCell>
                                           {moment(invoice?.createdAt).format(
                                             "DD-MM-YY"

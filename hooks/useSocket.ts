@@ -40,6 +40,17 @@ function useSocket() {
       });
     });
 
+
+    // Listen for order notifications
+    socket.on("orderPlaced", (data) => {
+      toast({
+        className: "text-base font-semibold border-2 border-primary-orange bg-background text-primary",
+        title: "Order Alert",
+        description: data,
+        duration: 120000, // Toast stays for two minutes
+      });
+    });
+
     // Cleanup on unmount
     return () => {
       socket.off("connect");
