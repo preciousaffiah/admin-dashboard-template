@@ -101,6 +101,7 @@ const BusinessMenu = ({
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
+console.log(table);
 
   return (
     <div>

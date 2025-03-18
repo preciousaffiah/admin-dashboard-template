@@ -4,16 +4,12 @@ import { useRouter } from "next/router";
 import { FolderOpen, Loader } from "lucide-react";
 import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import BusinessMenu from "@/components/pages/business/menu";
-import { useTableDetails } from "@/hooks";
 
 const BusinessMenuPage: FC = () => {
   const router = useRouter();
   const slug = router.query.name as string;
-  const number = router.query.number as string;
-  console.log("number", number);
 
   const decodedName = slug?.replace(/-/g, " ");
-  // const decodedName = name ? decodeURIComponent(name as string) : "";
 
   const { isLoading, isError, data } = useBusinessDetailsWithoutAuth({
     name: decodedName,

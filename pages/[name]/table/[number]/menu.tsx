@@ -10,7 +10,6 @@ const TableMenuPage: FC = () => {
   const router = useRouter();
   const slug = router.query.name as string;
   const number = router.query.number as string;
-  console.log("number", number);
 
   const decodedName = slug?.replace(/-/g, " ");
   // const decodedName = name ? decodeURIComponent(name as string) : "";

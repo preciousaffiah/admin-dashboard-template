@@ -70,7 +70,7 @@ const ScannedComp = ({
 
       <div className="text-xl flex gap-y-3 flex-col md:w-[27rem] w-[75%] text-center capitalize">
         <Link
-          href={`/${BusinessName}/menu?number=${tabelNumber}`}
+          href={`/${BusinessName}/table/${tabelNumber}/menu`}
           className="w-full rounded-2xl py-4 border-[1px] border-neutral-500"
         >
           menu
