@@ -52,8 +52,6 @@ const AdminOrdersTable = ({
   const fetchOrders = async () => {
     try {
       // setPage(pageParam);
-      console.log("dateKey", dateKey);
-
       const response = await OrderService.getOrders(
         userData?.businessId || "", // businessId
         page, // page
@@ -74,7 +72,7 @@ const AdminOrdersTable = ({
     isError,
     data: itemsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-orders", userData?.businessId || ""],
+    queryKey: ["get-orders", userData?.businessId || "", tabKey, dateKey, page],
     queryFn: fetchOrders,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,

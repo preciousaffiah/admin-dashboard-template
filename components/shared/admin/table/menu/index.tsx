@@ -57,7 +57,7 @@ const AdminMenuTable = ({
     isError,
     data: itemsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-items", userData?.businessId || ""],
+    queryKey: ["get-items", userData?.businessId || "", tabKey, page],
     queryFn: fetchItems,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,

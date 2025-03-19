@@ -16,6 +16,16 @@ class BusinessService {
     });
   }
 
+  getBusinessStats(businessId: string, dateFilter?: string) {
+    console.log(businessId );
+    
+    return axiosWithToken().get(`/business/statistics/${businessId}`, {
+      params: {
+        dateFilter,
+      },
+    });
+  }
+
   getBusinessByNameOrIdOrEmailWithoutAuth(
     name?: string,
     email?: string,
@@ -49,14 +59,11 @@ class BusinessService {
       menuCategories?: string[];
     }
   ) {
-console.log("payload", payload);
-
     const filteredData = Object.fromEntries(
       Object.entries(payload).filter(
         ([_, value]) => value !== "" && value !== undefined
       )
     );
-console.log("filteredData", filteredData);
 
     return axiosWithToken().put("/business/update", {
       businessId,

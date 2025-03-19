@@ -80,7 +80,7 @@ const AdminUsersTable = ({
     isError,
     data: staffsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-staffs", userData?.businessId || ""],
+    queryKey: ["get-staffs", userData?.businessId || "", tabKey, currentPage],
     queryFn: fetchStaffs,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: false,

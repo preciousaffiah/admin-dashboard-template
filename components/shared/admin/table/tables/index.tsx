@@ -62,7 +62,7 @@ const TablesTable = ({
     isError,
     data: tablesData,
   } = useQuery<any, Error>({
-    queryKey: ["get-tables", userData?.businessId || ""],
+    queryKey: ["get-tables", userData?.businessId || "", tabKey, page],
     queryFn: fetchItems,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,

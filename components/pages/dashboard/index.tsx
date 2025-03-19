@@ -36,6 +36,7 @@ import { handleAxiosError } from "@/utils/axios";
 import OrderService from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
+import { BusService } from "@/services";
 
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
@@ -44,206 +45,50 @@ const BarChart = dynamic(
 
 export const description = "A line chart with dots";
 
-const profitChartData = [
-  {
-    month: "Jan",
-    amt: 9400,
-  },
-  {
-    month: "Feb",
-    amt: 5210,
-  },
-  {
-    month: "Mar",
-    amt: 73290,
-  },
-  {
-    month: "Apr",
-    amt: 12000,
-  },
-  {
-    month: "May",
-    amt: 91181,
-  },
-  {
-    month: "Jun",
-    amt: 21500,
-  },
-  {
-    month: "Jul",
-    amt: 70100,
-  },
-  {
-    month: "Aug",
-    amt: 12000,
-  },
-  {
-    month: "Sep",
-    amt: 91181,
-  },
-  {
-    month: "Oct",
-    amt: 21500,
-  },
-  {
-    month: "Nov",
-    amt: 70100,
-  },
-  {
-    month: "Dec",
-    amt: 12000,
-  },
-];
 
 const customersChartData = [
-  { month: "January", desktop: 80 },
-  { month: "February", desktop: 105 },
-  { month: "March", desktop: 137 },
-  { month: "April", desktop: 173 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
+  { month: "Start", cusomers: 0 },
+  { month: "Stop", cusomers: 0 },
 ];
 
 const ordersChartData = [
-  { month: "January", desktop: 80 },
-  { month: "February", desktop: 105 },
-  { month: "March", desktop: 137 },
-  { month: "April", desktop: 173 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
+  { month: "Start", orders: 0 },
+  { month: "Stop", orders: 0 },
 ];
 
 const revenuesChartData = [
-  { month: "January", desktop: 80 },
-  { month: "February", desktop: 105 },
-  { month: "March", desktop: 137 },
-  { month: "April", desktop: 173 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-  { month: "June", desktop: 214 },
+  { month: "Start", revenue: 0 },
+  { month: "Stop", revenue: 0 },
 ];
 
-const salesChartData = [
-  {
-    name: "Mon",
-    inc: 4000,
-    dec: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Tue",
-    inc: 3000,
-    dec: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Wed",
-    inc: 2000,
-    dec: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Thu",
-    inc: 2780,
-    dec: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Fri",
-    inc: 1890,
-    dec: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Sat",
-    inc: 2390,
-    dec: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Sun",
-    inc: 3490,
-    dec: 4300,
-    amt: 2100,
-  },
-];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
+const chartCusomersConfig = {
+  Customers: {
+    label: "Customers",
     color: "#0000FF",
   },
 } satisfies ChartConfig;
 
-const tabs = ["today", "yesterday", "This Week", "This Month", "This Year"];
+const chartOrdersConfig = {
+  Orders: {
+    label: "Orders",
+    color: "#0000FF",
+  },
+} satisfies ChartConfig;
+
+const chartRevenuesConfig = {
+  Revenue: {
+    label: "Revenue",
+    color: "#0000FF",
+  },
+} satisfies ChartConfig;
+
+const tabs = {
+  today: "today",
+  yesterday: "yesterday",
+  thisWeek: "This Week",
+  thisMonth: "This Month",
+  thisYear: "This Year",
+};
 
 const tableHeaders = [
   "S/N",
@@ -259,6 +104,7 @@ const Dashboard: FC = () => {
   const { data } = useBusinessDetailsWithoutAuth({
     id: userData?.businessId || undefined,
   });
+  const [dateKey, setDateKey] = useState<string>("");
 
   const url: any = slugify(data?.name || "");
 
@@ -303,24 +149,95 @@ const Dashboard: FC = () => {
     refetchOnWindowFocus: true,
   });
 
+  // GET STATS
+  const fetchBusinessStats = async () => {
+    try {
+      const response = await BusService.getBusinessStats(
+        userData?.businessId || "", // businessId
+        dateKey
+      );
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
+    }
+  };
+
+  const {
+    isLoading: isStatsLoading,
+    isRefetching: isStatsRefetching,
+    refetch: statsRefetch,
+    isError: isStatsError,
+    data: statsData,
+  } = useQuery<any, Error>({
+    queryKey: ["get-stats", userData?.businessId || "", dateKey],
+    queryFn: fetchBusinessStats,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: true,
+  });
+
+  useEffect(() => {
+    statsRefetch();
+  }, [dateKey]);
+
+  const customersChartData2: any = () => {
+    if (!statsData?.charts || statsData.charts.length === 0 || isStatsRefetching)
+      return customersChartData;
+    return [
+      { month: "Start", customers: 0 }, // Initial baseline point
+      ...statsData?.charts.map((item: any) => ({
+        month: item.label,
+        customers: item.totalCustomers,
+      })),
+    ];
+  };
+
+  const ordersChartData2: any = () => {
+    if (!statsData?.charts || statsData.charts.length === 0 || isStatsRefetching)
+      return ordersChartData;
+    return [
+      { month: "Start", orders: 0 }, // Initial baseline point
+      ...statsData?.charts.map((item: any) => ({
+        month: item.label,
+        orders: item.totalOrders,
+      })),
+    ];
+  };
+
+  const revenuesChartData2: any = () => {
+    if (!statsData?.charts || statsData.charts.length === 0 || isStatsRefetching)
+      return revenuesChartData;
+    return [
+      { month: "Start", revenue: 0 }, // Initial baseline point
+      ...statsData?.charts.map((item: any) => ({
+        month: item.label,
+        revenue: item.totalRevenue,
+      })),
+    ];
+  };
+
   return (
     <div className="flex justify-end h-screen w-full">
       <Container>
         <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-          <Tabs defaultValue={tabs[0]} className="w-full">
+          <Tabs defaultValue={Object.keys(tabs || {})[0]} className="w-full">
             <ScrollArea className="px-3 w-full whitespace-nowrap">
               <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
                 <TabsList className="bg-transparent">
-                  {tabs.map((item, index) => (
-                    <div key={index}>
-                      <TabsTrigger
-                        value={item}
-                        className="active-main-tab text-sm px-6 capitalize"
-                      >
-                        {item}
-                      </TabsTrigger>
-                    </div>
-                  ))}
+                  {Object.entries(tabs || {}).map(
+                    ([key, value], index): any => (
+                      <div key={index}>
+                        <TabsTrigger
+                          value={key}
+                          className="active-main-tab text-sm px-6 capitalize"
+                          onClick={() => setDateKey(key)}
+                        >
+                          {value as string}
+                        </TabsTrigger>
+                      </div>
+                    )
+                  )}
                 </TabsList>
                 <div className="text-primary md:text-sm text-xs gap-x-1 md: flex w-full items-center lg:justify-end justify-start sm:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
                   Sign in link:
@@ -332,7 +249,7 @@ const Dashboard: FC = () => {
               </div>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
-            {tabs.map((item, index) => (
+            {Object.keys(tabs || {}).map((item: any, index: number) => (
               <TabsContent value={item} key={index}>
                 <div className="w-full">
                   <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
@@ -356,27 +273,41 @@ const Dashboard: FC = () => {
                                 <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
-                                      <p className="font-medium">673</p>
+                                      <p className="font-medium">
+                                        {statsData?.customer.stat}
+                                      </p>
                                       <div className="flex w-28 items-center">
-                                        <TrendingDown className="w-8 pr-1 text-red-600" />
+                                        {statsData?.customer.indicator ===
+                                        "nill" ? null : (
+                                          <>
+                                            {statsData?.customer.indicator ===
+                                            "less" ? (
+                                              <TrendingDown className="w-8 pr-1 text-red-600" />
+                                            ) : (
+                                              <TrendingUp className="w-8 pr-1 text-green-600" />
+                                            )}
 
-                                        <p className="text-sm font-medium leading-4">
-                                          5% less than last month
-                                        </p>
+                                            <p className="text-sm font-medium leading-4">
+                                              {statsData?.customer.percentage}%{" "}
+                                              {statsData?.customer.indicator}{" "}
+                                              than last time
+                                            </p>
+                                          </>
+                                        )}
                                       </div>
                                     </CardTitle>
                                   </CardHeader>
                                   <CardContent className="p-0 h-20">
                                     <ChartContainer
-                                      config={chartConfig}
+                                      config={chartCusomersConfig}
                                       className="w-full h-full"
                                     >
                                       <AreaChart
                                         accessibilityLayer
-                                        data={customersChartData}
+                                        data={customersChartData2()}
                                         margin={{
-                                          left: 12,
-                                          right: 12,
+                                          left: 5,
+                                          right: 5,
                                         }}
                                       >
                                         <ChartTooltip
@@ -405,7 +336,7 @@ const Dashboard: FC = () => {
                                         </defs>
                                         <Area
                                           className="w-full"
-                                          dataKey="desktop"
+                                          dataKey="customers"
                                           type="natural"
                                           fill="url(#fillDesktop1)"
                                           fillOpacity={0.2}
@@ -437,27 +368,42 @@ const Dashboard: FC = () => {
                                 <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
-                                      <p className="font-medium">865</p>
-                                      <div className="flex w-28 items-center">
-                                        <TrendingUp className="w-8 pr-1 text-green-600" />
+                                      <p className="font-medium">
+                                        {statsData?.order.stat}
+                                      </p>
 
-                                        <p className="text-sm font-medium leading-4">
-                                          10% more than last month
-                                        </p>
+                                      <div className="flex w-28 items-center">
+                                        {statsData?.order.indicator ===
+                                        "nill" ? null : (
+                                          <>
+                                            {statsData?.order.indicator ===
+                                            "less" ? (
+                                              <TrendingDown className="w-8 pr-1 text-red-600" />
+                                            ) : (
+                                              <TrendingUp className="w-8 pr-1 text-green-600" />
+                                            )}
+
+                                            <p className="text-sm font-medium leading-4">
+                                              {statsData?.order.percentage}%{" "}
+                                              {statsData?.order.indicator} than
+                                              last time
+                                            </p>
+                                          </>
+                                        )}
                                       </div>
                                     </CardTitle>
                                   </CardHeader>
                                   <CardContent className="p-0 h-20">
                                     <ChartContainer
-                                      config={chartConfig}
+                                      config={chartOrdersConfig}
                                       className="w-full h-full"
                                     >
                                       <AreaChart
                                         accessibilityLayer
-                                        data={ordersChartData}
+                                        data={ordersChartData2()}
                                         margin={{
-                                          left: 12,
-                                          right: 12,
+                                          left: 5,
+                                          right: 5,
                                         }}
                                       >
                                         <ChartTooltip
@@ -466,7 +412,7 @@ const Dashboard: FC = () => {
                                         />
                                         <defs>
                                           <linearGradient
-                                            id="fillDesktop"
+                                            id="fillDesktop2"
                                             x1="0"
                                             y1="0"
                                             x2="0"
@@ -474,7 +420,7 @@ const Dashboard: FC = () => {
                                           >
                                             <stop
                                               offset="5%"
-                                              stopColor="green"
+                                              stopColor="#ff7800"
                                               stopOpacity={0.8}
                                             />
                                             <stop
@@ -486,11 +432,11 @@ const Dashboard: FC = () => {
                                         </defs>
                                         <Area
                                           className="w-full"
-                                          dataKey="desktop"
+                                          dataKey="orders"
                                           type="natural"
-                                          fill="url(#fillDesktop)"
+                                          fill="url(#fillDesktop2)"
                                           fillOpacity={0.2}
-                                          stroke="green"
+                                          stroke="#ff7800"
                                           stackId="a"
                                         />
                                       </AreaChart>
@@ -517,27 +463,42 @@ const Dashboard: FC = () => {
                                 <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
-                                      <p className="font-medium">$95000</p>
+                                      <p className="font-medium">
+                                        ₦
+                                        {statsData?.revenue.stat?.toLocaleString()}
+                                      </p>
                                       <div className="flex w-28 items-center">
-                                        <TrendingUp className="w-8 pr-1 text-green-600" />
+                                        {statsData?.revenue.indicator ===
+                                        "nill" ? null : (
+                                          <>
+                                            {statsData?.revenue.indicator ===
+                                            "less" ? (
+                                              <TrendingDown className="w-8 pr-1 text-red-600" />
+                                            ) : (
+                                              <TrendingUp className="w-8 pr-1 text-green-600" />
+                                            )}
 
-                                        <p className="text-sm font-medium leading-4">
-                                          5% more than last month
-                                        </p>
+                                            <p className="text-sm font-medium leading-4">
+                                              {statsData?.revenue.percentage}%{" "}
+                                              {statsData?.revenue.indicator}{" "}
+                                              than last time
+                                            </p>
+                                          </>
+                                        )}
                                       </div>
                                     </CardTitle>
                                   </CardHeader>
                                   <CardContent className="p-0 h-20">
                                     <ChartContainer
-                                      config={chartConfig}
+                                      config={chartRevenuesConfig}
                                       className="w-full h-full"
                                     >
                                       <AreaChart
                                         accessibilityLayer
-                                        data={revenuesChartData}
+                                        data={revenuesChartData2()}
                                         margin={{
-                                          left: 12,
-                                          right: 12,
+                                          left: 5,
+                                          right: 5,
                                         }}
                                       >
                                         <ChartTooltip
@@ -546,7 +507,7 @@ const Dashboard: FC = () => {
                                         />
                                         <defs>
                                           <linearGradient
-                                            id="fillDesktop"
+                                            id="fillDesktop3"
                                             x1="0"
                                             y1="0"
                                             x2="0"
@@ -554,7 +515,7 @@ const Dashboard: FC = () => {
                                           >
                                             <stop
                                               offset="5%"
-                                              stopColor="white"
+                                              stopColor="green"
                                               stopOpacity={0.8}
                                             />
                                             <stop
@@ -566,9 +527,9 @@ const Dashboard: FC = () => {
                                         </defs>
                                         <Area
                                           className="w-full"
-                                          dataKey="desktop"
+                                          dataKey="revenue"
                                           type="natural"
-                                          fill="url(#fillDesktop)"
+                                          fill="url(#fillDesktop3)"
                                           fillOpacity={0.2}
                                           stroke="green"
                                           stackId="a"
@@ -635,7 +596,9 @@ const Dashboard: FC = () => {
                                             ) : null}
                                           </div>
                                         </TableCell>
-                                        <TableCell>₦{invoice.total.toLocaleString()}</TableCell>
+                                        <TableCell>
+                                          ₦{invoice.total.toLocaleString()}
+                                        </TableCell>
                                         <TableCell>
                                           {moment(invoice?.createdAt).format(
                                             "DD-MM-YY"
