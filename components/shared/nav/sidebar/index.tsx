@@ -42,7 +42,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
           ))}
         </div>
       </div>
-      <div className="md:hidden flex bg-background px-4 h-[3rem] fixed bottom-0 w-full z-50">
+      <div className="md:hidden flex bg-background px-4 h-[4rem] fixed bottom-0 w-full z-50">
         <div className="flex w-full justify-between items-center">
           {mobileNavItems.map((item: any, index: number) => (
             <div
@@ -53,7 +53,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
               }`}
             >
               <Link key={index} href={item.link}>
-                <item.tag className="m-auto size-[1.6rem]" />
+                <item.tag className="m-auto size-[1.75rem]" />
               </Link>
             </div>
           ))}
