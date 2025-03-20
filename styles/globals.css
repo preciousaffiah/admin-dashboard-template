@@ -119,6 +119,7 @@ tr td:last-child {
   opacity: 0;
   animation: slide 9s infinite;
   color: #f97316;
+  padding-left: 1rem;
 }
 
 .word:nth-child(1) {

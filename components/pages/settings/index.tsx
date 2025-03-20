@@ -636,7 +636,7 @@ const Settings = ({ title }: { title: string }) => {
                                   <button
                                     onClick={handleAccountDetails}
                                     type="button"
-                                    className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                    className="bg-primaryGreen rounded-sm text-sm text-black px-2 py-1  w-fit cursor-pointer font-medium"
                                   >
                                     Save
                                   </button>
@@ -711,7 +711,7 @@ const Settings = ({ title }: { title: string }) => {
                                                   .getValues("tableQuantity")
                                                   ?.trim()
                                               }
-                                              className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1 cursor-pointer font-medium"
+                                              className="bg-primaryGreen rounded-sm text-sm text-black px-2 py-1 cursor-pointer font-medium"
                                             >
                                               Save
                                             </button>
@@ -766,7 +766,7 @@ const Settings = ({ title }: { title: string }) => {
                                                 .getValues("tableNumber")
                                                 ?.trim()
                                             }
-                                            className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  cursor-pointer font-medium"
+                                            className="bg-primaryGreen rounded-sm text-sm text-black px-2 py-1  cursor-pointer font-medium"
                                           >
                                             Generate
                                           </button>
@@ -888,14 +888,14 @@ const Settings = ({ title }: { title: string }) => {
                                   {categories.map((category, index) => (
                                     <div
                                       key={index}
-                                      className="capitalize flex items-center justify-center bg-primaryDark hover:bg-[#ff831754] hover:px-5 transition-all w-fit cursor-pointer text-sm text-gray-800 rounded-xl px-3 py-1"
+                                      className="capitalize flex items-center justify-center bg-primaryDark hover:bg-[#ff831754] hover:px-5 transition-all w-fit cursor-pointer text-sm text-primary rounded-xl px-3 py-1"
                                     >
                                       <p>{category}</p>
                                       <X
                                         onClick={() =>
                                           handleRemoveCategory(category)
                                         }
-                                        className="w-3.5 ml-1 text-secondaryBorder hover:text-primary-border"
+                                        className="w-3.5 ml-1 text-secondaryBorder"
                                       />
                                     </div>
                                   ))}
@@ -904,7 +904,7 @@ const Settings = ({ title }: { title: string }) => {
                                   <button
                                     onClick={(e: any) => handleAddCategory(e)}
                                     type="button"
-                                    className="bg-primaryGreen rounded-sm text-sm text-primary px-2 py-1  w-fit cursor-pointer font-medium"
+                                    className="bg-primaryGreen rounded-sm text-sm text-black px-2 py-1  w-fit cursor-pointer font-medium"
                                   >
                                     Save
                                   </button>
