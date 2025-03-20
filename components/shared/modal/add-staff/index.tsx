@@ -282,7 +282,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                                 type={`${showPassword ? "password" : "text"}`}
                                 placeholder="Password"
                                 {...field}
-                                className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                className="md:pt-0 pt-4 md:text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                               />
                               <EyeOff
                                 onClick={() => {
