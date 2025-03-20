@@ -97,12 +97,12 @@ const ItemBox = ({
                 <div className="w-[50%] justify-end gap-x-1 flex text-end font-medium text-lg">
                   {invoice.discount > 0 ? (
                     <>
-                      <p className="line-through">₦{invoice.price.toLocaleString()}</p>
+                      <p className="line-through">₦{Number(invoice.price).toLocaleString()}</p>
 
                       <p>₦{(invoice.price - invoice.discount).toLocaleString()}</p>
                     </>
                   ) : (
-                    <p>₦{invoice.price.toLocaleString()}</p>
+                    <p>₦{Number(invoice.price).toLocaleString()}</p>
                   )}
                 </div>
               </div>

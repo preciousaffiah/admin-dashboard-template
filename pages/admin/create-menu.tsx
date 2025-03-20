@@ -576,7 +576,7 @@ const CreateMenu: FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="md:hidden flex bg-background px-4 h-20 fixed bottom-0 w-full z-50">
+                <div className="md:hidden flex bg-background px-4 h-fit py-4 fixed bottom-0 w-full z-50">
                   <div className="text-xs flex w-full justify-between items-center">
                     <div className="text-txWhite font-medium w-full flex justify-between">
                       <Drawer>

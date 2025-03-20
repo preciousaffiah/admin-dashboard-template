@@ -224,7 +224,7 @@ const CreateOrder: FC = () => {
   return (
     <div className="flex justify-end h-screen w-full">
       <Container>
-        <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 px-0">
+        <div className="authcard3 md:py-24 py-16 md:h-fit lg:px-6 px-0 md:bg-inherit bg-primaryDark">
           <div className="w-full bg-primaryDark pt-4 md:pb-0 pb-6 rounded-md">
             <div className="w-full h-full">
               <div className="px-3 flex pb-4 border-b border-primary-border">
@@ -257,7 +257,7 @@ const CreateOrder: FC = () => {
                               className="w-full h-full"
                             >
                               <div className="bg-transparent h-fit w-full flex m-auto justify-between py-3 px-3 overflow-x-scroll md:gapx-0 gap-x-2">
-                                <TabsList className="w-fit bg-secondaryDark">
+                                <TabsList className="w-fit bg-primaryDark">
                                   {Object.entries(tabHeaders || {}).map(
                                     ([key, value], index): any => (
                                       <TabsTrigger
@@ -272,20 +272,20 @@ const CreateOrder: FC = () => {
                                   )}
                                 </TabsList>
                               </div>
-                              {itemsData &&
-                                !isItemsLoading &&
-                                //   !isRefetching &&
-                                itemsData.currentItemCount > 0 &&
-                                Object.keys(tabHeaders || {}).map(
-                                  (item: any, index: number) => (
-                                    <TabsContent
-                                      key={index}
-                                      value={item}
-                                      className="w-full"
-                                    >
-                                      <div className="min-h-[70vh] py-4">
+                              <div className="h-[80%] overflow-y-scroll">
+                                {itemsData &&
+                                  !isItemsLoading &&
+                                  //   !isRefetching &&
+                                  itemsData.currentItemCount > 0 &&
+                                  Object.keys(tabHeaders || {}).map(
+                                    (item: any, index: number) => (
+                                      <TabsContent
+                                        key={index}
+                                        value={item}
+                                        className="w-full"
+                                      >
                                         <div>
-                                          <div className="flex flex-wrap justify-center gap-4">
+                                          <div className="flex h-full flex-wrap justify-center gap-4">
                                             {itemsData?.items.map(
                                               (item: Menus, index: number) => (
                                                 <div
@@ -316,7 +316,7 @@ const CreateOrder: FC = () => {
                                                           <>
                                                             <p className="line-through">
                                                               ₦
-                                                              {item.price.toLocaleString()}
+                                                              {Number(item.price).toLocaleString()}
                                                             </p>
 
                                                             <p>
@@ -330,7 +330,7 @@ const CreateOrder: FC = () => {
                                                         ) : (
                                                           <p>
                                                             ₦
-                                                            {item.price.toLocaleString()}
+                                                            {Number(item.price).toLocaleString()}
                                                           </p>
                                                         )}
                                                       </div>
@@ -364,21 +364,21 @@ const CreateOrder: FC = () => {
                                             )}
                                           </div>
                                         </div>
-                                      </div>
-                                      <DataPagination
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                        refetch={refetch}
-                                        total_items={itemsData.total}
-                                        total_pages={itemsData.totalPages}
-                                        items_per_page={itemsData.perPage}
-                                        current_item_count={
-                                          itemsData.currentItemCount
-                                        } // Total number of items matching the filter
-                                      />
-                                    </TabsContent>
-                                  )
-                                )}
+                                      </TabsContent>
+                                    )
+                                  )}
+                              </div>
+                                <DataPagination
+                                  currentPage={currentPage}
+                                  setCurrentPage={setCurrentPage}
+                                  refetch={refetch}
+                                  total_items={itemsData?.total}
+                                  total_pages={itemsData?.totalPages}
+                                  items_per_page={itemsData?.perPage}
+                                  current_item_count={
+                                    itemsData?.currentItemCount
+                                  } // Total number of items matching the filter
+                                />
                             </Tabs>
                           </DrawerContent>
                         </Drawer>
@@ -588,7 +588,7 @@ const CreateOrder: FC = () => {
               </div>
             </div>
           </div>
-          <div className="lg:hidden flex bg-foreground px-4 h-32 fixed bottom-0 w-full z-50">
+          <div className="lg:hidden flex bg-foreground px-4 h-fit py-4 fixed bottom-0 w-full z-50">
             <div className="text-xs flex flex-col w-full justify-between items-center">
               <div className="w-full text-base">
                 <AnimatePresence>

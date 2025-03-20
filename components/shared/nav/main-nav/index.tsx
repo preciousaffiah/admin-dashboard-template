@@ -50,7 +50,7 @@ const MainNavbar = ({ title, subtitle }: any) => {
       <>
         <div className="flex w-fit h-full pb-1 items-center">
           <Link href="#">
-            <p className="text-xl text-secondaryBorder font-medium uppercase">
+            <p className="text-xl text-secondaryBorder md:font-medium font-semibold uppercase">
               {data?.name || ""}
             </p>
 
