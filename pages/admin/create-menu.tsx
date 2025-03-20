@@ -262,7 +262,7 @@ const CreateMenu: FC = () => {
                                 )}
                               </div>
 
-                              <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark text-sm rounded-md px-4">
+                              <div className="flex flex-col gap-y-6 py-3 bg-secondaryDark md:text-sm text-base rounded-md px-4">
                                 <div className="flex flex-col items-start justify-between py-4">
                                   <h4 className="font-semibold">
                                     Add Item Details
