@@ -1,17 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import {
   BadgeCheck,
-  Edit3,
-  FolderOpen,
-  Loader,
   ShoppingCart,
-  UtensilsCrossed,
-  X,
 } from "lucide-react";
-import { AdminTable, CartOrderItem, Menus } from "@/types";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
-import { handleRowClick } from "@/utils/modal";
+import { CartOrderItem, Menus } from "@/types";
 
 const defaultInvoice: Menus = {
   _id: "",
@@ -30,6 +22,7 @@ const ItemBox = ({
   setSelectedInvoice,
   selectedInvoice,
   setCarted,
+  table,
   carted,
   tableOrderData,
 }: any) => {
@@ -113,7 +106,7 @@ const ItemBox = ({
                   )}
                 </div>
               </div>
-              {!tableOrderData && invoice.available ? (
+              {!tableOrderData && invoice.available && table ? (
                 <>
                   {activeId === invoice._id && carted ? (
                     <BadgeCheck className="fill-background text-primaryLime transition-all" />

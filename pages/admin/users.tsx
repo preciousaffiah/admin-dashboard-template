@@ -18,8 +18,6 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddStaffModal from "@/components/shared/modal/add-staff";
 import avatar from "public/avatar.png";
 
-const tabs = ["today", "yesterday", "This Week", "This Month", "This Year"];
-
 const tabHeaders = {
   all: "all",
   admin: "admins",
@@ -70,53 +68,50 @@ const Users: FC = () => {
       <div className="flex justify-end h-screen w-full">
         <Container>
           <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-            <Tabs defaultValue={tabs[0]} className="w-full md:px-0 px-2">
-              <div className="w-full bg-primaryDark pt-4 rounded-md">
-                <div className="w-full h-full">
-                  <div className="px-3 flex md:justify-between justify-start pb-4 border-b border-primary-border">
-                    <div className="flex items-center">
-                      <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
-                        All Staffs
-                      </h1>
-                    </div>
-                    <div>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <p
-                            onClick={() => {
-                              setSuccess(false);
-                            }}
-                            className="cursor-pointer flex bg-primaryGreen text-black rounded-md items-center gap-x-1 w-fit m-0 px-2 py-2 text-sm font-semibold"
-                          >
-                            <Plus className="w-4 h-4" />
-                            Add Staff
-                          </p>
-                        </DialogTrigger>
-                        <AddStaffModal
-                          success={success}
-                          setSuccess={setSuccess}
-                        />
-                      </Dialog>
-                    </div>
+            <div className="w-full bg-primaryDark pt-4 rounded-md">
+              <div className="w-full h-full">
+                <div className="px-3 flex md:justify-between justify-start pb-4 border-b border-primary-border">
+                  <div className="flex items-center">
+                    <h1 className="md:block hidden capitalize font-semibold text-txWhite text-xl">
+                      All Staffs
+                    </h1>
                   </div>
-
-                  <AdminUsersTable
-                    view={view}
-                    tabHeaders={tabHeaders}
-                    tableHeaders={tableHeaders}
-                    setIsOpen={setIsOpen}
-                    setSelectedInvoice={setSelectedInvoice}
-                    selectedInvoice={selectedInvoice}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    tabKey={tabKey}
-                    setTabKey={setTabKey}
-                    handleRowClick={handleRowClick}
-                  />
-                   
+                  <div>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <p
+                          onClick={() => {
+                            setSuccess(false);
+                          }}
+                          className="cursor-pointer flex bg-primaryGreen text-black rounded-md items-center gap-x-1 w-fit m-0 px-2 py-2 text-sm font-semibold"
+                        >
+                          <Plus className="w-4 h-4" />
+                          Add Staff
+                        </p>
+                      </DialogTrigger>
+                      <AddStaffModal
+                        success={success}
+                        setSuccess={setSuccess}
+                      />
+                    </Dialog>
+                  </div>
                 </div>
+
+                <AdminUsersTable
+                  view={view}
+                  tabHeaders={tabHeaders}
+                  tableHeaders={tableHeaders}
+                  setIsOpen={setIsOpen}
+                  setSelectedInvoice={setSelectedInvoice}
+                  selectedInvoice={selectedInvoice}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  tabKey={tabKey}
+                  setTabKey={setTabKey}
+                  handleRowClick={handleRowClick}
+                />
               </div>
-            </Tabs>
+            </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
               <div>
                 <div className="border-b-[0.3px] border-b-primary-border -border">
@@ -180,7 +175,7 @@ const Users: FC = () => {
                     <div>
                       <div>
                         <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                          <div className="flex flex-col gap-y-3 w-full">
+                          <div className="capitalize flex flex-col gap-y-3 w-full">
                             <div className="flex justify-between">
                               <p>Department</p>
                               <p className="text-txWhite">
@@ -189,7 +184,13 @@ const Users: FC = () => {
                             </div>
                             <div className="flex justify-between">
                               <p>Phone Number</p>
-                              <p>{selectedInvoice.phone} </p>
+                              <p>
+                                {`${
+                                  !selectedInvoice.phone
+                                    ? "nill"
+                                    : selectedInvoice.phone
+                                }`}{" "}
+                              </p>
                             </div>
                             <div className="flex justify-between">
                               <p>Orders Completed</p>

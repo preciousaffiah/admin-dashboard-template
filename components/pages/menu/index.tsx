@@ -374,7 +374,7 @@ const Menu: FC = () => {
                       <div>
                         <div>
                           <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                            <div className="flex flex-col gap-y-3 w-full">
+                            <div className="capitalize flex flex-col gap-y-3 w-full">
                               <div className="flex justify-between">
                                 <p>Department</p>
                                 <p className="text-txWhite">
@@ -405,7 +405,7 @@ const Menu: FC = () => {
                               </div>
                               <div className="flex justify-between gap-x-8">
                                 <p>Description</p>
-                                <p>{selectedInvoice.description} </p>
+                                <p className="first-letter:uppercase lowercase ">{selectedInvoice.description} </p>
                               </div>
                             </div>
                           </div>
@@ -553,7 +553,7 @@ const Menu: FC = () => {
                                         <FormControl>
                                           <select
                                             {...field}
-                                            className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
+                                            className="capitalize md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
                                           >
                                             <option
                                               value="none"
@@ -564,9 +564,9 @@ const Menu: FC = () => {
                                               Select department
                                             </option>
                                             <option value="waiter">
-                                              waiter
+                                              Waiter
                                             </option>
-                                            <option value="bar">bar</option>
+                                            <option value="bar">Bar</option>
                                           </select>
                                         </FormControl>
                                       </div>
@@ -584,7 +584,7 @@ const Menu: FC = () => {
                                         <FormControl>
                                           <select
                                             {...field}
-                                            className="md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
+                                            className="capitalize md:w-9/12 w-full border-primary-border border-[1px] rounded-md p-2 bg-transparent"
                                           >
                                             <option
                                               value="none"

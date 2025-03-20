@@ -51,7 +51,7 @@ const OrdersGrid = ({
               </div>
               <div className="text-base flex justify-between">
                 <p>
-                  Table No. {""}
+                  Table No. #{""}
                   {String(invoice.tableId.tableNumber).padStart(2, "0")}
                 </p>
                 <p> {index + 1}</p>

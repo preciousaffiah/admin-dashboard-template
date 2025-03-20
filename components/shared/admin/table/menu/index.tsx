@@ -133,7 +133,7 @@ const AdminMenuTable = ({
                                   selectedInvoice._id === invoice._id
                                     ? "border border-primaryGreen bg-selectedRow"
                                     : "bg-primaryDark"
-                                } truncate text-center py-2 rounded-lg cursor-pointer`}
+                                } capitalize truncate text-center py-2 rounded-lg cursor-pointer`}
                                 onClick={() => {
                                   handleRowClick(
                                     invoice,
@@ -166,7 +166,7 @@ const AdminMenuTable = ({
                                         className="w-10 h-8 rounded-full object-cover"
                                       />
                                     </div>
-                                    <p className="capitalize flex break-words">
+                                    <p className="flex break-words">
                                       {invoice.name}
                                     </p>
                                   </div>

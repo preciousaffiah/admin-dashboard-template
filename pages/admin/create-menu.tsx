@@ -17,7 +17,7 @@ import ComboboxDemo from "@/components/shared/waiter/combobox";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ItemService } from "@/services";
-import { useAuthToken } from "@/hooks";
+import { useAuthToken, useTabHeaders } from "@/hooks";
 import { useMutation } from "@tanstack/react-query";
 import {
   Form,
@@ -29,51 +29,28 @@ import {
 import { ToastMessage } from "@/components/serviette-ui";
 import { handleAxiosError } from "@/utils/axios";
 
-const categoryArray: any = ["intercontinental"];
-const deptArray: any = [
-  "kitchen",
-  "bar",
-  "reception",
-  "hospitality",
-  "bakery",
-  "waiter",
-  "counter",
-  "utilities",
-];
-
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
 
-const formSchema = z
-  .object({
-    name: z.string().min(1, "required"),
-    price: z
-      .string()
-      .min(1, { message: "required" })
-      .regex(/^\d+$/, { message: "digits only" }),
-    description: z.string().min(1, "required"),
-    department: z.enum([
-      "kitchen",
-      "bar",
-      "reception",
-      "hospitality",
-      "bakery",
-      "waiter",
-      "counter",
-      "utilities",
-    ]), //add field for other
-
-    category: z.enum(["intercontinental"]), //add field for other
-    image: z
-      .string()
-      .refine((val) => val.startsWith("data:"), {
-        message: "Invalid file format",
-      })
-      .refine((val) => val.length <= MAX_BASE64_LENGTH, {
-        message: "File size must be less than 4MB.",
-      }),
-    businessId: z.string().min(1, "required").optional(),
-  })
+const formSchema = z.object({
+  name: z.string().min(1, "required"),
+  price: z
+    .string()
+    .min(1, { message: "required" })
+    .regex(/^\d+$/, { message: "digits only" }),
+  description: z.string().min(1, "required"),
+  department: z.string().min(1, "required"), //add field for other
+  category: z.string().min(1, "required"), //add field for other
+  image: z
+    .string()
+    .refine((val) => val.startsWith("data:"), {
+      message: "Invalid file format",
+    })
+    .refine((val) => val.length <= MAX_BASE64_LENGTH, {
+      message: "File size must be less than 4MB.",
+    }),
+  businessId: z.string().min(1, "required").optional(),
+});
 
 const defaultMenu: createMenu = {
   name: "",
@@ -103,19 +80,14 @@ const CreateMenu: FC = () => {
   const [success, setSuccess] = useState(false);
 
   const [menu, setMenu] = useState<createMenu>(defaultMenu);
-  const [imgError, setImgError] = useState(false);
   const [saved, setSaved] = useState(false);
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-
   const { userData } = useAuthToken();
 
-  const handleChange = (event: any, field: any) => {
-    const inputValue = event.target.value;
-    // Allow only digits
-    const digitsOnly = inputValue.replace(/\D/g, "");
-    field.onChange(digitsOnly); // Pass the filtered value to the parent
-  };
+  const tabHeaders = useTabHeaders({
+    id: userData?.businessId || undefined,
+  });
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const addItemRequest: any = async () => {
     try {
@@ -407,7 +379,7 @@ const CreateMenu: FC = () => {
                                         <FormControl>
                                           <select
                                             {...field}
-                                            className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                            className="capitalize md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                           >
                                             <option
                                               value="none"
@@ -417,9 +389,18 @@ const CreateMenu: FC = () => {
                                             >
                                               Select category
                                             </option>
-                                            <option value="intercontinental">
-                                              intercontinental
-                                            </option>
+                                            {Object.keys(tabHeaders || {})
+                                              .slice(1)
+                                              .map(
+                                                (item: any, index: number) => (
+                                                  <option
+                                                    value={item}
+                                                    key={index}
+                                                  >
+                                                    {item}
+                                                  </option>
+                                                )
+                                              )}
                                           </select>
                                         </FormControl>
                                       </div>
@@ -440,7 +421,7 @@ const CreateMenu: FC = () => {
                                         <FormControl>
                                           <select
                                             {...field}
-                                            className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                            className="capitalize md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                           >
                                             <option
                                               value="none"
@@ -450,9 +431,9 @@ const CreateMenu: FC = () => {
                                             >
                                               Select department
                                             </option>
-                                            <option value="bar">bar</option>
+                                            <option value="bar">Bar</option>
                                             <option value="waiter">
-                                              waiter
+                                              Waiter
                                             </option>
                                           </select>
                                         </FormControl>
@@ -540,7 +521,7 @@ const CreateMenu: FC = () => {
                                   <div>
                                     <div>
                                       <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
-                                        <div className="flex flex-col gap-y-3 w-full">
+                                        <div className="capitalize flex flex-col gap-y-3 w-full">
                                           <div className="flex justify-between">
                                             <p>Department</p>
                                             <p className="text-txWhite">
@@ -557,7 +538,7 @@ const CreateMenu: FC = () => {
                                           </div>
                                           <div className="flex justify-between">
                                             <p>Description</p>
-                                            <p className="w-full word-breaks text-right">
+                                            <p className="first-letter:uppercase lowercase w-full word-breaks text-right">
                                               {menu.description}{" "}
                                             </p>
                                           </div>
@@ -568,11 +549,13 @@ const CreateMenu: FC = () => {
                                       <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
                                         <div className="p-3 w-full bg-foreground rounded-b-md">
                                           <button
-                                          type="submit"
+                                            type="submit"
                                             onClick={onSubmit}
                                             className={`place-menu-btn  ${
-                                              form.formState.isValid ? "bg-primaryGreen" : "bg-lime-700"
-                                             }  w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
+                                              form.formState.isValid
+                                                ? "bg-primaryGreen"
+                                                : "bg-lime-700"
+                                            }  w-full py-2 rounded-md text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
                                           >
                                             Add to Menu
                                             {form.formState.isValid &&
@@ -610,7 +593,9 @@ const CreateMenu: FC = () => {
                             disabled={!form.formState.isValid}
                             className={`place-menu-btn 
                                ${
-                                form.formState.isValid ? "bg-primaryGreen" : "bg-lime-700"
+                                 form.formState.isValid
+                                   ? "bg-primaryGreen"
+                                   : "bg-lime-700"
                                } 
                              w-full py-2 rounded-md text-sm text-black
                              flex items-center justify-center gap-x-2

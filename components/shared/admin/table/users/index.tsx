@@ -64,7 +64,7 @@ const AdminUsersTable = ({
       const response = await StaffService.getAllStaff(
         userData?.businessId || "", // businessId
         currentPage, // page
-        {department: tabKey} // filters object
+        { department: tabKey } // filters object
       );
       return response?.data?.data?.data;
     } catch (error: any) {
@@ -121,8 +121,10 @@ const AdminUsersTable = ({
               view ? "px-4 bg-secondaryDarker" : ""
             }  flex py-4 justify-between`}
           >
-            {(staffsData && !isItemsLoading && !isRefetching &&
-              staffsData.currentItemCount > 0 )&&
+            {staffsData &&
+              !isItemsLoading &&
+              !isRefetching &&
+              staffsData.currentItemCount > 0 &&
               Object.keys(tabHeaders || {}).map((item, index) => (
                 <TabsContent key={index} value={item} className="w-full">
                   <div className={className}>
@@ -135,7 +137,7 @@ const AdminUsersTable = ({
                               selectedInvoice._id === invoice._id
                                 ? "border border-primaryGreen bg-selectedRow"
                                 : "bg-primaryDark"
-                            } truncate text-center py-2 rounded-lg cursor-pointer`}
+                            } capitalize truncate text-center py-2 rounded-lg cursor-pointer`}
                             onClick={() =>
                               handleRowClick(
                                 invoice,
@@ -172,9 +174,13 @@ const AdminUsersTable = ({
                                 </p>
                               </div>
                             </TableCell>
-                            <TableCell>{invoice.email}</TableCell>
+                            <TableCell className="lowercase">
+                              {invoice.email}
+                            </TableCell>
                             <TableCell>{invoice.department}</TableCell>
-                            <TableCell>{invoice.phone}</TableCell>
+                            <TableCell>{`${
+                              !invoice.phone ? "nill" : invoice.phone
+                            }`}</TableCell>
                             <TableCell>
                               {moment(invoice?.createdAt).format("DD-MM-YY")}
                             </TableCell>
@@ -200,17 +206,19 @@ const AdminUsersTable = ({
                     total_items={staffsData.total}
                     total_pages={staffsData.totalPages}
                     items_per_page={staffsData.perPage}
-                    current_item_count={staffsData.currentItemCount} 
+                    current_item_count={staffsData.currentItemCount}
                   />
                 </TabsContent>
               ))}
 
-            {(staffsData?.currentItemCount < 1 && !isRefetching && !isItemsLoading) && (
-              <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
-                <FolderOpen />
-                Empty
-              </div>
-            )}
+            {staffsData?.currentItemCount < 1 &&
+              !isRefetching &&
+              !isItemsLoading && (
+                <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
+                  <FolderOpen />
+                  Empty
+                </div>
+              )}
 
             {(isItemsLoading || isRefetching) && (
               <div className="text-txWhite h-[18rem] m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">

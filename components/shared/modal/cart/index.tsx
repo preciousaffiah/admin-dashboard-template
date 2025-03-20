@@ -1,31 +1,8 @@
-import {
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import PhoneInput from "react-phone-number-input";
-
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  AlignRight,
-  Copy,
   Dot,
-  EyeIcon,
-  EyeOff,
   FolderOpen,
   LoaderCircle,
-  Martini,
   Minus,
   Plus,
   ShoppingCart,

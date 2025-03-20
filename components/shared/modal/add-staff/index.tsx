@@ -164,7 +164,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                               type="text"
                               placeholder="staff email"
                               {...field}
-                              className="py-1.5 px-3 text-sm rounded-md w-full border-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                              className="py-1.5 px-3 md:text-sm rounded-md w-full border-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
                             />
                           </FormControl>
                         </div>
@@ -186,7 +186,7 @@ const AddStaffModal = ({ success, setSuccess }: any) => {
                               type="text"
                               placeholder="staff fullname"
                               {...field}
-                              className="py-1.5 px-3 text-sm rounded-md w-full border-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
+                              className="py-1.5 px-3 md:text-sm rounded-md w-full border-[1px] border-primary-border focus:border-orange-500 outline-none transition-colors duration-500"
                             />
                           </FormControl>
                         </div>

@@ -38,7 +38,6 @@ const BusinessMenu = ({
   });
 
   const [tabKey, setTabKey] = useState<string>("");
-  const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus[]>([]);
   const [carted, setCarted] = useState(false);
@@ -46,11 +45,9 @@ const BusinessMenu = ({
   // GET ITEMS
   const fetchItems = async () => {
     try {
-      // setPage(pageParam);
-
       const response = await ItemService.getItems(
         businessId,
-        page, // page
+        currentPage, // page
         { category: tabKey } // filters object
       );
 
@@ -68,17 +65,15 @@ const BusinessMenu = ({
     isError,
     data: itemsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-items", userData?.businessId || ""],
+    queryKey: ["get-items-menu", userData?.businessId || "", tabKey, currentPage],
     queryFn: fetchItems,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
 
   useEffect(() => {
-    console.log("Updated dateKey:", tabKey);
     refetch();
   }, [tabKey]);
-  console.log("itemsData", itemsData);
 
   // GET ORDER
   const fetchLastOrder = async () => {
@@ -102,6 +97,7 @@ const BusinessMenu = ({
     refetchOnWindowFocus: true,
   });
 console.log(table);
+
 
   return (
     <div>
@@ -165,6 +161,8 @@ console.log(table);
                       selectedInvoice={selectedInvoice}
                       setCarted={setCarted}
                       carted={carted}
+                table={table}
+
                       tableOrderData={tableOrderData?.[0]}
                     />
                   </div>

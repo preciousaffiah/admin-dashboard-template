@@ -69,15 +69,16 @@ const businessDetailsSchema = z.object({
     .string()
     .min(1, "Country is required")
     .regex(/^\S+$/, { message: "cannot contain whitespace." }),
-  cac: z.string().refine((val) => val.startsWith("data:"), {
-    message: "Invalid file format",
-  })
-  .refine((val) => val.length <= MAX_BASE64_LENGTH, {
-    message: "File size must be less than 3MB.",
-  }),
+  cac: z
+    .string()
+    .refine((val) => val.startsWith("data:"), {
+      message: "Invalid file format",
+    })
+    .refine((val) => val.length <= MAX_BASE64_LENGTH, {
+      message: "File size must be less than 3MB.",
+    }),
   role: z.enum(["owner", "manager"]),
 });
-
 
 // const paymentDetailsSchema = z.object({
 //   cardholderName: z.string().min(1, "Cardholder name is required"),
@@ -341,7 +342,7 @@ const ResturantSignUp: FC = () => {
                                       <FormControl>
                                         <select
                                           {...field}
-                                          className="md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
+                                          className="capitalize md:pt-0 pt-4 text-[0.98rem] rounded-none text-txWhite w-full mt-1 bg-transparent border-b-[1px] border-primary-border focus:border-b-orange-500 outline-none transition-colors duration-500"
                                         >
                                           <option
                                             value="none"
@@ -351,15 +352,16 @@ const ResturantSignUp: FC = () => {
                                           >
                                             Select business type
                                           </option>
-                                          <option value="fine dining">
-                                            fine dining
+                                          <option value="bars & nightlife">
+                                            Bars & Nightlife
                                           </option>
-                                          <option value="fast food">
-                                            fast food
+                                          <option value="restaurants & dining">
+                                            Restaurants & Dining
                                           </option>
-                                          <option value="cafe">cafe</option>
-                                          <option value="bar">bar</option>
-                                          <option value="other">other</option>
+                                          <option value="cafés & bakeries">
+                                            Cafés & Bakeries
+                                          </option>
+                                          <option value="other">Other</option>
                                         </select>
                                       </FormControl>
                                       <FormMessage />

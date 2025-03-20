@@ -13,7 +13,6 @@ const useBusinessDetailsWithoutAuth = ({ name, id, email }: BDetails) => {
         email,
         id
       );
-
       return response?.data?.data?.data;
     } catch (error: any) {
       console.log("error messge:",error.response?.data?.message );

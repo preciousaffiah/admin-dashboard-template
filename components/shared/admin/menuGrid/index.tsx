@@ -25,7 +25,7 @@ const MenuGrid = ({
 }: AdminTable) => {
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="capitalize flex flex-wrap justify-center gap-4">
         {invoiceData?.items.map((invoice: Menus, index: number) => (
           <div
             onClick={() =>
@@ -47,14 +47,14 @@ const MenuGrid = ({
                   <div className="size-16">
                     <img
                       src={`${invoice.image}`}
-                      className="w-full h-full rounded-full"
+                      className="w-full h-full rounded-full object-cover"
                     />
                   </div>
                   <div className="max-w-60">
                     <p className="capitalize text-lg font-medium text-ellipsis break-words">
                       {invoice.name}
                     </p>
-                    <p className="text-ellipsis truncate">
+                    <p className="first-letter:uppercase lowercase  text-ellipsis truncate">
                       {invoice.description}
                     </p>
                   </div>
