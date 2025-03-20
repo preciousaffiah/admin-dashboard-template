@@ -48,7 +48,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
             <div
               className={`nav-item ${
                 item.link === path
-                  ? "text-black bg-primaryGreen rounded-md py-1 px-2"
+                  ? "text-black bg-primaryGreen rounded-md p-2"
                   : "text-secondaryBorder"
               }`}
             >
