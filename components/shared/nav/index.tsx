@@ -52,7 +52,7 @@ const Navbar: FC = () => {
     <div className="bg-primaryDark">
       <div className="md:flex justify-between hidden w-full py-4 text-txWhite items-center px-4 gap-x-1">
         {/* <div className="w-[13%] lg:w-[17%]"> */}
-          <Image alt="logo" src={logo} className="w-32 h-8" />
+          <Image alt="logo" src={logo} className="w-44 h-10" />
         {/* </div> */}
 {/* 
         <div className="w-[47%] lg:w-[43%] flex pl-5">
@@ -132,7 +132,7 @@ const Navbar: FC = () => {
             className="px-0 border-none flex justify-start"
           >
             <div className="text-secondaryBorder flex flex-col gap-y-5 py-8 font-medium px-3 mt-7">
-              {navItems.map((item: any, index) => (
+              {/* {navItems.map((item: any, index) => (
                 <li key={index} className="flex items-center list-none">
                   <item.tag className="size-7" />
 
@@ -145,7 +145,7 @@ const Navbar: FC = () => {
                     {item.title}
                   </Link>
                 </li>
-              ))}
+              ))} */}
               {token && (
                 <div
                   onClick={logout}

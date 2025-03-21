@@ -96,7 +96,7 @@ const Start: FC = () => {
     <div>
       <Navbar />
       <div className="flex flex-col items-center md:gap-y-16 gap-y-10">
-        <div className="cover relative flex h-[50rem] w-full items-center justify-center bg-white dark:bg-black">
+        <div className="cover relative flex md:h-[35rem] h-[22rem] w-full items-center justify-center bg-white dark:bg-black">
           {/* <div
             className={cn(
               "absolute inset-0",
@@ -138,9 +138,9 @@ const Start: FC = () => {
             elevating the customer experience and improving efficiency.
           </p>
         </div>
-        <div className="flex flex-col gap-y-3 md:w-[75%] w-full px-4">
+        <div className="flex flex-col gap-y-3 lg:w-[75%] md:w-[85%] w-full px-4">
           <div className="flex md:flex-row flex-col justify-center md:gap-y-0 gap-y-3 gap-x-2">
-            <div className="image-container w-fit">
+            <div className="image-container md:w-fit w-full">
               <Image
                 src={beer}
                 alt="img"
@@ -158,7 +158,7 @@ const Start: FC = () => {
         </div>
         <div className="m-auto flex flex-col justify-center items-center">
           <Link
-            href="#"
+            href="/business/sign-up"
             className="w-fit px-3 py-2 rounded-md text-white bg-primary-orange font-semibold"
           >
             Start Your Free Trial
@@ -169,7 +169,7 @@ const Start: FC = () => {
             Who Is Servlette For?
           </h1>
           <div className="pt-8 px-4 flex flex-col gap-y-4 w-full">
-            <div className="flex md:flex-row flex-col md:gap-y-0 gap-y-3 gap-x-4 w-fit">
+            <div className="md:min-w-fit min-w-[80vw] flex md:flex-row flex-col md:gap-y-0 gap-y-3 gap-x-4 w-fit">
               {array1.map((item, index) => (
                 <div
                   key={index}
@@ -183,7 +183,7 @@ const Start: FC = () => {
                 </div>
               ))}
             </div>
-            <div className="flex md:flex-row flex-col md:gap-y-0 gap-y-3 gap-x-4 w-fit">
+            <div className="md:min-w-fit min-w-[80vw] flex md:flex-row flex-col md:gap-y-0 gap-y-3 gap-x-4 w-fit">
               {array2.map((item, index) => (
                 <div
                   key={index}
@@ -204,8 +204,8 @@ const Start: FC = () => {
           <h1 className="font-medium lg:text-4xl text-3xl text-center font-edu">
             Key Features{" "}
           </h1>
-          <div className="pt-8 flex flex-col gap-y-4 md:px-36 px-4 m-auto">
-            <div className="flex md:flex-row flex-col md:gap-y-0 gap-y-3 gap-x-4 w-full">
+          <div className="pt-8 flex flex-col gap-y-4 lg:px-36 sm:px-10 px-4 m-auto">
+            <div className="flex lg:flex-row flex-col lg:gap-y-0 gap-y-3 gap-x-4 w-full">
               {features1.map((item, index) => (
                 <div
                   key={index}
@@ -223,7 +223,7 @@ const Start: FC = () => {
                 </div>
               ))}
             </div>
-            <div className="flex md:flex-row flex-col md:gap-y-0 gap-y-3 gap-x-4 w-full">
+            <div className="flex lg:flex-row flex-col lg:gap-y-0 gap-y-3 gap-x-4 w-full">
               {features2.map((item, index) => (
                 <div
                   key={index}
@@ -256,9 +256,9 @@ const Start: FC = () => {
           </div>
         </div>
         <div className="w-full">
-          <div className="w-full flex md:flex-row flex-col items-center gap-x-3 md:px-4 pb-0">
+          <div className="w-full flex lg:flex-row flex-col items-center gap-x-3 md:px-4 pb-0">
             <div className="md:px-0 px-4 w-full">
-              <div className="border-[1px] border-txWhite rounded-md w-full bg-secondaryDark text-primary py-24 text-center flex flex-col gap-y-3">
+              <div className="border-[1px] border-txWhite rounded-md w-full bg-secondaryDark text-primary md:py-24 py-16 text-center flex flex-col gap-y-3">
                 <h1 className="font-medium lg:text-4xl text-2xl font-edu">
                   Bring Servlette Into Your Business
                 </h1>
@@ -268,7 +268,7 @@ const Start: FC = () => {
                 </p>
                 <div className="flex flex-col justify-center items-center">
                   <Link
-                    href="#"
+                    href="/business/sign-up"
                     className="w-fit px-4 py-3 text-white rounded-md bg-primary-orange font-semibold"
                   >
                     Get in touch
@@ -276,9 +276,9 @@ const Start: FC = () => {
                 </div>
               </div>
             </div>
-            <div className=" w-full md:px-8 text-primary pb-0 md:pb-24 pt-24 text-center flex flex-col gap-y-3">
+            <div className=" w-full lg:px-8 text-primary pb-0 lg:pb-24 pt-24 text-center flex flex-col gap-y-3">
               <div className="px-4">
-                <h1 className="font-medium lg:text-4xl text-2xl font-edu">
+                <h1 className="font-medium md:text-4xl text-3xl font-edu">
                   Join millions of businesses Today
                 </h1>
                 <p className="md:text-lg text-base">
@@ -313,7 +313,7 @@ const Start: FC = () => {
                 </Link>
               </div>
               <Link
-                href="#"
+                href="/business/sign-up"
                 className="w-fit px-3 py-2 text-white rounded-md bg-primary-orange font-semibold"
               >
                 Start Now
