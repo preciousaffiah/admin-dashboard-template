@@ -15,7 +15,7 @@ import {
 import Container from "@/components/shared/container";
 import { useAuthToken } from "@/hooks";
 import bartender from "public/bartender.jpg";
-import waiter from "public/waiterserving.jpg";
+import payment from "public/payment.jpg";
 import food from "public/food.jpg";
 import beer from "public/beer.jpg";
 import analytics from "public/analytics.png";
@@ -81,7 +81,7 @@ const Start: FC = () => {
       title: "Seamless Payments",
       description:
         "We handle payments from customers and ensure weekly payouts to businesses, automatically deducting a 5% service fee before transferring funds.",
-      image: notification,
+      image: payment,
     },
     {
       title: "QR Code Generation",
