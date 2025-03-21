@@ -99,12 +99,12 @@ const Start: FC = () => {
       <div className="flex flex-col items-center md:gap-y-16 gap-y-10">
         <div className="pattern lg:h-[35rem] md:h-[25rem] h-[25rem] w-full px-4">
           <div className="md:text-center text-black m-auto h-full flex flex-col justify-center font-edu capitalize font-medium ">
-            <p className="font-semibold lg:text-[7.5rem] md:text-[6.5rem] sm:text-[4.5rem] text-[2rem] uppercase">
+            <p className="font-semibold lg:text-[7.5rem] md:text-[6.5rem] sm:text-[4.5rem] text-[3rem] uppercase">
               Servlette
             </p>
 
             <div className="md:w-[64rem] w-full">
-              <div className="flex md:flex-row flex-col lg:text-5xl md:text-3xl text-2xl md:justify-center md:text-center">
+              <div className="flex md:flex-row flex-col lg:text-5xl text-3xl md:justify-center md:text-center">
                 <p>All-in-One Management</p>
                 <div>
                   <span className="md:pl-3 pl-0"> for</span>
@@ -199,12 +199,12 @@ const Start: FC = () => {
               {features1.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center gap-x-2 border-[1px] cursor-pointer rounded-lg"
+                  className="image-container flex flex-col items-center gap-x-2 border-[1px] cursor-pointer rounded-lg"
                 >
                   <Image
                     src={item.image}
                     alt="img"
-                    className="w-full h-[12rem] hover:object-cover duration-500 transition-all object-fill rounded-t-md"
+                    className="w-full h-[12rem] duration-500 transition-all object-cover rounded-t-md"
                   />
                   <div className="py-4 md:px-4 px-2.5">
                     <p className="font-medium text-lg">{item.title}</p>
@@ -217,12 +217,12 @@ const Start: FC = () => {
               {features2.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center gap-x-2 border-[1px] cursor-pointer rounded-lg"
+                  className="image-container flex flex-col items-center gap-x-2 border-[1px] cursor-pointer rounded-lg"
                 >
                   <Image
                     src={item.image}
                     alt="img"
-                    className="w-full h-[12rem] hover:object-cover duration-500 transition-all object-fill rounded-t-md"
+                    className="w-full h-[12rem] duration-500 transition-all object-cover rounded-t-md"
                   />
                   <div className="py-4 md:px-4 px-2.5">
                     <p className="font-medium text-lg">{item.title}</p>
