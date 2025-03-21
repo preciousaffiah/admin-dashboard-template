@@ -117,7 +117,7 @@ const Start: FC = () => {
           </div>
         </div>
         <div className="w-full text-center m-auto text-primary py-8 md:px-28 px-4 flex flex-col gap-y-3">
-          <h1 className="font-medium lg:text-4xl text-3xl">
+          <h1 className="font-medium lg:text-4xl text-3xl font-edu">
             The Smart Way to Manage Your Business
           </h1>
           <p className="text-lg md:w-[70%] text-center m-auto w-full">
@@ -155,7 +155,7 @@ const Start: FC = () => {
           </Link>
         </div>
         <div className="text-black">
-          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center">
+          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center font-edu">
             Who Is Servlette For?
           </h1>
           <div className="pt-8 px-4 flex flex-col gap-y-4 w-full">
@@ -191,7 +191,7 @@ const Start: FC = () => {
         </div>
 
         <div className="text-black">
-          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center">
+          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center font-edu">
             Key Features{" "}
           </h1>
           <div className="pt-8 flex flex-col gap-y-4 md:px-36 px-4 m-auto">
@@ -235,7 +235,7 @@ const Start: FC = () => {
         </div>
 
         <div className="text-black">
-          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center px-2">
+          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center px-2 font-edu">
             How It Works <br /> (Step-by-Step Guide)
           </h1>
           <div className="pt-8 flex flex-col gap-y-4 md:px-20 px-8">
@@ -250,7 +250,7 @@ const Start: FC = () => {
         </div>
         <div className="w-full">
           <div className="w-full bg-secondaryDark text-primary py-24 text-center flex flex-col gap-y-3">
-            <h1 className="font-medium lg:text-4xl text-2xl">
+            <h1 className="font-medium lg:text-4xl text-2xl font-edu">
               Bring Servlette Into Your Business Today
             </h1>
             <p className="md:text-lg text-base">
