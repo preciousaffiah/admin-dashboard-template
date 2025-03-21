@@ -15,6 +15,9 @@ import {
 import Container from "@/components/shared/container";
 import { useAuthToken } from "@/hooks";
 import bartender from "public/bartender.jpg";
+import waiter from "public/waiterserving.jpg";
+import food from "public/food.jpg";
+import beer from "public/beer.jpg";
 import analytics from "public/analytics.png";
 import menu from "public/menu.png";
 import notification from "public/notification.jpg";
@@ -129,22 +132,28 @@ const Start: FC = () => {
         </div>
         <div className="flex flex-col gap-y-3 md:w-[75%] w-full px-4">
           <div className="flex md:flex-row flex-col justify-center md:gap-y-0 gap-y-3 gap-x-2">
-            <Image
-              src={bartender}
-              alt="img"
-              className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
-            />
+            <div className="image-container w-fit">
+              <Image
+                src={beer}
+                alt="img"
+                className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
+              />
+            </div>
+            <div className="image-container w-full">
+              <Image
+                src={food}
+                alt="img"
+                className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
+              />
+            </div>
+          </div>
+          <div className="image-container">
             <Image
               src={bartender}
               alt="img"
               className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
             />
           </div>
-          <Image
-            src={bartender}
-            alt="img"
-            className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
-          />
         </div>
         <div className="m-auto flex flex-col justify-center items-center">
           <Link
@@ -155,7 +164,7 @@ const Start: FC = () => {
           </Link>
         </div>
         <div className="text-black">
-          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center font-edu">
+          <h1 className="font-medium lg:text-4xl text-3xl text-center font-edu">
             Who Is Servlette For?
           </h1>
           <div className="pt-8 px-4 flex flex-col gap-y-4 w-full">
@@ -191,7 +200,7 @@ const Start: FC = () => {
         </div>
 
         <div className="text-black">
-          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center font-edu">
+          <h1 className="font-medium lg:text-4xl text-3xl text-center font-edu">
             Key Features{" "}
           </h1>
           <div className="pt-8 flex flex-col gap-y-4 md:px-36 px-4 m-auto">
@@ -235,7 +244,7 @@ const Start: FC = () => {
         </div>
 
         <div className="text-black">
-          <h1 className="md:font-semibold font-medium lg:text-4xl text-3xl text-center px-2 font-edu">
+          <h1 className="font-medium lg:text-4xl text-3xl text-center px-2 font-edu">
             How It Works <br /> (Step-by-Step Guide)
           </h1>
           <div className="pt-8 flex flex-col gap-y-4 md:px-20 px-8">
