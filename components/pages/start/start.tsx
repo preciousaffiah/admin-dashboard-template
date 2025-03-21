@@ -12,7 +12,6 @@ import {
   Twitter,
   UtensilsCrossed,
 } from "lucide-react";
-import Container from "@/components/shared/container";
 import { useAuthToken } from "@/hooks";
 import bartender from "public/bartender.jpg";
 import payment from "public/payment.jpg";
@@ -20,10 +19,9 @@ import food from "public/food.jpg";
 import beer from "public/beer.jpg";
 import analytics from "public/analytics.png";
 import menu from "public/menu.png";
-import notification from "public/notification.jpg";
+import orders from "public/orders.png";
 import qr from "public/qr.png";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 
 const name = "Victoria";
 let title = "Start";
@@ -60,7 +58,7 @@ const Start: FC = () => {
     {
       title: "Real-time Order Management",
       description: "instantly see new customer orders and attend to them.",
-      image: analytics,
+      image: orders,
     },
 
     {
