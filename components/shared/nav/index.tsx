@@ -49,7 +49,7 @@ const Navbar: FC = () => {
   const { token, userData, logout } = useAuthToken();
 
   return (
-    <div className="bg-secondaryDarker border-b-[1px] border-primary">
+    <div className="bg-primaryDark">
       <div className="md:flex justify-between hidden w-full py-4 text-txWhite items-center px-4 gap-x-1">
         {/* <div className="w-[13%] lg:w-[17%]"> */}
           <Image alt="logo" src={logo} className="w-32 h-8" />
