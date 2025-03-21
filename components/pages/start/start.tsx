@@ -246,7 +246,8 @@ const Start: FC = () => {
 
         <div className="text-black">
           <h1 className="font-medium lg:text-4xl text-3xl text-center px-2 font-edu">
-            How It Works <br /> (Step-by-Step Guide)
+            How It Works
+            <p className="lg:text-3xl text-2xl">(Step-by-Step Guide)</p>
           </h1>
           <div className="pt-8 flex flex-col gap-y-4 md:px-20 px-8">
             <div className="flex gap-x-4 m-auto">
