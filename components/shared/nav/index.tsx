@@ -49,12 +49,12 @@ const Navbar: FC = () => {
   const { token, userData, logout } = useAuthToken();
 
   return (
-    <div className="bg-background">
-      <div className="md:flex hidden w-full py-4 text-txWhite items-center px-4 gap-x-1">
-        <div className="w-[13%] lg:w-[17%]">
+    <div className="bg-secondaryDarker border-b-[1px] border-primary">
+      <div className="md:flex justify-between hidden w-full py-4 text-txWhite items-center px-4 gap-x-1">
+        {/* <div className="w-[13%] lg:w-[17%]"> */}
           <Image alt="logo" src={logo} className="w-32 h-8" />
-        </div>
-
+        {/* </div> */}
+{/* 
         <div className="w-[47%] lg:w-[43%] flex pl-5">
           {navItems.map((item, index) => (
             <li key={index} className="list-none px-4 text-[0.98rem]">
@@ -68,22 +68,22 @@ const Navbar: FC = () => {
               </Link>
             </li>
           ))}
-        </div>
-        <div className="flex lg:text-base text-sm justify-end w-[40%] gap-x-1 text-white">
+        </div> */}
+        <div className="flex lg:text-base text-sm justify-end gap-x-1 text-white">
           {!token && (
             <Link href="/auth/sign-in">
-              <p className="px-3 py-1 bg-primary-orange rounded-md ">Sign In</p>
+              <p className="px-3 py-2 bg-primary-orange rounded-md ">Sign In</p>
             </Link>
           )}
           {path !== "/business/sign-up" && (
             <Link href="/business/sign-up">
-              <p className="px-3 py-1 bg-primary-orange rounded-md ">
+              <p className="px-3 py-2 bg-primary-orange rounded-md ">
                 Register business
               </p>
             </Link>
           )}
 
-          <div className="bg-primary-orange flex items-center justify-center py-1 rounded-md px-1">
+          <div className="bg-primary-orange flex items-center justify-center py-2 rounded-md px-3">
             <Play fill="white" className="pr-2" />
 
             <p>Watch Video</p>
