@@ -50,7 +50,7 @@ const Start: FC = () => {
       tag: Coffee,
     },
     {
-      title: "Fast Foods",
+      title: "Fast Foods and more",
       description: "Handle drink orders, reservations, & staff efficiently.",
       tag: Pizza,
     },
@@ -58,8 +58,8 @@ const Start: FC = () => {
 
   const features1 = [
     {
-      title: "Smart Order Management",
-      description: "Streamline customer orders & optimize workflow.",
+      title: "Real-time Order Management",
+      description: "instantly see new customer orders and attend to them.",
       image: analytics,
     },
 
@@ -69,30 +69,25 @@ const Start: FC = () => {
       image: menu,
     },
     {
-      title: "Sales Reports & Analytics",
-      description: "Get analytics and reports to boost profits.",
+      title: "Sales & Revenue Tracking",
+      description:
+        "Get detailed reports on orders and payments so you’re always in control.",
       image: analytics,
     },
   ];
 
   const features2 = [
     {
-      title: "Alerts System ",
+      title: "Seamless Payments",
       description:
-        'Staff receives notifications when a customer requests service- "Nudge waiter" and places order.',
+        "We handle payments from customers and ensure weekly payouts to businesses, automatically deducting a 5% service fee before transferring funds.",
       image: notification,
     },
     {
       title: "QR Code Generation",
       description:
-        "Quick generation of unique QR code for each table where customers scan for menu, order and attention.",
+        "No need for customers to call a waiter; they can scan, order, and even nudge a waiter for assistance when needed.",
       image: qr,
-    },
-    {
-      title: "Alerts System ",
-      description:
-        'Staff receives notifications when a customer requests service- "Nudge waiter" and places order.',
-      image: notification,
     },
   ];
 
