@@ -280,7 +280,7 @@ const Orders: FC = () => {
                       </div> */}
                   </div>
                   <div className="my-2 md:mb-2 md:mt-12 flex justify-between px-2 items-center py-6 text-txWhite">
-                    <div className="flex h-full justify-between w-full text-primary">
+                    <div className="capitalize flex h-full justify-between w-full text-primary">
                       <p className="font-medium flex h-fit gap-x-2">
                         Order Status:{" "}
                         <span

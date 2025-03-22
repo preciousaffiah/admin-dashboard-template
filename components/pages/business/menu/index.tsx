@@ -1,3 +1,5 @@
+import dynamic from "next/dynamic";
+
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -5,16 +7,14 @@ import DataPagination from "@/components/serviette-ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService } from "@/services";
-import { useAuthToken, useBusinessDetails, useTabHeaders } from "@/hooks";
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Circle, FolderOpen, Loader, ShoppingCart } from "lucide-react";
+import { useAuthToken, useTabHeaders } from "@/hooks";
+import { FolderOpen, Loader } from "lucide-react";
 import ItemBox from "../itemBox";
 import { Menus } from "@/types";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import DeleteItemModal from "@/components/shared/modal/delete-item";
-import CartModal from "@/components/shared/modal/cart";
-import logo from "public/Logo.png";
-import Image from "next/image";
+// Dynamically import the CartModal component with SSR disabled
+const CartModal = dynamic(() => import("@/components/shared/modal/cart"), {
+  ssr: false,
+});
 import OrderService from "@/services/order";
 const staticTabHeaders = {
   all: "all",
@@ -65,7 +65,12 @@ const BusinessMenu = ({
     isError,
     data: itemsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-items-menu", userData?.businessId || "", tabKey, currentPage],
+    queryKey: [
+      "get-items-menu",
+      userData?.businessId || "",
+      tabKey,
+      currentPage,
+    ],
     queryFn: fetchItems,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
@@ -96,8 +101,7 @@ const BusinessMenu = ({
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
-console.log(table);
-
+  console.log(table);
 
   return (
     <div>
@@ -161,8 +165,7 @@ console.log(table);
                       selectedInvoice={selectedInvoice}
                       setCarted={setCarted}
                       carted={carted}
-                table={table}
-
+                      table={table}
                       tableOrderData={tableOrderData?.[0]}
                     />
                   </div>

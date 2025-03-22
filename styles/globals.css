@@ -96,6 +96,7 @@ tr td:last-child {
   color: rgba(var(--textPending));
 }
 
+.status-failed,
 .status-cancelled,
 .status-occupied,
 .status-inactive,
@@ -105,6 +106,7 @@ tr td:last-child {
   color: rgba(var(--textCancelled));
 }
 
+.status-paid,
 .status-completed,
 .status-served,
 .status-available,

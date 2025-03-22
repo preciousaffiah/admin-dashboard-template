@@ -13,6 +13,7 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
+    // "typeRoots": ["./node_modules/@types", "./types"], // Include custom types folder
     "paths": {
       "@/*": ["./*"],
       "@types": ["types"],
@@ -24,7 +25,8 @@
       "@layouts": ["components/layouts/index"],
       "@serviette-ui": ["components/serviette-ui/index"],
       "@serviette-icons": ["components/serviette-icons/index"],
-      "@serviette-illustrations": ["components/serviette-illustrations/index"]
+      "@serviette-illustrations": ["components/serviette-illustrations/index"],
+      "@paystack/inline-js": ["./types/paystack-inline-js.d.ts"] // Map the module to the declaration file
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

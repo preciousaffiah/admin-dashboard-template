@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Dot,
@@ -13,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ItemService, StaffService } from "@/services";
+import { ItemService, PaymnetsService, StaffService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import { handleMediaUpload } from "@/utils/upload";
@@ -30,6 +31,9 @@ import {
 import { handleAxiosError } from "@/utils/axios";
 import { CartOrderItem, Menus } from "@/types";
 import OrderService from "@/services/order";
+import Paystack from "@paystack/inline-js";
+import { useRouter } from "next/router";
+import { PaymentStatusEnum } from "@/types/enums";
 
 const CartModal = ({
   selectedInvoice,
@@ -44,9 +48,9 @@ const CartModal = ({
   businessId: string;
   tableOrderData: any;
 }) => {
-  const { userData } = useAuthToken();
-
   const [success, setSuccess] = useState(false);
+  const popup = new Paystack(process.env.PAYSTACK_PUBLIC_KEY as string);
+  const router = useRouter();
 
   const createOrderRequest: any = async () => {
     try {
@@ -98,6 +102,30 @@ const CartModal = ({
     );
   };
 
+  const initPaymentRequest: any = async () => {
+    try {
+      const response = await PaymnetsService.initPayment(tableOrderData[0]._id);
+      console.log("response", response.data);
+
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const initMutation: any = useMutation({
+    mutationFn: initPaymentRequest,
+    onSuccess: (res: any) => {
+      console.log("onSuccess", res);
+      popup.resumeTransaction(res.data.data.data.access_code);
+    },
+  });
+
+  const handlePayment = () => {
+    initMutation.mutate();
+  };
+  console.log(tableOrderData);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -136,7 +164,12 @@ const CartModal = ({
                               <p>₦{invoice.price.toLocaleString()}</p>
                             </div>
                             <div className="text-center text-xs text-txWhite w-full font-medium text-md">
-                              <p>₦{(invoice.quantity * invoice.price).toLocaleString()}</p>
+                              <p>
+                                ₦
+                                {(
+                                  invoice.quantity * invoice.price
+                                ).toLocaleString()}
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -152,17 +185,29 @@ const CartModal = ({
                 </div>
               </div>
               <div className="w-full left-0 absolute bottom-0 text-black">
-                <button
-                  type="submit"
-                  // disabled={mutation.isPending}
-                  // onClick={onSubmit}
-                  className={`place-menu-btn bg-primaryGreen w-full py-2 text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
-                >
-                  Checkout
-                  {/* {mutation.isPending && (
-                    <LoaderCircle className="text-black flex w-5 h-5 rotate-icon" />
-                  )} */}
-                </button>
+                {tableOrderData?.[0].paymentStatus ===
+                PaymentStatusEnum.PAID ? (
+                  <button
+                    disabled={true}
+                    className={`place-menu-btn bg-primaryLime w-full py-2 text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
+                  >
+                    <Wine />
+                    Preparing Order
+                    <Wine />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={initMutation.isPending}
+                    onClick={handlePayment}
+                    className={`place-menu-btn bg-primaryGreen w-full py-2 text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
+                  >
+                    Checkout
+                    {initMutation.isPending && (
+                      <LoaderCircle className="text-black flex w-5 h-5 rotate-icon" />
+                    )}
+                  </button>
+                )}
               </div>
             </>
           </div>
@@ -220,7 +265,12 @@ const CartModal = ({
                                 <p>₦{invoice.price.toLocaleString()}</p>
                               </div>
                               <div className="text-center text-xs text-txWhite w-full font-medium text-md">
-                                <p>₦{(invoice.quantity * invoice.price).toLocaleString()}</p>
+                                <p>
+                                  ₦
+                                  {(
+                                    invoice.quantity * invoice.price
+                                  ).toLocaleString()}
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -264,7 +314,7 @@ const CartModal = ({
                       {selectedInvoice.reduce(
                         (sum: number, item: CartOrderItem) => sum + item.total,
                         0
-                      )}
+                      ).toLocaleString()}
                     </p>
                   </div>
                 </div>

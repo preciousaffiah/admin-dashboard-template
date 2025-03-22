@@ -6,8 +6,8 @@ export enum RoleEnum {
 
 export enum DeptEnum {
   ADMIN = "admin",
-  WAITER = "waiter", 
-  BAR = "bar"
+  WAITER = "waiter",
+  BAR = "bar",
 }
 
 export enum StaffStatusEnum {
@@ -20,12 +20,16 @@ export enum PaymentStatusEnum {
   PAID = "paid",
 }
 
+export enum PaymentMetaDataTypeEnum {
+  ORDER = "order",
+  SUBSCRIPTION = "subscription",
+}
+
 export enum OrderStatusEnum {
   PENDING = "pending",
   SERVED = "served",
   CANCELLED = "cancelled",
 }
-
 
 export enum OrderDateFilterEnum {
   TODAY = "today",

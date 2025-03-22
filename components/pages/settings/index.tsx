@@ -337,37 +337,37 @@ const Settings = ({ title }: { title: string }) => {
   };
 
   const handlePrint = () => {
-    if (sectionRef.current) {
-      const printContent = sectionRef.current.innerHTML;
-      const newWindow = window.open("", "_blank");
-      newWindow?.document.write(`
-        <html>
-        <head>
-            <style>
-                @media print {
-                    body {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    margin: 0;
-                    }
-                    .print-area {
-                    max-width: 300px; /* Adjust size as needed */
-                    padding: 20px;
-                    border: 1px solid black;
-                    }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="print-area">${printContent}</div>
-        </body>
-        </html>
-      `);
-      newWindow?.document.close();
-      newWindow?.print();
-    }
+    // if (sectionRef.current) {
+    //   const printContent = sectionRef.current.innerHTML;
+    //   const newWindow = window.open("", "_blank");
+    //   newWindow?.document.write(`
+    //     <html>
+    //     <head>
+    //         <style>
+    //             @media print {
+    //                 body {
+    //                 display: flex;
+    //                 justify-content: center;
+    //                 align-items: center;
+    //                 height: 100vh;
+    //                 margin: 0;
+    //                 }
+    //                 .print-area {
+    //                 max-width: 300px; /* Adjust size as needed */
+    //                 padding: 20px;
+    //                 border: 1px solid black;
+    //                 }
+    //             }
+    //         </style>
+    //     </head>
+    //     <body>
+    //         <div class="print-area">${printContent}</div>
+    //     </body>
+    //     </html>
+    //   `);
+    //   newWindow?.document.close();
+    //   newWindow?.print();
+    // }
   };
 
   // GET ITEMS
