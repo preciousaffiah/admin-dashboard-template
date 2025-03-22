@@ -140,15 +140,6 @@ const Settings = ({ title }: { title: string }) => {
   // Ref for the hidden file input
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [domain, setDomain] = useState("");
-
-  useEffect(() => {
-    // Check if window is defined (client side)
-    if (typeof window !== "undefined") {
-      setDomain(window.location.origin);
-    }
-  }, []);
-
   // Sync categories with businessData
   useEffect(() => {
     if (data?.menuCategories) {
@@ -799,7 +790,7 @@ const Settings = ({ title }: { title: string }) => {
                                         id="print-section"
                                       >
                                         <Image
-                                          text={`${domain}/${
+                                          text={`${process.env.NEXT_PUBLIC_FRONTEND_URL as string}/${
                                             data?.name
                                           }/table/${form.getValues(
                                             "tableNumber"

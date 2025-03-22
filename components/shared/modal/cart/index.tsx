@@ -1,3 +1,4 @@
+"use client";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -9,19 +10,11 @@ import {
   ShoppingCart,
   Wine,
 } from "lucide-react";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ItemService, PaymnetsService, StaffService } from "@/services";
-import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
-import { handleMediaUpload } from "@/utils/upload";
 import "react-phone-number-input/style.css";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -31,9 +24,16 @@ import {
 import { handleAxiosError } from "@/utils/axios";
 import { CartOrderItem, Menus } from "@/types";
 import OrderService from "@/services/order";
-import Paystack from "@paystack/inline-js";
+const Paystack = dynamic(() => import("@paystack/inline-js") as any, {
+  ssr: false,
+});
+
 import { useRouter } from "next/router";
 import { PaymentStatusEnum } from "@/types/enums";
+
+// const Paystack = dynamic(() => import("@paystack/inline-js") as any, {
+//   ssr: false,
+// }) as any;
 
 const CartModal = ({
   selectedInvoice,
@@ -48,8 +48,19 @@ const CartModal = ({
   businessId: string;
   tableOrderData: any;
 }) => {
+  const [popup, setPopup] = useState<any>(null);
+
   const [success, setSuccess] = useState(false);
-  const popup = new Paystack(process.env.PAYSTACK_PUBLIC_KEY as string);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const PaystackInline = require("@paystack/inline-js").default;
+      setPopup(
+        new PaystackInline(
+          process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string
+        )
+      );
+    }
+  }, []);
   const router = useRouter();
 
   const createOrderRequest: any = async () => {
@@ -311,10 +322,13 @@ const CartModal = ({
                   <div className="pt-6 text-center">
                     <p className="border-primary-orange text-primary-orange border-2 px-1.5 rounded-sm py-1">
                       Total{" "}
-                      {selectedInvoice.reduce(
-                        (sum: number, item: CartOrderItem) => sum + item.total,
-                        0
-                      ).toLocaleString()}
+                      {selectedInvoice
+                        .reduce(
+                          (sum: number, item: CartOrderItem) =>
+                            sum + item.total,
+                          0
+                        )
+                        .toLocaleString()}
                     </p>
                   </div>
                 </div>

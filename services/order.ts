@@ -32,9 +32,10 @@ class OrdersService {
       dateFilter?: string;
     }
   ) {
-
     const filteredData = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => (value !== "" && value !== "all"))
+      Object.entries(filters).filter(
+        ([_, value]) => value !== "" && value !== "all"
+      )
     );
 
     return axiosWithToken().get(`/order/all-orders/${businessId}`, {
@@ -53,7 +54,6 @@ class OrdersService {
     orderId: string,
     payload: {
       status?: string;
-      itemData?: OrderItemUpdate[];
     }
   ) {
     const filteredData = Object.fromEntries(

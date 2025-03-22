@@ -10,7 +10,7 @@ import cover2 from "public/cover2.png";
 import cover3 from "public/cover3.jpg";
 import cover4 from "public/cover4.webp";
 import ScannedComp from "@/components/pages/business/scannedComp";
-import { BusService } from "@/services";
+import { BusService, OrderService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthToken } from "@/hooks";
 import { handleAxiosError } from "@/utils/axios";
@@ -58,6 +58,32 @@ const BusinessMenuPage: FC = () => {
     refetchOnWindowFocus: true,
   });
 
+  // GET ORDER
+  const fetchLastOrder = async () => {
+    try {
+      const response = await OrderService.getTableOrder(
+        data?._id || "",
+        tableData._id || ""
+      );
+
+      return response?.data?.data?.data;
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || "An error occurred");
+      handleAxiosError(error, "");
+    }
+  };
+
+  const { isLoading: isTableOrderLoading, data: tableOrderData } = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ["get-table-order", tableData?._id || ""],
+    queryFn: fetchLastOrder,
+    gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+    refetchOnWindowFocus: true,
+  });
+  console.log(tableOrderData);
+
   if (isTableLoading) {
     return (
       <div className="text-txWhite h-screen m-auto flex flex-col justify-center items-center font-medium text-lg font-edu">
@@ -77,13 +103,14 @@ const BusinessMenuPage: FC = () => {
   }
 
   return (
-      <div>
-        <ScannedComp
-          businessId={tableData.businessId}
-          BusinessName={decodedName}
-          tabelNumber={number as string}
-        />
-      </div>
+    <div>
+      <ScannedComp
+        businessId={tableData.businessId}
+        BusinessName={decodedName}
+        tabelNumber={number as string}
+        amountToCheckout={tableOrderData ? tableOrderData[0] : 0}
+      />
+    </div>
   );
 };
 

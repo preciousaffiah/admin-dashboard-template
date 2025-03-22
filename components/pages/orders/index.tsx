@@ -1,3 +1,5 @@
+'use client'
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { FC, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -31,6 +33,9 @@ import { OrderStatusEnum, PaymentStatusEnum } from "@/types/enums";
 import { useMutation } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import OrderService from "@/services/order";
+const Paystack = dynamic(() => import("@paystack/inline-js") as any, { ssr: false });
+
+import { PaymnetsService } from "@/services";
 
 const tabs = {
   today: "today",
@@ -71,16 +76,28 @@ const defaultInvoice: any = {
   status: "",
 };
 const Orders: FC = () => {
+  const [popup, setPopup] = useState<any>(null);
+
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [orderHeader, setOrderHeader] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<any>(defaultInvoice);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const PaystackInline = require("@paystack/inline-js").default;
+      setPopup(new PaystackInline(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string));
+    }
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const [dateKey, setDateKey] = useState<string>("");
   const [tabKey, setTabKey] = useState<string>("");
+  // if (typeof window !== 'undefined') {
 
+  // const popup = new Paystack(process.env.PAYSTACK_PUBLIC_KEY as string);
+  // }
   let title = "Orders";
 
   const updatedInvoice = { ...selectedInvoice };
@@ -171,6 +188,31 @@ const Orders: FC = () => {
 
     orderItemsMutation.mutate();
   };
+
+  const initPaymentRequest: any = async () => {
+    try {
+      const response = await PaymnetsService.initPayment(selectedInvoice._id);
+      console.log("response", response.data);
+
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const initMutation: any = useMutation({
+    mutationFn: initPaymentRequest,
+    onSuccess: (res: any) => {
+      console.log("onSuccess", res);
+      popup.resumeTransaction(res.data.data.data.access_code);
+
+    },
+  });
+
+  const handlePayment = () => {
+    initMutation.mutate();
+  };
+
   console.log(selectedInvoice);
 
   return (
@@ -399,8 +441,16 @@ const Orders: FC = () => {
                             PaymentStatusEnum.PAID &&
                             selectedInvoice.status !==
                               OrderStatusEnum.CANCELLED && (
-                              <button className="flex m-auto rounded-xl font-medium bg-primaryLime text-primaryDark px-3 py-2 ">
+                              <button
+                                type="submit"
+                                disabled={initMutation.isPending}
+                                onClick={handlePayment}
+                                className="flex m-auto items-center gap-x-1 rounded-xl font-medium bg-primaryLime text-primaryDark px-3 py-2 "
+                              >
                                 Checkout
+                                {initMutation.isPending && (
+                                  <LoaderCircle className=" flex w-5 h-5 rotate-icon" />
+                                )}
                               </button>
                             )}
                         </div>

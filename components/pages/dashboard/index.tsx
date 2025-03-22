@@ -37,6 +37,7 @@ import OrderService from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { BusService } from "@/services";
+import { CustomChartTooltip } from "@/components/serviette-ui";
 
 const BarChart = dynamic(
   () => import("recharts").then((recharts) => recharts.BarChart),
@@ -44,7 +45,6 @@ const BarChart = dynamic(
 );
 
 export const description = "A line chart with dots";
-
 
 const customersChartData = [
   { month: "Start", cusomers: 0 },
@@ -104,19 +104,11 @@ const Dashboard: FC = () => {
   const { data } = useBusinessDetailsWithoutAuth({
     id: userData?.businessId || undefined,
   });
-  const [dateKey, setDateKey] = useState<string>("");
+  const [dateKey, setDateKey] = useState<string>("today");
 
   const url: any = slugify(data?.name || "");
 
-  const [domain, setDomain] = useState("");
   const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    // Check if window is defined (client side)
-    if (typeof window !== "undefined") {
-      setDomain(window.location.origin);
-    }
-  }, []);
 
   // GET ORDERS
   const fetchOrders = async () => {
@@ -180,9 +172,14 @@ const Dashboard: FC = () => {
   useEffect(() => {
     statsRefetch();
   }, [dateKey]);
+console.log(dateKey);
 
   const customersChartData2: any = () => {
-    if (!statsData?.charts || statsData.charts.length === 0 || isStatsRefetching)
+    if (
+      !statsData?.charts ||
+      statsData.charts.length === 0 ||
+      isStatsRefetching
+    )
       return customersChartData;
     return [
       { month: "Start", customers: 0 }, // Initial baseline point
@@ -194,7 +191,11 @@ const Dashboard: FC = () => {
   };
 
   const ordersChartData2: any = () => {
-    if (!statsData?.charts || statsData.charts.length === 0 || isStatsRefetching)
+    if (
+      !statsData?.charts ||
+      statsData.charts.length === 0 ||
+      isStatsRefetching
+    )
       return ordersChartData;
     return [
       { month: "Start", orders: 0 }, // Initial baseline point
@@ -206,7 +207,11 @@ const Dashboard: FC = () => {
   };
 
   const revenuesChartData2: any = () => {
-    if (!statsData?.charts || statsData.charts.length === 0 || isStatsRefetching)
+    if (
+      !statsData?.charts ||
+      statsData.charts.length === 0 ||
+      isStatsRefetching
+    )
       return revenuesChartData;
     return [
       { month: "Start", revenue: 0 }, // Initial baseline point
@@ -242,9 +247,15 @@ const Dashboard: FC = () => {
                 <div className="text-primary md:text-sm text-xs gap-x-1 md: flex w-full items-center lg:justify-end justify-start sm:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
                   Sign in link:
                   <span className="font-normal text-xs">
-                    {`${domain}/auth/sign-in/${url}`}
+                    {`${
+                      process.env.NEXT_PUBLIC_FRONTEND_URL as string
+                    }/auth/sign-in/${url}`}
                   </span>
-                  <Copy textToCopy={`${domain}/auth/sign-in/${url}`} />
+                  <Copy
+                    textToCopy={`${
+                      process.env.NEXT_PUBLIC_FRONTEND_URL as string
+                    }/auth/sign-in/${url}`}
+                  />
                 </div>
               </div>
               <ScrollBar orientation="horizontal" />
@@ -311,8 +322,10 @@ const Dashboard: FC = () => {
                                         }}
                                       >
                                         <ChartTooltip
-                                          cursor={false}
-                                          content={<ChartTooltipContent />}
+                                         cursor={false}
+                                         content={({ payload }) => {
+                                           return <CustomChartTooltip payload={payload} tabKey={dateKey}/>
+                                         }}
                                         />
                                         <defs>
                                           <linearGradient
@@ -408,7 +421,9 @@ const Dashboard: FC = () => {
                                       >
                                         <ChartTooltip
                                           cursor={false}
-                                          content={<ChartTooltipContent />}
+                                          content={({ payload }) => {
+                                            return <CustomChartTooltip payload={payload} tabKey={dateKey}/>
+                                          }}
                                         />
                                         <defs>
                                           <linearGradient
@@ -502,8 +517,10 @@ const Dashboard: FC = () => {
                                         }}
                                       >
                                         <ChartTooltip
-                                          cursor={false}
-                                          content={<ChartTooltipContent />}
+                                         cursor={false}
+                                         content={({ payload }) => {
+                                           return <CustomChartTooltip payload={payload} tabKey={dateKey}/>
+                                         }}
                                         />
                                         <defs>
                                           <linearGradient

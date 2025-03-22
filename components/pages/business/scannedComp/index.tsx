@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { SearchBar } from "@/components/serviette-ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DataPagination from "@/components/serviette-ui/Pagination";
-import { useQuery } from "@tanstack/react-query";
+"use client";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
-import { ItemService } from "@/services";
-import { useAuthToken, useSocket } from "@/hooks";
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Circle, FolderOpen, Loader, ShoppingCart } from "lucide-react";
-import ItemBox from "../itemBox";
+import { PaymnetsService } from "@/services";
+import { useSocket } from "@/hooks";
+import { LoaderCircle } from "lucide-react";
 import { Menus } from "@/types";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import DeleteItemModal from "@/components/shared/modal/delete-item";
-import CartModal from "@/components/shared/modal/cart";
-import logo from "public/Logo.png";
-import Image from "next/image";
 import Link from "next/link";
+import { PaymentStatusEnum } from "@/types/enums";
+const Paystack = dynamic(() => import("@paystack/inline-js") as any, {
+  ssr: false,
+});
 
 let tabKey: any = null;
 
@@ -43,20 +39,54 @@ const ScannedComp = ({
   businessId,
   BusinessName,
   tabelNumber,
+  amountToCheckout,
 }: {
   businessId: string;
   BusinessName: string;
   tabelNumber: string;
+  amountToCheckout: any;
 }) => {
   useSocket();
-
+  const [popup, setPopup] = useState<any>(null);
   const { nudgeWaiter } = useSocket();
   const [nudged, setNudged] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const PaystackInline = require("@paystack/inline-js").default;
+      setPopup(
+        new PaystackInline(
+          process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string
+        )
+      );
+    }
+  }, []);
   const handleNudged = () => {
     nudgeWaiter(businessId, Number(tabelNumber));
     setNudged(true);
     setTimeout(() => setNudged(false), 4000); // Reset after 4 seconds
+  };
+
+  const initPaymentRequest: any = async () => {
+    try {
+      const response = await PaymnetsService.initPayment(amountToCheckout._id);
+
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const initMutation: any = useMutation({
+    mutationFn: initPaymentRequest,
+    onSuccess: (res: any) => {
+      console.log("onSuccess", res);
+      popup.resumeTransaction(res.data.data.data.access_code);
+    },
+  });
+
+  const handlePayment = () => {
+    initMutation.mutate();
   };
 
   return (
@@ -81,11 +111,27 @@ const ScannedComp = ({
         >
           {nudged ? "Nudged 👍🏽" : " Nudge waiter 👋🏽"}
         </div>
+        {amountToCheckout && amountToCheckout.paymentStatus !== PaymentStatusEnum.PAID &&
+          amountToCheckout.total && (
+            <button
+              type="submit"
+              disabled={initMutation.isPending}
+              onClick={handlePayment}
+              className="w-full flex  justify-center items-center gap-x-1 rounded-2xl py-4 border-[1px] border-neutral-500"
+            >
+              checkout{" "}
+              {amountToCheckout &&
+                `₦${(amountToCheckout?.total).toLocaleString()}`}
+              {initMutation.isPending && (
+                <LoaderCircle className="flex w-5 h-5 rotate-icon" />
+              )}
+            </button>
+          )}
         <Link
-          href={`/${BusinessName}/menu`}
+          href={`${process.env.NEXT_PUBLIC_FRONTEND_URL as string}`}
           className="w-full rounded-2xl py-4 border-[1px] border-neutral-500"
         >
-          checkout
+          Servlette
         </Link>
       </div>
     </div>

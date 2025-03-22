@@ -4,7 +4,7 @@ import PageAnimation from "./page-animation";
 import ToastMessage from "./ToastMessage";
 import Input from "./Input";
 import SearchBar from "./Search";
-
+import CustomChartTooltip from "./chart"
 export {
     // SideNav,
     MainWrapper,
@@ -12,4 +12,5 @@ export {
     ToastMessage,
     Input,
     SearchBar,
+    CustomChartTooltip
 };
