@@ -95,7 +95,7 @@ const tableHeaders = [
   "Table No.",
   "Menu Items",
   "Total",
-  "Time of Order",
+  "Date of Order",
   "Status",
 ];
 

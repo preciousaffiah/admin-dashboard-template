@@ -14,28 +14,32 @@ function useAuthToken() {
   const path = usePathname();
 
   const updateUser = (user: TAppUserState) => {
-    if (user) {
-      saveStore(user);
-      setToken(user?.token);
-      setUserData(user?.userData);
-    } else {
-      setToken("");
-    }
+    console.log("update user spotted");
+
+    // if (user) {
+    //   saveStore(user);
+    //   setToken(user?.token);
+    //   setUserData(user?.userData);
+    // } else {
+    //   setToken("");
+    // }
   };
 
   const logout = () => {
-    const updateStatus = updateLogoutStatus({
-      staffId: userData?.user_id || "",
-      businessId: userData?.businessId || "",
-      status: StaffStatusEnum.INACTIVE,
-    });
+    console.log("logout spotted");
+    
+    // const updateStatus = updateLogoutStatus({
+    //   staffId: userData?.user_id || "",
+    //   businessId: userData?.businessId || "",
+    //   status: StaffStatusEnum.INACTIVE,
+    // });
 
-    deleteStore();
-    if (path === "/") {
-      Router.reload();
-    } else {
-      Router.replace("/");
-    }
+    // deleteStore();
+    // if (path === "/") {
+    //   Router.reload();
+    // } else {
+    //   Router.replace("/");
+    // }
   };
 
   useEffect(() => {

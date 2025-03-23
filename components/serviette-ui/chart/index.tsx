@@ -12,7 +12,7 @@ const CustomChartTooltip = ({ payload, tabKey }: { payload: any; tabKey: string 
   const valueKey = keys[1]; // The numeric value field (e.g., "orders")
 
   const dateValue = moment(data[labelKey]); // Convert the date string to Moment.js object
-  let formattedLabel: string | null = "N/A";
+  let formattedLabel: string | null = null;
 
   // Determine the correct display format based on tabKey
   if (dateValue.isValid()) {
