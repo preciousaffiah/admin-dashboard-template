@@ -69,7 +69,7 @@ const ScannedComp = ({
 
   const initPaymentRequest: any = async () => {
     try {
-      const response = await PaymnetsService.initPayment(amountToCheckout._id);
+      const response = await PaymnetsService.initPayment(amountToCheckout._id, businessId);
 
       return response.data;
     } catch (error: any) {

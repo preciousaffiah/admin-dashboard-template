@@ -14,9 +14,7 @@ function useAuthToken() {
   const path = usePathname();
 
   const updateUser = (user: TAppUserState) => {
-    console.log("logout spotted");
-
-    if (user) {
+     if (user) {
       saveStore(user);
       setToken(user?.token);
       setUserData(user?.userData);
@@ -26,8 +24,6 @@ function useAuthToken() {
   };
 
   const logout = () => {
-    console.log("logout spotted");
-    
     const updateStatus = updateLogoutStatus({
       staffId: userData?.user_id || "",
       businessId: userData?.businessId || "",

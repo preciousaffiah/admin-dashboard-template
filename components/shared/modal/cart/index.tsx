@@ -115,7 +115,7 @@ const CartModal = ({
 
   const initPaymentRequest: any = async () => {
     try {
-      const response = await PaymnetsService.initPayment(tableOrderData[0]._id);
+      const response = await PaymnetsService.initPayment(tableOrderData[0]._id, tableOrderData[0].businessId);
       console.log("response", response.data);
 
       return response.data;
@@ -135,7 +135,7 @@ const CartModal = ({
   const handlePayment = () => {
     initMutation.mutate();
   };
-  console.log(tableOrderData);
+  console.log("tableOrderData",tableOrderData);
 
   return (
     <Sheet>

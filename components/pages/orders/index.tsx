@@ -191,7 +191,7 @@ const Orders: FC = () => {
 
   const initPaymentRequest: any = async () => {
     try {
-      const response = await PaymnetsService.initPayment(selectedInvoice._id);
+      const response = await PaymnetsService.initPayment(selectedInvoice._id, selectedInvoice.businessId);
       console.log("response", response.data);
 
       return response.data;
@@ -213,7 +213,7 @@ const Orders: FC = () => {
     initMutation.mutate();
   };
 
-  console.log(selectedInvoice);
+  console.log("selectedInvoice", selectedInvoice);
 
   return (
     <div className="flex justify-end h-screen w-full">
