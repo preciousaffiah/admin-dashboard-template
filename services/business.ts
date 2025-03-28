@@ -17,7 +17,6 @@ class BusinessService {
   }
 
   getBusinessStats(businessId: string, dateFilter?: string) {
-    console.log(businessId );
     
     return axiosWithToken().get(`/business/statistics/${businessId}`, {
       params: {

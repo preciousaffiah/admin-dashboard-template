@@ -17,7 +17,7 @@ const Sidebar = ({ navItems, mobileNavItems }: any) => {
   return (
     <div className="h-screen">
       <div className=" bg-background md:flex hidden group transition-all duration-300 ease-in overflow-y-scroll top-16 left-0 fixed h-screen  text-secondaryBorder flex-col hover:w-[14rem] w-14  z-50 py-3 px-4">
-        <div className="flex h-fit flex-col gap-y-10 ">
+        <div className="flex h-fit flex-col gap-y-8">
           <Menu className="w-8 h-8" />
 
           {navItems.map((item: any, index: number) => (

@@ -4,6 +4,9 @@ import ItemService from "./item";
 import StaffService from "./staff";
 import OrderService from "./order";
 import PaymnetsService from "./payment";
+import OrderTransService from "./order-transactions";
+import PayoutsService from "./payout";
+
 export {
   BusService,
   AuthService,
@@ -11,4 +14,6 @@ export {
   StaffService,
   OrderService,
   PaymnetsService,
+  OrderTransService,
+  PayoutsService
 };

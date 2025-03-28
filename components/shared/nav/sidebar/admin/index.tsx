@@ -6,6 +6,7 @@ import {
   MessageSquarePlus,
   Bolt,
   ShieldQuestion,
+  HandCoins,
 } from "lucide-react";
 import { Dinner } from "@/components/serviette-icons";
 import React from "react";
@@ -34,33 +35,16 @@ const AdminSidebar = () => {
       link: "/staff/orders",
       tag: NotepadText,
     },
-
-    // {
-    //   title: "Messages",
-    //   link: "/",
-    //   tag: Mail,
-    // },
-    // {
-    //   title: "Analytics",
-    //   link: "/",
-    //   tag: ChartSpline,
-    // },
     {
       title: "User Management",
       link: "/admin/users",
       tag: Users,
     },
-    // {
-    //   title: "Reviews",
-    //   link: "/",
-    //   tag: MessageSquarePlus,
-    // },
-    // {
-    //   title: "Profile",
-    //   link: "/",
-    //   tag: User,
-    // },
-
+    {
+      title: "Payouts",
+      link: "/admin/payouts",
+      tag: HandCoins,
+    },
     {
       title: "Settings",
       link: "/admin/settings",

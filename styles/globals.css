@@ -98,6 +98,7 @@ tr td:last-child {
 
 .status-failed,
 .status-cancelled,
+.status-declined,
 .status-occupied,
 .status-inactive,
 .status-false,
@@ -107,6 +108,8 @@ tr td:last-child {
 }
 
 .status-paid,
+.status-success,
+.status-processed,
 .status-completed,
 .status-served,
 .status-available,

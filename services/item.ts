@@ -59,7 +59,6 @@ class ItemsService {
       department?: string;
     }
   ) {
-    console.log(filters);
     
     const filteredData = Object.fromEntries(
       Object.entries(filters).filter(([_, value]) => (value !== "" && value !== "all" ))

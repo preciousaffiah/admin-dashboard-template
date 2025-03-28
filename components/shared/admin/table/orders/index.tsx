@@ -87,12 +87,6 @@ const AdminOrdersTable = ({
     <div>
       <Tabs defaultValue={Object.keys(tabHeaders || {})[0]} className="w-full">
         <div className="flex m-auto justify-between py-3 px-3 md:gapx-0 gap-x-2">
-          {/* <div className="md:block hidden">
-            <Button variant={"ghost"} className="transparent-btn text-secondaryBorder border-[0.3px]">
-              <p className="capitalize text-sm">bulk actions</p>
-              <ChevronDown className="w-5" />
-            </Button>
-          </div> */}
           <TabsList className="w-fit bg-secondaryDark">
             {Object.entries(tabHeaders || {}).map(
               ([key, value], index): any => (
@@ -107,12 +101,6 @@ const AdminOrdersTable = ({
               )
             )}
           </TabsList>
-          {/* <div>
-            <Button variant={"ghost"} className="md:rounded-xl border rounded-full px-3 transparent-btn text-secondaryBorder">
-              <Filter className="md:w-5 w-4" />
-              <ChevronDown className="md:block hidden w-5" />
-            </Button>
-          </div> */}
           <div>
             <SearchBar
               placeholder="Search for food, drinks and more"

@@ -252,6 +252,13 @@ const Orders: FC = () => {
                         >
                           Create New Order
                         </Link>
+
+                        <Link
+                          href="/staff/order-transactions"
+                          className="authbtn w-fit m-0 px-1 py-2 text-sm font-semibold"
+                        >
+                          View Order Transactions
+                        </Link>
                       </div>
                       <div>
                         <Button

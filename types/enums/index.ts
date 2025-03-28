@@ -31,10 +31,27 @@ export enum OrderStatusEnum {
   CANCELLED = "cancelled",
 }
 
+export enum TransactionStatusEnum {
+  PENDING = "pending",
+  SUCCESS = "success",
+  FAILED = "failed",
+}
+
 export enum OrderDateFilterEnum {
   TODAY = "today",
   YESTERDAY = "yesterday",
   THISWEEK = "thisWeek",
   THISMONTH = "thisMonth",
   THISYEAR = "thisYear",
+}
+
+export enum PayoutRequestStatusEnum {
+  UNDERREVIEW = "under_review",
+  OTPSENT = "otp_sent",
+  REQUESTED = "requested",
+}
+
+export enum PayoutTypeEnum {
+  TRANSACTION = "transaction",
+  REQUEST = "request",
 }
