@@ -1,10 +1,8 @@
-import { GeneralLayout } from "@layouts";
 import Link from "next/link";
 import React, { FC } from "react";
-import { MainNavbar, Navbar } from "@/components/shared";
+import { Navbar } from "@/components/shared";
 import {
   Beer,
-  ChevronRight,
   Coffee,
   Facebook,
   Instagram,
@@ -13,24 +11,12 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { useAuthToken } from "@/hooks";
-import bartender from "public/bartender.jpg";
-import payment from "public/payment.jpg";
-import food from "public/food.jpg";
-import beer from "public/beer.jpg";
-import analytics from "public/analytics.png";
-import menu from "public/menu.png";
-import orders from "public/orders.png";
-import qr from "public/qr.png";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import { SkeletonFour } from "@/components/serviette-ui/globe";
 import { SkeletonThree } from "@/components/serviette-ui/yt-widget";
 
-const name = "Victoria";
-let title = "Start";
 
 const Start: FC = () => {
-  const { userData } = useAuthToken();
   const array1 = [
     {
       title: "Bars & Clubs ",
@@ -61,19 +47,20 @@ const Start: FC = () => {
     {
       title: "Real-time Order Management",
       description: "instantly see new customer orders and attend to them.",
-      image: orders,
+      image: "https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272685/servlette/random/orders_cnqmqj.png",
     },
 
     {
       title: "Menu Customization",
       description: "Update digital menus instantly across locations.",
-      image: menu,
+      image: "https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272687/servlette/random/menu_grj2me.png",
     },
     {
       title: "Sales & Revenue Tracking",
       description:
         "Get detailed reports on orders and payments so you’re always in control.",
-      image: analytics,
+      image:
+        "https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272690/servlette/random/analytics_tikqhy.png",
     },
   ];
 
@@ -82,13 +69,13 @@ const Start: FC = () => {
       title: "Seamless Payments",
       description:
         "We handle payments from customers and ensure weekly payouts to businesses, automatically deducting a 5% service fee before transferring funds.",
-      image: payment,
+      image: "https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272686/servlette/random/payment_dugp1n.jpg",
     },
     {
       title: "QR Code Generation",
       description:
         "No need for customers to call a waiter; they can scan, order, and even nudge a waiter for assistance when needed.",
-      image: qr,
+      image: "https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272685/servlette/random/qr_udyoqg.png",
     },
   ];
 
@@ -141,15 +128,15 @@ const Start: FC = () => {
         <div className="flex flex-col gap-y-3 lg:w-[75%] md:w-[85%] w-full px-4">
           <div className="flex md:flex-row flex-col justify-center md:gap-y-0 gap-y-3 gap-x-2">
             <div className="image-container md:w-fit w-full">
-              <Image
-                src={beer}
+              <img
+                src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272696/servlette/random/beer_fc8aox.jpg"
                 alt="img"
                 className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
               />
             </div>
             <div className="image-container w-full">
-              <Image
-                src={food}
+              <img
+                src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272699/servlette/random/food_vumibw.jpg"
                 alt="img"
                 className="w-full md:h-[15rem] h-[8rem] object-cover rounded-md"
               />
@@ -211,8 +198,8 @@ const Start: FC = () => {
                   key={index}
                   className="image-container flex flex-col items-center gap-x-2 border-[1px] cursor-pointer rounded-lg"
                 >
-                  <Image
-                    src={item.image}
+                  <img
+                    src={`${item.image}`}
                     alt="img"
                     className="w-full h-[12rem] duration-500 transition-all object-cover rounded-t-md"
                   />
@@ -229,8 +216,8 @@ const Start: FC = () => {
                   key={index}
                   className="image-container flex flex-col items-center gap-x-2 border-[1px] cursor-pointer rounded-lg"
                 >
-                  <Image
-                    src={item.image}
+                  <img
+                    src={`${item.image}`}
                     alt="img"
                     className="w-full h-[12rem] duration-500 transition-all object-cover rounded-t-md"
                   />
@@ -251,7 +238,7 @@ const Start: FC = () => {
           </h1>
           <div className="pt-8 flex flex-col gap-y-4 md:px-20 px-8">
             <div className="flex gap-x-4 m-auto">
-              <SkeletonThree/>
+              <SkeletonThree />
             </div>
           </div>
         </div>

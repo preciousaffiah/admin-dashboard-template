@@ -121,7 +121,7 @@ tr td:last-child {
 }
 
 .cover {
-  background-image: url("../public/cover.png");
+  background-image: url("https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272687/servlette/random/cover_wsvpey.png");
   background-size: cover;
 }
 

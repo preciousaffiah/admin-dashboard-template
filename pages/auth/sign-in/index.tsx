@@ -4,7 +4,6 @@ import { GeneralLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../public/Logo.png";
-import authPwdImage from "../../../public/auth-pwd.png";
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -220,7 +219,7 @@ const SignIn: FC = () => {
               </div>
             </div>
             <div className="authcard6 md:flex hidden">
-              <Image alt="img" src={authPwdImage} className="authimg3" />
+              <Image alt="img" src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272688/servlette/random/auth-pwd_vwxw3p.png" className="authimg3" />
             </div>
           </div>
         </div>

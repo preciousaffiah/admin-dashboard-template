@@ -172,7 +172,6 @@ const Dashboard: FC = () => {
   useEffect(() => {
     statsRefetch();
   }, [dateKey]);
-console.log(dateKey);
 
   const customersChartData2: any = () => {
     if (

@@ -1,43 +1,18 @@
-import { GeneralLayout, StaffLayout } from "@layouts";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MainNavbar } from "@/components/shared";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import {
   BadgeCheck,
-  ChevronDown,
   ChevronUp,
-  CircleCheckBig,
-  EllipsisVertical,
   LoaderCircle,
   Minus,
   Plus,
-  Search,
-  ShoppingCart,
   Trash2,
-  UtensilsCrossed,
   Wine,
-  X,
 } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import Container from "@/components/shared/container";
-import { CartOrderItem, Menus, OrderItems, OrderMenuItem } from "@/types";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
-import orderImg2 from "public/auth-email.png";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import OrderDropDown from "@/components/shared/waiter/create-order-tab";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import * as z from "zod";
-import { useToast } from "@/hooks/use-toast";
+import { CartOrderItem, Menus } from "@/types";
 import { ItemService, OrderService } from "@/services";
 import {
   useAuthToken,

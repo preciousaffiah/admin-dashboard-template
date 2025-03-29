@@ -46,6 +46,8 @@ const OtpModal = ({
   timer,
   isResendDisabled,
   setIsResendDisabled,
+  showResendBtn,
+  setShowResendBtn
 }: any) => {
   const [showPassword, setShowPassword] = useState(false);
   const { userData } = useAuthToken();
@@ -68,7 +70,10 @@ const OtpModal = ({
     },
   });
 
-  const handleSubmit = () => otpMutation.mutate();
+  const handleSubmit = () => {
+    setShowResendBtn(true);
+    otpMutation.mutate();
+  };
 
   const handleResendOtp = () => {
     setOtp("");
@@ -88,6 +93,11 @@ const OtpModal = ({
           <>
             <DialogHeader>
               <DialogTitle className="text-center">Enter OTP</DialogTitle>
+              {timer > 0 && (
+                <DialogTitle className="text-center text-red-700">
+                  0:{timer.toString().padStart(2, "0")}
+                </DialogTitle>
+              )}
             </DialogHeader>
             <div className="grid gap-4">
               <div className="flex flex-col gap-y-3 items-center">
@@ -141,9 +151,7 @@ const OtpModal = ({
                 </button>
                 {/* Timer and Resend Button */}
                 <div className="text-sm text-gray-500 mt-2">
-                  {timer > 0 ? (
-                    <p>Resend OTP in {timer}s</p>
-                  ) : (
+                  {!isResendDisabled && timer < 1 && (
                     <button
                       onClick={handleResendOtp}
                       disabled={isResendDisabled || otpMutation.isPending}

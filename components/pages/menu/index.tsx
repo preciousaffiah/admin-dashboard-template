@@ -1,15 +1,11 @@
 import Link from "next/link";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MainNavbar, Modal } from "@/components/shared";
+import { Modal } from "@/components/shared";
 import Container from "@/components/shared/container";
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Menus } from "@/types";
 import Image from "next/image";
-import orderImg from "public/orderimg.png";
 import { handleRowClick } from "@/utils/modal";
-import Sidebar from "@/components/shared/nav/sidebar/admin";
-import orderImg2 from "public/auth-email.png";
 import AdminMenuTable from "@/components/shared/admin/table/menu";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

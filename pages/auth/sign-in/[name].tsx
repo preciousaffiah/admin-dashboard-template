@@ -1,42 +1,11 @@
 "use client";
 
-import { GeneralLayout, StaffLayout } from "@layouts";
-import Image from "next/image";
-import Link from "next/link";
-import logo from "../../../public/Logo.png";
-import authEmImage from "../../../public/auth-email.png";
-import authPwdImage from "../../../public/auth-pwd.png";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { GoogleSignIn } from "@/components/serviette-icons";
-import { usePathname } from "next/navigation";
-import { Navbar } from "@/components/shared";
 import {
-  CircleCheckBig,
-  EyeIcon,
-  EyeOff,
-  File,
   FolderOpen,
   Loader,
-  LoaderCircle,
 } from "lucide-react";
-import Container from "@/components/shared/container";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { motion, AnimatePresence } from "framer-motion";
-import { useMutation } from "@tanstack/react-query";
-import { AuthService } from "@/services";
-import { useAuthToken } from "@/hooks";
-import { ToastMessage } from "@/components/serviette-ui";
 import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import StaffSignIn from "@/components/pages/auth/sign-in/staff";
 

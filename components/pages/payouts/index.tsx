@@ -1,31 +1,10 @@
-import Link from "next/link";
-import React, { FC, useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { MainNavbar, Modal } from "@/components/shared";
+import React, { useEffect, useState } from "react";
 import Container from "@/components/shared/container";
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Menus } from "@/types";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
 import { handleRowClick } from "@/utils/modal";
-import Sidebar from "@/components/shared/nav/sidebar/admin";
-import orderImg2 from "public/auth-email.png";
-import AdminMenuTable from "@/components/shared/admin/table/menu";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import {
-  Check,
-  Circle,
-  CircleX,
   Clock,
-  Edit3,
-  EllipsisVertical,
-  LayoutGrid,
-  List,
   LoaderCircle,
-  TrendingDown,
-  X,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminLayout from "@/components/layouts/admin-layout";
@@ -108,6 +87,7 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(0);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const [showResendBtn, setShowResendBtn] = useState(false);
 
   useEffect(() => {
     if (timer > 0) {
@@ -129,7 +109,6 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
       setOtp("");
       return response.data;
     } catch (error: any) {
-      setTimer(0);
       console.log("payout error", error);
       handleAxiosError(error, "");
     }
@@ -246,6 +225,8 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
             timer={timer}
             isResendDisabled={isResendDisabled}
             setIsResendDisabled={setIsResendDisabled}
+            showResendBtn={showResendBtn}
+            setShowResendBtn={setShowResendBtn}
           />
         </div>
       </Container>
