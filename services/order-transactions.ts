@@ -22,6 +22,15 @@ class OrderTransactionsService {
       },
     });
   }
+
+  verifyOrderTransaction(orderId: string, reference: string) {
+    console.log(orderId, reference);
+    
+    return axiosWithToken().get(
+      `/order-transaction/verify/payment/${reference}/${orderId}`,
+      {}
+    );
+  }
 }
 
 const OrderTransService = new OrderTransactionsService();

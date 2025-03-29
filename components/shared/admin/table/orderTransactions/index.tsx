@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SearchBar } from "@/components/serviette-ui";
+import { SearchBar, ToastMessage } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable } from "@/types";
 import DefaultTable from "../../../table";
 import MenuGrid from "../../menuGrid";
 import DataPagination from "@/components/serviette-ui/Pagination";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService, OrderTransService } from "@/services";
 import { useAuthToken } from "@/hooks";
@@ -13,6 +13,7 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Circle, FolderOpen, Loader } from "lucide-react";
 import { TransactionStatusEnum } from "@/types/enums";
 import moment from "moment";
+import { motion, AnimatePresence } from "framer-motion";
 
 const OrderTransactionsTable = ({
   children,
@@ -34,6 +35,7 @@ const OrderTransactionsTable = ({
   const { token, userData } = useAuthToken();
 
   const [page, setPage] = useState(1);
+  const [verified, setVerified] = useState<string | null>(null);
 
   // GET HISTORY
   const fetchHistory = async () => {
@@ -60,7 +62,13 @@ const OrderTransactionsTable = ({
     isError,
     data: itemsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-order-transactions", userData?.businessId || "", tabKey, dateKey, page],
+    queryKey: [
+      "get-order-transactions",
+      userData?.businessId || "",
+      tabKey,
+      dateKey,
+      page,
+    ],
     queryFn: fetchHistory,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
@@ -70,6 +78,37 @@ const OrderTransactionsTable = ({
   useEffect(() => {
     refetch();
   }, [tabKey, dateKey]);
+
+  const verfiyStatusRequest: any = async (
+    orderId: string,
+    reference: string
+  ) => {
+    try {
+      const response = await OrderTransService.verifyOrderTransaction(
+        orderId,
+        reference
+      );
+      return response.data;
+    } catch (error: any) {
+      handleAxiosError(error, "");
+    }
+  };
+
+  const verifyMutation: any = useMutation({
+    mutationFn: ({
+      orderId,
+      reference,
+    }: {
+      orderId: string;
+      reference: string;
+    }) => verfiyStatusRequest(orderId, reference),
+    onSuccess: (res: any) => {
+      console.log(res.data);
+    },
+  });
+
+  const handleSubmit = (orderId: string, reference: string) =>
+    verifyMutation.mutate({orderId, reference});
 
   return (
     <div>
@@ -99,6 +138,34 @@ const OrderTransactionsTable = ({
             Order Transactions
           </h1>
         </div>
+        <div className="w-fit">
+        <AnimatePresence>
+          {verified && (
+            <motion.div
+              initial={{ y: -20, opacity: 0.5 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0.2 }}
+            >
+              <ToastMessage error={false} message={verified} />
+            </motion.div>
+          )}
+
+          {verifyMutation.isError && (
+            <motion.div
+              initial={{ y: -20, opacity: 0.5 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0.2 }}
+            >
+              <ToastMessage
+                message={
+                  verifyMutation?.error?.message ||
+                  "An error occured during process"
+                }
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        </div>  
         <div>
           <div
             className={`${
@@ -194,7 +261,15 @@ const OrderTransactionsTable = ({
                                   >
                                     {invoice.status !==
                                     TransactionStatusEnum.SUCCESS ? (
-                                      <button className="text-white bg-primary-orange px-3 py-1 rounded-md">
+                                      <button
+                                        onClick={() =>
+                                          handleSubmit(
+                                            invoice.orderId._id,
+                                            invoice.reference
+                                          )
+                                        }
+                                        className="text-white bg-primary-orange px-3 py-1 rounded-md"
+                                      >
                                         Verify
                                       </button>
                                     ) : (
