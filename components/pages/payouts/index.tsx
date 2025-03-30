@@ -80,8 +80,7 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
   const [currentPage, setCurrentPage] = useState(1);
-  const [orderHeader, setMenuHeader] = useState(false);
-  const [F, setIsOtpModalOpen] = useState(false);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [underReview, setUnderReview] = useState<string | null>(null);
   const [dateKey, setDateKey] = useState<string>("today");
   const [otp, setOtp] = useState("");
