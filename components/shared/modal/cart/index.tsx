@@ -30,6 +30,8 @@ const Paystack = dynamic(() => import("@paystack/inline-js") as any, {
 
 import { useRouter } from "next/router";
 import { PaymentStatusEnum } from "@/types/enums";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import CheckoutModal from "../checkout";
 
 // const Paystack = dynamic(() => import("@paystack/inline-js") as any, {
 //   ssr: false,
@@ -48,19 +50,8 @@ const CartModal = ({
   businessId: string;
   tableOrderData: any;
 }) => {
-  const [popup, setPopup] = useState<any>(null);
-
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [success, setSuccess] = useState(false);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const PaystackInline = require("@paystack/inline-js").default;
-      setPopup(
-        new PaystackInline(
-          process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string
-        )
-      );
-    }
-  }, []);
   const router = useRouter();
 
   const createOrderRequest: any = async () => {
@@ -113,28 +104,6 @@ const CartModal = ({
     );
   };
 
-  const initPaymentRequest: any = async () => {
-    try {
-      const response = await PaymnetsService.initPayment(tableOrderData[0]._id, tableOrderData[0].businessId);
-      console.log("response", response.data);
-
-      return response.data;
-    } catch (error: any) {
-      handleAxiosError(error, "");
-    }
-  };
-
-  const initMutation: any = useMutation({
-    mutationFn: initPaymentRequest,
-    onSuccess: (res: any) => {
-      console.log("onSuccess", res);
-      popup.resumeTransaction(res.data.data.data.access_code);
-    },
-  });
-
-  const handlePayment = () => {
-    initMutation.mutate();
-  };
   console.log("tableOrderData",tableOrderData);
 
   return (
@@ -207,17 +176,25 @@ const CartModal = ({
                     <Wine />
                   </button>
                 ) : (
-                  <button
-                    type="submit"
-                    disabled={initMutation.isPending}
-                    onClick={handlePayment}
-                    className={`place-menu-btn bg-primaryGreen w-full py-2 text-black flex items-center justify-center md:gap-x-4 gap-x-2`}
-                  >
-                    Checkout
-                    {initMutation.isPending && (
-                      <LoaderCircle className="text-black flex w-5 h-5 rotate-icon" />
-                    )}
-                  </button>
+                  <Dialog>
+                  <DialogTrigger asChild onClick={() => setIsOtpModalOpen(true)}>
+                    <button
+                    className={`place-menu-btn bg-primaryGreen w-full py-2 text-black flex items-center justify-center md:gap-x-4 gap-x-2`}>
+                    
+                      Checkout
+                    </button>
+                  </DialogTrigger>
+                  <CheckoutModal
+                    selectedInvoice={tableOrderData[0]}
+                    isOpen={isOtpModalOpen}
+
+                    onClose={() => {
+                      setIsOtpModalOpen(false);
+                    }}
+                    setIsOtpModalOpen={setIsOtpModalOpen}
+                  />
+                </Dialog>
+
                 )}
               </div>
             </>

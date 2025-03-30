@@ -2,12 +2,12 @@ import { PaymentMetaDataTypeEnum } from "@/types/enums";
 import { axiosWithToken, axiosWithoutToken } from "@/utils/axios";
 
 class PaymnetsService {
-  initPayment(orderId: string, businessId: string) {
-    console.log(orderId, businessId);
+  initPayment(orderId: string, businessId: string, email: string) {
+    console.log(orderId, businessId, email);
     
     // payload: { email: string; amount: string }
     const myData = {
-      email: "preciousaffiah205@gmail.com",
+      email,
       metadata: {
         type: PaymentMetaDataTypeEnum.ORDER,
         orderId,

@@ -42,7 +42,6 @@ import { handleAxiosError } from "@/utils/axios";
 import avatar from "public/avatar.png";
 import { useQRCode } from "next-qrcode";
 
-
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 const MAX_BASE64_LENGTH = Math.floor((MAX_FILE_SIZE * 4) / 3);
 
@@ -491,7 +490,7 @@ const Settings = ({ title }: { title: string }) => {
                               <div className="md:text-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
                                 <div className="flex flex-col items-start justify-between py-4">
                                   <h4 className="font-semibold text-lg">
-                                    Business Bank Details
+                                    Bank
                                   </h4>
                                   <AnimatePresence>
                                     {accountMutation.isError && (
@@ -643,6 +642,40 @@ const Settings = ({ title }: { title: string }) => {
                               <div className="md:text-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
                                 <div className="flex flex-col items-start justify-between py-4">
                                   <h4 className="font-semibold text-lg">
+                                    Account
+                                  </h4>
+                                </div>
+                                <div>
+                                  <div className="w-full flex gap-x-2">
+                                    <p className="text-primary font-medium pb-2">
+                                      Name:
+                                    </p>
+                                    <p className="capitalize text-txWhite font-normal">
+                                      {data?.name}
+                                    </p>
+                                  </div>
+                                  <div className="w-full flex gap-x-2">
+                                    <p className="text-primary font-medium pb-2">
+                                      Email:
+                                    </p>
+                                    <p className="text-txWhite font-normal">
+                                      {data?.email}
+                                    </p>
+                                  </div>
+                                  <div className="w-full flex gap-x-2">
+                                    <p className="text-primary font-medium pb-2">
+                                      Number of Staff:
+                                    </p>
+                                    <p className="text-txWhite font-normal">
+                                      {data?.staffCount}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="md:text-sm text-base flex flex-col gap-y-3 py-3 bg-secondaryDark text-primary rounded-md px-4">
+                                <div className="flex flex-col items-start justify-between py-4">
+                                  <h4 className="font-semibold text-lg">
                                     Tables
                                   </h4>
                                   <AnimatePresence>
@@ -790,7 +823,10 @@ const Settings = ({ title }: { title: string }) => {
                                         id="print-section"
                                       >
                                         <Image
-                                          text={`${process.env.NEXT_PUBLIC_FRONTEND_URL as string}/${
+                                          text={`${
+                                            process.env
+                                              .NEXT_PUBLIC_FRONTEND_URL as string
+                                          }/${
                                             data?.name
                                           }/table/${form.getValues(
                                             "tableNumber"

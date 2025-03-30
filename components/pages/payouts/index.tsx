@@ -81,7 +81,7 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
   const [selectedInvoice, setSelectedInvoice] = useState<Menus>(defaultInvoice);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderHeader, setMenuHeader] = useState(false);
-  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [F, setIsOtpModalOpen] = useState(false);
   const [underReview, setUnderReview] = useState<string | null>(null);
   const [dateKey, setDateKey] = useState<string>("today");
   const [otp, setOtp] = useState("");
@@ -109,7 +109,6 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
       setOtp("");
       return response.data;
     } catch (error: any) {
-      console.log("payout error", error);
       handleAxiosError(error, "");
     }
   };
@@ -117,8 +116,6 @@ const TransactionsAdmin = ({ title }: { title: string }) => {
   const mutation: any = useMutation({
     mutationFn: payoutRequest,
     onSuccess: (res: any) => {
-      console.log("page", res.data.data.status);
-
       if (res.data.data.status === PayoutRequestStatusEnum.OTPSENT) {
         setTimer(59);
         setIsOtpModalOpen(true);

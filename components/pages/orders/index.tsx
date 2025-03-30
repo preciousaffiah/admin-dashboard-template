@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { FC, useEffect, useState } from "react";
@@ -33,9 +33,14 @@ import { OrderStatusEnum, PaymentStatusEnum } from "@/types/enums";
 import { useMutation } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import OrderService from "@/services/order";
-const Paystack = dynamic(() => import("@paystack/inline-js") as any, { ssr: false });
+const Paystack = dynamic(() => import("@paystack/inline-js") as any, {
+  ssr: false,
+});
 
 import { PaymnetsService } from "@/services";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import DeleteItemModal from "@/components/shared/modal/delete-item";
+import CheckoutModal from "@/components/shared/modal/checkout";
 
 const tabs = {
   today: "today",
@@ -76,21 +81,13 @@ const defaultInvoice: any = {
   status: "",
 };
 const Orders: FC = () => {
-  const [popup, setPopup] = useState<any>(null);
-
   const [view, setView] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [orderHeader, setOrderHeader] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<any>(defaultInvoice);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const PaystackInline = require("@paystack/inline-js").default;
-      setPopup(new PaystackInline(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string));
-    }
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
 
   const [dateKey, setDateKey] = useState<string>("");
   const [tabKey, setTabKey] = useState<string>("");
@@ -187,30 +184,6 @@ const Orders: FC = () => {
     // console.log(selectedInvoice);
 
     orderItemsMutation.mutate();
-  };
-
-  const initPaymentRequest: any = async () => {
-    try {
-      const response = await PaymnetsService.initPayment(selectedInvoice._id, selectedInvoice.businessId);
-      console.log("response", response.data);
-
-      return response.data;
-    } catch (error: any) {
-      handleAxiosError(error, "");
-    }
-  };
-
-  const initMutation: any = useMutation({
-    mutationFn: initPaymentRequest,
-    onSuccess: (res: any) => {
-      console.log("onSuccess", res);
-      popup.resumeTransaction(res.data.data.data.access_code);
-
-    },
-  });
-
-  const handlePayment = () => {
-    initMutation.mutate();
   };
 
   console.log("selectedInvoice", selectedInvoice);
@@ -448,17 +421,28 @@ const Orders: FC = () => {
                             PaymentStatusEnum.PAID &&
                             selectedInvoice.status !==
                               OrderStatusEnum.CANCELLED && (
-                              <button
-                                type="submit"
-                                disabled={initMutation.isPending}
-                                onClick={handlePayment}
-                                className="flex m-auto items-center gap-x-1 rounded-xl font-medium bg-primaryLime text-primaryDark px-3 py-2 "
-                              >
-                                Checkout
-                                {initMutation.isPending && (
-                                  <LoaderCircle className=" flex w-5 h-5 rotate-icon" />
-                                )}
-                              </button>
+                              <>
+                                <Dialog>
+                                  <DialogTrigger
+                                    asChild
+                                    onClick={() => setIsOtpModalOpen(true)}
+                                  >
+                                    <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                                      <button className="flex m-auto items-center gap-x-1 rounded-xl font-medium bg-primaryLime text-primaryDark px-3 py-2 ">
+                                        Checkout
+                                      </button>
+                                    </div>
+                                  </DialogTrigger>
+                                  <CheckoutModal
+                                    selectedInvoice={selectedInvoice}
+                                    isOpen={isOtpModalOpen}
+                                    onClose={() => {
+                                      setIsOtpModalOpen(false);
+                                    }}
+                                    setIsOtpModalOpen={setIsOtpModalOpen}
+                                  />
+                                </Dialog>
+                              </>
                             )}
                         </div>
 

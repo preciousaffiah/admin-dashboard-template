@@ -288,15 +288,16 @@ const Dashboard: FC = () => {
                                       </p>
                                       <div className="flex w-28 items-center">
                                         {statsData?.customer.indicator ===
+                                          "less" && (
+                                          <TrendingDown className="w-8 pr-1 text-red-600" />
+                                        )}
+                                        {statsData?.customer.indicator ===
+                                          "more" && (
+                                          <TrendingUp className="w-8 pr-1 text-green-600" />
+                                        )}
+                                        {statsData?.customer.indicator ===
                                         "nill" ? null : (
                                           <>
-                                            {statsData?.customer.indicator ===
-                                            "less" ? (
-                                              <TrendingDown className="w-8 pr-1 text-red-600" />
-                                            ) : (
-                                              <TrendingUp className="w-8 pr-1 text-green-600" />
-                                            )}
-
                                             <p className="text-sm font-medium leading-4">
                                               {statsData?.customer.percentage}%{" "}
                                               {statsData?.customer.indicator}{" "}
@@ -321,10 +322,15 @@ const Dashboard: FC = () => {
                                         }}
                                       >
                                         <ChartTooltip
-                                         cursor={false}
-                                         content={({ payload }) => {
-                                           return <CustomChartTooltip payload={payload} tabKey={dateKey}/>
-                                         }}
+                                          cursor={false}
+                                          content={({ payload }) => {
+                                            return (
+                                              <CustomChartTooltip
+                                                payload={payload}
+                                                tabKey={dateKey}
+                                              />
+                                            );
+                                          }}
                                         />
                                         <defs>
                                           <linearGradient
@@ -386,15 +392,17 @@ const Dashboard: FC = () => {
 
                                       <div className="flex w-28 items-center">
                                         {statsData?.order.indicator ===
+                                          "less" && (
+                                          <TrendingDown className="w-8 pr-1 text-red-600" />
+                                        )}
+                                        {statsData?.order.indicator ===
+                                          "more" && (
+                                          <TrendingUp className="w-8 pr-1 text-green-600" />
+                                        )}
+
+                                        {statsData?.order.indicator ===
                                         "nill" ? null : (
                                           <>
-                                            {statsData?.order.indicator ===
-                                            "less" ? (
-                                              <TrendingDown className="w-8 pr-1 text-red-600" />
-                                            ) : (
-                                              <TrendingUp className="w-8 pr-1 text-green-600" />
-                                            )}
-
                                             <p className="text-sm font-medium leading-4">
                                               {statsData?.order.percentage}%{" "}
                                               {statsData?.order.indicator} than
@@ -421,7 +429,12 @@ const Dashboard: FC = () => {
                                         <ChartTooltip
                                           cursor={false}
                                           content={({ payload }) => {
-                                            return <CustomChartTooltip payload={payload} tabKey={dateKey}/>
+                                            return (
+                                              <CustomChartTooltip
+                                                payload={payload}
+                                                tabKey={dateKey}
+                                              />
+                                            );
                                           }}
                                         />
                                         <defs>
@@ -483,15 +496,17 @@ const Dashboard: FC = () => {
                                       </p>
                                       <div className="flex w-28 items-center">
                                         {statsData?.revenue.indicator ===
+                                          "less" && (
+                                          <TrendingDown className="w-8 pr-1 text-red-600" />
+                                        )}
+                                        {statsData?.revenue.indicator ===
+                                          "more" && (
+                                          <TrendingUp className="w-8 pr-1 text-green-600" />
+                                        )}
+
+                                        {statsData?.revenue.indicator ===
                                         "nill" ? null : (
                                           <>
-                                            {statsData?.revenue.indicator ===
-                                            "less" ? (
-                                              <TrendingDown className="w-8 pr-1 text-red-600" />
-                                            ) : (
-                                              <TrendingUp className="w-8 pr-1 text-green-600" />
-                                            )}
-
                                             <p className="text-sm font-medium leading-4">
                                               {statsData?.revenue.percentage}%{" "}
                                               {statsData?.revenue.indicator}{" "}
@@ -516,10 +531,15 @@ const Dashboard: FC = () => {
                                         }}
                                       >
                                         <ChartTooltip
-                                         cursor={false}
-                                         content={({ payload }) => {
-                                           return <CustomChartTooltip payload={payload} tabKey={dateKey}/>
-                                         }}
+                                          cursor={false}
+                                          content={({ payload }) => {
+                                            return (
+                                              <CustomChartTooltip
+                                                payload={payload}
+                                                tabKey={dateKey}
+                                              />
+                                            );
+                                          }}
                                         />
                                         <defs>
                                           <linearGradient

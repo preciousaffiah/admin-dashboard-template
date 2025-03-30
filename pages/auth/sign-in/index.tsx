@@ -219,7 +219,7 @@ const SignIn: FC = () => {
               </div>
             </div>
             <div className="authcard6 md:flex hidden">
-              <Image alt="img" src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272688/servlette/random/auth-pwd_vwxw3p.png" className="authimg3" />
+              <img alt="img" src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272688/servlette/random/auth-pwd_vwxw3p.png" className="authimg3" />
             </div>
           </div>
         </div>
