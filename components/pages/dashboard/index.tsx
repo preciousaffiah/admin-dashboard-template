@@ -295,8 +295,7 @@ const Dashboard: FC = () => {
                                           "more" && (
                                           <TrendingUp className="w-8 pr-1 text-green-600" />
                                         )}
-                                        {statsData?.customer.indicator ===
-                                        "nill" ? null : (
+                                        {statsData?.customer.indicator && (
                                           <>
                                             <p className="text-sm font-medium leading-4">
                                               {statsData?.customer.percentage}%{" "}
@@ -400,8 +399,7 @@ const Dashboard: FC = () => {
                                           <TrendingUp className="w-8 pr-1 text-green-600" />
                                         )}
 
-                                        {statsData?.order.indicator ===
-                                        "nill" ? null : (
+                                        {statsData?.order.indicator && (
                                           <>
                                             <p className="text-sm font-medium leading-4">
                                               {statsData?.order.percentage}%{" "}
@@ -504,8 +502,7 @@ const Dashboard: FC = () => {
                                           <TrendingUp className="w-8 pr-1 text-green-600" />
                                         )}
 
-                                        {statsData?.revenue.indicator ===
-                                        "nill" ? null : (
+                                        {statsData?.revenue.indicator && (
                                           <>
                                             <p className="text-sm font-medium leading-4">
                                               {statsData?.revenue.percentage}%{" "}

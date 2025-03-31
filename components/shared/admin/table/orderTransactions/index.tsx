@@ -36,6 +36,9 @@ const OrderTransactionsTable = ({
 
   const [page, setPage] = useState(1);
   const [verified, setVerified] = useState<string | null>(null);
+  const [loadingReferences, setLoadingReferences] = useState<
+    Record<string, boolean>
+  >({});
 
   // GET HISTORY
   const fetchHistory = async () => {
@@ -108,12 +111,22 @@ const OrderTransactionsTable = ({
 
       setInterval(() => {
         setVerified(null);
-      }, 3000);
+      }, 6000);
     },
   });
 
-  const handleSubmit = (orderId: string, reference: string) =>
-    verifyMutation.mutate({ orderId, reference });
+  const handleSubmit = async (orderId: string, reference: string) => {
+    setLoadingReferences((prev) => ({ ...prev, [reference]: true }));
+
+    verifyMutation.mutate(
+      { orderId, reference },
+      {
+        onSettled: () => {
+          setLoadingReferences((prev) => ({ ...prev, [reference]: false }));
+        },
+      }
+    );
+  };
 
   return (
     <div>
@@ -273,11 +286,16 @@ const OrderTransactionsTable = ({
                                             invoice.reference
                                           )
                                         }
+                                        disabled={
+                                          loadingReferences[invoice.reference]
+                                        }
                                         className="text-white bg-primary-orange flex items-center gap-x-1 px-3 py-1 rounded-md"
                                       >
                                         Verify
-                                        {verifyMutation.isPending && (
-                                          <LoaderCircle className=" flex w-4 h-5 rotate-icon" />
+                                        {loadingReferences[
+                                          invoice.reference
+                                        ] && (
+                                          <LoaderCircle className="flex w-4 h-5 rotate-icon" />
                                         )}
                                       </button>
                                     ) : (
