@@ -35,6 +35,13 @@ class StaffsService {
     });
   }
 
+  deleteStaff(businessId: string, staffId: string) {
+    return axiosWithToken().put(
+      `/staff/delete-staff/${businessId}/${staffId}`,
+      {}
+    );
+  }
+
   // getStaff(businessId: string, filters: { email?: string; _id?: string }) {
   //   return axiosWithToken().get(`/staff/${businessId}`, {
   //     params: {
@@ -50,7 +57,9 @@ class StaffsService {
     filters: { department?: string; status?: string; fullname?: string }
   ) {
     const filteredData = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => (value !== "" && value !== "all"))
+      Object.entries(filters).filter(
+        ([_, value]) => value !== "" && value !== "all"
+      )
     );
     return axiosWithToken().get(`/staff/all-staffs/${businessId}`, {
       params: {

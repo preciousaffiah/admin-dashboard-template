@@ -6,9 +6,10 @@ import { handleRowClick } from "@/utils/modal";
 import { Mail, Phone, Plus, X } from "lucide-react";
 import AdminUsersTable from "@/components/shared/admin/table/users";
 import { AdminLayout } from "@layouts";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import DeleteStaffModal from "@/components/shared/modal/delete-staff";
 import AddStaffModal from "@/components/shared/modal/add-staff";
 import avatar from "public/avatar.png";
+import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 
 const tabHeaders = {
   all: "all",
@@ -236,17 +237,18 @@ const Users: FC = () => {
                           </div>
                         </div>
                       </div> */}
-                      {/* <div>
-                        <div className="flex justify-between p-3 items-center border-t border-primary-border">
-                          <div className=" w-full text-white">
-                            <div className="flex justify-between">
-                              <button className="m-auto flex rounded-xl bg-cancel p-2 ">
-                                <X /> Delete Staff
+                      <div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <div className="flex justify-between p-3 items-center border-t border-primary-border text-txWhite">
+                              <button className="flex text-white m-auto rounded-xl bg-cancel p-2 ">
+                                <X /> Delete Item
                               </button>
                             </div>
-                          </div>
-                        </div>
-                      </div> */}
+                          </DialogTrigger>
+                          <DeleteStaffModal staffId={selectedInvoice._id} />
+                        </Dialog>
+                      </div>
                     </div>
                   </div>
                 </div>
