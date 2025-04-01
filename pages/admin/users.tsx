@@ -184,14 +184,14 @@ const Users: FC = () => {
                                 }`}{" "}
                               </p>
                             </div>
-                            <div className="flex justify-between">
+                            {/* <div className="flex justify-between">
                               <p>Orders Completed</p>
                               <p>{selectedInvoice.Completed} </p>
                             </div>
                             <div className="flex justify-between">
                               <p>Sales</p>
                               <p>₦{selectedInvoice.Sales} </p>
-                            </div>
+                            </div> */}
                             <div className="flex justify-between">
                               <p>Status</p>
                               <p

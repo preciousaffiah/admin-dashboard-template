@@ -146,11 +146,7 @@ const ResturantSignUp: FC = () => {
   const mutation: any = useMutation({
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
-      console.log(res.data);
-      
-      // updateUser(res.data.data);
-      // router.push("/");
-      // setSuccess(true);
+      setSuccess(true);
     },
   });
 
