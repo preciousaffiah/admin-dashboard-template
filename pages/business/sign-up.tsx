@@ -63,7 +63,7 @@ const businessDetailsSchema = z.object({
     }),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
   email: z.string().email("Invalid email address"),
-  type: z.enum(["fine dining", "fast food", "cafe", "bar", "other"]), //add field for other
+  type: z.enum(["bars & nightlife", "restaurants & dining", "cafés & bakeries", "other"]), //add field for other
   country: z
     .string()
     .min(1, "Country is required")
@@ -146,7 +146,11 @@ const ResturantSignUp: FC = () => {
   const mutation: any = useMutation({
     mutationFn: registerRequest,
     onSuccess: (res: any) => {
-      setSuccess(true);
+      console.log(res.data);
+      
+      // updateUser(res.data.data);
+      // router.push("/");
+      // setSuccess(true);
     },
   });
 
