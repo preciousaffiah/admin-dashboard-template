@@ -6,6 +6,7 @@ import OrderService from "./order";
 import PaymnetsService from "./payment";
 import OrderTransService from "./order-transactions";
 import PayoutsService from "./payout";
+import AdminService from "./admin";
 
 export {
   BusService,
@@ -15,5 +16,6 @@ export {
   OrderService,
   PaymnetsService,
   OrderTransService,
-  PayoutsService
+  PayoutsService,
+  AdminService
 };
