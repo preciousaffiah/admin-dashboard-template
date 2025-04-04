@@ -37,7 +37,9 @@ export default function AdminLayout({
 
   useEffect(() => {
     if (isLoading) return;
-    if (userData?.department !== DeptEnum.ADMIN) router.push("/");
+    if (!token) router.push("/auth/sign-in");
+
+    // if (userData?.department !== DeptEnum.ADMIN) router.push("/");
   }, [isLoading, router, token]);
 
   return (

@@ -31,6 +31,7 @@ class AdminsService {
     return axiosWithToken().get(`/admin/requests/business`, {
       params: {
         page,
+        dateFilter,
       },
     });
   }
@@ -43,10 +44,11 @@ class AdminsService {
     });
   }
 
-  getAllBusinessPayouts(page: number, dateFilter?: string) {
+  getPayoutRequets(page: number, dateFilter?: string) {
     return axiosWithToken().get(`/admin/requests/payout`, {
       params: {
         page,
+        dateFilter,
       },
     });
   }
@@ -57,7 +59,7 @@ class AdminsService {
     });
   }
 
-  updatePayout(payoutId: string, status: string) {
+  updatePayoutStatus(payoutId: string, status: string) {
     return axiosWithToken().put(`/admin/payout/${payoutId}`, {
       status,
     });

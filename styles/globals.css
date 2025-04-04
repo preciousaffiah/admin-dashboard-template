@@ -107,6 +107,8 @@ tr td:last-child {
   color: rgba(var(--textCancelled));
 }
 
+.status-processed,
+.status-approved,
 .status-paid,
 .status-success,
 .status-processed,

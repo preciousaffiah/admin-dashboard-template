@@ -4,12 +4,7 @@ const Container = ({ children, className }: any) => {
   const path = usePathname();
   // Check if the current route matches any of the specified patterns
   const isAuthRoute =
-    path === "/auth/sign-up" ||
-    path === "/auth/sign-in" ||
-    path?.startsWith("/auth/sign-in") || // Dynamic route pattern
-    path === "/business/sign-up" ||
-    path === "/start" ||
-    path === "/";
+    path === "/auth/sign-in"
 
   return (
     <div

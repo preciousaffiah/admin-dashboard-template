@@ -7,6 +7,8 @@ import {
   Bolt,
   ShieldQuestion,
   HandCoins,
+  BriefcaseBusiness,
+  Building2,
 } from "lucide-react";
 import { Dinner } from "@/components/serviette-icons";
 import React from "react";
@@ -17,71 +19,56 @@ const AdminSidebar = () => {
   const navItems = [
     {
       title: "Dashboard",
-      link: "/staff/dashboard",
+      link: "/dashboard",
       tag: LayoutDashboard,
     },
     {
-      title: "Menu",
-      link: "/staff/menu",
-      tag: UtensilsCrossed,
+      title: "Businesses",
+      link: "/businesses",
+      tag: BriefcaseBusiness,
     },
     {
-      title: "Tables",
-      link: "/staff/tables",
-      tag: Dinner,
-    },
-    {
-      title: "Orders",
-      link: "/staff/orders",
-      tag: NotepadText,
-    },
-    {
-      title: "User Management",
-      link: "/admin/users",
+      title: "Users",
+      link: "/users",
       tag: Users,
     },
     {
-      title: "Payouts",
-      link: "/admin/payouts",
+      title: "Payout Requests",
+      link: "/request/payouts",
       tag: HandCoins,
     },
     {
-      title: "Settings",
-      link: "/admin/settings",
-      tag: Bolt,
+      title: "Business Requests",
+      link: "/request/business",
+      tag: Building2,
     },
-    // {
-    //   title: "Help Center",
-    //   link: "/",
-    //   tag: ShieldQuestion,
-    // },
   ];
 
   const mobileNavItems = [
     {
       title: "Dashboard",
-      link: "/staff/dashboard",
+      link: "/dashboard",
       tag: LayoutDashboard,
     },
     {
-      title: "Menu",
-      link: "/staff/menu",
-      tag: UtensilsCrossed,
+      title: "Businesses",
+      link: "/businesses",
+      tag: BriefcaseBusiness,
     },
     {
-      title: "Orders",
-      link: "/staff/orders",
-      tag: NotepadText,
-    },
-    {
-      title: "User Management",
-      link: "/admin/users",
+      title: "Users",
+      link: "/users",
       tag: Users,
     },
     {
-      title: "Settings",
-      link: "/admin/settings",
-      tag: Bolt,
+      title: "Payout Requests",
+      link: "/request/payouts",
+      tag: HandCoins,
+    },
+    {
+      title: "Business Requests",
+      link: "/request/business",
+      tag: Building2,
     },
   ];
 

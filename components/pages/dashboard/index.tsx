@@ -10,6 +10,8 @@ import {
   TrendingDown,
   FolderOpen,
   Loader,
+  UsersRound,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "@/components/shared/container";
@@ -36,7 +38,7 @@ import { handleAxiosError } from "@/utils/axios";
 import OrderService from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
-import { BusService } from "@/services";
+import { AdminService, BusService } from "@/services";
 import { CustomChartTooltip } from "@/components/serviette-ui";
 
 const BarChart = dynamic(
@@ -99,7 +101,7 @@ const tableHeaders = [
   "Status",
 ];
 
-const Dashboard: FC = () => {
+const DashboardComp: FC = () => {
   const { userData } = useAuthToken();
   const { data } = useBusinessDetailsWithoutAuth({
     id: userData?.businessId || undefined,
@@ -110,16 +112,10 @@ const Dashboard: FC = () => {
 
   const [page, setPage] = useState(1);
 
-  // GET ORDERS
-  const fetchOrders = async () => {
+  // GET TotalStats
+  const fetchTotalStats = async () => {
     try {
-      // setPage(pageParam);
-
-      const response = await OrderService.getOrders(
-        userData?.businessId || "", // businessId
-        page, // page
-        {} // filters object
-      );
+      const response = await AdminService.getTotalStats();
 
       return response?.data?.data?.data;
     } catch (error: any) {
@@ -129,23 +125,49 @@ const Dashboard: FC = () => {
   };
 
   const {
-    isLoading: isItemsLoading,
-    isRefetching,
-    refetch,
-    isError,
-    data: itemsData,
+    isLoading: totalStatsLoading,
+    isRefetching: isTotalStatsRefetching,
+    refetch: totalStatsRefetch,
+    isError: isTotalStatsError,
+    data: totalStatsData,
   } = useQuery<any, Error>({
-    queryKey: ["get-orders", userData?.businessId || ""],
-    queryFn: fetchOrders,
+    queryKey: ["get-total-stats", userData?.businessId || ""],
+    queryFn: fetchTotalStats,
     gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
     refetchOnWindowFocus: true,
   });
 
+
+    // GET PAYOUT REQUESTS
+    const fetchPayoutRequests = async () => {
+      try {
+        const response = await AdminService.getPayoutRequets(page, "");
+  
+        return response?.data?.data?.data;
+      } catch (error: any) {
+        console.error(error?.response?.data?.message || "An error occurred");
+        handleAxiosError(error, "");
+      }
+    };
+  
+    const {
+      isLoading: isItemsLoading,
+      isRefetching,
+      refetch,
+      isError,
+      data: itemsData,
+    } = useQuery<any, Error>({
+      queryKey: ["get-payout-requests", userData?.businessId || ""],
+      queryFn: fetchPayoutRequests,
+      gcTime: 1000 * 60 * 15, // Keep data in cache for 10 minutes
+      refetchOnWindowFocus: true,
+    });
+
+    
   // GET STATS
   const fetchBusinessStats = async () => {
     try {
-      const response = await BusService.getBusinessStats(
-        userData?.businessId || "", // businessId
+      const response = await AdminService.getDashboardStats(
         dateKey
       );
 
@@ -172,60 +194,66 @@ const Dashboard: FC = () => {
   useEffect(() => {
     statsRefetch();
   }, [dateKey]);
-
-  const customersChartData2: any = () => {
-    if (
-      !statsData?.charts ||
-      statsData.charts.length === 0 ||
-      isStatsRefetching
-    )
-      return customersChartData;
-    return [
-      { month: "Start", customers: 0 }, // Initial baseline point
-      ...statsData?.charts.map((item: any) => ({
-        month: item.label,
-        customers: item.totalCustomers,
-      })),
-    ];
-  };
-
-  const ordersChartData2: any = () => {
-    if (
-      !statsData?.charts ||
-      statsData.charts.length === 0 ||
-      isStatsRefetching
-    )
-      return ordersChartData;
-    return [
-      { month: "Start", orders: 0 }, // Initial baseline point
-      ...statsData?.charts.map((item: any) => ({
-        month: item.label,
-        orders: item.totalOrders,
-      })),
-    ];
-  };
-
-  const revenuesChartData2: any = () => {
-    if (
-      !statsData?.charts ||
-      statsData.charts.length === 0 ||
-      isStatsRefetching
-    )
-      return revenuesChartData;
-    return [
-      { month: "Start", revenue: 0 }, // Initial baseline point
-      ...statsData?.charts.map((item: any) => ({
-        month: item.label,
-        revenue: item.totalRevenue,
-      })),
-    ];
-  };
+console.log("itemsData", itemsData);
 
   return (
     <div className="flex justify-end h-screen w-full">
       <Container>
         <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
-          <Tabs defaultValue={Object.keys(tabs || {})[0]} className="w-full">
+          <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
+            <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
+              <div
+                className={`
+                                    bg-primaryDark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
+              >
+                <div className="text-secondaryBorder w-full flex flex-col gap-y-10">
+                  <div className="p-2">
+                    <div className="text-secondaryBorder font-medium flex justify-between">
+                      <h1 className="text-lg">Total Users</h1>
+                      <UsersRound />
+                    </div>
+                  </div>
+                  <div className="w-full flex justify-between">
+                    <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
+                      <CardHeader className="px-2 py-2">
+                        <CardTitle className="flex justify-between">
+                          <p className="font-medium">
+                            {totalStatsData?.usersCount}
+                          </p>
+                        </CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`
+                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
+              >
+                <div className="text-secondaryBorder w-full flex flex-col gap-y-10">
+                  <div className="p-2">
+                    <div className="text-secondaryBorder font-medium flex justify-between">
+                      <h1 className="text-lg">Total Businesses</h1>
+                      <BriefcaseBusiness />
+                    </div>
+                  </div>
+                  <div className="w-full flex justify-between">
+                    <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
+                      <CardHeader className="px-2 py-2">
+                        <CardTitle className="flex justify-between">
+                          <p className="font-medium">{totalStatsData?.businessesCount}</p>
+                        </CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Tabs
+            defaultValue={Object.keys(tabs || {})[0]}
+            className="w-full pt-8"
+          >
             <ScrollArea className="px-3 w-full whitespace-nowrap">
               <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
                 <TabsList className="bg-transparent">
@@ -243,19 +271,6 @@ const Dashboard: FC = () => {
                     )
                   )}
                 </TabsList>
-                <div className="text-primary md:text-sm text-xs gap-x-1 md: flex w-full items-center lg:justify-end justify-start sm:justify-center md:pl-0 pl-4 md:text-end text-center font-medium">
-                  Sign in link:
-                  <span className="font-normal text-xs">
-                    {`${
-                      process.env.NEXT_PUBLIC_FRONTEND_URL as string
-                    }/auth/sign-in/${url}`}
-                  </span>
-                  <Copy
-                    textToCopy={`${
-                      process.env.NEXT_PUBLIC_FRONTEND_URL as string
-                    }/auth/sign-in/${url}`}
-                  />
-                </div>
               </div>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
@@ -270,13 +285,11 @@ const Dashboard: FC = () => {
                             className={`
                                     bg-primaryDark md:min-w-max min-w-80 w-full h-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                           >
-                            <div className="text-secondaryBorder w-full">
+                            <div className="text-secondaryBorder w-full flex flex-col gap-y-10">
                               <div className="p-2">
                                 <div className="text-secondaryBorder font-medium flex justify-between">
-                                  <h1 className="text-lg">Customers</h1>
-                                  <div className="flex gap-x-4">
-                                    <EllipsisVertical />
-                                  </div>
+                                  <h1 className="text-lg">New Users</h1>
+                                  <UsersRound />
                                 </div>
                               </div>
                               <div className="w-full flex justify-between">
@@ -284,22 +297,22 @@ const Dashboard: FC = () => {
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
                                       <p className="font-medium">
-                                        {statsData?.customer.stat}
+                                        {statsData?.user.stat}
                                       </p>
                                       <div className="flex w-28 items-center">
-                                        {statsData?.customer.indicator ===
+                                        {statsData?.user.indicator ===
                                           "less" && (
                                           <TrendingDown className="w-8 pr-1 text-red-600" />
                                         )}
-                                        {statsData?.customer.indicator ===
+                                        {statsData?.user.indicator ===
                                           "more" && (
                                           <TrendingUp className="w-8 pr-1 text-green-600" />
                                         )}
-                                        {statsData?.customer.indicator && (
+                                        {statsData?.user.indicator && (
                                           <>
                                             <p className="text-sm font-medium leading-4">
-                                              {statsData?.customer.percentage}%{" "}
-                                              {statsData?.customer.indicator}{" "}
+                                              {statsData?.user.percentage}%{" "}
+                                              {statsData?.user.indicator}{" "}
                                               than last time
                                             </p>
                                           </>
@@ -307,63 +320,6 @@ const Dashboard: FC = () => {
                                       </div>
                                     </CardTitle>
                                   </CardHeader>
-                                  <CardContent className="p-0 h-20">
-                                    <ChartContainer
-                                      config={chartCusomersConfig}
-                                      className="w-full h-full"
-                                    >
-                                      <AreaChart
-                                        accessibilityLayer
-                                        data={customersChartData2()}
-                                        margin={{
-                                          left: 5,
-                                          right: 5,
-                                        }}
-                                      >
-                                        <ChartTooltip
-                                          cursor={false}
-                                          content={({ payload }) => {
-                                            return (
-                                              <CustomChartTooltip
-                                                payload={payload}
-                                                tabKey={dateKey}
-                                              />
-                                            );
-                                          }}
-                                        />
-                                        <defs>
-                                          <linearGradient
-                                            id="fillDesktop1"
-                                            x1="0"
-                                            y1="0"
-                                            x2="0"
-                                            y2="1"
-                                          >
-                                            <stop
-                                              offset="5%"
-                                              stopColor="red"
-                                              stopOpacity={0.8}
-                                            />
-                                            <stop
-                                              offset="95%"
-                                              stopColor="white"
-                                              stopOpacity={0.1}
-                                            />
-                                          </linearGradient>
-                                        </defs>
-                                        <Area
-                                          className="w-full"
-                                          dataKey="customers"
-                                          type="natural"
-                                          fill="url(#fillDesktop1)"
-                                          fillOpacity={0.2}
-                                          stroke="red"
-                                          color="white"
-                                          stackId="a"
-                                        />
-                                      </AreaChart>
-                                    </ChartContainer>
-                                  </CardContent>
                                 </Card>
                               </div>
                             </div>
@@ -372,13 +328,11 @@ const Dashboard: FC = () => {
                             className={`
                                     bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
                           >
-                            <div className="text-secondaryBorder w-full">
+                            <div className="text-secondaryBorder w-full flex flex-col gap-y-10">
                               <div className="p-2">
                                 <div className="text-secondaryBorder font-medium flex justify-between">
-                                  <h1 className="text-lg">Orders</h1>
-                                  <div className="flex gap-x-4">
-                                    <EllipsisVertical />
-                                  </div>
+                                  <h1 className="text-lg">New Businesses</h1>
+                                  <BriefcaseBusiness />
                                 </div>
                               </div>
                               <div className="w-full flex justify-between">
@@ -386,24 +340,24 @@ const Dashboard: FC = () => {
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
                                       <p className="font-medium">
-                                        {statsData?.order.stat}
+                                        {statsData?.business.stat}
                                       </p>
 
                                       <div className="flex w-28 items-center">
-                                        {statsData?.order.indicator ===
+                                        {statsData?.business.indicator ===
                                           "less" && (
                                           <TrendingDown className="w-8 pr-1 text-red-600" />
                                         )}
-                                        {statsData?.order.indicator ===
+                                        {statsData?.business.indicator ===
                                           "more" && (
                                           <TrendingUp className="w-8 pr-1 text-green-600" />
                                         )}
 
-                                        {statsData?.order.indicator && (
+                                        {statsData?.business.indicator && (
                                           <>
                                             <p className="text-sm font-medium leading-4">
-                                              {statsData?.order.percentage}%{" "}
-                                              {statsData?.order.indicator} than
+                                              {statsData?.business.percentage}%{" "}
+                                              {statsData?.business.indicator} than
                                               last time
                                             </p>
                                           </>
@@ -411,165 +365,6 @@ const Dashboard: FC = () => {
                                       </div>
                                     </CardTitle>
                                   </CardHeader>
-                                  <CardContent className="p-0 h-20">
-                                    <ChartContainer
-                                      config={chartOrdersConfig}
-                                      className="w-full h-full"
-                                    >
-                                      <AreaChart
-                                        accessibilityLayer
-                                        data={ordersChartData2()}
-                                        margin={{
-                                          left: 5,
-                                          right: 5,
-                                        }}
-                                      >
-                                        <ChartTooltip
-                                          cursor={false}
-                                          content={({ payload }) => {
-                                            return (
-                                              <CustomChartTooltip
-                                                payload={payload}
-                                                tabKey={dateKey}
-                                              />
-                                            );
-                                          }}
-                                        />
-                                        <defs>
-                                          <linearGradient
-                                            id="fillDesktop2"
-                                            x1="0"
-                                            y1="0"
-                                            x2="0"
-                                            y2="1"
-                                          >
-                                            <stop
-                                              offset="5%"
-                                              stopColor="#ff7800"
-                                              stopOpacity={0.8}
-                                            />
-                                            <stop
-                                              offset="95%"
-                                              stopColor="white"
-                                              stopOpacity={0.1}
-                                            />
-                                          </linearGradient>
-                                        </defs>
-                                        <Area
-                                          className="w-full"
-                                          dataKey="orders"
-                                          type="natural"
-                                          fill="url(#fillDesktop2)"
-                                          fillOpacity={0.2}
-                                          stroke="#ff7800"
-                                          stackId="a"
-                                        />
-                                      </AreaChart>
-                                    </ChartContainer>
-                                  </CardContent>
-                                </Card>
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            className={`
-                                    bg-primaryDark h-full md:min-w-max min-w-80 w-full cursor-pointer text-sm text-txWhite rounded-md py-1`}
-                          >
-                            <div className="text-secondaryBorder w-full">
-                              <div className="p-2">
-                                <div className="text-secondaryBorder font-medium flex justify-between">
-                                  <h1 className="text-lg">Revenue</h1>
-                                  <div className="flex gap-x-4">
-                                    <EllipsisVertical />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="w-full flex justify-between">
-                                <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
-                                  <CardHeader className="px-2 py-2">
-                                    <CardTitle className="flex justify-between">
-                                      <p className="font-medium">
-                                        ₦
-                                        {statsData?.revenue.stat?.toLocaleString()}
-                                      </p>
-                                      <div className="flex w-28 items-center">
-                                        {statsData?.revenue.indicator ===
-                                          "less" && (
-                                          <TrendingDown className="w-8 pr-1 text-red-600" />
-                                        )}
-                                        {statsData?.revenue.indicator ===
-                                          "more" && (
-                                          <TrendingUp className="w-8 pr-1 text-green-600" />
-                                        )}
-
-                                        {statsData?.revenue.indicator && (
-                                          <>
-                                            <p className="text-sm font-medium leading-4">
-                                              {statsData?.revenue.percentage}%{" "}
-                                              {statsData?.revenue.indicator}{" "}
-                                              than last time
-                                            </p>
-                                          </>
-                                        )}
-                                      </div>
-                                    </CardTitle>
-                                  </CardHeader>
-                                  <CardContent className="p-0 h-20">
-                                    <ChartContainer
-                                      config={chartRevenuesConfig}
-                                      className="w-full h-full"
-                                    >
-                                      <AreaChart
-                                        accessibilityLayer
-                                        data={revenuesChartData2()}
-                                        margin={{
-                                          left: 5,
-                                          right: 5,
-                                        }}
-                                      >
-                                        <ChartTooltip
-                                          cursor={false}
-                                          content={({ payload }) => {
-                                            return (
-                                              <CustomChartTooltip
-                                                payload={payload}
-                                                tabKey={dateKey}
-                                              />
-                                            );
-                                          }}
-                                        />
-                                        <defs>
-                                          <linearGradient
-                                            id="fillDesktop3"
-                                            x1="0"
-                                            y1="0"
-                                            x2="0"
-                                            y2="1"
-                                          >
-                                            <stop
-                                              offset="5%"
-                                              stopColor="green"
-                                              stopOpacity={0.8}
-                                            />
-                                            <stop
-                                              offset="95%"
-                                              stopColor="white"
-                                              stopOpacity={0.1}
-                                            />
-                                          </linearGradient>
-                                        </defs>
-                                        <Area
-                                          className="w-full"
-                                          dataKey="revenue"
-                                          type="natural"
-                                          fill="url(#fillDesktop3)"
-                                          fillOpacity={0.2}
-                                          stroke="green"
-                                          stackId="a"
-                                        />
-                                      </AreaChart>
-                                    </ChartContainer>
-                                  </CardContent>
                                 </Card>
                               </div>
                             </div>
@@ -581,7 +376,7 @@ const Dashboard: FC = () => {
                         <div className="pt-4 rounded-t-md px-3 flex pb-4 border-b border-primary-border">
                           <div className="flex justify-between w-full">
                             <p className="capitalize text-lg font-medium text-secondaryBorder">
-                              Today's Orders
+                              Today's Payout Requests
                             </p>
                             <EllipsisVertical className="capitalize text-lg font-medium text-secondaryBorder" />
                           </div>
@@ -597,7 +392,7 @@ const Dashboard: FC = () => {
                                 tableHeaders={tableHeaders}
                               >
                                 <TableBody>
-                                  {itemsData?.orders
+                                  {itemsData?.payouts
                                     .slice(0, 5)
                                     .map((invoice: any, index: number) => (
                                       <TableRow
@@ -689,4 +484,4 @@ const Dashboard: FC = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardComp;

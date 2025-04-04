@@ -27,12 +27,12 @@ export const handleAxiosError = (err: any, thunkAPI: any) => {
 
   if (status === 401) {
     deleteStore();
-    router.push("/");
+    router.push("/auth/sign-in");
   }
 
   if (status === 403) {
     deleteStore();
-    router.push("/");
+    router.push("/auth/sign-in");
   }
 
   if (message === "Network Error") {

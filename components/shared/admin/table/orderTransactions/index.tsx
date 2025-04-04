@@ -106,7 +106,6 @@ const OrderTransactionsTable = ({
       reference: string;
     }) => verfiyStatusRequest(orderId, reference),
     onSuccess: (res: any) => {
-      console.log(res.data);
       setVerified(res.data.data.message);
 
       setInterval(() => {

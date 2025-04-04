@@ -42,7 +42,9 @@ const MainNavbar = ({ title, subtitle }: any) => {
     },
   ];
   const { userData, logout } = useAuthToken();
-  const { data } = useBusinessDetailsWithoutAuth({ id: userData?.businessId || "" });
+  const { data } = useBusinessDetailsWithoutAuth({
+    id: userData?.businessId || "",
+  });
   const router = useRouter();
 
   return (
@@ -51,10 +53,8 @@ const MainNavbar = ({ title, subtitle }: any) => {
         <div className="flex w-fit h-full pb-1 items-center">
           <Link href="#">
             <p className="text-xl text-secondaryBorder md:font-medium font-semibold uppercase">
-              {data?.name || ""}
+              Servlette Admin
             </p>
-
-            {/* <Image alt="logo" src={logo} className="w-32 h-8" /> */}
           </Link>
         </div>
         <div className="md:flex hidden w-fit h-full justify-start items-center xl:gap-x-64 lg:gap-x-40 md:gap-x-1">
@@ -63,18 +63,8 @@ const MainNavbar = ({ title, subtitle }: any) => {
               {subtitle} {title}
             </h1>
           </div>
-          {/* <SearchBar
-            placeholder="Search for menus, orders, food and more"
-            className="lg:w-80 py-1"
-          /> */}
         </div>
         <div className="flex  w-fit h-full gap-x-4 items-center">
-          {/* <div className=" bg-[#333232] h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
-              <Bell fill="white" className="w-[1.1rem]" />
-            </div>
-            <div className="md:w-fit h-fit bg-primary-orange flex justify-center px-3 p-1 rounded-md">
-              <p>Invite</p>
-            </div> */}
           <div className="w-full flex justify-center p-1rounded-md">
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="cursor-pointer">
@@ -101,16 +91,6 @@ const MainNavbar = ({ title, subtitle }: any) => {
             </DropdownMenu>
           </div>
         </div>
-      </>
-      <>
-        {/* <div className="md:hidden flex w-fit h-full justify-start items-center gap-x-2">
-          <div className="bg-foreground h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
-            <SearchIcon className="w-[1.1rem]" />
-          </div>
-          <div className="bg-foreground h-fit bg-opacity-80 flex justify-center py-1 px-2 rounded-full w-fit">
-            <Bell fill="white" className="w-[1.1rem]" />
-          </div>
-        </div> */}
       </>
     </div>
   );

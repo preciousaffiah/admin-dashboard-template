@@ -3,7 +3,7 @@
 import { GeneralLayout } from "@layouts";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../../public/Logo.png";
+import logo from "../../public/Logo.png";
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
-import { AuthService } from "@/services";
+import { AdminService, AuthService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import { EyeIcon, EyeOff } from "lucide-react";
@@ -61,7 +61,7 @@ const SignIn: FC = () => {
 
   const loginRequest: any = async () => {
     try {
-      const response = await AuthService.login(form.getValues());
+      const response = await AdminService.login(form.getValues());
 
       return response.data;
     } catch (error: any) {

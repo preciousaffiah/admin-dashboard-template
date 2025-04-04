@@ -1,7 +1,9 @@
-import { AdminLayout } from "@/components/layouts";
+"use client";
+import React, { FC } from "react";
+import AdminLayout from "@/components/layouts/admin-layout";
 import DashboardComp from "@/components/pages/dashboard";
 
-export default function Home() {
+const Dashboard: FC = () => {
   let title = "Dashboard";
 
   return (
@@ -9,4 +11,6 @@ export default function Home() {
       <DashboardComp />
     </AdminLayout>
   );
-}
+};
+
+export default Dashboard;

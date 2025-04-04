@@ -55,3 +55,15 @@ export enum PayoutTypeEnum {
   TRANSACTION = "transaction",
   REQUEST = "request",
 }
+
+export enum PayoutStatusEnum {
+  PENDING = "pending",
+  PROCESSED = "processed",
+  DECLINED = "declined",
+}
+
+export enum BusinessStatusEnum {
+  APPROVED = "approved",
+  DECLINED = "declined",
+  PENDING = "pending"
+}

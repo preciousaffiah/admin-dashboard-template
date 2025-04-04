@@ -34,6 +34,7 @@ export default function AuthenticatedLayout({
   useEffect(() => {
     if (isLoading) return;
     if (!token) router.push("/auth/sign-in");
+    
   }, [isLoading, router, token]);
 
   return (
