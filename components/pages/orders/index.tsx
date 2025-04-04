@@ -93,7 +93,7 @@ const Orders: FC = () => {
   const [tabKey, setTabKey] = useState<string>("");
   // if (typeof window !== 'undefined') {
 
-  // const popup = new Paystack(process.env.PAYSTACK_PUBLIC_KEY as string);
+  // const popup = new Paystack(process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string);
   // }
   let title = "Orders";
 
