@@ -1,45 +1,20 @@
 "use client";
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import React, { FC, useState } from "react";
 import {
-  TrendingUp,
-  ChevronRight,
   Circle,
-  EllipsisVertical,
-  TrendingDown,
   FolderOpen,
   Loader,
-  UsersRound,
-  BriefcaseBusiness,
 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
-import { Area, AreaChart } from "recharts";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import dynamic from "next/dynamic";
-import AdminOrdersTable from "@/components/shared/admin/table/orders";
-import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import { useAuthToken } from "@/hooks";
-import { slugify } from "@/utils/slugify";
-import Copy from "@/components/serviette-ui/copy-button";
 import DefaultTable from "@/components/shared/table";
 import { handleAxiosError } from "@/utils/axios";
-import OrderService from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
-import { AdminService, BusService } from "@/services";
-import { CustomChartTooltip } from "@/components/serviette-ui";
+import { AdminService } from "@/services";
 import DataPagination from "@/components/serviette-ui/Pagination";
 import { handleRowClick } from "@/utils/modal";
 

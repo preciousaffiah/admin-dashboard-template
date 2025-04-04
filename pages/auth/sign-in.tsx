@@ -2,7 +2,6 @@
 
 import { GeneralLayout } from "@layouts";
 import Image from "next/image";
-import Link from "next/link";
 import logo from "../../public/Logo.png";
 import React, { FC, useState } from "react";
 import { useRouter } from "next/router";
@@ -10,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { usePathname } from "next/navigation";
-import { Navbar } from "@/components/shared";
 import { LoaderCircle } from "lucide-react";
 import Container from "@/components/shared/container";
 import {
@@ -23,7 +21,7 @@ import {
 } from "@/components/ui/form";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
-import { AdminService, AuthService } from "@/services";
+import { AdminService } from "@/services";
 import { useAuthToken } from "@/hooks";
 import { ToastMessage } from "@/components/serviette-ui";
 import { EyeIcon, EyeOff } from "lucide-react";
@@ -31,17 +29,12 @@ import { handleAxiosError } from "@/utils/axios";
 // Define Zod schemas for each step
 const formSchema = z
   .object({
-    email: z.string()
-    .trim()
-    .email("Invalid email address"),
-    password: z
-      .string()
-      .min(1, "required")
+    email: z.string().trim().email("Invalid email address"),
+    password: z.string().min(1, "required"),
   })
   .required();
 
 const SignIn: FC = () => {
-  const [step, setStep] = useState(1);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,8 +49,6 @@ const SignIn: FC = () => {
   const { updateUser } = useAuthToken();
 
   const router = useRouter();
-
-  const path = usePathname();
 
   const loginRequest: any = async () => {
     try {
@@ -83,20 +74,23 @@ const SignIn: FC = () => {
 
   return (
     <GeneralLayout title={"Sign-in"}>
-      <Navbar />
       <Container className={"min-h-[40rem]"}>
         <div className="authcard3 lg:min-h-[46rem] md:pt-20 md:pb-16 py-0 lg:px-12 md:px-8 px-0">
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none md:bg-background bg-foreground">
               <div className="md:m-auto lg:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
-                <Image alt="img" src={logo} className="md:block hidden authimg2 mb-[2.2rem]" />
+                <Image
+                  alt="img"
+                  src={logo}
+                  className="md:block hidden authimg2 mb-[2.2rem]"
+                />
                 <div className="pb-8">
                   <div>
-                    <h1 className="md:text-[1.6rem] auth-header font-medium text-txWhite">
-                      Sign in to Your Account
+                    <h1 className="uppercase md:text-[1.6rem] auth-header font-medium text-txWhite">
+                      Servlette Admin
                     </h1>
                     <p className="font-medium auth-subheader text-secondaryBorder">
-                      Enter your details
+                      Sign in
                     </p>
                   </div>
                 </div>
@@ -110,7 +104,7 @@ const SignIn: FC = () => {
                       <ToastMessage
                         message={
                           mutation?.error?.message ||
-                          "An error occured during sign up"
+                          "An error occured during sign in"
                         }
                       />
                     </motion.div>
@@ -203,23 +197,14 @@ const SignIn: FC = () => {
                     )}
                   </form>
                 </Form>
-                {/* <div className="pt-3 text-secondaryBorder text-center text-base">
-                  <p>-Or-</p>
-
-                  <Link href="/auth/staff/sign-in" className="link">
-                    <span className="text-[#8BAE22]">Sign in as staff</span>
-                  </Link>
-                </div> */}
-                <div className="pt-3 text-secondaryBorder text-center text-base">
-                  Don't have an account?&nbsp;
-                  <Link href="/auth/sign-up" className="link">
-                    <span className="text-[#8BAE22]">Sign up instead</span>
-                  </Link>
-                </div>
               </div>
             </div>
             <div className="authcard6 md:flex hidden">
-              <img alt="img" src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272688/servlette/random/auth-pwd_vwxw3p.png" className="authimg3" />
+              <img
+                alt="img"
+                src="https://res.cloudinary.com/dlq0uwrii/image/upload/v1743272688/servlette/random/auth-pwd_vwxw3p.png"
+                className="authimg3"
+              />
             </div>
           </div>
         </div>

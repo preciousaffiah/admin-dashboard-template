@@ -16,73 +16,15 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Container from "@/components/shared/container";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
-import { Area, AreaChart } from "recharts";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import dynamic from "next/dynamic";
-import AdminOrdersTable from "@/components/shared/admin/table/orders";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import useBusinessDetailsWithoutAuth from "@/hooks/useBusinessDetailsWithoutAuth";
 import { useAuthToken } from "@/hooks";
 import { slugify } from "@/utils/slugify";
-import Copy from "@/components/serviette-ui/copy-button";
 import DefaultTable from "@/components/shared/table";
 import { handleAxiosError } from "@/utils/axios";
-import OrderService from "@/services/order";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
-import { AdminService, BusService } from "@/services";
-import { CustomChartTooltip } from "@/components/serviette-ui";
-
-const BarChart = dynamic(
-  () => import("recharts").then((recharts) => recharts.BarChart),
-  { ssr: false }
-);
-
-export const description = "A line chart with dots";
-
-const customersChartData = [
-  { month: "Start", cusomers: 0 },
-  { month: "Stop", cusomers: 0 },
-];
-
-const ordersChartData = [
-  { month: "Start", orders: 0 },
-  { month: "Stop", orders: 0 },
-];
-
-const revenuesChartData = [
-  { month: "Start", revenue: 0 },
-  { month: "Stop", revenue: 0 },
-];
-
-const chartCusomersConfig = {
-  Customers: {
-    label: "Customers",
-    color: "#0000FF",
-  },
-} satisfies ChartConfig;
-
-const chartOrdersConfig = {
-  Orders: {
-    label: "Orders",
-    color: "#0000FF",
-  },
-} satisfies ChartConfig;
-
-const chartRevenuesConfig = {
-  Revenue: {
-    label: "Revenue",
-    color: "#0000FF",
-  },
-} satisfies ChartConfig;
+import { AdminService } from "@/services";
 
 const tabs = {
   today: "today",
@@ -218,7 +160,7 @@ console.log("itemsData", itemsData);
                       <CardHeader className="px-2 py-2">
                         <CardTitle className="flex justify-between">
                           <p className="font-medium">
-                            {totalStatsData?.usersCount}
+                            {totalStatsData?.usersCount.toLocaleString()}
                           </p>
                         </CardTitle>
                       </CardHeader>
@@ -241,7 +183,7 @@ console.log("itemsData", itemsData);
                     <Card className="text-txWhite w-full rounded-none bg-transparent border-none">
                       <CardHeader className="px-2 py-2">
                         <CardTitle className="flex justify-between">
-                          <p className="font-medium">{totalStatsData?.businessesCount}</p>
+                          <p className="font-medium">{totalStatsData?.businessesCount.toLocaleString()}</p>
                         </CardTitle>
                       </CardHeader>
                     </Card>
@@ -297,7 +239,7 @@ console.log("itemsData", itemsData);
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
                                       <p className="font-medium">
-                                        {statsData?.user.stat}
+                                        {statsData?.user.stat.toLocaleString()}
                                       </p>
                                       <div className="flex w-28 items-center">
                                         {statsData?.user.indicator ===
@@ -340,7 +282,7 @@ console.log("itemsData", itemsData);
                                   <CardHeader className="px-2 py-2">
                                     <CardTitle className="flex justify-between">
                                       <p className="font-medium">
-                                        {statsData?.business.stat}
+                                        {statsData?.business.stat.toLocaleString()}
                                       </p>
 
                                       <div className="flex w-28 items-center">
