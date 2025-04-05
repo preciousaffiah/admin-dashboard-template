@@ -1,38 +1,20 @@
 import React, { FC, useEffect, useState } from "react";
 import { SearchBar } from "@/components/serviette-ui";
 import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/shared";
 import moment from "moment";
 import {
-  Check,
-  ChevronDown,
   Circle,
-  Clock,
-  Edit3,
-  EllipsisVertical,
-  Filter,
   FolderOpen,
   Loader,
-  Minus,
-  Plus,
-  Trash2,
-  UtensilsCrossed,
-  X,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AdminTable, Invoice, Menus } from "@/types";
-import Image from "next/image";
-import orderImg from "public/orderimg.png";
+import { AdminTable, Menus } from "@/types";
 import DefaultTable from "../../../table";
-import MenuGrid from "../../menuGrid";
 import DataPagination from "@/components/serviette-ui/Pagination";
 import { handleAxiosError } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";

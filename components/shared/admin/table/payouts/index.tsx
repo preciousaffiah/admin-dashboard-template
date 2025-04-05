@@ -3,7 +3,6 @@ import { SearchBar } from "@/components/serviette-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable } from "@/types";
 import DefaultTable from "../../../table";
-import MenuGrid from "../../menuGrid";
 import DataPagination from "@/components/serviette-ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";

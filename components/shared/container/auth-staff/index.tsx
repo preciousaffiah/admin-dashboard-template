@@ -1,8 +1,5 @@
-import { AdminLayout, StaffLayout } from "@layouts";
 import React, { FC, useEffect } from "react";
 import { useAuthToken } from "@/hooks";
-import { DeptEnum } from "@/types/enums";
-import CreateOrder from "@/components/pages/create-order";
 import { useRouter } from "next/router";
 
 const AuthenticatedStaffContainer = ({
