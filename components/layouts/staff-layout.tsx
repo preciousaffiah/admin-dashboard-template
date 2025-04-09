@@ -25,7 +25,7 @@ export default function StaffLayout({
   subtitle = subtitle || "";
   description =
     description ||
-    "A Global restaurant known for serving the best meals to customers"; //TODO: edit
+    "Flenjo- A Global Saas all in one management for your businesses";
   heading = heading || title;
 
   const router = useRouter();
