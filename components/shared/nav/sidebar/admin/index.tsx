@@ -10,7 +10,7 @@ import {
   BriefcaseBusiness,
   Building2,
 } from "lucide-react";
-import { Dinner } from "@/components/serviette-icons";
+import { Dinner } from "@/components/flenjo-icons";
 import React from "react";
 import { Mail, User, Users } from "lucide-react";
 import Sidebar from "..";

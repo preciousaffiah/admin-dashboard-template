@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { AdminService } from "@/services";
 import { useAuthToken } from "@/hooks";
-import { ToastMessage } from "@/components/serviette-ui";
+import { ToastMessage } from "@/components/flenjo-ui";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { handleAxiosError } from "@/utils/axios";
 // Define Zod schemas for each step

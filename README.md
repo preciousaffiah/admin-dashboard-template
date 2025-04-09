@@ -2,7 +2,7 @@
 
 ### Description
 
-Serviette- A Global restaurant known for serving the best meals to customers.
+Flenjo- A Global Saas all in one management for your businesses.
 
 ---
 

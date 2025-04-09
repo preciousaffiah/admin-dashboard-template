@@ -15,7 +15,7 @@ import { handleAxiosError } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { AdminService } from "@/services";
-import DataPagination from "@/components/serviette-ui/Pagination";
+import DataPagination from "@/components/flenjo-ui/Pagination";
 import { handleRowClick } from "@/utils/modal";
 
 const tabs = {

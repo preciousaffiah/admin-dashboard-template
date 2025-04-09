@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { PageAnimation } from "../serviette-ui";
+import { PageAnimation } from "../flenjo-ui";
 import AdminSidebar from "../shared/nav/sidebar/admin";
 import { useAuthToken, useSocket } from "@/hooks";
 import { DeptEnum, RoleEnum } from "@/types/enums";
@@ -45,21 +45,21 @@ export default function AdminLayout({
   return (
     <Fragment>
       <Head>
-        <title>{`Serviette | ${title}`}</title>
+        <title>{`Flenjo | ${title}`}</title>
 
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <meta name="author" content="Serviette" />
+        <meta name="author" content="Flenjo" />
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
         <meta name="description" content={description} />
         <meta name="title" content={description} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Serviette" />
+        <meta property="og:site_name" content="Flenjo" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:locale:alternate" content="en_US" />
-        <meta property="og:url" content="https://my-serviette.vercel.app/" />
+        <meta property="og:url" content="https://flenjo-admin.vercel.app/" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta
@@ -69,7 +69,7 @@ export default function AdminLayout({
         <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:url"
-          content="https://my-serviette.vercel.app/"
+          content="https://flenjo-admin.vercel.app/"
         />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />

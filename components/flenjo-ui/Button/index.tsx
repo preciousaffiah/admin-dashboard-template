@@ -1,4 +1,4 @@
-import { Spinner } from "@/components/serviette-icons";
+import { Spinner } from "@/components/flenjo-icons";
 import styles from "./Button.module.scss";
 
 type ButtonType = {

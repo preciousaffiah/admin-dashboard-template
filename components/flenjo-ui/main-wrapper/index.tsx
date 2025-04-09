@@ -1,4 +1,4 @@
-import { PageAnimation } from "@/components/serviette-ui";
+import { PageAnimation } from "@/components/flenjo-ui";
 import HeaderBreadcrumb from "./header-breadcrumb";
 
 export default function MainWrapper({

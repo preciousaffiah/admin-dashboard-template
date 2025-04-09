@@ -23,9 +23,9 @@
       "@shadcn-ui/*": ["components/ui/*"],
       "@pages": ["components/pages/index"],
       "@layouts": ["components/layouts/index"],
-      "@serviette-ui": ["components/serviette-ui/index"],
-      "@serviette-icons": ["components/serviette-icons/index"],
-      "@serviette-illustrations": ["components/serviette-illustrations/index"],
+      "@flenjo-ui": ["components/flenjo-ui/index"],
+      "@flenjo-icons": ["components/flenjo-icons/index"],
+      "@flenjo-illustrations": ["components/flenjo-illustrations/index"],
       "@paystack/inline-js": ["./types/paystack-inline-js.d.ts"] // Map the module to the declaration file
     }
   },

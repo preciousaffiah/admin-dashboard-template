@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { SearchBar } from "@/components/serviette-ui";
+import { SearchBar } from "@/components/flenjo-ui";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTable } from "@/types";
 import DefaultTable from "../../../table";
-import DataPagination from "@/components/serviette-ui/Pagination";
+import DataPagination from "@/components/flenjo-ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { handleAxiosError } from "@/utils/axios";
 import { ItemService, OrderTransService, PayoutsService } from "@/services";

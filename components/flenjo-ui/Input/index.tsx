@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-import { InputHide, InputShow } from "@/components/serviette-icons";
+import { InputHide, InputShow } from "@/components/flenjo-icons";
 import styles from "./Input.module.scss";
 import { title } from "process";
 

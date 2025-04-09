@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { SearchBar } from "@/components/serviette-ui";
+import { SearchBar } from "@/components/flenjo-ui";
 import { Button } from "@/components/ui/button";
 import moment from "moment";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { AdminTable, Menus } from "@/types";
 import DefaultTable from "../../../table";
-import DataPagination from "@/components/serviette-ui/Pagination";
+import DataPagination from "@/components/flenjo-ui/Pagination";
 import { handleAxiosError } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { StaffService } from "@/services";

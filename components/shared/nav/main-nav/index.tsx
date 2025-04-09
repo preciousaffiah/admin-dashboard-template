@@ -3,7 +3,7 @@ import logo from "public/Logo.png";
 import { Bell, ChevronDown, SearchIcon } from "lucide-react";
 import React from "react";
 import { usePathname } from "next/navigation";
-import { SearchBar } from "@/components/serviette-ui";
+import { SearchBar } from "@/components/flenjo-ui";
 import { LogOut, Mail, Settings, User } from "lucide-react";
 import {
   DropdownMenu,
