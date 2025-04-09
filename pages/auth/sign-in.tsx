@@ -87,7 +87,7 @@ const SignIn: FC = () => {
                 <div className="pb-8">
                   <div>
                     <h1 className="uppercase md:text-[1.6rem] auth-header font-medium text-txWhite">
-                      Servlette Admin
+                      Flenjo Admin
                     </h1>
                     <p className="font-medium auth-subheader text-secondaryBorder">
                       Sign in

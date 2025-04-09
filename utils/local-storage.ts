@@ -1,6 +1,6 @@
 import { TAppUserState } from "@types";
 
-const STORE_NAME = "SERVLETTESERVICE";
+const STORE_NAME = "FLENJOADMINSERVICE";
 
 export const loadStore = () => {
   try {

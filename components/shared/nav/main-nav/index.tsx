@@ -53,7 +53,7 @@ const MainNavbar = ({ title, subtitle }: any) => {
         <div className="flex w-fit h-full pb-1 items-center">
           <Link href="#">
             <p className="text-xl text-secondaryBorder md:font-medium font-semibold uppercase">
-              Servlette Admin
+              Flenjo Admin
             </p>
           </Link>
         </div>

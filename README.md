@@ -39,11 +39,11 @@ Flenjo- A Global Saas all in one management for your businesses.
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/preciousaffiah/my-servlette.git
+    git clone https://github.com/preciousaffiah/flenjo-admin.git
     ```
 2. Navigate into the project directory:
     ```bash
-    cd my-servlette
+    cd flenjo-admin
     ```
 3. Install dependencies:
     ```bash
