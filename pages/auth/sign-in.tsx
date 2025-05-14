@@ -81,7 +81,7 @@ const SignIn: FC = () => {
               <div className="md:m-auto lg:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
                 <Image
                   alt="img"
-                  src={logo}
+                  src="https://storage.googleapis.com/flenjo-456113.appspot.com/random/rectangledFlenjo.jpeg"
                   className="md:block hidden authimg2 mb-[2.2rem]"
                 />
                 <div className="pb-8">
