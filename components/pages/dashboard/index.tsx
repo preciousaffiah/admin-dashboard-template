@@ -141,7 +141,7 @@ console.log("itemsData", itemsData);
   return (
     <div className="flex justify-end h-screen w-full">
       <Container>
-        <div className="authcard3 h-fit lg:px-12 md:px-8 px-0">
+        <div className="authcard3 h-fit lg:px-12 md:px-8 px-4">
           <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
             <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
               <div
