@@ -79,10 +79,10 @@ const SignIn: FC = () => {
           <div className="authcard4">
             <div className="authcard5 md:rounded-xl py-8 rounded-none md:bg-background bg-foreground">
               <div className="md:m-auto lg:px-28 px-4 md:pt-0 pt-6 w-full flex flex-col">
-                <Image
+                <img
                   alt="img"
-                  src="https://storage.googleapis.com/flenjo-456113.appspot.com/random/rectangledFlenjo.jpeg"
-                  className="md:block hidden authimg2 mb-[2.2rem]"
+                   src="https://storage.googleapis.com/flenjo-456113.appspot.com/random/circledFlenjoIcon.png"
+                  className="md:block hidden authimg2 mb-[2.2rem] h-[7.5rem] w-[8rem]"
                 />
                 <div className="pb-8">
                   <div>
