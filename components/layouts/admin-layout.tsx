@@ -77,7 +77,7 @@ export default function AdminLayout({
           property="twitter:image"
                     content="https://storage.googleapis.com/flenjo-456113.appspot.com/random/circledFlenjo.png"
         />
-       <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/flenjo-456113.appspot.com/random/circledFlenjoIcon.png" />      </Head>
+       <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/flenjo-456113.appspot.com/random/circledFlenjoIcon.png" />  
 
       </Head>
 
