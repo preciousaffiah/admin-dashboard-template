@@ -96,9 +96,7 @@ const UsersComp: FC = () => {
                                 tableHeaders={tableHeaders}
                               >
                                 <TableBody>
-                                  {data?.users
-                                    .slice(0, 5)
-                                    .map((invoice: any, index: number) => (
+                                  {data?.users.map((invoice: any, index: number) => (
                                       <TableRow
                                         key={index}
                                         className={`${
