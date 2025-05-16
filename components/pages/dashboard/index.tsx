@@ -220,7 +220,7 @@ console.log("itemsData", itemsData);
               <TabsContent value={item} key={index}>
                 <div className="w-full">
                   <div className="flex gap-y-6 px-0 flex-col w-full h-full">
-                    <div className="pt-4 rounded-md px-3 gap-y-10 flex pb-4 gap-x-4 flex-col">
+                    <div className="pt-4 rounded-md md:px-3 px-0 gap-y-10 flex pb-4 gap-x-4 flex-col">
                       <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
                         <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
                           <div
