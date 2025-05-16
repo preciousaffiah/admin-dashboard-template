@@ -196,7 +196,7 @@ console.log("itemsData", itemsData);
             defaultValue={Object.keys(tabs || {})[0]}
             className="w-full pt-8"
           >
-            <ScrollArea className="px-3 w-full whitespace-nowrap">
+            <ScrollArea className="md:px-3 px-0 w-full whitespace-nowrap">
               <div className="flex justify-between items-center lg:flex-row flex-col-reverse">
                 <TabsList className="bg-transparent">
                   {Object.entries(tabs || {}).map(
@@ -219,7 +219,7 @@ console.log("itemsData", itemsData);
             {Object.keys(tabs || {}).map((item: any, index: number) => (
               <TabsContent value={item} key={index}>
                 <div className="w-full">
-                  <div className="flex gap-y-6 md:px-0 px-3 flex-col w-full h-full">
+                  <div className="flex gap-y-6 px-0 flex-col w-full h-full">
                     <div className="pt-4 rounded-md px-3 gap-y-10 flex pb-4 gap-x-4 flex-col">
                       <div className="lg:w-[100%] w-full h-fit flex flex-col gap-y-4 md:pb-0 pb-3 justify-between">
                         <div className="w-full overflow-x-scroll flex md:justify-start gap-x-4">
