@@ -59,7 +59,7 @@ const MainNavbar = ({ title, subtitle }: any) => {
         </div>
         <div className="flex w-fit h-full justify-start items-center xl:gap-x-64 lg:gap-x-40 md:gap-x-1">
           <div>
-            <h1 className="text-xl text-secondaryBorder font-medium">
+            <h1 className="text-xl text-secondaryBorder md:font-medium font-semibold uppercase">
               {subtitle} {title}
             </h1>
           </div>
