@@ -50,14 +50,14 @@ const MainNavbar = ({ title, subtitle }: any) => {
   return (
     <div className="fixed top-0 z-[50] flex w-full bg-background justify-between py-3 text-txWhite items-center px-4">
       <>
-        <div className="flex w-fit h-full pb-1 items-center">
+        <div className="md:flex hidden w-fit h-full pb-1 items-center">
           <Link href="#">
             <p className="text-xl text-secondaryBorder md:font-medium font-semibold uppercase">
               Flenjo Admin
             </p>
           </Link>
         </div>
-        <div className="md:flex hidden w-fit h-full justify-start items-center xl:gap-x-64 lg:gap-x-40 md:gap-x-1">
+        <div className="flex w-fit h-full justify-start items-center xl:gap-x-64 lg:gap-x-40 md:gap-x-1">
           <div>
             <h1 className="text-xl text-secondaryBorder font-medium">
               {subtitle} {title}
