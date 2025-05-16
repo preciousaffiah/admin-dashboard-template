@@ -175,7 +175,6 @@ const BusinessRequestsComp: FC = () => {
                               <DefaultTable tableHeaders={tableHeaders}>
                                 <TableBody>
                                   {data?.requests
-                                    .slice(0, 5)
                                     .map((invoice: any, index: number) => (
                                       <TableRow
                                         key={index}
