@@ -97,7 +97,6 @@ const BusinessesComp: FC = () => {
                               >
                                 <TableBody>
                                   {data?.businesses
-                                    .slice(0, 5)
                                     .map((invoice: any, index: number) => (
                                       <TableRow
                                         key={index}
