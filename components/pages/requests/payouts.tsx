@@ -165,7 +165,6 @@ const PayoutRequestsComp: FC = () => {
                               <DefaultTable tableHeaders={tableHeaders}>
                                 <TableBody>
                                   {data?.payouts
-                                    .slice(0, 5)
                                     .map((invoice: any, index: number) => (
                                       <TableRow
                                         key={index}
