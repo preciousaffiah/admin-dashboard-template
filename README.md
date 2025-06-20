@@ -39,7 +39,7 @@ Flenjo- A Global Saas all in one management for your businesses.
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/preciousaffiah/flenjo-admin.git
+    git clone https://github.com/preciousaffiah/admin-dashboard-template.git
     ```
 2. Navigate into the project directory:
     ```bash
