@@ -1,4 +1,4 @@
-# Admin Dashboard Template
+# Admin Dashboard Template - Dummy Admin ReadMe
 
 ### Description
 
