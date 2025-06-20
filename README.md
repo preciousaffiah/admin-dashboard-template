@@ -1,4 +1,4 @@
-# Project Name
+# Admin Dashboard Template
 
 ### Description
 
