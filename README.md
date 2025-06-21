@@ -2,7 +2,7 @@
 
 ### Description
 
-Flenjo- A Global Saas all in one management for your businesses.
+A Global Saas all in one management for your businesses.
 
 ---
 
