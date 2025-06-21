@@ -43,7 +43,7 @@ A Global Saas all in one management for your businesses.
     ```
 2. Navigate into the project directory:
     ```bash
-    cd flenjo-admin
+    cd admin-dashboard-template
     ```
 3. Install dependencies:
     ```bash
